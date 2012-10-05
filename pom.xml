@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.kitchenoffice</groupId>
+	<groupId>com.gentics</groupId>
 	<artifactId>kitchenoffice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -11,7 +11,9 @@
 
 	<modules>
 		<module>kitchenoffice-data</module>
+		<module>kitchenoffice-restapi-webapp</module>
 		<module>kitchenoffice-webapp</module>
+		<module>kitchenoffice-server</module>
 	</modules>
 
 	<properties>
@@ -21,6 +23,7 @@
 		<slf4j.version>1.6.1</slf4j.version>
 		<spring-data-neo4j.version>2.1.0.RC4</spring-data-neo4j.version>
 		<neo4j.version>1.8.RC1</neo4j.version>
+		<jersey.version>1.6</jersey.version>
 	</properties>
 
 	<repositories>
