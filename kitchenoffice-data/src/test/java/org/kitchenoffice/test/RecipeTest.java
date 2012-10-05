@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
 @Transactional
 public class RecipeTest {
 	
-	private static Logger log = Logger.getLogger("org.soundbox.kitchenoffice.RecipeTest");
+	private static Logger log = Logger.getLogger(RecipeTest.class);
 	
 	@Autowired
 	private RecipeRepository recipeRepository;
