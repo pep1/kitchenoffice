@@ -12,18 +12,12 @@
 	<packaging>war</packaging>
 	<name>Kitchen Office Web App</name>
 
-
-	<properties>
-		<vaadin.version>6.8.3</vaadin.version>
-		<gwt.version>2.3.0</gwt.version>
-		<gwt.plugin.version>2.2.0</gwt.plugin.version>
-	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
