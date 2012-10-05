@@ -11,6 +11,7 @@
 
 	<modules>
 		<module>kitchenoffice-data</module>
+		<module>kitchenoffice-webapp</module>
 	</modules>
 
 	<properties>
