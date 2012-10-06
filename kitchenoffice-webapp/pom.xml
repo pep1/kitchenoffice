@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-        <groupId>com.gentics</groupId>
+		<groupId>com.gentics</groupId>
 		<artifactId>kitchenoffice</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
@@ -198,7 +198,7 @@
 			<artifactId>kitchenoffice-data</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
+
 		<!-- Vaadin Core dependencies -->
 		<dependency>
 			<groupId>com.vaadin</groupId>
@@ -254,11 +254,24 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j</artifactId>
+			<version>${spring-data-neo4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
