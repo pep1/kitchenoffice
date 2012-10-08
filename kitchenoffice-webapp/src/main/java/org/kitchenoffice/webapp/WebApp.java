@@ -10,6 +10,7 @@ import org.kitchenoffice.data.repository.MealRepository;
 import org.kitchenoffice.data.repository.RecipeRepository;
 import org.kitchenoffice.data.repository.UserRepository;
 import org.kitchenoffice.webapp.container.connector.SpringDataQueryFactory;
+import org.kitchenoffice.webapp.ui.form.RecipeForm;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -18,14 +19,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.node.Neo4jHelper;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.vaadin.addons.lazyquerycontainer.LazyQueryContainer;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
 
@@ -58,6 +56,10 @@ public class WebApp extends SpringContextApplication implements
 
 	private static Logger log = Logger
 			.getLogger("org.kitchenoffice.webapp.WebApp");
+	
+	private Table table = new Table();
+	
+	private RecipeForm form;
 
 	public WebApp() {
 
@@ -70,17 +72,8 @@ public class WebApp extends SpringContextApplication implements
 		
 		setTheme("runo");
 
-		window = new Window("Spring Neo4j Test WebApp");
+		window = new Window("Kitchenoffice WebApp");
 		setMainWindow(window);
-
-		log.debug("cleaning up database");
-		cleanUpGraph();
-		
-
-		log.debug("creating new articles");
-		for (int i = 0; i < 50; i++) {
-			createSomeRecipes();
-		}
 		
 		SpringDataQueryFactory<RecipeRepository> queryDefinition = new SpringDataQueryFactory<RecipeRepository>(
 				recipeRepository, Recipe.class);
@@ -88,51 +81,33 @@ public class WebApp extends SpringContextApplication implements
 				queryDefinition, false, 50);
 
 		final Table table = new Table();
+		
+		table.setImmediate(true);
 
 		table.setContainerDataSource(container);
-
+		
 		table.addContainerProperty("id", String.class, "");
 		table.addContainerProperty("name", String.class, "");
 		table.addContainerProperty("description", String.class, "");
 		table.addContainerProperty("totalPrice", String.class, "");
-		table.setSizeFull();
-
-		window.addComponent(table);
-		table.setSizeFull();
-
+		
+		table.addListener(new Property.ValueChangeListener() {
+            public void valueChange(ValueChangeEvent event) {
+                Object id = table.getValue();
+                form.setItemDataSource(id == null ? null : table
+                        .getItem(id));
+            }
+        });
+		
 		table.setWriteThrough(true);
-
-		final Button edit = new Button("Edit");
-		edit.addListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				table.setEditable(true);
-				edit.setEnabled(false);
-			}
-		});
-
-		final Button save = new Button("Save");
-		save.addListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				table.commit();
-				container.commit();
-				table.setEditable(false);
-				edit.setEnabled(true);
-			}
-		});
-
-		final Button cancel = new Button("Cancel");
-		cancel.addListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				table.discard();
-				container.discard();
-				table.setEditable(false);
-				edit.setEnabled(true);
-			}
-		});
-
-		window.addComponent(edit);
-		window.addComponent(save);
-		window.addComponent(cancel);
+		table.setSelectable(true);
+		table.setSizeFull();
+		table.setHeight("200px");
+		window.addComponent(table);
+		
+		form = new RecipeForm(container, table);
+		form.setSizeFull();
+		window.addComponent(form);
 
 	}
 

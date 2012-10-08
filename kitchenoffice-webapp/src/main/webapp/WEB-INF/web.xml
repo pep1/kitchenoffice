@@ -18,6 +18,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
 	<servlet>
 		<servlet-name>Kitchenoffice Webapp</servlet-name>
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
