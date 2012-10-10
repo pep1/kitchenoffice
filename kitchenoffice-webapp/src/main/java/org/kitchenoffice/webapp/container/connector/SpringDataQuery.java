@@ -17,6 +17,7 @@ public class SpringDataQuery<A extends GraphRepository<? extends AbstractPersist
 	
 	private Logger log = Logger.getLogger(this.getClass());
 	
+	@SuppressWarnings("unused")
 	private QueryDefinition definition;
 	
 	private Class<? extends AbstractPersistable> pojoClass;
@@ -78,6 +79,7 @@ public class SpringDataQuery<A extends GraphRepository<? extends AbstractPersist
 		return items;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void saveItems(List<Item> addedItems, List<Item> modifiedItems, List<Item> removedItems) {
 		
@@ -102,10 +104,11 @@ public class SpringDataQuery<A extends GraphRepository<? extends AbstractPersist
 		
 	}
 	
-	private void addPojosFromItemListToPojoList(List<Item> items, List pojos) {
+	@SuppressWarnings("unchecked")
+	private void addPojosFromItemListToPojoList(List<Item> items, List<Object> pojos) {
         if (items != null) {
             for (Item item : items) {
-                pojos.add(((BeanItem) item).getBean());
+                pojos.add(((BeanItem<? extends AbstractPersistable>) item).getBean());
             }
         }
     }

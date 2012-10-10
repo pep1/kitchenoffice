@@ -7,12 +7,6 @@ public abstract class AbstractPersistable {
 	@GraphId
     private Long id;
 	
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.data.domain.Persistable#getId()
-	 */
 	public Long getId() {
 
 		return id;
@@ -28,24 +22,13 @@ public abstract class AbstractPersistable {
 		this.id = id;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.data.domain.Persistable#isNew()
-	 */
 	public boolean isNew() {
 
 		return null == getId();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-
 
 			int hashCode = 17;
 
@@ -55,11 +38,6 @@ public abstract class AbstractPersistable {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 

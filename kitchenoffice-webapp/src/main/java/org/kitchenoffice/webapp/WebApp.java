@@ -2,13 +2,8 @@ package org.kitchenoffice.webapp;
 
 import org.apache.log4j.Logger;
 import org.dellroad.stuff.vaadin.SpringContextApplication;
-import org.kitchenoffice.data.domain.Article;
 import org.kitchenoffice.data.domain.Recipe;
-import org.kitchenoffice.data.repository.ArticleRepository;
-import org.kitchenoffice.data.repository.CommentRepository;
-import org.kitchenoffice.data.repository.MealRepository;
 import org.kitchenoffice.data.repository.RecipeRepository;
-import org.kitchenoffice.data.repository.UserRepository;
 import org.kitchenoffice.webapp.container.connector.SpringDataQueryFactory;
 import org.kitchenoffice.webapp.ui.form.RecipeForm;
 import org.springframework.beans.BeansException;
@@ -36,18 +31,6 @@ public class WebApp extends SpringContextApplication implements
 
 	@Autowired
 	private RecipeRepository recipeRepository;
-
-	@Autowired
-	private ArticleRepository articleRepository;
-
-	@Autowired
-	private MealRepository mealRepository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private CommentRepository commentRepository;
 	
 	@Autowired
 	private Neo4jTemplate template;
@@ -66,9 +49,9 @@ public class WebApp extends SpringContextApplication implements
 	}
 
 	@Override
-	protected void initSpringApplication(ConfigurableWebApplicationContext arg0) {
+	protected void initSpringApplication(ConfigurableWebApplicationContext context) {
 
-		log.debug("initializing Webapp");
+		log.debug("initializing Webapp instance");
 		
 		setTheme("runo");
 
@@ -79,8 +62,6 @@ public class WebApp extends SpringContextApplication implements
 				recipeRepository, Recipe.class);
 		final LazyQueryContainer container = new LazyQueryContainer(
 				queryDefinition, false, 50);
-
-		final Table table = new Table();
 		
 		table.setImmediate(true);
 
@@ -110,49 +91,6 @@ public class WebApp extends SpringContextApplication implements
 		window.addComponent(form);
 
 	}
-
-	private void createSomeRecipes() {
-
-		Recipe r = new Recipe("Tortellini mit Tomatensoße", "lecker", 1, 5);
-		recipeRepository.save(r);
-
-		Article i1 = new Article("Tortellini Pasta", "Package, 500g", 0.89);
-		articleRepository.save(i1);
-		Article i2 = new Article("Tomaten in der Dose, gestückelt",
-				"Dose, 400ml", 2.0);
-		articleRepository.save(i2);
-		Article i3 = new Article("Zwiebeln", "Package", 0.89);
-		articleRepository.save(i3);
-		Article i4 = new Article("Parmesan, Grana", "Package", 0.89);
-		articleRepository.save(i4);
-
-		// saving after each adding seems to be necessary
-		r.addArticle(i1, 1);
-		recipeRepository.save(r);
-		r.addArticle(i2, 2);
-		recipeRepository.save(r);
-		r.addArticle(i3, 0.5);
-		recipeRepository.save(r);
-		r.addArticle(i4, 0.5);
-		recipeRepository.save(r);
-
-		Recipe r2 = new Recipe("Nudeln mit Tomatensoße", "lecker", 1, 10);
-
-		Article i5 = new Article("Nudeln Pasta, irgendeine Sorte",
-				"Package, 500g", 0.89);
-		articleRepository.save(i5);
-
-		r2.addArticle(i5, 1);
-		recipeRepository.save(r2);
-		r2.addArticle(i2, 1);
-		recipeRepository.save(r2);
-		r2.addArticle(i3, 1);
-		recipeRepository.save(r2);
-		r2.addArticle(i4, 1);
-		recipeRepository.save(r2);
-
-	}
-	
 
 	public void cleanUpGraph() {
 		Neo4jHelper.cleanDb(template);
