@@ -1,42 +1,56 @@
 package com.gentics.kitchenoffice.webapp.view.layout;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-
-@Component
+@org.springframework.stereotype.Component
 @Scope("prototype")
-public class MainLayout extends VerticalLayout{
-	
-	private Label header = new Label("<h1>KitchenOffice</h1>", ContentMode.HTML);
-	
-	private TabSheet tabSheet = new TabSheet();
-	
-	
+public class MainLayout extends VerticalLayout implements ViewDisplay {
+
+	private Label header = new Label("<h1>Kitchen Office <span style='color: red; font-size: small;'>alpha</span></h1>", ContentMode.HTML);
+
+	private Panel panel = new Panel();
+
 	public MainLayout() {
 		
-		this.addComponent(header);
-		
-		this.addComponent(tabSheet);
-		this.setExpandRatio(tabSheet, 1.0F);
-		
-	}
+		setSpacing(true);
+		setMargin(true);
 
+		addComponent(header);
+		
+		panel.setSizeFull();
+
+		addComponent(panel);
+		setExpandRatio(panel, 1.0F);
+
+	}
 
 	public Label getHeader() {
 		return header;
 	}
 
-
-	public TabSheet getTabSheet() {
-		return tabSheet;
+	public Panel getPanel() {
+		return panel;
 	}
-	
-	
-	
+
+	@Override
+	public void showView(View view) {
+		if (view instanceof Component) {
+			
+			panel.removeAllComponents();
+			panel.addComponent((Component) view);
+			
+		} else {
+			throw new IllegalArgumentException("View is not a component: "
+					+ view);
+		}
+	}
+
 }

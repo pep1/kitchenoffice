@@ -63,7 +63,6 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	private ProgressIndicator indicator = new ProgressIndicator();
 
 	public ImageField() {
-
 	}
 
 	private VerticalLayout buildVerticalImage() {

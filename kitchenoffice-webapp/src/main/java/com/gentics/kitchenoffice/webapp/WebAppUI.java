@@ -30,6 +30,9 @@ public class WebAppUI extends UI
 	@Autowired
     private transient ApplicationContext applicationContext;
 	
+	@Autowired
+	private MainLayout layout;
+	
 	private static Logger log = Logger.getLogger(WebAppUI.class);
 	
 	
@@ -40,11 +43,10 @@ public class WebAppUI extends UI
         
     	log.debug("initializing WebApp instance");
     	
-    	Navigator.SimpleViewDisplay display = new Navigator.SimpleViewDisplay();
-        setContent(display);
+        setContent(layout);
         setSizeFull();
 
-        DiscoveryNavigator navigator = new DiscoveryNavigator(applicationContext, UI.getCurrent(), display, "com.gentics.kitchenoffice.webapp.view");
+        DiscoveryNavigator navigator = new DiscoveryNavigator(applicationContext, UI.getCurrent(), layout, "com.gentics.kitchenoffice.webapp.view");
 
         // Navigate to view
         navigator.navigateTo(RecipeView.NAME);

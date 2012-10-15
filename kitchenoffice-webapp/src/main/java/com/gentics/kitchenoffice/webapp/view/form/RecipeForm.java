@@ -65,6 +65,7 @@ public class RecipeForm extends FieldGroup {
 		layout.addComponent(description, 1, 1);
 		layout.addComponent(text, 1, 2);
 		layout.addComponent(image, 0, 0, 0, 1);
+		image.setWidth("140px");
 
 		return layout;
 
