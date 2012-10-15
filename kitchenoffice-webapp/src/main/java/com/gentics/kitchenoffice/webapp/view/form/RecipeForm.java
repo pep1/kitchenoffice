@@ -12,7 +12,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 @Component
@@ -42,13 +42,18 @@ public class RecipeForm extends FieldGroup {
 
 	private GridLayout buildLayout() {
 		layout = new GridLayout(2, 3);
+		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		TextField name = new TextField("Name");
 		name.setNullRepresentation("");
+		name.setInputPrompt("Please enter the recipe name here");
 		TextField description = new TextField("Description");
 		description.setNullRepresentation("");
-		RichTextArea text = new RichTextArea("Recipe Text");
+		description.setInputPrompt("Please enter a short description here");
+		TextArea text = new TextArea("Recipe Text");
 		text.setNullRepresentation("");
+		text.setInputPrompt("Aloha Editor would be nice here!");
 
 		this.bind(name, "name");
 		this.bind(description, "description");
@@ -58,8 +63,8 @@ public class RecipeForm extends FieldGroup {
 		// component, column, row
 		layout.addComponent(name, 1, 0);
 		layout.addComponent(description, 1, 1);
-		layout.addComponent(text, 0, 2, 1, 2);
-		layout.addComponent(image, 0, 0);
+		layout.addComponent(text, 1, 2);
+		layout.addComponent(image, 0, 0, 0, 1);
 
 		return layout;
 
