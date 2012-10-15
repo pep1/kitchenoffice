@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	version="2.5">
+	id="WebApp_ID" version="2.5">
 	<display-name>Vaadin Web Application</display-name>
 	<context-param>
 		<description>Vaadin production mode</description>
@@ -14,25 +14,31 @@
 		<param-value>classpath:spring/applicationContext.xml</param-value>
 	</context-param>
 
+	<!-- Spring -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 
+
+	<!-- Vaadin servlet -->
 	<servlet>
-		<servlet-name>Kitchenoffice Webapp</servlet-name>
-		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<servlet-name>Vaadin Sample Application</servlet-name>
+		<servlet-class>ru.xpoft.vaadin.SpringVaadinServlet</servlet-class>
 		<init-param>
-			<description>Vaadin application class to start</description>
-			<param-name>application</param-name>
-			<param-value>org.kitchenoffice.webapp.WebApp</param-value>
+			<param-name>beanName</param-name>
+			<param-value>webAppUI</param-value>
 		</init-param>
 	</servlet>
+	
 	<servlet-mapping>
-		<servlet-name>Kitchenoffice Webapp</servlet-name>
+		<servlet-name>Vaadin Sample Application</servlet-name>
 		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Vaadin Sample Application</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
 	</servlet-mapping>
 </web-app>
