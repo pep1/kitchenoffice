@@ -111,13 +111,15 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 	}
 		
 	public void add() {
-		Object itemId = container.addItem(new Recipe());
+		
+		Recipe newRecipe = new Recipe();
+		Object itemId = container.addItem(newRecipe);
 		form.setItemDataSource(container.getItem(itemId));
 		form.setReadOnly(false);
 		
-		log.debug("container size: " + container.size());
+		log.debug("added bean item, container size now is: " + container.size());
 		
-		table.select(itemId);
+		table.select(newRecipe);
 	}
 	
 
@@ -137,6 +139,13 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 
 	public void cancel() {
 		form.discard();
+		
+		BeanItem<Recipe> item = (BeanItem<Recipe>) form.getItemDataSource();
+		
+		if(item.getBean().isNew()) {
+			container.removeItem(item.getBean());
+		}
+		
 		form.setReadOnly(true);
 	}
 	

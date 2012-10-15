@@ -11,8 +11,6 @@ import com.gentics.kitchenoffice.storage.Storable;
 
 public class FileStorageImpl extends AbstractFileStorage<Storable> {
 	
-	private String tempPath = "C:/TEMP";
-	
 	private static Logger log = Logger.getLogger(FileStorageImpl.class);
 	
 	public FileStorageImpl() {
@@ -30,28 +28,32 @@ public class FileStorageImpl extends AbstractFileStorage<Storable> {
 		Assert.isTrue(file.canWrite(), "ImageFile: write protected: " + fileName);
 		Assert.hasLength(newLocation, "new location should not be empty");
 		
+		File newFile = new File(newLocation, file.getName());
+		 
+        if(newFile.exists())
+            newFile.delete();
+		
 		// Move file to new directory
-		if(file.renameTo(new File(newLocation, file.getName()))) {
-			
-			return file;
+		if(file.renameTo(newFile)) {
+			return newFile;
 		}
 		
 		return null;
 	}
 
 	@Override
-	public File createTempFile(String fileName, String mimeType) {
+	public File createTempFile(String directory, String fileName, String mimeType) {
 		
 		Assert.hasLength(fileName, "new location should not be empty");
 		
 		int dotPos = fileName.lastIndexOf(".");
-        String extension = fileName.substring(dotPos);
+        String extension = fileName.substring(dotPos+1).toLowerCase();
         
-        String tempFileName = String.format("%s%s", RandomStringUtils.randomAlphanumeric(16), extension);
-		
-		log.debug("creating new temp file:"+  tempPath + File.separator +  tempFileName);
+        String tempFileName = this.getUniqueFileName(extension);
         
-		File f = new File(tempPath, tempFileName);
+		log.debug("creating new temp file: "+  directory + File.separator +  tempFileName);
+        
+		File f = new File(directory, tempFileName);
 		
 		return f;
 	}
@@ -85,14 +87,6 @@ public class FileStorageImpl extends AbstractFileStorage<Storable> {
 	      throw new IllegalArgumentException("Delete: deletion failed");
 	    
 		return success;
-	}
-
-	public String getTempPath() {
-		return tempPath;
-	}
-
-	public void setTempPath(String tempPath) {
-		this.tempPath = tempPath;
 	}
 
 }

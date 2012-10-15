@@ -6,7 +6,7 @@ public interface Storage<T extends Storable> {
 	
 	public File moveFile(File file, String newLocation);
 	
-	public File createTempFile(String fileName, String mimeType);
+	public File createTempFile(String directory, String fileName, String mimeType);
 	
 	public boolean deleteFile(String filePath);
 	

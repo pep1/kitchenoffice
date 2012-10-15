@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- $Id$ -->
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -18,7 +18,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.gentics.kitchenoffice" />
 
-	<neo4j:config storeDirectory="target/neo4j-db" />
+	<neo4j:config storeDirectory="${db.location}" />
 	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
 
 </beans>

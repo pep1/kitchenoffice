@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.storage.file;
+package com.gentics.kitchenoffice.storage.processing;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,44 +13,69 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
-
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
+import com.gentics.kitchenoffice.repository.ImageRepository;
 import com.gentics.kitchenoffice.storage.Storable;
 import com.gentics.kitchenoffice.storage.Storage;
 
-@Component
-@Scope("singleton")
+
 public class ImageProcessor {
 
 	private static Logger log = Logger.getLogger(ImageProcessor.class);
 
-	@Value("${storage.temppath}")
-	private String tempPath = "C:/TEMP";
-
-	@Value("${storage.imagepath}")
 	private String imagePath;
 
-	@Autowired
 	private Storage<Storable> storage;
+	
+	private ImageRepository repository;
+
 
 	public com.gentics.kitchenoffice.data.Image createImageObject(File file) throws IOException {
-
-		com.gentics.kitchenoffice.data.Image image = null;
+		
+		Assert.notNull(file, "File should not be null!");
 
 		file = storage.moveFile(file, imagePath);
 		
-		File thumb120 = new File(imagePath + File.separator + "thumb_120" + File.separator, file.getName());
+		File thumb120 = new File(imagePath + File.separator + "thumb_120", file.getName());
 
-		createThumb(file, thumb120, 120, 120, (float) 0.6);
+		createThumb(file, thumb120, 120, 120, (float) 0.8);
 
-		image = readImageData(file);
+		com.gentics.kitchenoffice.data.Image image = readImageData(file);
+		
+		if(image != null) {
+			return image;
+		}
 
-		return image;
+		return null;
+	}
+	
+	public boolean removeImageObject(com.gentics.kitchenoffice.data.Image oldImage) {
+		
+		Assert.notNull(oldImage, "Image to remove should not be null!");
+		
+		try {
+			File toRemove = new File(imagePath, oldImage.getFileName());
+		
+		
+			File toRemoveThumb = new File(imagePath + File.separator + "thumb_120", oldImage.getFileName());
+			
+			if(storage.deleteFile(toRemove) && storage.deleteFile(toRemoveThumb)) {
+				
+				if(!oldImage.isNew()) {
+					repository.delete(oldImage);
+				}
+				
+				return true;
+			}
+		} catch (Exception e) {
+			log.error("Failed to delete Image");
+			e.printStackTrace();
+		}
+		
+		return false;
+		
 	}
 
 	private com.gentics.kitchenoffice.data.Image readImageData(File file)
@@ -63,7 +88,7 @@ public class ImageProcessor {
 		image.setHeight(bi.getHeight());
 		image.setWidth(bi.getWidth());
 		// TODO get mimetype
-		// image.setType(bi.get);
+		//image.setType(bi.get);
 
 		image.setFileName(file.getName());
 		image.setFilePath(file.getAbsolutePath());
@@ -88,7 +113,7 @@ public class ImageProcessor {
 			ImageWriteParam iwp = writer.getDefaultWriteParam();
 
 			iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-			iwp.setCompressionQuality(1);
+			iwp.setCompressionQuality(quality);
 
 			FileImageOutputStream output = new FileImageOutputStream(outputFile);
 			writer.setOutput(output);
@@ -141,16 +166,32 @@ public class ImageProcessor {
 				IIOImage imageWrite = new IIOImage(processedImage, null, null);
 				writer.write(null, imageWrite, iwp);
 				writer.dispose();
-
+				
+				output.close();
+				
 				writer = null;
+				output = null;
 			}
 
 		} catch (IOException e) {
 			log.debug("something went wrong with the image processing: "
 					+ e.getStackTrace());
+			e.printStackTrace();
 		}
 
 		return outputFile;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public void setStorage(Storage<Storable> storage) {
+		this.storage = storage;
+	}
+
+	public void setRepository(ImageRepository repository) {
+		this.repository = repository;
 	}
 
 }

@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.webapp.view.form.field.ImageField;
+import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -64,6 +67,24 @@ public class RecipeForm extends FieldGroup {
 
 	public GridLayout getLayout() {
 		return layout;
+	}
+	
+	@Override
+	public void setItemDataSource(Item itemDataSource) {
+		
+		if(this.isModified()) {
+			// if user made changes, diguard them
+			this.discard();
+		}
+		
+		super.setItemDataSource(itemDataSource);
+		
+		// and switch to readonly again, except its a new one we are switching to
+		BeanItem<Recipe> item = (BeanItem<Recipe>) itemDataSource;
+		if(item != null && !item.getBean().isNew()) {
+			setReadOnly(true);
+		}
+
 	}
 
 }

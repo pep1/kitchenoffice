@@ -10,16 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.gentics.kitchenoffice.storage.Storable;
 import com.gentics.kitchenoffice.storage.Storage;
 
-@Component
-@Scope("prototype")
-@SuppressWarnings("serial")
 public class FileBuffer implements UploadFieldReceiver {
 
 	String mimeType;
@@ -32,8 +25,9 @@ public class FileBuffer implements UploadFieldReceiver {
 
 	private boolean deleteFiles = true;
 
-	@Autowired
-	private Storage<Storable> factory;
+	private Storage<Storable> storage;
+	
+	private String tempPath;
 
 	public enum FieldType {
 		UTF8_STRING, BYTE_ARRAY, FILE;
@@ -66,7 +60,7 @@ public class FileBuffer implements UploadFieldReceiver {
 		mimeType = MIMEType;
 		try {
 			if (file == null) {
-				file = factory.createTempFile(filename, mimeType);
+				file = storage.createTempFile(tempPath, filename, mimeType);
 			}
 			return new FileOutputStream(file);
 		} catch (final FileNotFoundException e) {
@@ -138,7 +132,7 @@ public class FileBuffer implements UploadFieldReceiver {
 			// we set the contents of the file
 			if (file == null || !file.exists()) {
 				// TODO attributes may be nulls
-				file = factory.createTempFile(fileName, mimeType);
+				file = storage.createTempFile(tempPath, fileName, mimeType);
 			}
 			try {
 				FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -201,4 +195,20 @@ public class FileBuffer implements UploadFieldReceiver {
 	public boolean isDeleteFiles() {
 		return deleteFiles;
 	}
+	
+	public void reset() {
+		mimeType = null;
+		fileName = null;
+		file = null;
+	}
+
+	public void setStorage(Storage<Storable> storage) {
+		this.storage = storage;
+	}
+
+	public void setTempPath(String tempPath) {
+		this.tempPath = tempPath;
+	}
+	
+	
 }
