@@ -272,8 +272,11 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	protected void setInternalValue(Image image) {
 		super.setInternalValue(image);
 
-		detach();
-		attach();
+		if(this.getUI() != null) {
+			detach();
+			attach();
+		}
+		
 
 	}
 

@@ -84,12 +84,24 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 		cancel = new Button("Cancel", this);
 		add = new Button("Add", this);
 		
+		edit.setEnabled(false);
+		edit.setDisableOnClick(true);
+		save.setEnabled(false);
+		save.setDisableOnClick(true);
+		cancel.setEnabled(false);
+		cancel.setDisableOnClick(true);
+		add.setEnabled(true);
+		add.setDisableOnClick(true);
 				
 		footer.addComponent(edit);
 		footer.addComponent(save);
 		footer.addComponent(cancel);
 		footer.addComponent(add);
 		this.addComponent(footer);
+		
+		if(container.size() > 0) {
+			table.select(container.firstItemId());
+		}
 	}
 
 	@Override
@@ -103,11 +115,23 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 		BeanItem<Recipe> item = container.getItem(table.getValue());
 		
         form.setItemDataSource(item);
+        
+        if(table.getValue() != null) {
+        	edit.setEnabled(true);
+        }
+        
+        add.setEnabled(true);
+		cancel.setEnabled(false);
+		save.setEnabled(false);
 		
 	}
 	
 	public void edit() {
 		form.setReadOnly(false);
+		
+		add.setEnabled(false);
+		cancel.setEnabled(true);
+		save.setEnabled(true);
 	}
 		
 	public void add() {
@@ -120,6 +144,10 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 		log.debug("added bean item, container size now is: " + container.size());
 		
 		table.select(newRecipe);
+		
+		edit.setEnabled(false);
+		cancel.setEnabled(true);
+		save.setEnabled(true);
 	}
 	
 
@@ -134,6 +162,10 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 		container.commit();
 		
 		form.setReadOnly(true);
+		
+		edit.setEnabled(true);
+		cancel.setEnabled(false);
+		add.setEnabled(true);
 	}
 	
 
@@ -147,6 +179,11 @@ public class RecipeView extends VerticalLayout implements View, ValueChangeListe
 		}
 		
 		form.setReadOnly(true);
+		
+		add.setEnabled(true);
+		edit.setEnabled(true);
+		cancel.setEnabled(false);
+		save.setEnabled(false);
 	}
 	
 
