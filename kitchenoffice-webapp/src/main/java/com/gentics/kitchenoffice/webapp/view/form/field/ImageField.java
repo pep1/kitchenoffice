@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.repository.ImageRepository;
@@ -221,7 +222,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 					Image prevImage = getValue();
 
-					if (prevImage != null) {
+					if (prevImage != null && prevImage.getFilePath() != null && !"".equals(prevImage.getFilePath())) {
 						oldImage = prevImage;
 					}
 

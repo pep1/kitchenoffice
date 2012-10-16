@@ -67,7 +67,7 @@ public class DiscoveryNavigator extends Navigator
     }
 
     private static Logger logger = LoggerFactory.getLogger(DiscoveryNavigator.class);
-    private static final ConcurrentMap<String, List<DiscoveryClass>> viewsCache = new ConcurrentHashMap();
+    private static final ConcurrentMap<String, List<DiscoveryClass>> viewsCache = new ConcurrentHashMap<String, List<DiscoveryClass>>();
     private transient ApplicationContext applicationContext;
 
     public DiscoveryNavigator(ApplicationContext applicationContext, UI ui, ViewDisplay display, String basePackage)
@@ -103,7 +103,7 @@ public class DiscoveryNavigator extends Navigator
                     scanner.addExcludeFilter(new RegexPatternTypeFilter(pattern));
                 }
 
-                List<DiscoveryClass>discoveryClasses = new ArrayList();
+                List<DiscoveryClass>discoveryClasses = new ArrayList<DiscoveryClass>();
                 Set<BeanDefinition> beans = scanner.findCandidateComponents(basePackage);
                 for (BeanDefinition bean : beans)
                 {
@@ -150,6 +150,12 @@ public class DiscoveryNavigator extends Navigator
     @Override
     public void navigateTo(String navigationState)
     {
+        // We can't bind NULL
+        if (navigationState == null)
+        {
+            navigationState = "";
+        }
+
         // fix Vaadin
         if (navigationState.startsWith("!"))
         {

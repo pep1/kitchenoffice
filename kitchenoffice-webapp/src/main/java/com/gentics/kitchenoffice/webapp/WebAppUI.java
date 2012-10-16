@@ -13,6 +13,7 @@ import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.Navigator.SimpleViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
@@ -44,6 +45,9 @@ public class WebAppUI extends UI
     	log.debug("initializing WebApp instance");
     	
         setContent(layout);
+        
+        //SimpleViewDisplay display = new SimpleViewDisplay();
+        //setContent(display);
         setSizeFull();
 
         DiscoveryNavigator navigator = new DiscoveryNavigator(applicationContext, UI.getCurrent(), layout, "com.gentics.kitchenoffice.webapp.view");

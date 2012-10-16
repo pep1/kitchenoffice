@@ -70,8 +70,7 @@ public class ImageProcessor {
 				return true;
 			}
 		} catch (Exception e) {
-			log.error("Failed to delete Image");
-			e.printStackTrace();
+			log.error("Failed to delete Image: " + e.getMessage());
 		}
 		
 		return false;
