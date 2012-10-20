@@ -38,7 +38,7 @@ public class MainLayout extends VerticalLayout implements ViewDisplay {
 		Authentication test = SecurityContextHolder.getContext().getAuthentication();
 		
 		log.debug("Name: " + test.getName());
-		log.debug("Dateils: " + test.getDetails());
+		log.debug("Details: " + test.getDetails());
 		log.debug("Principal: " + test.getPrincipal());
 		log.debug("isAuthenticated: " + test.isAuthenticated());
 		log.debug("Credentials: " + test.getCredentials());

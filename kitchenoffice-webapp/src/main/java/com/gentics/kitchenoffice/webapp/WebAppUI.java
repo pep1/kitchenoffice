@@ -1,5 +1,7 @@
 package com.gentics.kitchenoffice.webapp;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.DiscoveryNavigator;
 
 import com.gentics.kitchenoffice.webapp.view.RecipeView;
+import com.gentics.kitchenoffice.webapp.view.SecurityViewChangeListener;
 import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -34,6 +37,11 @@ public class WebAppUI extends UI
 	@Autowired
 	private MainLayout layout;
 	
+	@Autowired
+	private SecurityViewChangeListener viewChangeListener;
+	
+	private DiscoveryNavigator navigator;
+	
 	private static Logger log = Logger.getLogger(WebAppUI.class);
 	
 	
@@ -45,16 +53,16 @@ public class WebAppUI extends UI
     	log.debug("initializing WebApp instance");
     	
         setContent(layout);
-        
-        //SimpleViewDisplay display = new SimpleViewDisplay();
-        //setContent(display);
         setSizeFull();
-
-        DiscoveryNavigator navigator = new DiscoveryNavigator(applicationContext, UI.getCurrent(), layout, "com.gentics.kitchenoffice.webapp.view");
+        
+        navigator = new DiscoveryNavigator(applicationContext, UI.getCurrent(), layout, "com.gentics.kitchenoffice.webapp.view");
+        
+        navigator.addViewChangeListener(viewChangeListener);
 
         // Navigate to view
         navigator.navigateTo(RecipeView.NAME);
     	
     }
+   
 
 }

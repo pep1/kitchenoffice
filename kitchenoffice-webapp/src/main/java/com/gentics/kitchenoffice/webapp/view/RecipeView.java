@@ -5,11 +5,14 @@ import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
 import com.gentics.kitchenoffice.data.Recipe;
+import com.gentics.kitchenoffice.data.Role;
+import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.container.RecipeContainer;
 import com.gentics.kitchenoffice.webapp.view.form.RecipeForm;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -29,10 +32,12 @@ import com.vaadin.ui.themes.Runo;
 @Component
 @Scope("prototype")
 @VaadinView(RecipeView.NAME)
-public class RecipeView extends VerticalLayout implements View,
+public class RecipeView extends VerticalLayout implements SecurityView,
 		ValueChangeListener, ClickListener {
 
 	public static final String NAME = "recipes";
+	
+	private static final String VIEW_ROLE = KitchenOfficeUserService.ROLE_USER_NAME;
 
 	public static final Object[] visibleColumns = new Object[] { "id", "name",
 			"description" };
@@ -114,9 +119,15 @@ public class RecipeView extends VerticalLayout implements View,
 		this.addComponent(footer);
 	}
 
-	@Override
+
 	public void enter(ViewChangeEvent event) {
 
+		
+	}
+	
+
+	public String getViewRole() {
+		return VIEW_ROLE;
 	}
 
 	@Override
