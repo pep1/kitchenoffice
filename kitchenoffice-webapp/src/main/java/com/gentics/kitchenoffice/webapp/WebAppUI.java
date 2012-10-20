@@ -1,7 +1,5 @@
 package com.gentics.kitchenoffice.webapp;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,8 +13,6 @@ import com.gentics.kitchenoffice.webapp.view.SecurityViewChangeListener;
 import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
-import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.Navigator.SimpleViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
