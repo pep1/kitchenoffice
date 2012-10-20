@@ -1,6 +1,9 @@
 package com.gentics.kitchenoffice.webapp.view.layout;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
@@ -13,6 +16,8 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 @Scope("prototype")
 public class MainLayout extends VerticalLayout implements ViewDisplay {
+	
+	private static Logger log = Logger.getLogger(MainLayout.class);
 
 	private Label header = new Label("<h1>Kitchen Office <span style='color: red; font-size: small;'>alpha</span></h1>", ContentMode.HTML);
 
@@ -29,6 +34,15 @@ public class MainLayout extends VerticalLayout implements ViewDisplay {
 
 		addComponent(panel);
 		setExpandRatio(panel, 1.0F);
+		
+		Authentication test = SecurityContextHolder.getContext().getAuthentication();
+		
+		log.debug("Name: " + test.getName());
+		log.debug("Dateils: " + test.getDetails());
+		log.debug("Principal: " + test.getPrincipal());
+		log.debug("isAuthenticated: " + test.isAuthenticated());
+		log.debug("Credentials: " + test.getCredentials());
+		log.debug("Authorities: " + test.getAuthorities());
 
 	}
 

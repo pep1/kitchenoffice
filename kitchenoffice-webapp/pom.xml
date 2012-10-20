@@ -105,11 +105,26 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<!-- Spring Security CAS -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Spring Data Neo4j -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-neo4j</artifactId>
 			<version>${spring-data-neo4j.version}</version>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>commons-lang</groupId>
