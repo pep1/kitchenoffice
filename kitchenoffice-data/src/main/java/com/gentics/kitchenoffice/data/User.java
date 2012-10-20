@@ -1,27 +1,45 @@
 package com.gentics.kitchenoffice.data;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @NodeEntity
-public class User extends AbstractPersistable{
+public class User extends AbstractPersistable implements UserDetails {
 
 	private String firstName;
 	
 	private String lastName;
 	
 	@Indexed
-	private String userName;
+	private String username;
+	
+	private String password;
+	
+	private boolean enabled;
+	
+	@Fetch
+	@RelatedTo(type = "HAS_ROLES", direction = Direction.BOTH)
+	private Set<Role> roles = new HashSet<Role>();
 	
 	public User() {
 		
 	}
 
-	public User(String firstName, String lastName, String userName) {
+	public User(String firstName, String lastName, String userName, boolean enabled) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.userName = userName;
+		this.username = userName;
+		this.enabled = enabled;
 	}
 
 	public String getFirstName() {
@@ -40,12 +58,56 @@ public class User extends AbstractPersistable{
 		this.lastName = lastName;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return isEnabled();
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return isEnabled();
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return isEnabled();
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

@@ -143,9 +143,9 @@ public class RecipeTest {
 	
 	private void createSomeMealsAndComments() {
 		
-		User u1 = new User("max", "mustermann", "maxi");
+		User u1 = new User("max", "mustermann", "maxi", true);
 		userRepository.save(u1);
-		User u2 = new User ("Helmut", "Tester", "helmi");
+		User u2 = new User ("Helmut", "Tester", "helmi", true);
 		userRepository.save(u2);
 		
 		Recipe result = recipeRepository.findByPropertyValue("name", "Tortellini mit Tomatensoße");
