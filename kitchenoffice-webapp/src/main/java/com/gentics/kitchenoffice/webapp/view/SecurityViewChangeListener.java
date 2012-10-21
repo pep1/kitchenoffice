@@ -24,21 +24,30 @@ public class SecurityViewChangeListener implements ViewChangeListener{
 		
 		if (event.getNewView() instanceof SecurityView) {
 			
+			boolean hasViewRights = false;
+			
+			long start = System.currentTimeMillis();
+			
 			log.debug("entering a security view with view role: " + ((SecurityView)event.getNewView()).getViewRole());
 			// check if the logged in user is in the view role of this view
-			if(!userService.hasRole(((SecurityView)event.getNewView()).getViewRole())) {
+			if(userService.hasRole(((SecurityView)event.getNewView()).getViewRole())) {
+				
+				// user has the view role
+				log.debug("User is in specified view Role");
+	            hasViewRights = true;
+			} 
+			
+			if(!hasViewRights) {
 				
 				log.warn("User is not in specified view Role");
-				
 				// Redirect to login here, but for now:
 	            Notification.show("Permission denied",
 	                    Notification.Type.ERROR_MESSAGE);
-	            return false;
-			} else {
-				// user has the view role
-				log.debug("User is in specified view Role");
-				return true;
 			}
+			
+			log.debug("check view rights took " + (System.currentTimeMillis() - start) + " ms");
+			
+			return hasViewRights;
             
 
         } else {

@@ -30,7 +30,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Runo;
 
 @Component
-@Scope("prototype")
+@Scope("session")
 @VaadinView(RecipeView.NAME)
 public class RecipeView extends VerticalLayout implements SecurityView,
 		ValueChangeListener, ClickListener {
@@ -65,9 +65,7 @@ public class RecipeView extends VerticalLayout implements SecurityView,
 	@PostConstruct
 	public void PostConstruct() {
 
-		log.debug("initializing Recipe View");
-
-		log.debug("repository: " + container);
+		log.debug("initializing Recipe View : " + this.toString());
 		
 		buildLayout();
 
@@ -218,6 +216,13 @@ public class RecipeView extends VerticalLayout implements SecurityView,
 			cancel();
 		}
 
+		
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		log.debug("finalizing RecipeView: " + toString());
+		super.finalize();
 	}
 
 }

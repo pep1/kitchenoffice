@@ -184,6 +184,8 @@ public class MainLayout extends CustomComponent implements ViewDisplay {
 
 			panel.removeAllComponents();
 			panel.addComponent((Component) view);
+			
+			panel.setCaption(Page.getCurrent().getFragment().toString().substring(1));
 
 		} else {
 			throw new IllegalArgumentException("View is not a component: "
