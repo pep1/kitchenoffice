@@ -26,6 +26,7 @@ import com.vaadin.ui.DragAndDropWrapper;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Html5File;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.DragAndDropWrapper.WrapperTransferable;
@@ -60,6 +61,9 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 	@Value("${webapp.imagepath}")
 	private String imagePath;
+	
+	private Html5File[] files;
+	private Html5File file;
 
 	private ProgressIndicator indicator = new ProgressIndicator();
 
@@ -69,7 +73,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	private VerticalLayout buildVerticalImage() {
 		// common part: create layout
 		vi = new VerticalLayout();
-		vi.setWidth("120px");
+		vi.setWidth("160px");
 
 		vi.setImmediate(true);
 		vi.setMargin(false);
@@ -84,8 +88,8 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		addStyleName("no-vertical-drag-hints");
 
 		imageEmbed = new Embedded();
-		imageEmbed.setWidth("120px");
-		imageEmbed.setHeight("120px");
+		imageEmbed.setWidth("160px");
+		imageEmbed.setHeight("160px");
 
 		wrapper = new DragAndDropWrapper(imageEmbed);
 		wrapper.setDropHandler(null);
@@ -118,7 +122,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 				|| "".equals(image.getFilePath())) {
 			url = imagePath + "no_image.png";
 		} else {
-			url = imagePath + "thumb_120/" + image.getFileName();
+			url = imagePath + "thumb_160/" + image.getFileName();
 		}
 
 		ExternalResource icon = new ExternalResource(url);
@@ -156,7 +160,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		DragAndDropWrapper.WrapperTransferable transferable = (WrapperTransferable) event
 				.getTransferable();
 
-		Html5File[] files = transferable.getFiles();
+		files = transferable.getFiles();
 
 		if (files == null || files.length != 1) {
 
@@ -167,7 +171,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 			return;
 		}
 
-		final Html5File file = files[0];
+		file = files[0];
 
 		indicator.setVisible(true);
 		indicator.setEnabled(true);
@@ -236,7 +240,8 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 					String msg = "FileType is not supported!";
 
-					Notification.show(msg, Notification.TYPE_ERROR_MESSAGE);
+					Notification.show(msg, Type.ERROR_MESSAGE);
+					
 					storage.deleteFile(receiver.getFile());
 
 				} finally {

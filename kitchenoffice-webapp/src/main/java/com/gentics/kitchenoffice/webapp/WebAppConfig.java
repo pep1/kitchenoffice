@@ -70,7 +70,7 @@ public class WebAppConfig implements ServletContextAware{
 	}
 	
 	@Bean
-	@Scope("singleton")
+	@Scope("session")
 	public ImageProcessor imageProcessor() {
 		ImageProcessor ip = new ImageProcessor();
 		

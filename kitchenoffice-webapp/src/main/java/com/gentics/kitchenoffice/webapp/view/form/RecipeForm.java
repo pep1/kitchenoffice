@@ -11,6 +11,7 @@ import com.gentics.kitchenoffice.webapp.view.form.field.ImageField;
 import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextArea;
@@ -46,7 +47,7 @@ public class RecipeForm extends FieldGroup {
 	private GridLayout buildLayout() {
 		layout = new GridLayout(2, 3);
 		layout.setSpacing(true);
-		layout.setMargin(true);
+		layout.setMargin(new MarginInfo(false, true, false, true));
 
 		TextField name = new TextField("Name");
 		name.setNullRepresentation("");
@@ -70,7 +71,7 @@ public class RecipeForm extends FieldGroup {
 		layout.addComponent(description, 1, 1);
 		layout.addComponent(text, 0, 2, 1, 2);
 		layout.addComponent(image, 0, 0, 0, 1);
-		image.setWidth("140px");
+		image.setWidth("180px");
 
 		return layout;
 

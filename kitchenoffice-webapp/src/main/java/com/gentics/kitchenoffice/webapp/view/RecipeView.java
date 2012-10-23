@@ -5,13 +5,11 @@ import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
 import com.gentics.kitchenoffice.data.Recipe;
-import com.gentics.kitchenoffice.data.Role;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.container.RecipeContainer;
 import com.gentics.kitchenoffice.webapp.view.form.RecipeForm;
@@ -19,7 +17,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -27,7 +24,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.Runo;
 
 @Component
 @Scope("session")
@@ -89,7 +85,7 @@ public class RecipeView extends VerticalLayout implements SecurityView,
 
 		splitter.addComponent(form.getLayout());
 		form.getLayout().setSizeFull();
-		form.getLayout().setWidth("300px");
+		form.getLayout().setWidth("320px");
 
 		splitter.setExpandRatio(table, 1.0F);
 
