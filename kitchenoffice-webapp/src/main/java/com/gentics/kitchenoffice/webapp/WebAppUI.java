@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.DiscoveryNavigator;
 
-import com.gentics.kitchenoffice.webapp.view.RecipeView;
+import com.gentics.kitchenoffice.webapp.view.HomeView;
 import com.gentics.kitchenoffice.webapp.view.SecurityViewChangeListener;
 import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
 import com.vaadin.annotations.Theme;
@@ -39,9 +39,6 @@ public class WebAppUI extends UI
 	private DiscoveryNavigator navigator;
 	
 	private static Logger log = Logger.getLogger(WebAppUI.class);
-	
-	
-	MainLayout main = new MainLayout();
 
     @Override
     protected void init(VaadinRequest request) {
@@ -51,12 +48,12 @@ public class WebAppUI extends UI
         setContent(layout);
         setSizeFull();
         
-        navigator = new DiscoveryNavigator(applicationContext, UI.getCurrent(), layout, "com.gentics.kitchenoffice.webapp.view");
+        navigator = new DiscoveryNavigator(this, layout.getPanel());
         
         navigator.addViewChangeListener(viewChangeListener);
 
         // Navigate to view
-        navigator.navigateTo(RecipeView.NAME);
+        navigator.navigateTo(HomeView.NAME);
     	
     }
    
