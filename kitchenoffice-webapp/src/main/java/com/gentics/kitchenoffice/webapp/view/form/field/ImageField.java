@@ -238,7 +238,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 							+ e.getLocalizedMessage());
 					e.printStackTrace();
 
-					String msg = "FileType is not supported!";
+					String msg = "Failed to process Image!";
 
 					Notification.show(msg, Type.ERROR_MESSAGE);
 					

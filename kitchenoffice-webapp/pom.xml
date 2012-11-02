@@ -131,6 +131,7 @@
 			<version>${spring-data-neo4j.version}</version>
 		</dependency>
 
+		<!-- Tools -->
 		<dependency>
 			<groupId>org.imgscalr</groupId>
 			<artifactId>imgscalr-lib</artifactId>
@@ -138,6 +139,12 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>jmimemagic</groupId>
+			<artifactId>jmimemagic</artifactId>
+			<version>0.1.2</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>commons-lang</groupId>

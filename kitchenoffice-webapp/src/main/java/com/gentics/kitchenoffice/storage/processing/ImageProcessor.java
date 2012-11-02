@@ -13,6 +13,13 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
+
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatch;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
+
 import org.apache.log4j.Logger;
 import org.imgscalr.Scalr;
 import org.springframework.util.Assert;
@@ -32,7 +39,7 @@ public class ImageProcessor {
 	private ImageRepository repository;
 
 	public com.gentics.kitchenoffice.data.Image createImageObject(File file)
-			throws IOException {
+			throws IOException, MagicParseException, MagicMatchNotFoundException, MagicException {
 
 		Assert.notNull(file, "File should not be null!");
 
@@ -80,7 +87,7 @@ public class ImageProcessor {
 	}
 
 	private com.gentics.kitchenoffice.data.Image readImageData(File file)
-			throws IOException {
+			throws IOException, MagicParseException, MagicMatchNotFoundException, MagicException {
 
 		BufferedImage bi = ImageIO.read(file);
 
@@ -88,13 +95,16 @@ public class ImageProcessor {
 
 		image.setHeight(bi.getHeight());
 		image.setWidth(bi.getWidth());
-		// TODO get mimetype
-		// image.setType(bi.get);
+		
+		MagicMatch match = Magic.getMagicMatch(file, true);
+		image.setType(match.getMimeType());
 
 		image.setFileName(file.getName());
 		image.setFilePath(file.getAbsolutePath());
 
 		image.setSize(file.length());
+		
+		bi.flush();
 
 		return image;
 	}
