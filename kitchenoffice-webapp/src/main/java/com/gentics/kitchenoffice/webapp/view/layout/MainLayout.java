@@ -31,7 +31,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
-@Scope("session")
+@Scope("prototype")
 public class MainLayout extends VerticalLayout implements ViewDisplay {
 	
 	private static Logger log = Logger.getLogger(MainLayout.class);
@@ -63,8 +63,6 @@ public class MainLayout extends VerticalLayout implements ViewDisplay {
 	 */
 	public MainLayout() {
 		buildMainLayout();
-
-		// TODO add user code here
 	}
 
 	@PostConstruct
