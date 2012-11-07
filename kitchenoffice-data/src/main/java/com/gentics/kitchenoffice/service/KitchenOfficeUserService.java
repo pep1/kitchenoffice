@@ -5,15 +5,14 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
+import org.jasig.cas.client.validation.Assertion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.security.cas.authentication.CasAuthenticationToken;
+import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 
 import com.gentics.kitchenoffice.data.Role;
 import com.gentics.kitchenoffice.data.User;
@@ -22,7 +21,8 @@ import com.gentics.kitchenoffice.repository.UserRepository;
 
 @Service
 @Scope("singleton")
-public class KitchenOfficeUserService implements UserDetailsService {
+public class KitchenOfficeUserService extends
+		AbstractCasAssertionUserDetailsService {
 
 	private static Logger log = Logger
 			.getLogger(KitchenOfficeUserService.class);
@@ -39,7 +39,6 @@ public class KitchenOfficeUserService implements UserDetailsService {
 
 	@PostConstruct
 	public void initialize() {
-		log.debug("initializing " + this.getClass() + "...");
 
 		// initially create two roles
 		checkAndCreateRoles();
@@ -47,17 +46,30 @@ public class KitchenOfficeUserService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
+	protected UserDetails loadUserDetails(Assertion assertion) {
 
-		log.debug("loadbyUsername called, username: " + username);
-
-		User user = userRepository.findUserByUsername(username);
+		User user = userRepository.findUserByUsername(assertion.getPrincipal()
+				.getName());
 
 		if (user == null) {
 			// if user is not found in database, create one with specified
 			// username
-			return createUserByUsername(username);
+			user = createUserByUsername(assertion.getPrincipal().getName());
+		}
+
+		user.setFirstName((String) assertion.getPrincipal().getAttributes()
+				.get("firstname"));
+		user.setLastName((String) assertion.getPrincipal().getAttributes()
+				.get("lastname"));
+
+		Object email = assertion.getPrincipal().getAttributes().get("email");
+
+		if (email instanceof String) {
+			
+			String emailString = ((String)email).replace("[", "");
+			emailString = emailString.replace("]", "");
+			String[] emails = emailString.split(","); 
+			user.setEmail(emails[0]);
 		}
 
 		return user;
@@ -93,7 +105,7 @@ public class KitchenOfficeUserService implements UserDetailsService {
 
 	public final boolean hasRole(String role) {
 		boolean hasRole = false;
-		UserDetails userDetails = getUserDetails();
+		UserDetails userDetails = getUser();
 		if (userDetails != null) {
 			Collection<? extends GrantedAuthority> authorities = userDetails
 					.getAuthorities();
@@ -107,15 +119,15 @@ public class KitchenOfficeUserService implements UserDetailsService {
 	/**
 	 * Get info about currently logged in user
 	 * 
-	 * @return UserDetails if found in the context, null otherwise
+	 * @return User if found in the context, null otherwise
 	 */
-	public UserDetails getUserDetails() {
+	public User getUser() {
 		Object principal = SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		
-		UserDetails userDetails = null;
-		if (principal instanceof UserDetails) {
-			userDetails = (UserDetails) principal;
+
+		User userDetails = null;
+		if (principal instanceof User) {
+			userDetails = (User) principal;
 		}
 		return userDetails;
 	}

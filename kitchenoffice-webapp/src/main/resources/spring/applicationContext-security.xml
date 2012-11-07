@@ -34,9 +34,6 @@
 		<authentication-provider ref="casAuthProvider" />
 	</authentication-manager>
 
-	<b:bean id="userService" class="com.gentics.kitchenoffice.service.KitchenOfficeUserService">
-    </b:bean>
-
 	<!-- This filter handles a Single Logout Request from the CAS Server -->
 	<b:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
 	<!-- This filter redirects to the CAS Server to signal Single Logout should 
@@ -80,9 +77,8 @@
 		class="org.springframework.security.cas.authentication.CasAuthenticationProvider"
 		p:serviceProperties-ref="serviceProperties" p:key="casAuthProviderKey">
 		<b:property name="authenticationUserDetailsService">
-			<b:bean
-				class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
-				<b:constructor-arg ref="userService" />
+			<b:bean id="userService"
+				class="com.gentics.kitchenoffice.service.KitchenOfficeUserService">
 			</b:bean>
 		</b:property>
 		<b:property name="ticketValidator">
