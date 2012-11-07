@@ -49,14 +49,12 @@ public class ImageProcessor {
 				file.getName());
 
 		createThumb(file, thumb160, 160, 160, (float) 0.8);
+		
+		com.gentics.kitchenoffice.data.Image image = null;
 
-		com.gentics.kitchenoffice.data.Image image = readImageData(file);
+		image = readImageData(file);
 
-		if (image != null) {
-			return image;
-		}
-
-		return null;
+		return image;
 	}
 
 	public boolean removeImageObject(

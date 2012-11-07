@@ -98,6 +98,9 @@ public class MainLayout extends VerticalLayout implements ViewDisplay {
 		}
 		
 		if(userService.getUserDetails() != null) {
+			
+			
+			userService.getUserDetails();
 			// set Greeting Value
 			greeting.setValue("Welcome, " + userService.getUserDetails().getUsername());
 			

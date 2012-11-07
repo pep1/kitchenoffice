@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.cas.authentication.CasAuthenticationToken;
 
 import com.gentics.kitchenoffice.data.Role;
 import com.gentics.kitchenoffice.data.User;
@@ -111,6 +112,7 @@ public class KitchenOfficeUserService implements UserDetailsService {
 	public UserDetails getUserDetails() {
 		Object principal = SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
+		
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
 			userDetails = (UserDetails) principal;

@@ -78,7 +78,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		vi.setImmediate(true);
 		vi.setMargin(false);
 
-		indicator.setImmediate(true);
+		indicator.setImmediate(false);
 
 		indicator.setWidth("100%");
 		indicator.setVisible(false);
@@ -137,7 +137,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 			this.setCaption("");
 
-			indicator.setVisible(false);
+			//indicator.setVisible(false);
 			indicator.setEnabled(false);
 
 			if (wrapper != null) {
@@ -175,7 +175,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 		indicator.setVisible(true);
 		indicator.setEnabled(true);
-		indicator.setPollingInterval(200);
+		indicator.setPollingInterval(500);
 
 		file.setStreamVariable(new StreamVariable() {
 
@@ -215,7 +215,6 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 			public void streamingFinished(StreamingEndEvent event) {
 
 				indicator.setValue(1.0F);
-				indicator.setPollingInterval(0);
 
 				wrapper.setDropHandler(null);
 
@@ -247,6 +246,8 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 				} finally {
 					receiver.reset();
 					setReadOnly(true);
+					
+					indicator.markAsDirty();
 				}
 
 			}
@@ -264,7 +265,6 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	}
 
 	public AcceptCriterion getAcceptCriterion() {
-
 		return AcceptAll.get();
 	}
 
@@ -277,7 +277,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	protected void setInternalValue(Image image) {
 		super.setInternalValue(image);
 
-		if(this.getUI() != null) {
+		if(getUI() != null) {
 			detach();
 			attach();
 		}
