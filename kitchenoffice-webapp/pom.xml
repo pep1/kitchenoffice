@@ -145,7 +145,7 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -156,6 +156,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -221,7 +227,8 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -255,4 +262,26 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<cas.server.host>secure.gentics.com</cas.server.host>
+				<cas.service.host>pepone.sytes.net</cas.service.host>
+				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<cas.server.host>secure.gentics.com</cas.server.host>
+				<cas.service.host>localhost:8080</cas.service.host>
+				<db.location>C:/TEMP/neo4j-db</db.location>
+			</properties>
+		</profile>
+	</profiles>
 </project>
