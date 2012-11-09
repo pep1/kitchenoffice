@@ -22,7 +22,7 @@ import com.vaadin.data.util.BeanItemContainer;
 
 
 @Component
-@Scope("session")
+@Scope("prototype")
 public class RecipeContainer extends BeanItemContainer<Recipe> implements ItemChangedListener{
 	
 	private static Logger log = Logger.getLogger(RecipeContainer.class);

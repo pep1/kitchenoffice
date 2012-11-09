@@ -22,15 +22,15 @@ public class SecurityViewChangeListener implements ViewChangeListener{
 	@Override
 	public boolean beforeViewChange(ViewChangeEvent event) {
 		
-		if (event.getNewView() instanceof SecurityView) {
+		if (event.getNewView() instanceof KitchenOfficeView) {
 			
 			boolean hasViewRights = false;
 			
 			long start = System.currentTimeMillis();
 			
-			log.debug("entering a security view with view role: " + ((SecurityView)event.getNewView()).getViewRole());
+			log.debug("entering a security view with view role: " + ((KitchenOfficeView)event.getNewView()).getViewRole());
 			// check if the logged in user is in the view role of this view
-			if(userService.hasRole(((SecurityView)event.getNewView()).getViewRole())) {
+			if(userService.hasRole(((KitchenOfficeView)event.getNewView()).getViewRole())) {
 				
 				// user has the view role
 				log.debug("User is in specified view Role");

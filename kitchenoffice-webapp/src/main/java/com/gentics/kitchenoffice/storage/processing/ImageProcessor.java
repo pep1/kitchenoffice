@@ -183,8 +183,7 @@ public class ImageProcessor {
 			}
 
 		} catch (IOException e) {
-			log.debug("something went wrong with the image processing: "
-					+ e.getStackTrace());
+			log.debug("something went wrong with the image processing: " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -205,8 +204,8 @@ public class ImageProcessor {
 			ImageIO.write(rescaledImage, "jpg", outputFile);
 
 		} catch (IOException e) {
-			log.error("something went wrong with the image processing: "
-					+ e.getStackTrace().toString());
+			log.error("something went wrong with the image processing: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		return outputFile;

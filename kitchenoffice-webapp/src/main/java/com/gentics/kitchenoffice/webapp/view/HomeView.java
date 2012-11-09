@@ -3,6 +3,7 @@ package com.gentics.kitchenoffice.webapp.view;
 import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,9 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 @Component
 @Scope("prototype")
-@VaadinView(HomeView.NAME)
-public class HomeView extends HomeLayout implements SecurityView {
+@VaadinView(value = HomeView.NAME, cached = true)
+@MenuEntrySortOrder(0)
+public class HomeView extends HomeLayout implements KitchenOfficeView {
 	
 	private static Logger log = Logger.getLogger(HomeView.class);
 	
@@ -35,13 +37,11 @@ public class HomeView extends HomeLayout implements SecurityView {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public String getViewRole() {
-		// TODO Auto-generated method stub
 		return VIEW_ROLE;
 	}
 

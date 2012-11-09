@@ -27,8 +27,9 @@ import com.vaadin.ui.VerticalLayout;
 
 @Component
 @Scope("prototype")
-@VaadinView(RecipeView.NAME)
-public class RecipeView extends VerticalLayout implements SecurityView,
+@VaadinView(value = RecipeView.NAME, cached = true)
+@MenuEntrySortOrder(1)
+public class RecipeView extends VerticalLayout implements KitchenOfficeView,
 		ValueChangeListener, ClickListener {
 
 	public static final String NAME = "recipes";
@@ -170,8 +171,8 @@ public class RecipeView extends VerticalLayout implements SecurityView,
 
 			form.commit();
 		} catch (CommitException e) {
-			log.error("Something went wrong with committing: "
-					+ e.getStackTrace());
+			log.error("Something went wrong with committing: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		container.commit();
