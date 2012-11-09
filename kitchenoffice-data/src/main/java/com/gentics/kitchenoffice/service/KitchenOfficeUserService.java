@@ -40,6 +40,8 @@ public class KitchenOfficeUserService extends
 	@PostConstruct
 	public void initialize() {
 
+		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
+		
 		// initially create two roles
 		checkAndCreateRoles();
 
@@ -47,6 +49,9 @@ public class KitchenOfficeUserService extends
 
 	@Override
 	protected UserDetails loadUserDetails(Assertion assertion) {
+		
+		log.debug("loading user details of cas assertion: " + assertion.getPrincipal()
+				.getName());
 
 		User user = userRepository.findUserByUsername(assertion.getPrincipal()
 				.getName());

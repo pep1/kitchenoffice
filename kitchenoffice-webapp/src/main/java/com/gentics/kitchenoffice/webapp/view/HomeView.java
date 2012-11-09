@@ -14,7 +14,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 
 @Component
-@Scope("session")
+@Scope("prototype")
 @VaadinView(HomeView.NAME)
 public class HomeView extends HomeLayout implements SecurityView {
 	

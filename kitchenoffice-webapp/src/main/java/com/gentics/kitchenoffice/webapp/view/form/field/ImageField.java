@@ -175,7 +175,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 		indicator.setVisible(true);
 		indicator.setEnabled(true);
-		indicator.setPollingInterval(500);
+		indicator.setPollingInterval(1200);
 
 		file.setStreamVariable(new StreamVariable() {
 

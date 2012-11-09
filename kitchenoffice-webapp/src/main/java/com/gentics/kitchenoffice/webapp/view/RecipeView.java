@@ -26,7 +26,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 @Component
-@Scope("session")
+@Scope("prototype")
 @VaadinView(RecipeView.NAME)
 public class RecipeView extends VerticalLayout implements SecurityView,
 		ValueChangeListener, ClickListener {
