@@ -265,17 +265,8 @@
 
 	<profiles>
 		<profile>
-			<id>prod</id>
-			<properties>
-				<cas.server.host>secure.gentics.com</cas.server.host>
-				<cas.service.host>pepone.sytes.net</cas.service.host>
-				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
-			</properties>
-		</profile>
-		<profile>
 			<id>dev-win</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
 				<os>
 					<family>Windows</family>
 				</os>
@@ -296,6 +287,14 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
+				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<cas.server.host>secure.gentics.com</cas.server.host>
+				<cas.service.host>pepone.sytes.net</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
 			</properties>
 		</profile>
