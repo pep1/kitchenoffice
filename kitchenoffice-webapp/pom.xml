@@ -243,7 +243,7 @@
 											vaadin-maven-plugin
 										</artifactId>
 										<versionRange>
-											[7.0.0.beta7,)
+											[${vaadin.version},)
 										</versionRange>
 										<goals>
 											<goal>resources</goal>
@@ -273,14 +273,30 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>dev</id>
+			<id>dev-win</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<os>
+					<family>Windows</family>
+				</os>
 			</activation>
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>C:/TEMP/neo4j-db</db.location>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-linux</id>
+			<activation>
+				<os>
+					<family>Linux</family>
+				</os>
+			</activation>
+			<properties>
+				<cas.server.host>secure.gentics.com</cas.server.host>
+				<cas.service.host>localhost:8080</cas.service.host>
+				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
 			</properties>
 		</profile>
 	</profiles>
