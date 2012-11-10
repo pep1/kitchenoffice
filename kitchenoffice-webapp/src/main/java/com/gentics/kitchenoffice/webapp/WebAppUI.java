@@ -10,6 +10,7 @@ import ru.xpoft.vaadin.DiscoveryNavigator;
 
 import com.gentics.kitchenoffice.webapp.view.HomeView;
 import com.gentics.kitchenoffice.webapp.view.SecurityViewChangeListener;
+import com.gentics.kitchenoffice.webapp.view.StandardErrorView;
 import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -51,6 +52,8 @@ public class WebAppUI extends UI
         navigator = new DiscoveryNavigator(this, layout.getPanel());
         
         navigator.addViewChangeListener(viewChangeListener);
+        
+        navigator.setErrorView(StandardErrorView.class);
 
         // Navigate to view
         navigator.navigateTo(HomeView.NAME);
