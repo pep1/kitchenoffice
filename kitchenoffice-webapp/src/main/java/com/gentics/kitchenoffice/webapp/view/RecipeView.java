@@ -17,23 +17,20 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.VerticalLayout;
 
 @Component
 @Scope("prototype")
 @VaadinView(value = RecipeView.NAME, cached = true)
 @MenuEntrySortOrder(1)
-public class RecipeView extends VerticalLayout implements KitchenOfficeView,
-		ValueChangeListener, ClickListener {
+public class RecipeView extends AbstractItemSelectionView<Recipe> implements
+		KitchenOfficeViewInterface, ValueChangeListener, ClickListener {
 
 	public static final String NAME = "recipes";
-	
+
 	private static final String VIEW_ROLE = KitchenOfficeUserService.ROLE_USER_NAME;
 
 	public static final Object[] visibleColumns = new Object[] { "id", "name",
@@ -41,34 +38,27 @@ public class RecipeView extends VerticalLayout implements KitchenOfficeView,
 
 	private static Logger log = Logger.getLogger(RecipeView.class);
 
-	private Table table = new Table();
-
 	@Autowired
 	private RecipeForm form;
 
 	private Button edit;
-
 	private Button save;
-
 	private Button cancel;
-
 	private Button add;
 
 	private HorizontalLayout footer = new HorizontalLayout();
-
-	@Autowired
-	private RecipeContainer container;
+	
+	public RecipeView() {
+		super(RecipeContainer.class);
+	}
 
 	@PostConstruct
 	public void PostConstruct() {
 
 		log.debug("initializing Recipe View : " + this.toString());
-		
+
 		buildLayout();
 
-		if (container.size() > 0) {
-			table.select(container.firstItemId());
-		}
 	}
 
 	private void buildLayout() {
@@ -114,13 +104,6 @@ public class RecipeView extends VerticalLayout implements KitchenOfficeView,
 		this.addComponent(footer);
 	}
 
-
-	public void enter(ViewChangeEvent event) {
-
-		
-	}
-	
-
 	public String getViewRole() {
 		return VIEW_ROLE;
 	}
@@ -129,6 +112,9 @@ public class RecipeView extends VerticalLayout implements KitchenOfficeView,
 	public void valueChange(ValueChangeEvent event) {
 
 		BeanItem<Recipe> item = container.getItem(table.getValue());
+
+		// set URI fragment to the new recipe id but don't refresh
+		setURIFragmentByItem(item.getBean(), false);
 
 		form.setItemDataSource(item);
 
@@ -213,9 +199,8 @@ public class RecipeView extends VerticalLayout implements KitchenOfficeView,
 			cancel();
 		}
 
-		
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
 		log.debug("finalizing RecipeView: " + toString());

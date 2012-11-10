@@ -2,7 +2,6 @@ package com.gentics.kitchenoffice.webapp;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +13,7 @@ import com.gentics.kitchenoffice.webapp.view.StandardErrorView;
 import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
@@ -27,9 +27,6 @@ import com.vaadin.ui.UI;
 @Title("KitchenOffice WebApp")
 public class WebAppUI extends UI
 {
-	
-	@Autowired
-    private transient ApplicationContext applicationContext;
 	
 	@Autowired
 	private MainLayout layout;
@@ -49,16 +46,26 @@ public class WebAppUI extends UI
         setContent(layout);
         setSizeFull();
         
-        navigator = new DiscoveryNavigator(this, layout.getPanel());
+        initializeNavigator();
+        
+    }
+
+	private void initializeNavigator() {
+		
+		navigator = new DiscoveryNavigator(this, layout.getPanel());
         
         navigator.addViewChangeListener(viewChangeListener);
         
         navigator.setErrorView(StandardErrorView.class);
 
-        // Navigate to view
-        navigator.navigateTo(HomeView.NAME);
-    	
-    }
+        if(Page.getCurrent().getFragment().isEmpty()) {
+        	// Navigate to standard view
+            navigator.navigateTo(HomeView.NAME);
+        } else {
+        	// Navigate to view specified by fragment
+        	navigator.navigateTo(Page.getCurrent().getFragment());
+        }
+	}
    
 
 }
