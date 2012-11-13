@@ -22,7 +22,7 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @Component
 @Scope("request")
-@Theme("runo")
+@Theme("kitchenoffice-webapp-theme")
 @Title("KitchenOffice WebApp")
 public class WebAppUI extends UI
 {
@@ -43,7 +43,7 @@ public class WebAppUI extends UI
     @Override
     protected void init(VaadinRequest request) {
         
-    	log.debug("initializing WebApp instance");
+    	log.debug("initializing WebApp instance..");
     	
         setContent(layout);
         setSizeFull();
