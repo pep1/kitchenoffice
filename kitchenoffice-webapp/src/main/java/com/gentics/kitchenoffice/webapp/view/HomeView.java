@@ -18,7 +18,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 @Scope("prototype")
 @VaadinView(value = HomeView.NAME, cached = true)
 @MenuEntrySortOrder(0)
-public class HomeView extends HomeLayout implements KitchenOfficeView {
+public class HomeView extends HomeLayout implements KitchenOfficeViewInterface {
 	
 	private static Logger log = Logger.getLogger(HomeView.class);
 	
