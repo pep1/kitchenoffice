@@ -25,47 +25,48 @@ import com.vaadin.ui.UI;
 @Scope("request")
 @Theme("kitchenoffice-webapp-theme")
 @Title("KitchenOffice WebApp")
-public class WebAppUI extends UI
-{
-	
+public class WebAppUI extends UI {
+
 	@Autowired
 	private MainLayout layout;
-	
+
 	@Autowired
 	private SecurityViewChangeListener viewChangeListener;
-	
+
 	private DiscoveryNavigator navigator;
-	
+
 	private static Logger log = Logger.getLogger(WebAppUI.class);
 
-    @Override
-    protected void init(VaadinRequest request) {
-        
-    	log.debug("initializing WebApp instance..");
-    	
-        setContent(layout);
-        setSizeFull();
-        
-        initializeNavigator();
-        
-    }
+	@Override
+	protected void init(VaadinRequest request) {
+
+		log.debug("initializing WebApp instance..");
+
+		setContent(layout);
+		setSizeFull();
+
+		initializeNavigator();
+
+	}
 
 	private void initializeNavigator() {
-		
-		navigator = new DiscoveryNavigator(this, layout.getPanel());
-        
-        navigator.addViewChangeListener(viewChangeListener);
-        
-        navigator.setErrorView(StandardErrorView.class);
 
-        if(Page.getCurrent().getFragment().isEmpty()) {
-        	// Navigate to standard view
-            navigator.navigateTo(HomeView.NAME);
-        } else {
-        	// Navigate to view specified by fragment
-        	navigator.navigateTo(Page.getCurrent().getFragment());
-        }
+		navigator = new DiscoveryNavigator(this, layout.getPanel());
+
+		navigator.addViewChangeListener(viewChangeListener);
+
+		navigator.setErrorView(StandardErrorView.class);
+
+		//check if there is a URI Fragment set
+		if (Page.getCurrent() != null
+				&& Page.getCurrent().getFragment() != null
+				&& !Page.getCurrent().getFragment().isEmpty()) {
+			// Navigate to view specified by fragment
+			navigator.navigateTo(Page.getCurrent().getFragment());
+		} else {
+			// Navigate to standard view
+			navigator.navigateTo(HomeView.NAME);
+		}
 	}
-   
 
 }
