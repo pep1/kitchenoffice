@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.data;
 
 import java.util.Date;
 
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 
@@ -10,6 +11,7 @@ public class Tag extends AbstractPersistable{
 	
 	private Date timeStamp;
 	
+	@Indexed(unique = true)
 	private String tag;
 	
 	public Tag() {
