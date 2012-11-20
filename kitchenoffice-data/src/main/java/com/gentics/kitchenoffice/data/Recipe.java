@@ -40,6 +40,10 @@ public class Recipe extends AbstractPersistable{
     @RelatedTo(type = "RECIPE_HAS_COMMENT", direction = Direction.BOTH)
 	private Set<Comment> comments = new HashSet<Comment>();
     
+    @Fetch
+    @RelatedTo(type = "HAS_TAG", direction = Direction.BOTH)
+	private Set<Tag> tags = new HashSet<Tag>();
+    
     public Recipe() {
    
     }
@@ -124,6 +128,14 @@ public class Recipe extends AbstractPersistable{
 
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Set<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 
 	public Incredient addArticle(Article article, double amount) {

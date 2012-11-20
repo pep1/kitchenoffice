@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import ru.xpoft.vaadin.DiscoveryNavigator;
 import ru.xpoft.vaadin.KitchenOfficeNavigator;
 
 import com.gentics.kitchenoffice.webapp.view.HomeView;
@@ -24,7 +22,7 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @Component
 @Scope("request")
-@Theme("runo")
+@Theme("kitchenoffice-webapp-theme")
 @Title("KitchenOffice WebApp")
 public class WebAppUI extends UI {
 
@@ -40,6 +38,7 @@ public class WebAppUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
+
 
 		log.debug("initializing WebApp instance");
 		
@@ -60,12 +59,13 @@ public class WebAppUI extends UI {
 
 		navigator.setErrorView(StandardErrorView.class);
 
+		//check if there is a URI Fragment set
+
 		if (Page.getCurrent() != null
 				&& Page.getCurrent().getFragment() != null
 				&& !Page.getCurrent().getFragment().isEmpty()) {
 			// Navigate to view specified by fragment
 			navigator.navigateTo(Page.getCurrent().getFragment());
-			
 		} else {
 			// Navigate to standard view
 			navigator.navigateTo(HomeView.NAME);

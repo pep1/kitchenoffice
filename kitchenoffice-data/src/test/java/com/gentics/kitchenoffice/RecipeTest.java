@@ -15,15 +15,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Article;
 import com.gentics.kitchenoffice.data.Meal;
 import com.gentics.kitchenoffice.data.Recipe;
+import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.User;
 import com.gentics.kitchenoffice.repository.ArticleRepository;
 import com.gentics.kitchenoffice.repository.CommentRepository;
 import com.gentics.kitchenoffice.repository.MealRepository;
 import com.gentics.kitchenoffice.repository.RecipeRepository;
+import com.gentics.kitchenoffice.repository.TagRepository;
 import com.gentics.kitchenoffice.repository.UserRepository;
 
 import static org.junit.Assert.*;
@@ -50,6 +53,9 @@ public class RecipeTest {
 	
 	@Autowired
 	private CommentRepository commentRepository;
+	
+	@Autowired
+	private TagRepository tagRepository;
 	
 	@Autowired
 	private Neo4jTemplate template;
@@ -98,6 +104,42 @@ public class RecipeTest {
 		}
 		
 		log.debug("comments: " + commentRepository.count());
+	}
+	
+	@Test
+	public void tagTest() {
+		log.debug("starting tag test");
+		
+		createSomeRecipes();
+		
+		
+		Tag tag1 = new Tag();
+		tag1.setTag("testtag");
+		
+		tagRepository.save(tag1);
+		
+		Recipe result = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
+		
+		log.debug("adding first tag");
+		result.getTags().add(tag1);
+		
+		recipeRepository.save(result);
+		
+		result = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
+		
+		Assert.notNull(result.getTags());
+		log.debug("tagcount result1: " + result.getTags());
+		
+		Recipe result2 = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
+		
+		log.debug("adding second tag");
+		result2.getTags().add(tag1);
+		recipeRepository.save(result2);
+		
+		result2 = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
+		
+		Assert.notNull(result2.getTags());
+		log.debug("tagcount result2: " + result2.getTags());
 	}
 	
 	

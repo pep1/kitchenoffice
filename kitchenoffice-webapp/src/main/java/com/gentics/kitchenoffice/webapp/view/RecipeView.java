@@ -114,6 +114,10 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 	public void valueChange(ValueChangeEvent event) {
 
 		BeanItem<Recipe> item = container.getItem(table.getValue());
+		
+		if(item == null) {
+			return;
+		}
 
 		// set URI fragment to the new recipe id but don't refresh
 		setURIFragmentByItem(item.getBean(), false);
