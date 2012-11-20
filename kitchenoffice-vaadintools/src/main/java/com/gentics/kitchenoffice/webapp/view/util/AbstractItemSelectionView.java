@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.webapp.view;
+package com.gentics.kitchenoffice.webapp.view.util;
 
 import javax.annotation.PostConstruct;
 
@@ -13,11 +13,10 @@ import com.gentics.kitchenoffice.webapp.container.SpringDataBeanItemContainer;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
 
 @Component
 @Scope("prototype")
-public abstract class AbstractItemSelectionView<A extends AbstractPersistable> extends VerticalLayout implements KitchenOfficeViewInterface{
+public abstract class AbstractItemSelectionView<A extends AbstractPersistable> extends KitchenOfficeView {
 	
 	private static Logger log = Logger.getLogger(AbstractItemSelectionView.class);
 	
@@ -82,7 +81,7 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 
 		if (item.getId() != null && Page.getCurrent() != null) {
 			Page.getCurrent().setFragment(
-					"!" + RecipeView.NAME + "/" + item.getId(), refresh);
+					"!" + this.getName() + "/" + item.getId(), refresh);
 		}
 
 	}

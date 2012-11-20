@@ -123,7 +123,6 @@ public class SpringDataBeanItemContainer<A extends AbstractPersistable> extends
 		refresh();
 	}
 
-	@Override
 	public void itemChanged(ItemChangedEvent event) {
 
 		BeanItem<A> item = (BeanItem<A>) event.getItem();

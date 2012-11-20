@@ -13,6 +13,9 @@ import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.container.RecipeContainer;
 import com.gentics.kitchenoffice.webapp.view.form.RecipeForm;
+import com.gentics.kitchenoffice.webapp.view.util.AbstractItemSelectionView;
+import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeViewInterface;
+import com.gentics.kitchenoffice.webapp.view.util.MenuEntrySortOrder;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -26,8 +29,7 @@ import com.vaadin.ui.Button.ClickEvent;
 @Scope("prototype")
 @VaadinView(value = RecipeView.NAME, cached = true)
 @MenuEntrySortOrder(1)
-public class RecipeView extends AbstractItemSelectionView<Recipe> implements
-		KitchenOfficeViewInterface, ValueChangeListener, ClickListener {
+public class RecipeView extends AbstractItemSelectionView<Recipe> implements ValueChangeListener, ClickListener {
 
 	public static final String NAME = "recipes";
 
@@ -202,9 +204,8 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
-		log.debug("finalizing RecipeView: " + toString());
-		super.finalize();
+	public String getName() {
+		return NAME;
 	}
 
 }

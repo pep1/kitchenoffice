@@ -164,7 +164,6 @@ public class Watcher implements Serializable {
 			}
 		}
 
-		@Override
 		public void valueChange(Property.ValueChangeEvent event) {
 			notifyItemChanged(new ItemChangedEvent(item, event.getProperty()));
 		}

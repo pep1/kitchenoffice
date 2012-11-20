@@ -26,6 +26,7 @@
 			<snapshots>
 			</snapshots>
 		</repository>
+		
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -42,6 +43,11 @@
 		<dependency>
 			<groupId>com.gentics</groupId>
 			<artifactId>kitchenoffice-data</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gentics</groupId>
+			<artifactId>kitchenoffice-vaadintools</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
