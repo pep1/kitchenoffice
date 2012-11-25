@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.vaadin.mvp.uibinder.IUiBindable;
 import org.vaadin.mvp.uibinder.UiBinder;
 import org.vaadin.mvp.uibinder.UiBinderException;
+import org.vaadin.mvp.uibinder.resource.ResourceBundleUiMessageSource;
 
 import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeView;
 import com.vaadin.navigator.Navigator;
@@ -62,9 +63,13 @@ public class KitchenOfficeNavigator extends Navigator implements
 			.synchronizedMap(new HashMap<String, View>());
 
 	private UiBinder binder = new UiBinder();
+	
+	private Boolean isTemplateCache;
 
-	public KitchenOfficeNavigator(UI ui, ComponentContainer display) {
+	public KitchenOfficeNavigator(UI ui, ComponentContainer display, Boolean isTemplateCache) {
 		super(ui, display);
+		
+		this.isTemplateCache =isTemplateCache;
 
 		if (views.isEmpty()) {
 			logger.debug("discovery views from spring context");
@@ -93,6 +98,9 @@ public class KitchenOfficeNavigator extends Navigator implements
 		} else {
 			logger.debug("discovery views from cache");
 		}
+		
+		ResourceBundleUiMessageSource ms = new ResourceBundleUiMessageSource("i18n/Resources");
+		binder.setUiMessageSource(ms);
 
 		addCachedBeans();
 	}
@@ -172,7 +180,8 @@ public class KitchenOfficeNavigator extends Navigator implements
 	 * @return
 	 */
 	public View getView(String name, String beanName, boolean cached) {
-		if (cached) {
+		
+		if (cached && isTemplateCache) {
 			if (viewScoped.containsKey(name)) {
 				return viewScoped.get(name);
 			}
@@ -180,28 +189,39 @@ public class KitchenOfficeNavigator extends Navigator implements
 			KitchenOfficeView view = (KitchenOfficeView) SpringApplicationContext
 					.getApplicationContext().getBean(beanName);
 
-			if (view instanceof IUiBindable) {
-				try {
-					long start = System.currentTimeMillis();
-					// apply UiBinder
-					view = binder.bind(view.getClass().getName(), view, Page
-							.getCurrent().getWebBrowser().getLocale(), null);
-
-					logger.debug("ui binding took "
-							+ (System.currentTimeMillis() - start) + " ms");
-
-				} catch (UiBinderException e) {
-					logger.error("something went wrong with the UiBinding...");
-					e.printStackTrace();
-				}
-			}
+			bindUIToView(view);
 
 			viewScoped.put(name, view);
 
 			return view;
 		}
+		
+		KitchenOfficeView view = (KitchenOfficeView) SpringApplicationContext
+				.getApplicationContext().getBean(beanName);
+		
+		bindUIToView(view);
 
-		return (View) SpringApplicationContext.getApplicationContext().getBean(
-				beanName);
+		return view;
+	}
+	
+	private void bindUIToView(KitchenOfficeView view) {
+		
+		if (view instanceof IUiBindable) {
+			try {
+				long start = System.currentTimeMillis();
+				// apply UiBinder
+				view = binder.bind(view.getClass().getName(), view, Page
+						.getCurrent().getWebBrowser().getLocale(), null);
+
+				logger.debug("ui binding took "
+						+ (System.currentTimeMillis() - start) + " ms");
+
+			} catch (UiBinderException e) {
+				logger.error("something went wrong with the UiBinding...");
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 }

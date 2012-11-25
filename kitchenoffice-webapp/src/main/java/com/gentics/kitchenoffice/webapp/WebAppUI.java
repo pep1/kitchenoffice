@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.webapp;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.KitchenOfficeNavigator;
@@ -25,6 +26,9 @@ import com.vaadin.ui.UI;
 @Theme("kitchenoffice-webapp-theme")
 @Title("KitchenOffice WebApp")
 public class WebAppUI extends UI {
+	
+	@Value("${webapp.templatecache}")
+	private Boolean isTemplateCache;
 
 	@Autowired
 	private MainLayout layout;
@@ -43,6 +47,7 @@ public class WebAppUI extends UI {
 		log.debug("initializing WebApp instance");
 		
 		log.debug("Locale is " + this.getLocale().toString());
+		log.debug("Template cache: " + isTemplateCache);
 
 		setContent(layout);
 		setSizeFull();
@@ -53,7 +58,7 @@ public class WebAppUI extends UI {
 
 	private void initializeNavigator() {
 
-		navigator = new KitchenOfficeNavigator(this, layout.getPanel());
+		navigator = new KitchenOfficeNavigator(this, layout.getPanel(), isTemplateCache);
 
 		navigator.addViewChangeListener(viewChangeListener);
 

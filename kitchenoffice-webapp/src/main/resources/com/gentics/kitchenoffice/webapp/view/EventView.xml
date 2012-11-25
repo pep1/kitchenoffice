@@ -11,6 +11,7 @@
   
     <v:Button m:caption="action.ok" />
     <v:Button m:caption="action.cancel" />
+    <v:Button m:caption="test" />
     
   </v:HorizontalLayout>
   
