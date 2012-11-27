@@ -7,3 +7,4 @@ target/
 widgetsets/
 gwt-unitCache/
 
+.checkstyle
