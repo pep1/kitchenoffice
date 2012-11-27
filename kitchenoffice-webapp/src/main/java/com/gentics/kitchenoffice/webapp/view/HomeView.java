@@ -11,6 +11,9 @@ import ru.xpoft.vaadin.VaadinView;
 
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.view.layout.HomeLayout;
+import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeView;
+import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeViewInterface;
+import com.gentics.kitchenoffice.webapp.view.util.MenuEntrySortOrder;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 
@@ -18,7 +21,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 @Scope("prototype")
 @VaadinView(value = HomeView.NAME, cached = true)
 @MenuEntrySortOrder(0)
-public class HomeView extends HomeLayout implements KitchenOfficeViewInterface {
+public class HomeView extends KitchenOfficeView {
 	
 	private static Logger log = Logger.getLogger(HomeView.class);
 	
@@ -43,6 +46,13 @@ public class HomeView extends HomeLayout implements KitchenOfficeViewInterface {
 	@Override
 	public String getViewRole() {
 		return VIEW_ROLE;
+	}
+
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return NAME;
 	}
 
 }

@@ -12,36 +12,19 @@
 
 	<name>Kitchenoffice Webapplication</name>
 
-	<repositories>
-		<repository>
-			<id>vaadin-addons</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-		<repository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+	<properties>
+		<neo4j.db.location>/tmp/kitchenoffice/neo4j-database</neo4j.db.location>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.gentics</groupId>
 			<artifactId>kitchenoffice-data</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gentics</groupId>
+			<artifactId>kitchenoffice-vaadintools</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
@@ -155,6 +138,34 @@
 
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>linux</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<name>Linux</name>
+				</os>
+			</activation>
+			<properties>
+				<neo4j.db.location>/tmp/kitchenoffice/neo4j-database</neo4j.db.location>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows</id>
+			<properties>
+				<neo4j.db.location>C:/TEMP/neo4j-db</neo4j.db.location>
+			</properties>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+		</profile>
+
+	</profiles>
+
+
 	<build>
 		<resources>
 			<resource>
@@ -262,6 +273,33 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>vaadin-addons</id>
+			<url>http://maven.vaadin.com/vaadin-addons</url>
+		</repository>
+		<repository>
+			<id>vaadin-snapshots</id>
+			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>vaadin-snapshots</id>
+			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<profiles>
 		<profile>

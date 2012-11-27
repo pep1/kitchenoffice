@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.webapp.view;
+package com.gentics.kitchenoffice.webapp.view.util;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
