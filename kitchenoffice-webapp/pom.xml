@@ -138,34 +138,6 @@
 
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>linux</id>
-			<activation>
-				<os>
-					<family>unix</family>
-					<name>Linux</name>
-				</os>
-			</activation>
-			<properties>
-				<neo4j.db.location>/tmp/kitchenoffice/neo4j-database</neo4j.db.location>
-			</properties>
-		</profile>
-		<profile>
-			<id>windows</id>
-			<properties>
-				<neo4j.db.location>C:/TEMP/neo4j-db</neo4j.db.location>
-			</properties>
-			<activation>
-				<os>
-					<family>Windows</family>
-				</os>
-			</activation>
-		</profile>
-
-	</profiles>
-
-
 	<build>
 		<resources>
 			<resource>
