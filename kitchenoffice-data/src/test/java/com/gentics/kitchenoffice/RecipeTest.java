@@ -118,28 +118,29 @@ public class RecipeTest {
 		
 		tagRepository.save(tag1);
 		
-		Recipe result = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
+		Recipe recipeA = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
 		
 		log.debug("adding first tag");
-		result.getTags().add(tag1);
+		recipeA.getTags().add(tag1);
 		
-		recipeRepository.save(result);
+		recipeRepository.save(recipeA);
 		
-		result = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
+		recipeA = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
 		
-		Assert.notNull(result.getTags());
-		log.debug("tagcount result1: " + result.getTags());
+		Assert.notNull(recipeA.getTags());
+		log.debug("tagcount recipeA: " + recipeA.getTags());
 		
-		Recipe result2 = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
+		
+		Recipe recipeB = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
 		
 		log.debug("adding second tag");
-		result2.getTags().add(tag1);
-		recipeRepository.save(result2);
+		recipeB.getTags().add(tag1);
+		recipeRepository.save(recipeB);
 		
-		result2 = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
+		recipeB = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
 		
-		Assert.notNull(result2.getTags());
-		log.debug("tagcount result2: " + result2.getTags());
+		Assert.notNull(recipeB.getTags());
+		log.debug("tagcount recipeB: " + recipeB.getTags());
 	}
 	
 	
