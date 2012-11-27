@@ -109,6 +109,35 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.8</version>
+				<executions>
+					<execution>
+						<id>unit-tests</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<forkMode>always</forkMode>
+							<!-- Terminate the test if it takes more than 1h for execution -->
+							<forkedProcessTimeoutInSeconds>3600</forkedProcessTimeoutInSeconds>
+							<includes>
+								<!-- Include unit tests within integration-test phase. -->
+								<include>**/*Test.java</include>
+								<include>**/*TestSuite.java</include>
+							</includes>
+							<excludes>
+								<!-- Exclude the following files -->
+								<exclude>**/*AbstractTest.java</exclude>
+								<exclude>**/*Abstract*Test.java</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>1.6</version>
 				<executions>
