@@ -1,0 +1,12 @@
+Welcome to the Kitchenoffice Project Documentation
+==================================================
+
+Here we can provide some basic introduction to the project
+
+This is writen in Markdown.
+
+And you had generated the web site using:
+
+    mvn site
+
+It has generated the web site for ${project.groupId}:${project.artifactId}:${project.version}.

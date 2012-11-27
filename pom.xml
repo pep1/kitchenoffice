@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.gentics</groupId>
@@ -7,7 +9,46 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>kitchenoffice</name>
+	<name>Kitchenoffice Project</name>
+
+	<url>https://github.com/gentics/kitchenoffice</url>
+	<inceptionYear>2012</inceptionYear>
+
+	<organization>
+		<name>Gentics Software GmbH</name>
+		<url>http://www.gentics.com</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Johannes Schüth</name>
+			<email>j.schueth@gentics.com</email>
+		</developer>
+		<developer>
+			<name>Leonard Osang</name>
+			<email>l.osang@gentics.com</email>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<url>https://github.com/gentics/kitchenoffice/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:gentics/kitchenoffice.git</connection>
+		<url>https://github.com/gentics/kitchenoffice</url>
+		<developerConnection>scm:git:git@github.com:gentics/kitchenoffice.git</developerConnection>
+	</scm>
+
 
 	<modules>
 		<module>kitchenoffice-data</module>
@@ -19,12 +60,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<aspectj.version>1.6.12</aspectj.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<spring-data-neo4j.version>2.1.0.RC4</spring-data-neo4j.version>
 		<neo4j.version>1.8.RC1</neo4j.version>
 		<beanutils.version>1.8.3</beanutils.version>
+		<log4j.version>1.2.17</log4j.version>
+
 		<!-- Rest API versions -->
 		<jersey.version>1.6</jersey.version>
 
@@ -32,13 +76,103 @@
 		<vaadin.version>7.0.0.beta8</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
-		<log4j.version>1.2.17</log4j.version>
-
+		<!-- Maven Plugin Versions -->
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
 		<maven-eclipse-plugin.version>2.8</maven-eclipse-plugin.version>
 		<maven-javadoc-plugin.version>2.8.1</maven-javadoc-plugin.version>
 		<maven-release-plugin.version>2.1</maven-release-plugin.version>
+		<maven-surefire-report-plugin.version></maven-surefire-report-plugin.version>
+		<maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
+		<maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
+		<maven-clover-plugin.version>3.1.8</maven-clover-plugin.version>
+		<maven-site-plugin.version>3.1</maven-site-plugin.version>
 	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.kohsuke</groupId>
+						<artifactId>doxia-module-markdown</artifactId>
+						<version>1.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.5</version>
+				<configuration>
+					<message>Building site for ${project.version}</message>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>site-deploy</phase>
+						<configuration>
+							<path>${project.version}</path>
+							<merge>true</merge>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.6</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>project-team</report>
+							<report>mailing-list</report>
+							<report>cim</report>
+							<report>scm</report>
+							<report>issue-tracking</report>
+							<report>license</report>
+							<report>help</report>
+							<report>index</report>
+							<report>modules</report>
+							<report>summary</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
+			</plugin> -->
+		</plugins>
+	</reporting>
+
 
 	<repositories>
 		<repository>
@@ -62,17 +196,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>neo4j-snapshot-repository</id>
-			<name>Neo4j Maven 2 snapshot repository</name>
-			<url>http://m2.neo4j.org/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -81,11 +204,5 @@
 			<name>Spring Maven Release Repository</name>
 			<url>http://maven.springframework.org/release</url>
 		</pluginRepository>
-		<pluginRepository>
-			<id>spring-maven-milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-		</pluginRepository>
 	</pluginRepositories>
-
 </project>
