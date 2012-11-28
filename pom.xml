@@ -21,7 +21,7 @@
 
 	<developers>
 		<developer>
-			<name>Johannes Schüth</name>
+			<name>Johannes Schï¿½th</name>
 			<email>j.schueth@gentics.com</email>
 		</developer>
 		<developer>
@@ -86,14 +86,19 @@
 		<maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
 		<maven-clover-plugin.version>3.1.8</maven-clover-plugin.version>
 		<maven-site-plugin.version>3.1</maven-site-plugin.version>
+		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+		
 	</properties>
 
 	<build>
 		<plugins>
+		
+			<!-- START for site creation -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>3.1</version>
 				<configuration>
-					<skipDeploy>true</skipDeploy>
+					<!-- <skipDeploy>true</skipDeploy> -->
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -124,6 +129,8 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- END for site creation -->
+			
 		</plugins>
 	</build>
 
@@ -137,39 +144,20 @@
 					<reportSet>
 						<reports>
 							<report>project-team</report>
-							<report>mailing-list</report>
 							<report>cim</report>
 							<report>scm</report>
 							<report>issue-tracking</report>
-							<report>license</report>
 							<report>help</report>
-							<report>index</report>
-							<report>modules</report>
 							<report>summary</report>
 						</reports>
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId> 
+				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jxr-plugin</artifactId> 
+				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-clover-plugin</artifactId> 
+				</plugin> -->
 		</plugins>
 	</reporting>
 
@@ -205,4 +193,28 @@
 			<url>http://maven.springframework.org/release</url>
 		</pluginRepository>
 	</pluginRepositories>
+
+
+	<distributionManagement>
+
+		<!-- FIXME: To Deploy Maven site somewhere -->
+		<site>
+			<id>website.doc.public</id>
+			<name>Online Documentation</name>
+			<url>http://www.mycompany.com</url>
+		</site>
+
+		<!-- Gentics Distribution Management -->
+		<repository>
+			<id>archiva.com.gentics.public</id>
+			<name>Gentics Public Repository</name>
+			<url>http://archiva.gentics.com:8081/archiva/repository/com.gentics.public</url>
+		</repository>
+		<snapshotRepository>
+			<id>archiva.com.gentics.public_snapshots</id>
+			<name>Gentics Public Snapshots Repository</name>
+			<url>http://archiva.gentics.com:8081/archiva/repository/com.gentics.public_snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>

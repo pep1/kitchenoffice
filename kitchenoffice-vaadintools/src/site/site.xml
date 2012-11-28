@@ -35,14 +35,7 @@
 
 		<menu name="Project Documentation">
 			<item name="Welcome" href="index.html" />
-			<item name="Technologies" href="technologies.html" />
 		</menu>
 		
-		<!-- Inherit this menu for sub modules. -->
-		<menu ref="parent" inherit="top" />
-		
-		<menu name="Project Modules" ref="modules" />
-
-		<menu ref="reports" name="Reports" inherit="bottom" />
 	</body>
 </project>
