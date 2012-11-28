@@ -120,7 +120,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		String url;
 		if (image == null || image.getFilePath() == null
 				|| "".equals(image.getFilePath())) {
-			url = imagePath + "no_image.png";
+			url = imagePath + "thumb_160/no_image.png";
 		} else {
 			url = imagePath + "thumb_160/" + image.getFileName();
 		}
