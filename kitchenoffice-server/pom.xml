@@ -7,6 +7,8 @@
 		<groupId>com.gentics</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	
+	<name>Kitchenoffice Server</name>
 
 	<packaging>jar</packaging>
 	<dependencies>

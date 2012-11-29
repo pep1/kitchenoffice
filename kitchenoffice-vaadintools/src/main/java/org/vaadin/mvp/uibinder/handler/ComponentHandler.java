@@ -212,15 +212,7 @@ public class ComponentHandler implements TargetHandler {
       logger.debug("Add current {} with Method {}", current.getClass().getName(), this.currentMethod.getName());
       currentMethod = null;
     } else {
-      if (current instanceof Panel && inner instanceof ComponentContainer) {
-        // set content
-        ComponentContainer panelContent = ((Panel) current).getContent();
-        if (panelContent != null) {
-          logger.warn("Panel content is already set, content is overwritten with new component");
-        }
-        logger.debug("Current {} is a PANEL, setting content: {}", current.getClass().getName(), inner.getClass().getName());
-        ((Panel) current).setContent((ComponentContainer) inner);
-      } else if (current instanceof ComponentContainer) {
+    	if (current instanceof ComponentContainer) {
         // add the component
         logger.debug("Current {} is a container, adding new comp: {}", current.getClass().getName(), inner.getClass().getName());
         ((ComponentContainer) current).addComponent(inner);

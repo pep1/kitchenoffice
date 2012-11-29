@@ -80,7 +80,7 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 	public void setURIFragmentByItem(A item, Boolean refresh) {
 
 		if (item.getId() != null && Page.getCurrent() != null) {
-			Page.getCurrent().setFragment(
+			Page.getCurrent().setUriFragment(
 					"!" + this.getName() + "/" + item.getId(), refresh);
 		}
 

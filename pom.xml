@@ -73,7 +73,7 @@
 		<jersey.version>1.6</jersey.version>
 
 		<!-- Vaadin versions -->
-		<vaadin.version>7.0.0.beta8</vaadin.version>
+		<vaadin.version>7.0.0.beta10</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
 		<!-- Maven Plugin Versions -->
@@ -87,12 +87,12 @@
 		<maven-clover-plugin.version>3.1.8</maven-clover-plugin.version>
 		<maven-site-plugin.version>3.1</maven-site-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		
+
 	</properties>
 
 	<build>
 		<plugins>
-		
+
 			<!-- START for site creation -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
@@ -130,7 +130,7 @@
 				</executions>
 			</plugin>
 			<!-- END for site creation -->
-			
+
 		</plugins>
 	</build>
 
@@ -153,11 +153,24 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId> 
-				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jxr-plugin</artifactId> 
-				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
-				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-clover-plugin</artifactId> 
-				</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.12.4</version>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
+			</plugin> -->
 		</plugins>
 	</reporting>
 

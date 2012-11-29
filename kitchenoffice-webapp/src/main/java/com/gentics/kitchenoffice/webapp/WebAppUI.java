@@ -23,7 +23,7 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @Component
 @Scope("request")
-@Theme("kitchenoffice-webapp-theme")
+@Theme("runo")
 @Title("KitchenOffice WebApp")
 public class WebAppUI extends UI {
 	
@@ -67,10 +67,10 @@ public class WebAppUI extends UI {
 		//check if there is a URI Fragment set
 
 		if (Page.getCurrent() != null
-				&& Page.getCurrent().getFragment() != null
-				&& !Page.getCurrent().getFragment().isEmpty()) {
+				&& Page.getCurrent().getUriFragment() != null
+				&& !Page.getCurrent().getUriFragment().isEmpty()) {
 			// Navigate to view specified by fragment
-			navigator.navigateTo(Page.getCurrent().getFragment());
+			navigator.navigateTo(Page.getCurrent().getUriFragment());
 		} else {
 			// Navigate to standard view
 			navigator.navigateTo(HomeView.NAME);
