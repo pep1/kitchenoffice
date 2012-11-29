@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vaadin.mvp.uibinder.IUiBindable;
+import org.vaadin.mvp.uibinder.IUiInitializable;
+import org.vaadin.mvp.uibinder.annotation.UiField;
 
 import ru.xpoft.vaadin.VaadinView;
 
@@ -14,7 +17,6 @@ import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.container.RecipeContainer;
 import com.gentics.kitchenoffice.webapp.view.form.RecipeForm;
 import com.gentics.kitchenoffice.webapp.view.util.AbstractItemSelectionView;
-import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeViewInterface;
 import com.gentics.kitchenoffice.webapp.view.util.MenuEntrySortOrder;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -22,14 +24,17 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.VerticalLayout;
 
 @Component
 @Scope("prototype")
 @VaadinView(value = RecipeView.NAME, cached = true)
 @MenuEntrySortOrder(1)
-public class RecipeView extends AbstractItemSelectionView<Recipe> implements ValueChangeListener, ClickListener {
+public class RecipeView extends AbstractItemSelectionView<Recipe> implements ValueChangeListener, ClickListener, IUiBindable, IUiInitializable {
 
 	public static final String NAME = "recipes";
 
@@ -42,13 +47,23 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 
 	@Autowired
 	private RecipeForm form;
-
+	@UiField
+	private HorizontalLayout splitter;
+	@UiField
+	private VerticalLayout formLayout;
+	@UiField
 	private Button edit;
+	@UiField
 	private Button save;
+	@UiField
 	private Button cancel;
+	@UiField
 	private Button add;
-
-	private HorizontalLayout footer = new HorizontalLayout();
+	@UiField
+	private CssLayout formContainer;
+	@UiField
+	private CssLayout tableContainer;
+	
 	
 	public RecipeView() {
 		super(RecipeContainer.class);
@@ -56,39 +71,29 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 
 	@PostConstruct
 	public void PostConstruct() {
-
 		log.debug("initializing Recipe View : " + this.toString());
 
-		buildLayout();
-
 	}
+	
 
-	private void buildLayout() {
-
-		HorizontalLayout splitter = new HorizontalLayout();
-
+	@Override
+	public void init() {
+		
+		setSizeFull();
+		
+		table.setWidth("300px");
+		table.setHeight("100%");
 		table.setImmediate(true);
 		table.setContainerDataSource(container);
 		table.setVisibleColumns(visibleColumns);
-		table.addValueChangeListener(this);
 		table.setSelectable(true);
-
-		splitter.addComponent(table);
-		table.setSizeFull();
-
-		splitter.addComponent(form.getLayout());
-		form.getLayout().setSizeFull();
-		form.getLayout().setWidth("320px");
-
-		splitter.setExpandRatio(table, 1.0F);
-
-		addComponent(splitter);
-		splitter.setSizeFull();
-
-		edit = new Button("Edit", this);
-		save = new Button("Save", this);
-		cancel = new Button("Cancel", this);
-		add = new Button("Add", this);
+		table.addValueChangeListener(this);
+		tableContainer.addComponent(table);
+		
+		edit.addClickListener(this);
+		save.addClickListener(this);
+		cancel.addClickListener(this);
+		add.addClickListener(this);
 
 		edit.setEnabled(false);
 		edit.setDisableOnClick(true);
@@ -98,12 +103,14 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 		cancel.setDisableOnClick(true);
 		add.setEnabled(true);
 		add.setDisableOnClick(true);
-
-		footer.addComponent(edit);
-		footer.addComponent(save);
-		footer.addComponent(cancel);
-		footer.addComponent(add);
-		this.addComponent(footer);
+		
+		
+		formContainer.addComponent(form.getLayout());
+		form.getLayout().setSizeFull();
+		
+		splitter.setExpandRatio(formLayout, 1.0f);
+		formLayout.setExpandRatio(formContainer, 1.0f);
+		
 	}
 
 	public String getViewRole() {

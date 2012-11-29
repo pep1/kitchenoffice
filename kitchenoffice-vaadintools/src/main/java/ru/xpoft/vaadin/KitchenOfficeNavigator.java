@@ -214,7 +214,7 @@ public class KitchenOfficeNavigator extends Navigator implements
 				view = binder.bind(view.getClass().getName(), view, Page
 						.getCurrent().getWebBrowser().getLocale(), null);
 
-				logger.debug("ui binding took "
+				logger.debug("ui binding of view " + view.getName() + " took "
 						+ (System.currentTimeMillis() - start) + " ms");
 
 			} catch (UiBinderException e) {
@@ -232,7 +232,7 @@ public class KitchenOfficeNavigator extends Navigator implements
 				// apply UiBinder
 				component = binder.bind(component.getClass().getName(), component, locale, null);
 
-				logger.debug("ui binding took "
+				logger.debug("ui binding of Component " + component.getClass().getSimpleName() + " took "
 						+ (System.currentTimeMillis() - start) + " ms");
 
 			} catch (UiBinderException e) {
