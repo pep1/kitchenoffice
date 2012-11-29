@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.webapp.view.util;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,17 @@ public class SecurityViewChangeListener implements ViewChangeListener{
 	
 	private static Logger log = Logger.getLogger(SecurityViewChangeListener.class);
 	
+	@Value("${webapp.security.enabled}")
+	private Boolean isSecurityEnabled;
+	
 	@Autowired
 	KitchenOfficeUserService userService;
 
 	public boolean beforeViewChange(ViewChangeEvent event) {
+		
+		if(!isSecurityEnabled) {
+			return true;
+		}
 		
 		if (event.getNewView() instanceof KitchenOfficeViewInterface) {
 			

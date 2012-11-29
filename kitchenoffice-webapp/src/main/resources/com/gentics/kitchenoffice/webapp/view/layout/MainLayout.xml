@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder
+	xmlns:ui="urn:org.vaadin.mvp.uibinder"
+	xmlns:m="urn:org.vaadin.mvp.uibinder.message"
+	xmlns:r="urn:org.vaadin.mvp.uibinder.resource"
+	xmlns:e="urn:org.vaadin.mvp.uibinder.event"
+	xmlns:v="urn:import:com.vaadin.ui"
+	xmlns:c="urn:import:com.gentics.kitchenoffice.webapp.view.component">
+
+	<v:HorizontalLayout ui:field="header" spacing="true" width="100%" height="-1px">
+		<c:HTMLLabel ui:field="logo" contentMode="ContentMode.HTML" m:value="header.label" />
+		<c:HTMLLabel ui:field="beta" contentMode="ContentMode.HTML" m:value="header.beta" />
+		<c:HTMLLabel ui:field="greeting" contentMode="ContentMode.HTML" m:value="header.greeting" />
+	</v:HorizontalLayout>
+
+	<v:MenuBar ui:field="menu" width="100%" />
+
+	<v:Panel ui:field="panel" width="100%" height="100%">
+	</v:Panel>
+
+</ui:UiBinder>

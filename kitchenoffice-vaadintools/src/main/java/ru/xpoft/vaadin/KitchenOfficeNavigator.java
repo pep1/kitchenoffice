@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -62,7 +64,9 @@ public class KitchenOfficeNavigator extends Navigator implements
 	private final Map<String, View> viewScoped = Collections
 			.synchronizedMap(new HashMap<String, View>());
 
-	private UiBinder binder = new UiBinder();
+	private static ResourceBundleUiMessageSource ms = new ResourceBundleUiMessageSource("i18n/Resources");
+	
+	private static UiBinder binder = new UiBinder(ms);
 	
 	private Boolean isTemplateCache;
 
@@ -98,9 +102,6 @@ public class KitchenOfficeNavigator extends Navigator implements
 		} else {
 			logger.debug("discovery views from cache");
 		}
-		
-		ResourceBundleUiMessageSource ms = new ResourceBundleUiMessageSource("i18n/Resources");
-		binder.setUiMessageSource(ms);
 
 		addCachedBeans();
 	}
@@ -221,7 +222,24 @@ public class KitchenOfficeNavigator extends Navigator implements
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
+	
+	public static void bindUIToComponent(Component component, Locale locale) {
+		
+		if (component instanceof IUiBindable) {
+			try {
+				long start = System.currentTimeMillis();
+				// apply UiBinder
+				component = binder.bind(component.getClass().getName(), component, locale, null);
+
+				logger.debug("ui binding took "
+						+ (System.currentTimeMillis() - start) + " ms");
+
+			} catch (UiBinderException e) {
+				logger.error("something went wrong with the UiBinding...");
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }
