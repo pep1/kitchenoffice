@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vaadin.mvp.uibinder.annotation.UiField;
 
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.webapp.container.SpringDataBeanItemContainer;
@@ -30,7 +31,7 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 	private Class<? extends SpringDataBeanItemContainer<A>> containerClazz;
 	
 	public AbstractItemSelectionView(Class<? extends SpringDataBeanItemContainer<A>> contClazz) {
-		
+
 		this.containerClazz = contClazz;
 	}
 	
@@ -80,7 +81,7 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 	public void setURIFragmentByItem(A item, Boolean refresh) {
 
 		if (item.getId() != null && Page.getCurrent() != null) {
-			Page.getCurrent().setFragment(
+			Page.getCurrent().setUriFragment(
 					"!" + this.getName() + "/" + item.getId(), refresh);
 		}
 

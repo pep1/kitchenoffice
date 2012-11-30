@@ -3,6 +3,7 @@ package com.gentics.kitchenoffice.webapp;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.KitchenOfficeNavigator;
@@ -31,6 +32,8 @@ public class WebAppUI extends UI {
 	private Boolean isTemplateCache;
 
 	@Autowired
+	private ApplicationContext context;
+	
 	private MainLayout layout;
 
 	@Autowired
@@ -48,7 +51,9 @@ public class WebAppUI extends UI {
 		
 		log.debug("Locale is " + this.getLocale().toString());
 		log.debug("Template cache: " + isTemplateCache);
-
+		
+		layout = (MainLayout) context.getBean("MainLayout", getLocale());
+		
 		setContent(layout);
 		setSizeFull();
 
@@ -58,7 +63,7 @@ public class WebAppUI extends UI {
 
 	private void initializeNavigator() {
 
-		navigator = new KitchenOfficeNavigator(this, layout.getPanel(), isTemplateCache);
+		navigator = new KitchenOfficeNavigator(this, layout.getContainer(), isTemplateCache);
 
 		navigator.addViewChangeListener(viewChangeListener);
 
@@ -67,10 +72,10 @@ public class WebAppUI extends UI {
 		//check if there is a URI Fragment set
 
 		if (Page.getCurrent() != null
-				&& Page.getCurrent().getFragment() != null
-				&& !Page.getCurrent().getFragment().isEmpty()) {
+				&& Page.getCurrent().getUriFragment() != null
+				&& !Page.getCurrent().getUriFragment().isEmpty()) {
 			// Navigate to view specified by fragment
-			navigator.navigateTo(Page.getCurrent().getFragment());
+			navigator.navigateTo(Page.getCurrent().getUriFragment());
 		} else {
 			// Navigate to standard view
 			navigator.navigateTo(HomeView.NAME);

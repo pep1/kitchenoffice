@@ -20,6 +20,7 @@ import org.vaadin.mvp.uibinder.handler.MethodHandler;
 import org.vaadin.mvp.uibinder.handler.ResourceHandler;
 import org.vaadin.mvp.uibinder.handler.UiHandler;
 import org.vaadin.mvp.uibinder.resource.EmptyUiMessageSource;
+import org.vaadin.mvp.uibinder.resource.ResourceBundleUiMessageSource;
 
 import com.vaadin.ui.Component;
 
@@ -36,12 +37,21 @@ public class UiBinder {
    */
   private IUiMessageSource messageSource = new EmptyUiMessageSource();
 
+  
+  public UiBinder() {
+	  spf.setNamespaceAware(true);
+	  spf.setValidating(false);
+  }
+  
   /**
    * Constructor.
+ * @param ms 
    */
-  public UiBinder() {
+  public UiBinder(ResourceBundleUiMessageSource ms) {
     spf.setNamespaceAware(true);
     spf.setValidating(false);
+    
+    this.messageSource = ms;
   }
 
   /**

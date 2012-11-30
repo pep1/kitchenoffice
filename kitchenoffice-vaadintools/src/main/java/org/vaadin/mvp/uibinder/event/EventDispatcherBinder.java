@@ -19,13 +19,14 @@ import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.DoubleClickEvent;
+import com.vaadin.server.ErrorHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Component.ErrorEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
-import com.vaadin.ui.ComponentContainer.ComponentDetachEvent;
+import com.vaadin.ui.HasComponents.ComponentAttachEvent;
+import com.vaadin.ui.HasComponents.ComponentDetachEvent;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.Table;
@@ -94,7 +95,7 @@ public class EventDispatcherBinder implements IEventBinder {
   static Map<String, Class<?>> eventMap = new HashMap<String, Class<?>>();
 
   static {
-    eventMap.put("error", Component.ErrorListener.class);
+    eventMap.put("error", ErrorHandler.class);
     eventMap.put("componentAttach", ComponentContainer.ComponentAttachListener.class);
     eventMap.put("componentDetach", ComponentContainer.ComponentDetachListener.class);
     eventMap.put("valueChange", Property.ValueChangeListener.class);
@@ -125,7 +126,7 @@ public class EventDispatcherBinder implements IEventBinder {
   }
 
   public class DispatchingListenerImpl implements
-      Component.ErrorListener,
+      ErrorHandler,
       ComponentContainer.ComponentAttachListener,
       ComponentContainer.ComponentDetachListener,
       Property.ValueChangeListener,
@@ -262,10 +263,6 @@ public class EventDispatcherBinder implements IEventBinder {
       dispatcher.dispatch(eventName, e);
     }
 
-    public void componentError(ErrorEvent e) {
-      dispatcher.dispatch(eventName, e);
-    }
-
     public void itemClick(ItemClickEvent e) {
       dispatcher.dispatch(eventName, e);
     }
@@ -273,6 +270,10 @@ public class EventDispatcherBinder implements IEventBinder {
     public void selectedTabChange(SelectedTabChangeEvent e) {
       dispatcher.dispatch(eventName, e);
     }
+
+	public void error(com.vaadin.server.ErrorEvent e) {
+		dispatcher.dispatch(eventName, e);
+	}
 
   }
 }

@@ -33,7 +33,7 @@ public class RecipeForm extends FieldGroup {
 	private static final long serialVersionUID = 5777870393018611126L;
 
 	public RecipeForm() {
-
+		super();
 	}
 
 
@@ -41,7 +41,6 @@ public class RecipeForm extends FieldGroup {
 	public void initialize() {
 		layout = buildLayout();
 
-		setReadOnly(true);
 	}
 
 	private GridLayout buildLayout() {
@@ -85,7 +84,7 @@ public class RecipeForm extends FieldGroup {
 	public void setItemDataSource(Item itemDataSource) {
 		
 		if(this.isModified()) {
-			// if user made changes, diguard them
+			// if user made changes, discard them
 			this.discard();
 		}
 		
