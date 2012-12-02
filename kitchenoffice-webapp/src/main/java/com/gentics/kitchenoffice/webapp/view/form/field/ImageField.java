@@ -2,17 +2,19 @@ package com.gentics.kitchenoffice.webapp.view.form.field;
 
 import java.io.OutputStream;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.repository.ImageRepository;
 import com.gentics.kitchenoffice.storage.Storage;
 import com.gentics.kitchenoffice.storage.file.FileBuffer;
 import com.gentics.kitchenoffice.storage.processing.ImageProcessor;
+import com.gentics.kitchenoffice.webapp.util.WebappHelper;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -59,8 +61,8 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	@Autowired
 	private ImageRepository repository;
 
-	@Value("${webapp.imagepath}")
-	private String imagePath;
+	@Autowired
+	private WebappHelper helper;
 	
 	private Html5File[] files;
 	private Html5File file;
@@ -78,8 +80,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		vi.setImmediate(true);
 		vi.setMargin(false);
 
-		indicator.setImmediate(false);
-
+		indicator.setImmediate(true);
 		indicator.setWidth("100%");
 		indicator.setVisible(false);
 		indicator.setEnabled(false);
@@ -92,6 +93,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		imageEmbed.setHeight("160px");
 
 		wrapper = new DragAndDropWrapper(imageEmbed);
+		wrapper.setImmediate(true);
 		wrapper.setDropHandler(null);
 
 		addStyleName("no-horizontal-drag-hints");
@@ -105,28 +107,22 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 		return vi;
 	}
+	
+	@PostConstruct
+	private void postConstruct() {
+		buildVerticalImage();
+	}
 
 	@Override
 	protected Component initContent() {
-
-		return buildVerticalImage();
+		return vi;
 	};
 
 	public void attach() {
 		super.attach(); // Must call.
 
 		Image image = this.getValue();
-
-		String url;
-		if (image == null || image.getFilePath() == null
-				|| "".equals(image.getFilePath())) {
-			url = imagePath + "thumb_160/no_image.png";
-		} else {
-			url = imagePath + "thumb_160/" + image.getFileName();
-		}
-
-		ExternalResource icon = new ExternalResource(url);
-		imageEmbed.setSource(icon);
+		imageEmbed.setSource(helper.getImageThumbnail(image, 160));
 	}
 
 	@Override
@@ -137,7 +133,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 
 			this.setCaption("");
 
-			//indicator.setVisible(false);
+			indicator.setVisible(false);
 			indicator.setEnabled(false);
 
 			if (wrapper != null) {
@@ -288,11 +284,14 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	@Override
 	public void commit() {
 		// save the new image
-		repository.save(getValue());
-
-		// delete the old image
-		if (oldImage != null) {
-			processor.removeImageObject(oldImage);
+		if(isModified() && getValue() != null) {
+			repository.save(getValue());
+			
+			// delete the old image
+			if (oldImage != null) {
+				processor.removeImageObject(oldImage);
+			}
+			
 		}
 		
 		super.commit();

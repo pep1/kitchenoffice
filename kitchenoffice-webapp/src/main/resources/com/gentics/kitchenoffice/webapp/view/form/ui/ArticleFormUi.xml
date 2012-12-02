@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder 
+  xmlns:ui="urn:org.vaadin.mvp.uibinder"
+  xmlns:m="urn:org.vaadin.mvp.uibinder.message"
+  xmlns:r="urn:org.vaadin.mvp.uibinder.resource"
+  xmlns:e="urn:org.vaadin.mvp.uibinder.event"
+  xmlns:v="urn:import:com.vaadin.ui"
+  xmlns:c="urn:import:com.example.component">
+  	
+  	
+  	<v:CssLayout ui:field="imageContainer">
+  	
+  	</v:CssLayout>
+  	<v:TextField ui:field="name" m:caption="caption.name" nullRepresentation="" m:inputPrompt="field.prompt.name" width="100%" height="-1px"/>
+  	<v:TextField ui:field="unit" m:caption="caption.unit" nullRepresentation="" m:inputPrompt="field.prompt.unit" width="100%" height="-1px"/>
+  	<v:TextField ui:field="price" m:caption="caption.price" nullRepresentation="" m:inputPrompt="field.prompt.price" width="100%" height="-1px"/>
+	
+	<v:HorizontalLayout ui:field="actionBar" spacing="true">
+		<v:Label ui:field="spacer" m:caption="common.empty" />
+    	<v:Button ui:field="save" m:caption="action.save" />
+    	<v:Button ui:field="cancel" m:caption="action.cancel" />
+	</v:HorizontalLayout>
+	
+</ui:UiBinder>

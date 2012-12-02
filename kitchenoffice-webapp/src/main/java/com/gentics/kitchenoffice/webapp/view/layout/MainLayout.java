@@ -73,17 +73,14 @@ public class MainLayout extends VerticalLayout implements ViewDisplay, IUiBindab
 	 * editor.
 	 * @param locale 
 	 */
-	public MainLayout(Locale locale) {
-		
-		this.locale = locale;
+	public MainLayout() {
+		KitchenOfficeNavigator.bindUIToComponent(this);
 	}
 
 	@PostConstruct
 	public void initialize() throws ClassNotFoundException {
 		
 		log.debug("Initializing MainLayout Instance..");
-		
-		KitchenOfficeNavigator.bindUIToComponent(this, locale);
 		
 		buildMainLayout();
 		buildMenuBar();

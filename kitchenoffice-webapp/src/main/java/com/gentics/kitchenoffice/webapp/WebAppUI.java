@@ -16,6 +16,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 
 /**
@@ -34,6 +35,7 @@ public class WebAppUI extends UI {
 	@Autowired
 	private ApplicationContext context;
 	
+	@Autowired
 	private MainLayout layout;
 
 	@Autowired
@@ -49,10 +51,8 @@ public class WebAppUI extends UI {
 
 		log.debug("initializing WebApp instance");
 		
-		log.debug("Locale is " + this.getLocale().toString());
+		log.debug("Locale is " + getLocale().toString());
 		log.debug("Template cache: " + isTemplateCache);
-		
-		layout = (MainLayout) context.getBean("MainLayout", getLocale());
 		
 		setContent(layout);
 		setSizeFull();

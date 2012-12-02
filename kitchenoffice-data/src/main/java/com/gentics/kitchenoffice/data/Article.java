@@ -1,7 +1,10 @@
 package com.gentics.kitchenoffice.data;
 
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 @NodeEntity
 public class Article extends AbstractPersistable {
@@ -12,6 +15,10 @@ public class Article extends AbstractPersistable {
     private String unit;
     
     private double price;
+    
+    @Fetch
+    @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
+	private Image image = new Image();
     
     public Article() {
     	
@@ -48,9 +55,17 @@ public class Article extends AbstractPersistable {
 		this.price = price;
 	}
 	
-	@Override
-	public String toString() {
-		return String.format("Incredient{name='%s', price=%f}", name, price);
+	public Image getImage() {
+		return image;
 	}
 
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return String.format("Article{name='%s', price=%f}", name, price);
+	}
 }

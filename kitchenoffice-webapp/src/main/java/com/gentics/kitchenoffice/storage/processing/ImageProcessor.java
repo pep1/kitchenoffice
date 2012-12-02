@@ -14,6 +14,9 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.Canvas;
+import net.coobird.thumbnailator.geometry.Positions;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
@@ -27,6 +30,7 @@ import org.springframework.util.Assert;
 import com.gentics.kitchenoffice.repository.ImageRepository;
 import com.gentics.kitchenoffice.storage.Storable;
 import com.gentics.kitchenoffice.storage.Storage;
+import com.gentics.kitchenoffice.webapp.util.Filename;
 
 public class ImageProcessor {
 
@@ -37,6 +41,10 @@ public class ImageProcessor {
 	private Storage<Storable> storage;
 
 	private ImageRepository repository;
+	
+	private Integer[] sizes = new Integer[] {40, 160};
+	
+	private static final String EXTENSION = "jpg";
 
 	public com.gentics.kitchenoffice.data.Image createImageObject(File file)
 			throws IOException, MagicParseException, MagicMatchNotFoundException, MagicException {
@@ -44,17 +52,30 @@ public class ImageProcessor {
 		Assert.notNull(file, "File should not be null!");
 
 		file = storage.moveFile(file, imagePath);
-
-		File thumb160 = new File(imagePath + File.separator + "thumb_160",
-				file.getName());
-
-		createThumb(file, thumb160, 160, 160, (float) 0.8);
+		
+		// create thumbnails
+		for(Integer size : sizes) {
+			createThumbFile(size, file);
+		}
 		
 		com.gentics.kitchenoffice.data.Image image = null;
 
 		image = readImageData(file);
 
 		return image;
+	}
+	
+	private synchronized void createThumbFile(Integer size, File file) throws IOException {
+		long start = System.currentTimeMillis();
+		
+		String fileName = Filename.filename(file.getName());
+		
+		File thumb = new File(imagePath + File.separator + "thumb_" + size.toString(),
+				fileName + Filename.EXTENSIONSEPARATOR + EXTENSION);
+		createFastThumb(file, thumb, size, size, (float) 0.8);
+		
+		long end = System.currentTimeMillis() - start;
+		log.debug("creating thumb took " + end + " ms");
 	}
 
 	public boolean removeImageObject(
@@ -63,12 +84,26 @@ public class ImageProcessor {
 		Assert.notNull(oldImage, "Image to remove should not be null!");
 
 		try {
+			
+			boolean success = true;
 			File toRemove = new File(imagePath, oldImage.getFileName());
-			File toRemoveThumb = new File(imagePath + File.separator
-					+ "thumb_160", oldImage.getFileName());
+			
+			// delete original
+			if(!storage.deleteFile(toRemove)) {
+				success = false;
+			}
+			
+			// delete thumbnails
+			for(Integer size : sizes) {
+				File toRemoveThumb = new File(imagePath + File.separator
+						+ "thumb_" + size, oldImage.getFileName());
+				
+				if(!storage.deleteFile(toRemoveThumb)) {
+					success = false;
+				}
+			}
 
-			if (storage.deleteFile(toRemove)
-					&& storage.deleteFile(toRemoveThumb)) {
+			if (success) {
 
 				if (!oldImage.isNew()) {
 					repository.delete(oldImage);
@@ -87,6 +122,8 @@ public class ImageProcessor {
 	private com.gentics.kitchenoffice.data.Image readImageData(File file)
 			throws IOException, MagicParseException, MagicMatchNotFoundException, MagicException {
 
+		long start = System.currentTimeMillis();
+		
 		BufferedImage bi = ImageIO.read(file);
 
 		com.gentics.kitchenoffice.data.Image image = new com.gentics.kitchenoffice.data.Image();
@@ -103,6 +140,9 @@ public class ImageProcessor {
 		image.setSize(file.length());
 		
 		bi.flush();
+		
+		long end = System.currentTimeMillis() - start;
+		log.debug("Reading Image data took " + end + " ms");
 
 		return image;
 	}
@@ -177,9 +217,6 @@ public class ImageProcessor {
 				writer.dispose();
 
 				output.close();
-
-				writer = null;
-				output = null;
 			}
 
 		} catch (IOException e) {
@@ -208,6 +245,36 @@ public class ImageProcessor {
 			e.printStackTrace();
 		}
 
+		return outputFile;
+	}
+	
+	private synchronized File createFastThumb(File inputFile, File outputFile, int x, int y, float quality) throws IOException {
+		
+		BufferedImage image;
+
+		image = ImageIO.read(inputFile);
+		
+		double ratio = (double) image.getWidth()
+				/ (double) image.getHeight();
+		double scaleRatio;
+		
+		if (ratio > 1) {
+			// Width larger than Height
+			scaleRatio = (double) x / (double) image.getHeight();
+		} else {
+			scaleRatio = (double) y / (double) image.getWidth();
+		}
+		
+		int newWidth = (int) Math.ceil((image.getWidth() * scaleRatio));
+		int newHeight = (int) Math.ceil((image.getHeight() * scaleRatio));
+		
+		Thumbnails.of(image)
+			.size(newWidth, newHeight)
+			.outputQuality(quality)
+			.outputFormat("jpg")
+			.addFilter(new Canvas(x, y, Positions.CENTER, true))
+			.toFile(outputFile);
+		
 		return outputFile;
 	}
 

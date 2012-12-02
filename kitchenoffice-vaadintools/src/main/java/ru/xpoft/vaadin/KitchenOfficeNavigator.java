@@ -19,6 +19,7 @@ import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
@@ -224,12 +225,13 @@ public class KitchenOfficeNavigator extends Navigator implements
 		}
 	}
 	
-	public static void bindUIToComponent(Component component, Locale locale) {
+	public static void bindUIToComponent(Component component) {
 		
 		if (component instanceof IUiBindable) {
 			try {
 				long start = System.currentTimeMillis();
 				// apply UiBinder
+				Locale locale = VaadinSession.getCurrent().getLocale();
 				component = binder.bind(component.getClass().getName(), component, locale, null);
 
 				logger.debug("ui binding of Component " + component.getClass().getSimpleName() + " took "

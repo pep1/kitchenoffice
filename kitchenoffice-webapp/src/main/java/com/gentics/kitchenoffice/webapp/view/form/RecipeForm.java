@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.gentics.kitchenoffice.data.Incredient;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.webapp.view.form.field.ImageField;
+import com.gentics.kitchenoffice.webapp.view.form.field.IngredientField;
 import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -26,6 +28,9 @@ public class RecipeForm extends FieldGroup {
 
 	@Autowired
 	private ImageField image;
+	
+	@Autowired
+	private IngredientField inField;
 
 	/**
 	 * 
@@ -57,6 +62,7 @@ public class RecipeForm extends FieldGroup {
 		TextArea text = new TextArea("Recipe Text");
 		text.setInputPrompt("Please enter a short description here");
 		
+		
 		text.setNullRepresentation("");
 		//text.setInputPrompt("Aloha Editor would be nice here!");
 
@@ -64,11 +70,13 @@ public class RecipeForm extends FieldGroup {
 		this.bind(description, "description");
 		this.bind(text, "text");
 		this.bind(image, "image");
+		this.bind(inField, "incredients");
 
 		// component, column, row
 		layout.addComponent(name, 1, 0);
 		layout.addComponent(description, 1, 1);
-		layout.addComponent(text, 0, 2, 1, 2);
+		layout.addComponent(text, 0, 2);
+		layout.addComponent(inField, 1, 2);
 		layout.addComponent(image, 0, 0, 0, 1);
 		image.setWidth("180px");
 
@@ -78,6 +86,18 @@ public class RecipeForm extends FieldGroup {
 
 	public GridLayout getLayout() {
 		return layout;
+	}
+	
+	@Override
+	public void commit() throws CommitException{
+		
+		BeanItem<Recipe> item = (BeanItem<Recipe>) getItemDataSource();
+		
+		for(Incredient in : item.getBean().getIncredients()) {
+			in.setRecipe(item.getBean());
+		}
+		
+		super.commit();
 	}
 	
 	@Override
@@ -91,7 +111,7 @@ public class RecipeForm extends FieldGroup {
 		super.setItemDataSource(itemDataSource);
 		
 		// and switch to readonly again, except its a new one we are switching to
-		BeanItem<Recipe> item = (BeanItem<Recipe>) itemDataSource;
+		BeanItem<Recipe> item = (BeanItem<Recipe>) getItemDataSource();
 		if(item != null && !item.getBean().isNew()) {
 			setReadOnly(true);
 		}

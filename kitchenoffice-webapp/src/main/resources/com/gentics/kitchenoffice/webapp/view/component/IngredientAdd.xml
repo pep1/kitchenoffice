@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder 
+  xmlns:ui="urn:org.vaadin.mvp.uibinder"
+  xmlns:m="urn:org.vaadin.mvp.uibinder.message"
+  xmlns:v="urn:import:com.vaadin.ui" >
+  
+  	<v:ComboBox ui:field="input" m:inputPrompt="field.prompt.article" width="100%" height="-1px" />
+  	<v:TextField ui:field="amount" m:inputPrompt="field.prompt.amount" width="30px" />
+  	<v:Button ui:field="save" m:caption="action.save" height="-1px" />
+  	<v:Button ui:field="add" m:caption="action.add" height="-1px" />
+  	
+</ui:UiBinder>

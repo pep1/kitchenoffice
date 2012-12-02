@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder 
+  xmlns:ui="urn:org.vaadin.mvp.uibinder"
+  xmlns:m="urn:org.vaadin.mvp.uibinder.message"
+  xmlns:v="urn:import:com.vaadin.ui">
+  
+  
+  	<v:Embedded ui:field="image" width="40px" height="40px">
+  	</v:Embedded>
+  	<v:VerticalLayout ui:field="infoContainer" spacing="false" width="100%" height="40px">
+ 		
+ 		<v:HorizontalLayout ui:field="nameContainer" height="-1px" width="100%">
+ 			<v:Label ui:field="name" width="100%" styleName="ingredientName" />
+ 			<v:Label ui:field="spacer" m:value="common.empty" />
+ 			<v:Button ui:field="edit" m:caption="action.edit" styleName="small" />
+ 			<v:Button ui:field="remove" m:caption="action.remove" styleName="small" />
+ 		</v:HorizontalLayout>
+  		<v:HorizontalLayout ui:field="descriptionContainer" height="-1px">
+  			<v:TextField ui:field="amount" width="30px" />
+  			<v:Label ui:field="unit" />
+  			<v:Label ui:field="price" />
+  		</v:HorizontalLayout>
+  	</v:VerticalLayout>
+
+</ui:UiBinder>
