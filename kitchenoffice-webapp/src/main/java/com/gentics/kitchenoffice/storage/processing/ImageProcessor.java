@@ -53,26 +53,29 @@ public class ImageProcessor {
 
 		file = storage.moveFile(file, imagePath);
 		
-		// create thumbnails
-		for(Integer size : sizes) {
-			createThumbFile(size, file);
-		}
+		BufferedImage bi = ImageIO.read(file);
 		
 		com.gentics.kitchenoffice.data.Image image = null;
-
-		image = readImageData(file);
+		
+		// read image data
+		image = readImageData(file, bi);
+		
+		// create thumbnails
+		for(Integer size : sizes) {
+			createThumbFile(size, bi, Filename.filename(file.getName()));
+		}
+		
+		bi.flush();
 
 		return image;
 	}
 	
-	private synchronized void createThumbFile(Integer size, File file) throws IOException {
+	private synchronized void createThumbFile(Integer size, BufferedImage image, String fileName) throws IOException {
 		long start = System.currentTimeMillis();
-		
-		String fileName = Filename.filename(file.getName());
 		
 		File thumb = new File(imagePath + File.separator + "thumb_" + size.toString(),
 				fileName + Filename.EXTENSIONSEPARATOR + EXTENSION);
-		createFastThumb(file, thumb, size, size, (float) 0.8);
+		createFastThumb(image, thumb, size, size, (float) 0.8);
 		
 		long end = System.currentTimeMillis() - start;
 		log.debug("creating thumb took " + end + " ms");
@@ -119,12 +122,10 @@ public class ImageProcessor {
 
 	}
 
-	private com.gentics.kitchenoffice.data.Image readImageData(File file)
+	private com.gentics.kitchenoffice.data.Image readImageData(File file, BufferedImage bi)
 			throws IOException, MagicParseException, MagicMatchNotFoundException, MagicException {
 
 		long start = System.currentTimeMillis();
-		
-		BufferedImage bi = ImageIO.read(file);
 
 		com.gentics.kitchenoffice.data.Image image = new com.gentics.kitchenoffice.data.Image();
 
@@ -138,8 +139,6 @@ public class ImageProcessor {
 		image.setFilePath(file.getAbsolutePath());
 
 		image.setSize(file.length());
-		
-		bi.flush();
 		
 		long end = System.currentTimeMillis() - start;
 		log.debug("Reading Image data took " + end + " ms");
@@ -248,11 +247,7 @@ public class ImageProcessor {
 		return outputFile;
 	}
 	
-	private synchronized File createFastThumb(File inputFile, File outputFile, int x, int y, float quality) throws IOException {
-		
-		BufferedImage image;
-
-		image = ImageIO.read(inputFile);
+	private synchronized File createFastThumb(BufferedImage image, File outputFile, int x, int y, float quality) throws IOException {
 		
 		double ratio = (double) image.getWidth()
 				/ (double) image.getHeight();

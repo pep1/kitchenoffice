@@ -49,36 +49,42 @@ public class RecipeForm extends FieldGroup {
 	}
 
 	private GridLayout buildLayout() {
-		layout = new GridLayout(2, 3);
+		layout = new GridLayout(3, 3);
 		layout.setSpacing(true);
 		layout.setMargin(new MarginInfo(false, true, false, true));
 
 		TextField name = new TextField("Name");
+		name.setWidth("100%");
 		name.setNullRepresentation("");
 		name.setInputPrompt("Please enter the recipe name here");
 		TextField description = new TextField("Description");
+		description.setWidth("100%");
 		description.setNullRepresentation("");
 		description.setInputPrompt("Please enter a short description here");
-		TextArea text = new TextArea("Recipe Text");
-		text.setInputPrompt("Please enter a short description here");
-		
-		
-		text.setNullRepresentation("");
-		//text.setInputPrompt("Aloha Editor would be nice here!");
+		RichTextArea text = new RichTextArea("Recipe Text");
+		text.setWidth("100%");
+		text.setHeight("100%");
+		text.setNullRepresentation("Please enter the recipe text here");
 
 		this.bind(name, "name");
 		this.bind(description, "description");
 		this.bind(text, "text");
 		this.bind(image, "image");
 		this.bind(inField, "incredients");
+		
+		image.setWidth("180px");
+		image.setHeight("180px");
+		inField.setWidth("350px");
+		layout.setRowExpandRatio(2, 1.0f);
+		layout.setColumnExpandRatio(1, 1.0f);
 
 		// component, column, row
 		layout.addComponent(name, 1, 0);
 		layout.addComponent(description, 1, 1);
-		layout.addComponent(text, 0, 2);
-		layout.addComponent(inField, 1, 2);
+		layout.addComponent(text, 0, 2, 1, 2);
+		layout.addComponent(inField, 2, 0, 2, 2);
 		layout.addComponent(image, 0, 0, 0, 1);
-		image.setWidth("180px");
+		
 
 		return layout;
 

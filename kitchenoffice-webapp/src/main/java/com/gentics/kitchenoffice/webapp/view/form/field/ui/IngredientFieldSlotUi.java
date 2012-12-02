@@ -56,6 +56,7 @@ public class IngredientFieldSlotUi extends HorizontalLayout implements IUiBindab
 	public IngredientFieldSlotUi() {
 		
 		KitchenOfficeNavigator.bindUIToComponent(this);
+		setStyleName("ingredientslot");
 		setSizeFull();
 		setSpacing(true);
 		setExpandRatio(infoContainer, 1.0f);

@@ -263,8 +263,12 @@ public class IngredientField extends CustomField<Set<Incredient>> implements Cli
 		if(layout.getAddComponent().getInput().getValue() != null &&
 				layout.getAddComponent().getAmount().getValue() != null) {
 			
-			if(this.getValue().contains(layout.getAddComponent().getInput().getValue())) {
-				Notification.show("Article already added", Notification.Type.WARNING_MESSAGE);
+			for(Incredient in : getValue()) {
+				if(in.getArticle().equals(layout.getAddComponent().getInput().getValue())) {
+					Notification.show("Article already added", Notification.Type.WARNING_MESSAGE);
+					layout.getAddComponent().reset();
+					return;
+				}
 			}
 			
 			try{

@@ -76,6 +76,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		// common part: create layout
 		vi = new VerticalLayout();
 		vi.setWidth("160px");
+		vi.setMargin(true);
 
 		vi.setImmediate(true);
 		vi.setMargin(false);
@@ -89,6 +90,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		addStyleName("no-vertical-drag-hints");
 
 		imageEmbed = new Embedded();
+		imageEmbed.setStyleName("imageposter");
 		imageEmbed.setWidth("160px");
 		imageEmbed.setHeight("160px");
 
