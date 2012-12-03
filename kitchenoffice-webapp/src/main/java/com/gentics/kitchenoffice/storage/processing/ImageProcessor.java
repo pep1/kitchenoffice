@@ -17,6 +17,7 @@ import javax.imageio.stream.FileImageOutputStream;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.filters.Canvas;
 import net.coobird.thumbnailator.geometry.Positions;
+import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
@@ -75,7 +76,7 @@ public class ImageProcessor {
 		
 		File thumb = new File(imagePath + File.separator + "thumb_" + size.toString(),
 				fileName + Filename.EXTENSIONSEPARATOR + EXTENSION);
-		createFastThumb(image, thumb, size, size, (float) 0.8);
+		createFastThumb(image, thumb, size, size, (float) 0.9);
 		
 		long end = System.currentTimeMillis() - start;
 		log.debug("creating thumb took " + end + " ms");
