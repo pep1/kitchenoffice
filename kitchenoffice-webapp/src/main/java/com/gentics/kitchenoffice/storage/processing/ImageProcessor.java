@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Iterator;
 
 import javax.imageio.IIOImage;
@@ -33,7 +34,7 @@ import com.gentics.kitchenoffice.storage.Storable;
 import com.gentics.kitchenoffice.storage.Storage;
 import com.gentics.kitchenoffice.webapp.util.Filename;
 
-public class ImageProcessor {
+public class ImageProcessor implements Serializable{
 
 	private static Logger log = Logger.getLogger(ImageProcessor.class);
 

@@ -144,6 +144,7 @@ public class MainLayout extends VerticalLayout implements ViewDisplay, IUiBindab
 		
 		panel.setContent(container);
 		
+		setMargin(true);
 		setSizeFull();
 		setExpandRatio(panel, 1.0f);
 		
