@@ -16,13 +16,13 @@
 
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
-		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/VAADIN/**" access="permitAll" />
-		<intercept-url pattern="/index.jsp" access="permitAll" />
+		<intercept-url pattern="/index.jsp" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/cas-logout.jsp" access="permitAll" />
 		<intercept-url pattern="/casfailed.jsp" access="permitAll" />
 
-		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
 		<custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" />
 		<custom-filter ref="singleLogoutFilter" before="CAS_FILTER" />
