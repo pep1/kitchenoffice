@@ -75,8 +75,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	private VerticalLayout buildVerticalImage() {
 		// common part: create layout
 		vi = new VerticalLayout();
-		vi.setWidth("160px");
-		vi.setMargin(true);
+		vi.setSizeFull();
 
 		vi.setImmediate(true);
 		vi.setMargin(false);
@@ -97,12 +96,14 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 		wrapper = new DragAndDropWrapper(imageEmbed);
 		wrapper.setImmediate(true);
 		wrapper.setDropHandler(null);
+		wrapper.setWidth("160px");
+		wrapper.setHeight("160px");
 
 		addStyleName("no-horizontal-drag-hints");
 		addStyleName("no-vertical-drag-hints");
-		// dropWrapper.addStyleName("no-box-drag-hints");
 
 		vi.addComponent(wrapper);
+		vi.setComponentAlignment(wrapper, Alignment.MIDDLE_CENTER);
 		vi.addComponent(indicator);
 		vi.setExpandRatio(wrapper, 1.0f);
 		vi.setComponentAlignment(wrapper, Alignment.MIDDLE_CENTER);
@@ -111,7 +112,7 @@ public class ImageField extends CustomField<Image> implements DropHandler {
 	}
 	
 	@PostConstruct
-	private void postConstruct() {
+	public void postConstruct() {
 		buildVerticalImage();
 	}
 

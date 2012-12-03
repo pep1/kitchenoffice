@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Article;
-import com.gentics.kitchenoffice.data.Meal;
+import com.gentics.kitchenoffice.data.Event;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.User;
@@ -97,9 +97,9 @@ public class RecipeTest {
 		
 		log.debug("mealcount: " + mealRepository.count());
 		
-		EndResult<Meal> meals = mealRepository.findAll();
+		EndResult<Event> meals = mealRepository.findAll();
 		
-		for (Meal meal : meals) {
+		for (Event meal : meals) {
 			log.debug("meal: \n" + meal);
 		}
 		
@@ -146,7 +146,7 @@ public class RecipeTest {
 	
 	private void createSomeRecipes() {
 		
-		Recipe r = new Recipe("Tortellini mit Tomatensoße", "lecker", 1, 5);
+		Recipe r = new Recipe("Tortellini mit Tomatensoße", "lecker", 5);
 		recipeRepository.save(r);
 		
 		Article i1 = new Article("Tortellini Pasta", "Package, 500g", 0.89);
@@ -168,7 +168,7 @@ public class RecipeTest {
 		r.addArticle(i4, 0.5);
 		recipeRepository.save(r);
 		
-		Recipe r2 = new Recipe("Nudeln mit Tomatensoße", "lecker", 1, 10);
+		Recipe r2 = new Recipe("Nudeln mit Tomatensoße", "lecker", 10);
 		
 		Article i5 = new Article("Nudeln Pasta, irgendeine Sorte", "Package, 500g", 0.89);
 		articleRepository.save(i5);
@@ -198,7 +198,7 @@ public class RecipeTest {
 		
 		cal.add(Calendar.DATE, 1);
 		
-		Meal m1 = new Meal(cal.getTime(), result);
+		Event m1 = new Event(cal.getTime(), result);
 		m1.addParticipant(u1, "einkaufen und Tellerwaschen");
 		mealRepository.save(m1);
 		
@@ -207,7 +207,7 @@ public class RecipeTest {
 		
 		cal.add(Calendar.DATE, 1);
 		
-		Meal m2 = new Meal(cal.getTime(), result2);
+		Event m2 = new Event(cal.getTime(), result2);
 		m2.addParticipant(u1, "einkaufen");
 		mealRepository.save(m2);
 		m2.addParticipant(u2, "kochen");
@@ -217,7 +217,4 @@ public class RecipeTest {
 		mealRepository.save(m2);
 		
 	}
-	
-	
-
 }

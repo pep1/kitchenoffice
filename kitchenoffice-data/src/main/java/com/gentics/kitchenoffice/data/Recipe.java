@@ -24,9 +24,11 @@ public class Recipe extends AbstractPersistable{
     
     private int prepTime;
     
-    private int minPersons;
-    
     private int maxPersons;
+    
+    @Fetch
+    @RelatedTo(type = "IS_CREATED", direction = Direction.OUTGOING)
+	private User user = new User();
     
     @Fetch
     @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
@@ -48,12 +50,11 @@ public class Recipe extends AbstractPersistable{
    
     }
 
-	public Recipe(String name, String description, int minPersons,
+	public Recipe(String name, String description,
 			int maxPersons) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.minPersons = minPersons;
 		this.maxPersons = maxPersons;
 
 	}
@@ -90,14 +91,6 @@ public class Recipe extends AbstractPersistable{
 		this.prepTime = prepTime;
 	}
 
-	public int getMinPersons() {
-		return minPersons;
-	}
-
-	public void setMinPersons(int minPersons) {
-		this.minPersons = minPersons;
-	}
-
 	public int getMaxPersons() {
 		return maxPersons;
 	}
@@ -112,6 +105,14 @@ public class Recipe extends AbstractPersistable{
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Set<Incredient> getIncredients() {

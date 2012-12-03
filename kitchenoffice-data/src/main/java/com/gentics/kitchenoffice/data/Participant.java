@@ -10,7 +10,7 @@ public class Participant extends AbstractPersistable{
 
 	@Fetch
 	@StartNode
-    private Meal meal;
+    private Event event;
 	
 	@Fetch
 	@EndNode
@@ -23,19 +23,19 @@ public class Participant extends AbstractPersistable{
 		
 	}
 
-	public Participant(Meal meal, User user, String job) {
+	public Participant(Event event, User user, String job) {
 		super();
-		this.meal = meal;
+		this.event = event;
 		this.user = user;
 		this.job = job;
 	}
 
-	public Meal getMeal() {
-		return meal;
+	public Event getEvent() {
+		return event;
 	}
 
-	public void setMeal(Meal meal) {
-		this.meal = meal;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 
 	public User getUser() {

@@ -51,7 +51,7 @@ public class RecipeForm extends FieldGroup {
 	private GridLayout buildLayout() {
 		layout = new GridLayout(3, 3);
 		layout.setSpacing(true);
-		layout.setMargin(new MarginInfo(false, true, false, true));
+		//layout.setMargin(new MarginInfo(false, true, false, true));
 
 		TextField name = new TextField("Name");
 		name.setWidth("100%");

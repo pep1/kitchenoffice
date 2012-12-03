@@ -13,7 +13,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.util.Assert;
 
 @NodeEntity
-public class Meal extends AbstractPersistable{
+public class Event extends AbstractPersistable{
 	
 	@Indexed
 	private Date date;
@@ -26,14 +26,14 @@ public class Meal extends AbstractPersistable{
 	private Set<Participant> participants = new HashSet<Participant>();
 	
 	@Fetch
-	@RelatedTo(type = "MEAL_HAS_COMMENT", direction = Direction.BOTH)
+	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.BOTH)
 	private Set<Comment> comments = new HashSet<Comment>();
 	
-	public Meal() {
+	public Event() {
 		
 	}
 	
-	public Meal(Date date, Recipe recipe) {
+	public Event(Date date, Recipe recipe) {
 		super();
 		this.date = date;
 		this.recipe = recipe;
@@ -97,7 +97,7 @@ public class Meal extends AbstractPersistable{
 	
 	@Override
 	public String toString() {
-		return String.format("Meal{\n  recipe='%s',\n  date=%s,\n  participants=%s\n, comments=%s\n}", recipe.getName(), date.toString(), participants.toString(), comments.toString());
+		return String.format("Event{\n  recipe='%s',\n  date=%s,\n  participants=%s\n, comments=%s\n}", recipe.getName(), date.toString(), participants.toString(), comments.toString());
 	}
 	
 }
