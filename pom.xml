@@ -99,7 +99,7 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<!-- <skipDeploy>true</skipDeploy> -->
+					<skipDeploy>true</skipDeploy>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -113,20 +113,21 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.5</version>
+				<version>0.7</version>
 				<configuration>
-					<message>Building site for ${project.version}</message>
+					<message>Creating site for ${project.artifactId},
+						${project.version}</message>
+					<!-- this does the trick to place every module in the correct subfolder -->
+					<path>${project.distributionManagement.site.url}</path>
+					<merge>true</merge>
 				</configuration>
 				<executions>
 					<execution>
+						<id>github-site</id>
 						<goals>
 							<goal>site</goal>
 						</goals>
 						<phase>site-deploy</phase>
-						<configuration>
-							<path>${project.version}</path>
-							<merge>true</merge>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -159,19 +160,15 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.12.4</version>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jxr-plugin</artifactId> 
+				</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9</version>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-clover-plugin</artifactId> 
+				</plugin> -->
 		</plugins>
 	</reporting>
 
@@ -211,11 +208,11 @@
 
 	<distributionManagement>
 
-		<!-- FIXME: To Deploy Maven site somewhere -->
+		<!-- Dummy github site deploy -->
 		<site>
-			<id>website.doc.public</id>
-			<name>Online Documentation</name>
-			<url>http://www.mycompany.com</url>
+			<id>github-pages-site</id>
+			<name>Deployment through GitHub's site deployment plugin (Dummy)</name>
+			<url>site/${project.version}</url>
 		</site>
 
 		<!-- Gentics Distribution Management -->
