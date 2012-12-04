@@ -1,10 +1,14 @@
 package com.gentics.kitchenoffice.data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 @NodeEntity
 public class Article extends AbstractPersistable {
@@ -19,6 +23,10 @@ public class Article extends AbstractPersistable {
     @Fetch
     @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
 	private Image image = new Image();
+    
+    @Fetch
+    @RelatedToVia(type = "IS_NEEDED_IN", direction = Direction.BOTH)
+    private Set<Incredient> incredients = new HashSet<Incredient>();
     
     public Article() {
     	
@@ -63,7 +71,14 @@ public class Article extends AbstractPersistable {
 		this.image = image;
 	}
 	
-	
+	public Set<Incredient> getIncredients() {
+		return incredients;
+	}
+
+	public void setIncredients(Set<Incredient> incredients) {
+		this.incredients = incredients;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Article{name='%s', price=%f}", name, price);

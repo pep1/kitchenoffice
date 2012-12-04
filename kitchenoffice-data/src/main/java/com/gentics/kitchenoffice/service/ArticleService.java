@@ -29,7 +29,6 @@ public class ArticleService {
 	}
 	
 	public Article save(Article article) {
-		
 		Assert.notNull(article, "Article to save may not be null");
 		articleRepository.save(article);
 		return article;

@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
-@RelationshipEntity(type="IS_NEEDED_FOR")
+@RelationshipEntity
 public class Incredient extends AbstractPersistable{
 	
 	@Fetch

@@ -274,7 +274,7 @@
 			<id>prod</id>
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
-				<cas.service.host>pepone.sytes.net</cas.service.host>
+				<cas.service.host>food.office</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
 			</properties>
 		</profile>
