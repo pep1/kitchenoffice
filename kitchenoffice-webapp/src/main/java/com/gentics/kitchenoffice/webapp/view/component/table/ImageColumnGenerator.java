@@ -22,11 +22,16 @@ public class ImageColumnGenerator implements ColumnGenerator{
 
 	@Override
 	public Object generateCell(Table source, Object itemId, Object columnId) {
-		log.debug("Generating image column for itemId" + itemId);
 		
 		Embedded embed = new Embedded();
 		embed.setStyleName("thumbnail40");
-		embed.setSource(helper.getImageThumbnail(((Recipe)itemId).getImage(), 40));
+		
+		if(itemId instanceof Recipe) {
+			embed.setSource(helper.getImageThumbnail(((Recipe)itemId).getImage(), 40));
+		} else {
+			embed.setSource(helper.getImageThumbnail(null , 40));
+		}
+		
 		return embed;
 	}
 

@@ -44,6 +44,8 @@
 }
 
 .thumbnail40 img{
+	width: 40px;
+	height: 40px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;

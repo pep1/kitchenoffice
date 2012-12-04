@@ -116,10 +116,15 @@ public class RecipeForm extends FieldGroup {
 		
 		super.setItemDataSource(itemDataSource);
 		
-		// and switch to readonly again, except its a new one we are switching to
-		BeanItem<Recipe> item = (BeanItem<Recipe>) getItemDataSource();
-		if(item != null && !item.getBean().isNew()) {
-			setReadOnly(true);
+		if(itemDataSource != null) {
+			// and switch to readonly again, except its a new one we are switching to
+			BeanItem<Recipe> item = (BeanItem<Recipe>) getItemDataSource();
+			if(item != null && !item.getBean().isNew()) {
+				setReadOnly(true);
+			} else {
+				// its e new item, so switch to edit mode
+				setReadOnly(false);
+			}
 		}
 
 	}

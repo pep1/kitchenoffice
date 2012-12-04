@@ -141,14 +141,10 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 
 		form.setItemDataSource(item);
 
-		if (table.getValue() != null) {
-			edit.setEnabled(true);
-		}
-
 		add.setEnabled(true);
 		cancel.setEnabled(false);
 		save.setEnabled(false);
-
+		edit.setEnabled(true);
 	}
 
 	public void edit() {
@@ -162,9 +158,8 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 	public void add() {
 
 		Recipe newRecipe = new Recipe();
-		Object itemId = container.addItem(newRecipe);
-		form.setItemDataSource(container.getItem(itemId));
-		form.setReadOnly(false);
+		container.addItem(newRecipe);
+		// form.setItemDataSource will be executed in table value change handling
 
 		log.debug("added bean item, container size now is: " + container.size());
 

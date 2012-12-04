@@ -64,12 +64,9 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 		// if there is no recipe specified by parameter, select the first item
 		// in container and set the URI
 		if (toSelect == null) {
-
 			if (container.size() > 0) {
 				table.select(container.firstItemId());
-			}
-
-			setURIFragmentByItem(container.firstItemId(), false);
+			} 
 		}
 
 		if (toSelect != null) {
