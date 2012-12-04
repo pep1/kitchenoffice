@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vaadin.mvp.uibinder.IUiBindable;
@@ -15,7 +16,9 @@ import ru.xpoft.vaadin.VaadinView;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.container.RecipeContainer;
+import com.gentics.kitchenoffice.webapp.view.component.table.ImageColumnGenerator;
 import com.gentics.kitchenoffice.webapp.view.form.RecipeForm;
+import com.gentics.kitchenoffice.webapp.view.form.field.IngredientFieldSlot;
 import com.gentics.kitchenoffice.webapp.view.util.AbstractItemSelectionView;
 import com.gentics.kitchenoffice.webapp.view.util.MenuEntrySortOrder;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -40,8 +43,8 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 
 	private static final String VIEW_ROLE = KitchenOfficeUserService.ROLE_USER_NAME;
 
-	public static final Object[] visibleColumns = new Object[] { "id", "name",
-			"description" };
+	public static final Object[] visibleColumns = new Object[] { "thumb", "id", "name" };
+	public static final String[] columnHeaders = new String[] { "", "id", "Name" };
 
 	private static Logger log = Logger.getLogger(RecipeView.class);
 
@@ -64,6 +67,8 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 	@UiField
 	private CssLayout tableContainer;
 	
+	@Autowired
+	private ApplicationContext context;
 	
 	public RecipeView() {
 		super(RecipeContainer.class);
@@ -85,9 +90,14 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 		table.setHeight("100%");
 		table.setImmediate(true);
 		table.setContainerDataSource(container);
+		table.addGeneratedColumn("thumb", (ImageColumnGenerator)context.getBean(ImageColumnGenerator.class));
 		table.setVisibleColumns(visibleColumns);
+		table.setColumnHeaders(columnHeaders);
+		table.setColumnExpandRatio("name", 1.0f);
+		
 		table.setSelectable(true);
 		table.addValueChangeListener(this);
+		
 		tableContainer.addComponent(table);
 		
 		edit.addClickListener(this);

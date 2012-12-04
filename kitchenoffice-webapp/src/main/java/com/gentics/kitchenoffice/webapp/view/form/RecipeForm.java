@@ -64,7 +64,7 @@ public class RecipeForm extends FieldGroup {
 		RichTextArea text = new RichTextArea("Recipe Text");
 		text.setWidth("100%");
 		text.setHeight("100%");
-		text.setNullRepresentation("Please enter the recipe text here");
+		text.setNullRepresentation("Aloha would be nice here :)");
 
 		this.bind(name, "name");
 		this.bind(description, "description");
