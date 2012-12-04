@@ -15,9 +15,9 @@ public interface RecipeRepository extends GraphRepository<Recipe>, RelationshipO
 	@Query("start recipe={0} match recipe-->name<--similar return similar")
     public List<Recipe> getSimilarRecipes(Recipe recipe);
 	
-	@Query("start recipe={0}
+	@Query("start recipe={0} " + 
 			" match recipe-->article<--similar" + 
-			" return distinct similar.name, count(article)"
+			" return distinct similar.name, count(article)" +
 			" order by count(article) desc" + 
 			" limit 10")
 	public List<Recipe> getRecipesWithSimilarIngredients(Recipe recipe);
