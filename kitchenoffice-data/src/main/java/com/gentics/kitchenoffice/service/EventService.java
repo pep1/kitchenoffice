@@ -20,7 +20,7 @@ import com.gentics.kitchenoffice.repository.OrderEventRepository;
 
 @Service
 @Scope("singleton")
-public class EventService<A extends Event> {
+public class EventService {
 	
 	private static Logger log = Logger.getLogger(EventService.class);
 	
@@ -35,7 +35,7 @@ public class EventService<A extends Event> {
 	@Autowired
 	private EatOutEventRepository eatOutEventRepo;
 	
-	private List<Class<A>> availableEvents = new ArrayList<Class<A>>();
+	private List<Class<? extends Event>> availableEvents = new ArrayList<Class<? extends Event>>();
 	
 	@PostConstruct
 	public void initialize() {
@@ -47,8 +47,17 @@ public class EventService<A extends Event> {
 		log.debug("Looking for available Events in package: " + EVENT_CLASS.getPackage().getName());
 		
 		Reflections reflections = new Reflections(EVENT_CLASS.getPackage().getName());    
-		Set<Class<A>> classes = reflections.getSubTypesOf(EVENT_CLASS);
+		Set<Class<? extends Event>> classes = reflections.getSubTypesOf(EVENT_CLASS);
 		
 		availableEvents.addAll(classes);
+	}
+	
+	public List<Class<? extends Event>> getAvailableEvents() {
+		
+		if(availableEvents.size() == 0) {
+			log.error("no events found!");
+		}
+		
+		return availableEvents;
 	}
 }
