@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.data;
+package com.gentics.kitchenoffice.data.event;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,14 +12,20 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.util.Assert;
 
+import com.gentics.kitchenoffice.data.AbstractPersistable;
+import com.gentics.kitchenoffice.data.Comment;
+import com.gentics.kitchenoffice.data.Job;
+import com.gentics.kitchenoffice.data.Participant;
+import com.gentics.kitchenoffice.data.Recipe;
+import com.gentics.kitchenoffice.data.user.User;
+
 @NodeEntity
-public class Event extends AbstractPersistable{
-	
+public abstract class Event extends AbstractPersistable{
+
 	@Indexed
 	private Date date;
 	
-	@Fetch
-	private Recipe recipe;
+	private String note;
 	
 	@Fetch
 	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH)
@@ -33,10 +39,9 @@ public class Event extends AbstractPersistable{
 		
 	}
 	
-	public Event(Date date, Recipe recipe) {
+	public Event(Date date) {
 		super();
 		this.date = date;
-		this.recipe = recipe;
 	}
 
 	public Date getDate() {
@@ -47,12 +52,12 @@ public class Event extends AbstractPersistable{
 		this.date = date;
 	}
 
-	public Recipe getRecipe() {
-		return recipe;
+	public String getNote() {
+		return note;
 	}
 
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public Set<Participant> getParticipants() {
@@ -82,10 +87,10 @@ public class Event extends AbstractPersistable{
 		return c;
 	}
 
-	public Participant addParticipant (User user, String job) {
+	public Participant addParticipant (User user, Job job) {
 		
 		Assert.notNull(user, "user may not be null");
-		Assert.hasLength(job, "job may not be null or empty");
+		Assert.notNull(job, "job may not be null");
 		
 		Participant p = new Participant(this, user, job);
 		
@@ -97,7 +102,7 @@ public class Event extends AbstractPersistable{
 	
 	@Override
 	public String toString() {
-		return String.format("Event{\n  recipe='%s',\n  date=%s,\n  participants=%s\n, comments=%s\n}", recipe.getName(), date.toString(), participants.toString(), comments.toString());
+		return String.format("Event{\n date=%s,\n  participants=%s\n, comments=%s\n}", date.toString(), participants.toString(), comments.toString());
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.data;
+package com.gentics.kitchenoffice.data.user;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,6 +11,8 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.gentics.kitchenoffice.data.AbstractPersistable;
 
 @NodeEntity
 public class User extends AbstractPersistable implements UserDetails {

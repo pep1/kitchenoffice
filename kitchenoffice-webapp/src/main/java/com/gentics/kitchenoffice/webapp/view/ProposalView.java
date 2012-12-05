@@ -15,15 +15,15 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 
 @Component
 @Scope("prototype")
-@VaadinView(value = EventView.NAME, cached = true)
+@VaadinView(value = ProposalView.NAME, cached = true)
 @MenuEntrySortOrder(2)
-public class EventView extends KitchenOfficeView implements KitchenOfficeViewInterface, IUiBindable{
+public class ProposalView extends KitchenOfficeView implements IUiBindable{
 
-	private static Logger log = Logger.getLogger(HomeView.class);
+	private static Logger log = Logger.getLogger(ProposalView.class);
 	
 	private static final String VIEW_ROLE = KitchenOfficeUserService.ROLE_USER_NAME;
 	
-	public static final String NAME = "events";
+	public static final String NAME = "proposal";
 
 	@Override
 	public void enter(ViewChangeEvent event) {

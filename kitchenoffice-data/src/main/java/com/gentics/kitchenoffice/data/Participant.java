@@ -1,9 +1,14 @@
 package com.gentics.kitchenoffice.data;
 
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
+
+import com.gentics.kitchenoffice.data.event.Event;
+import com.gentics.kitchenoffice.data.user.User;
 
 @RelationshipEntity(type="TAKES_PART")
 public class Participant extends AbstractPersistable{
@@ -15,15 +20,16 @@ public class Participant extends AbstractPersistable{
 	@Fetch
 	@EndNode
     private User user;
-	
-	//TODO has to be externalized to own entity
-	private String job;
+
+	@Fetch
+    @RelatedTo(type = "HAS_JOB", direction = Direction.BOTH)
+	private Job job;
 	
 	public Participant() {
 		
 	}
 
-	public Participant(Event event, User user, String job) {
+	public Participant(Event event, User user, Job job) {
 		super();
 		this.event = event;
 		this.user = user;
@@ -46,11 +52,11 @@ public class Participant extends AbstractPersistable{
 		this.user = user;
 	}
 
-	public String getJob() {
+	public Job getJob() {
 		return job;
 	}
 
-	public void setJob(String job) {
+	public void setJob(Job job) {
 		this.job = job;
 	}
 	

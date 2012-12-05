@@ -18,13 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Article;
-import com.gentics.kitchenoffice.data.Event;
+import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.Tag;
-import com.gentics.kitchenoffice.data.User;
+import com.gentics.kitchenoffice.data.event.CookEvent;
+import com.gentics.kitchenoffice.data.event.Event;
+import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.ArticleRepository;
 import com.gentics.kitchenoffice.repository.CommentRepository;
-import com.gentics.kitchenoffice.repository.MealRepository;
+import com.gentics.kitchenoffice.repository.EventRepository;
+import com.gentics.kitchenoffice.repository.JobRepository;
 import com.gentics.kitchenoffice.repository.RecipeRepository;
 import com.gentics.kitchenoffice.repository.TagRepository;
 import com.gentics.kitchenoffice.repository.UserRepository;
@@ -46,7 +49,7 @@ public class RecipeTest {
 	private ArticleRepository articleRepository;
 	
 	@Autowired
-	private MealRepository mealRepository;
+	private EventRepository mealRepository;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -56,6 +59,9 @@ public class RecipeTest {
 	
 	@Autowired
 	private TagRepository tagRepository;
+	
+	@Autowired
+	private JobRepository jobRepository;
 	
 	@Autowired
 	private Neo4jTemplate template;
@@ -198,8 +204,20 @@ public class RecipeTest {
 		
 		cal.add(Calendar.DATE, 1);
 		
-		Event m1 = new Event(cal.getTime(), result);
-		m1.addParticipant(u1, "einkaufen und Tellerwaschen");
+		Job job1 = new Job();
+		job1.setName("Teller waschen");
+		log.debug("saving first job");
+		jobRepository.save(job1);
+		
+		Job job2 = new Job();
+		job2.setName("einkaufen");
+		log.debug("saving second job");
+		jobRepository.save(job2);
+		
+		CookEvent m1 = new CookEvent();
+		m1.setRecipe(result);
+		m1.setDate(cal.getTime());
+		m1.addParticipant(u1, job1);
 		mealRepository.save(m1);
 		
 		m1.addComment(u2, "is gut geworden! nächstes mal mehr chili..");
@@ -207,10 +225,12 @@ public class RecipeTest {
 		
 		cal.add(Calendar.DATE, 1);
 		
-		Event m2 = new Event(cal.getTime(), result2);
-		m2.addParticipant(u1, "einkaufen");
+		CookEvent m2 = new CookEvent();
+		m2.setRecipe(result2);
+		m2.setDate(cal.getTime());
+		m2.addParticipant(u1, job1);
 		mealRepository.save(m2);
-		m2.addParticipant(u2, "kochen");
+		m2.addParticipant(u2, job2);
 		mealRepository.save(m2);
 		
 		m2.addComment(u1, "das sollten wir öfter machen!");

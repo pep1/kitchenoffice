@@ -17,15 +17,15 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.gentics.kitchenoffice" />
 
-	<!-- <neo4j:config storeDirectory="target/neo4j-db"/> <neo4j:repositories 
-		base-package="com.gentics.kitchenoffice.repository"/> -->
+	<neo4j:config storeDirectory="target/neo4j-db"/>
+	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository"/>
 
-	<neo4j:config graphDatabaseService="graphDatabaseService" />
+	<!--  <neo4j:config graphDatabaseService="graphDatabaseService" />
 	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
 	<bean id="graphDatabaseService"
 		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
 		<constructor-arg index="0" value="http://satan3.office:7474/db/data" />
-	</bean>
+	</bean> -->
 
 </beans>
 

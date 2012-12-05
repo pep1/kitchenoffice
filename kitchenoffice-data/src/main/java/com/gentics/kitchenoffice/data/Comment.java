@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import com.gentics.kitchenoffice.data.user.User;
+
 @NodeEntity
 public class Comment extends AbstractPersistable{
 

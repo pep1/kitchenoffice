@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 
-import com.gentics.kitchenoffice.data.Role;
-import com.gentics.kitchenoffice.data.User;
+import com.gentics.kitchenoffice.data.user.Role;
+import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.RoleRepository;
 import com.gentics.kitchenoffice.repository.UserRepository;
 

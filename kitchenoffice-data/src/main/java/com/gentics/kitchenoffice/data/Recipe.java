@@ -11,6 +11,8 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.util.Assert;
 
+import com.gentics.kitchenoffice.data.user.User;
+
 @NodeEntity
 public class Recipe extends AbstractPersistable{
     
@@ -27,11 +29,11 @@ public class Recipe extends AbstractPersistable{
     private int maxPersons;
     
     @Fetch
-    @RelatedTo(type = "IS_CREATED", direction = Direction.OUTGOING)
-	private User user = new User();
+    @RelatedTo(type = "IS_CREATED_BY", direction = Direction.BOTH)
+	private User creator = new User();
     
     @Fetch
-    @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
+    @RelatedTo(type = "HAS_IMAGE", direction = Direction.BOTH)
 	private Image image = new Image();
 
     @Fetch
@@ -107,12 +109,12 @@ public class Recipe extends AbstractPersistable{
 		this.image = image;
 	}
 
-	public User getUser() {
-		return user;
+	public User getCreator() {
+		return creator;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCreator(User user) {
+		this.creator = user;
 	}
 
 	public Set<Incredient> getIncredients() {
