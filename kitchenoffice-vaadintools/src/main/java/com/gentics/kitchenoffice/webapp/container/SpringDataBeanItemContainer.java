@@ -58,7 +58,7 @@ public class SpringDataBeanItemContainer<A extends AbstractPersistable> extends
 	}
 	
 	@PostConstruct
-    public void PostConstruct() throws InstantiationException{
+    public void postConstruct() throws InstantiationException{
 		
 		// get right repository bean
 		repository = context.getBean(repositoryClazz);
@@ -133,10 +133,11 @@ public class SpringDataBeanItemContainer<A extends AbstractPersistable> extends
 	}
 
 	public A getItemById(Long id) {
+		Assert.notNull(id, "Id should not be null");
 
 		for (A item : this.getItemIds()) {
 
-			if (item.getId() == id) {
+			if (id.equals(item.getId())) {
 				return item;
 			}
 		}
