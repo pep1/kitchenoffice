@@ -55,9 +55,16 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 
 			if (msgs.length == 1 && msgs[0] instanceof String
 					&& !((String) msgs[0]).isEmpty()) {
-
-				toSelect = container.getItemById(Long.valueOf(msgs[0]));
-
+				try {
+					toSelect = container.getItemById(Long.valueOf(msgs[0]));
+				} catch (NumberFormatException e) {
+					// no parseable id was given as parameter
+					// set Uri Fragment back to selected item
+					if(table.getValue() instanceof AbstractPersistable) {
+						setURIFragmentByItem((AbstractPersistable)table.getValue(), false);
+						return;
+					}
+				}
 			}
 		}
 
@@ -75,12 +82,19 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 
 	}
 	
-	public void setURIFragmentByItem(A item, Boolean refresh) {
-
-		if (item.getId() != null && Page.getCurrent() != null) {
-			Page.getCurrent().setUriFragment(
-					"!" + this.getName() + "/" + item.getId(), refresh);
+	public void setURIFragmentByItem(AbstractPersistable item, Boolean refresh) {
+		
+		if(Page.getCurrent() != null) {
+			
+			// set view to this view
+			String uriFragment = "!" + this.getName();
+			
+			if(item != null && item.getId() != null) {
+				// set display to that item
+				uriFragment += "/" + item.getId();
+			}
+			
+			Page.getCurrent().setUriFragment(uriFragment, refresh);
 		}
-
 	}
 }
