@@ -1,5 +1,7 @@
 package com.gentics.kitchenoffice.webapp.view;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,15 @@ public class ProposalView extends KitchenOfficeView implements IUiBindable{
 	private static final String VIEW_ROLE = KitchenOfficeUserService.ROLE_USER_NAME;
 	
 	public static final String NAME = "proposal";
+	
+	public ProposalView(){
+		
+	}
+	
+	@PostConstruct
+	public void initialize() {
+		
+	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {

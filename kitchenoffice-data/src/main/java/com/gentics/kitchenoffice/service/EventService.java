@@ -14,7 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.gentics.kitchenoffice.data.event.Event;
-import com.gentics.kitchenoffice.repository.EventRepository;
+import com.gentics.kitchenoffice.repository.CookEventRepository;
+import com.gentics.kitchenoffice.repository.EatOutEventRepository;
+import com.gentics.kitchenoffice.repository.OrderEventRepository;
 
 @Service
 @Scope("singleton")
@@ -25,7 +27,13 @@ public class EventService<A extends Event> {
 	public static final Class EVENT_CLASS = Event.class;
 
 	@Autowired
-	private EventRepository eventrepo;
+	private OrderEventRepository orderEventRepo;
+	
+	@Autowired
+	private CookEventRepository cookEventRepo;
+	
+	@Autowired
+	private EatOutEventRepository eatOutEventRepo;
 	
 	private List<Class<A>> availableEvents = new ArrayList<Class<A>>();
 	
