@@ -101,6 +101,11 @@
 			<artifactId>spring-data-neo4j</artifactId>
 			<version>${spring-data-neo4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-neo4j-rest</artifactId>
+			<version>${spring-data-neo4j.version}</version>
+		</dependency>
 
 		<!-- Tools -->
 		<dependency>
@@ -210,6 +215,22 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>**/web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -261,6 +282,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>C:/TEMP/neo4j-db</db.location>
+				<spring.app.context>classpath:spring/applicationContext-dev.xml</spring.app.context>
 			</properties>
 		</profile>
 		<profile>
@@ -274,6 +296,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
+				<spring.app.context>classpath:spring/applicationContext-dev.xml</spring.app.context>
 			</properties>
 		</profile>
 		<profile>
@@ -282,6 +305,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
+				<spring.app.context>classpath:spring/applicationContext-prod.xml</spring.app.context>
 			</properties>
 		</profile>
 	</profiles>
