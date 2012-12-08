@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id$ -->
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:neo4j="http://www.springframework.org/schema/data/neo4j" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/security
+			http://www.springframework.org/schema/security/spring-security-3.1.xsd
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/data/neo4j
+			http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
+
+	<context:property-placeholder location="classpath:/config/webapp.properties" />
+	<!-- Activate Spring annotation support -->
+	<context:spring-configured />
+	<context:annotation-config />
+	<context:component-scan base-package="com.gentics.kitchenoffice" />
+
+	<b:bean id="graphDatabaseService"
+		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+		<b:constructor-arg index="0" value="http://localhost:7474/db/data" />
+	</b:bean>
+
+	<neo4j:config graphDatabaseService="graphDatabaseService" />
+	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
+
+</b:beans>
