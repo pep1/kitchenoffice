@@ -19,7 +19,7 @@ import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.RoleRepository;
 import com.gentics.kitchenoffice.repository.UserRepository;
 
-@Service
+@Service("KitchenOfficeUserService")
 @Scope("singleton")
 public class KitchenOfficeUserService extends
 		AbstractCasAssertionUserDetailsService {

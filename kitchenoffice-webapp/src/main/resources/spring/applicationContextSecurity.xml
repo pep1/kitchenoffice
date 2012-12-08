@@ -78,9 +78,7 @@
 		class="org.springframework.security.cas.authentication.CasAuthenticationProvider"
 		p:serviceProperties-ref="serviceProperties" p:key="casAuthProviderKey">
 		<b:property name="authenticationUserDetailsService">
-			<b:bean id="userService"
-				class="com.gentics.kitchenoffice.service.KitchenOfficeUserService">
-			</b:bean>
+			<b:ref bean="KitchenOfficeUserService" />
 		</b:property>
 		<b:property name="ticketValidator">
 			<b:bean class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator"
