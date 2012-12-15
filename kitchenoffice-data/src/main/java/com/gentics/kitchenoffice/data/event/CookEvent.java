@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.gentics.kitchenoffice.data.Recipe;
 
 @NodeEntity
+@LocaleResourceName("event.cookevent.name")
 public class CookEvent extends Event{
 	
 	@Fetch

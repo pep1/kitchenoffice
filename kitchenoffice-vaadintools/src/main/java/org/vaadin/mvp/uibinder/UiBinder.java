@@ -19,9 +19,9 @@ import org.vaadin.mvp.uibinder.handler.I18nHandler;
 import org.vaadin.mvp.uibinder.handler.MethodHandler;
 import org.vaadin.mvp.uibinder.handler.ResourceHandler;
 import org.vaadin.mvp.uibinder.handler.UiHandler;
-import org.vaadin.mvp.uibinder.resource.EmptyUiMessageSource;
-import org.vaadin.mvp.uibinder.resource.ResourceBundleUiMessageSource;
 
+import com.gentics.kitchenoffice.webapp.resource.EmptyUiMessageSource;
+import com.gentics.kitchenoffice.webapp.resource.ResourceBundleUiMessageSource;
 import com.vaadin.ui.Component;
 
 public class UiBinder {

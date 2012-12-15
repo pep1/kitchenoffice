@@ -2,7 +2,7 @@ package com.gentics.kitchenoffice.service;
 
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -35,7 +35,7 @@ public class EventService {
 	@Autowired
 	private EatOutEventRepository eatOutEventRepo;
 	
-	private List<Class<? extends Event>> availableEvents = new ArrayList<Class<? extends Event>>();
+	private Collection<Class<? extends Event>> availableEvents = new ArrayList<Class<? extends Event>>();
 	
 	@PostConstruct
 	public void initialize() {
@@ -52,7 +52,7 @@ public class EventService {
 		availableEvents.addAll(classes);
 	}
 	
-	public List<Class<? extends Event>> getAvailableEvents() {
+	public Collection<Class<? extends Event>> getAvailableEvents() {
 		
 		if(availableEvents.size() == 0) {
 			log.error("no events found!");

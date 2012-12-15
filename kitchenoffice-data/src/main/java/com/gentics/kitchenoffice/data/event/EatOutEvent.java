@@ -6,7 +6,9 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 @NodeEntity
+@LocaleResourceName("event.eatoutevent.name")
 public class EatOutEvent extends Event {
+	
 	
 	@Fetch
     @RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH)
@@ -23,4 +25,5 @@ public class EatOutEvent extends Event {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.KitchenOfficeNavigator;
 
+import com.gentics.kitchenoffice.webapp.container.converter.KitchenOfficeConverterFactory;
 import com.gentics.kitchenoffice.webapp.view.HomeView;
 import com.gentics.kitchenoffice.webapp.view.StandardErrorView;
 import com.gentics.kitchenoffice.webapp.view.layout.MainLayout;
@@ -31,15 +32,15 @@ public class WebAppUI extends UI {
 	
 	@Value("${webapp.templatecache}")
 	private Boolean isTemplateCache;
-
-	@Autowired
-	private ApplicationContext context;
 	
 	@Autowired
 	private MainLayout layout;
 
 	@Autowired
 	private SecurityViewChangeListener viewChangeListener;
+	
+	@Autowired
+	private KitchenOfficeConverterFactory converterFactory;
 
 	private KitchenOfficeNavigator navigator;
 
@@ -47,12 +48,13 @@ public class WebAppUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-
-
 		log.debug("initializing WebApp instance");
 		
 		log.debug("Locale is " + getLocale().toString());
 		log.debug("Template cache: " + isTemplateCache);
+		
+		//set the converter factory
+		VaadinSession.getCurrent().setConverterFactory(converterFactory);
 		
 		setContent(layout);
 		setSizeFull();

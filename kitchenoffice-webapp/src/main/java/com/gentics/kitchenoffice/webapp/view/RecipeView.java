@@ -16,6 +16,7 @@ import ru.xpoft.vaadin.VaadinView;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.container.RecipeContainer;
+import com.gentics.kitchenoffice.webapp.controller.RecipeController;
 import com.gentics.kitchenoffice.webapp.view.component.table.ImageColumnGenerator;
 import com.gentics.kitchenoffice.webapp.view.form.RecipeForm;
 import com.gentics.kitchenoffice.webapp.view.form.field.IngredientFieldSlot;
@@ -70,14 +71,20 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 	@Autowired
 	private ApplicationContext context;
 	
+	@Autowired
+	private RecipeController recipeController;
+	
+	@Autowired ImageColumnGenerator imageColumnGenerator;
+	
 	public RecipeView() {
-		super(RecipeContainer.class);
+		super();
 	}
 
 	@PostConstruct
 	public void PostConstruct() {
 		log.debug("initializing Recipe View : " + this.toString());
 
+		container = recipeController.getContainer();
 	}
 	
 
@@ -90,7 +97,7 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 		table.setHeight("100%");
 		table.setImmediate(true);
 		table.setContainerDataSource(container);
-		table.addGeneratedColumn("thumb", (ImageColumnGenerator)context.getBean(ImageColumnGenerator.class));
+		table.addGeneratedColumn("thumb", imageColumnGenerator);
 		table.setVisibleColumns(visibleColumns);
 		table.setColumnHeaders(columnHeaders);
 		table.setColumnExpandRatio("name", 1.0f);
@@ -156,9 +163,9 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 	}
 
 	public void add() {
+		
+		Recipe newRecipe = recipeController.addNewRecipe();
 
-		Recipe newRecipe = new Recipe();
-		container.addItem(newRecipe);
 		// form.setItemDataSource will be executed in table value change handling
 
 		log.debug("added bean item, container size now is: " + container.size());
@@ -193,7 +200,7 @@ public class RecipeView extends AbstractItemSelectionView<Recipe> implements Val
 
 		BeanItem<Recipe> item = (BeanItem<Recipe>) form.getItemDataSource();
 
-		if (item.getBean().isNew()) {
+		if (item != null && item.getBean().isNew()) {
 			container.removeItem(item.getBean());
 		}
 

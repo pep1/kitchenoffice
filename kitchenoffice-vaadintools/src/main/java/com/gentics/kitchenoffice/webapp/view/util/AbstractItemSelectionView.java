@@ -28,18 +28,12 @@ public abstract class AbstractItemSelectionView<A extends AbstractPersistable> e
 
 	protected SpringDataBeanItemContainer<A> container;
 	
-	private Class<? extends SpringDataBeanItemContainer<A>> containerClazz;
-	
-	public AbstractItemSelectionView(Class<? extends SpringDataBeanItemContainer<A>> contClazz) {
-
-		this.containerClazz = contClazz;
+	public AbstractItemSelectionView(){
+		
 	}
 	
 	@PostConstruct
-	public void initialize() {
-		
-		// get right repository bean
-		container = context.getBean(containerClazz);
+	public void initialize(){
 	}
 
 	public void enter(ViewChangeEvent event) {

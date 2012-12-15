@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
 import org.vaadin.mvp.uibinder.IUiBindable;
 import org.vaadin.mvp.uibinder.UiBinder;
 import org.vaadin.mvp.uibinder.UiBinderException;
-import org.vaadin.mvp.uibinder.resource.ResourceBundleUiMessageSource;
 
+import com.gentics.kitchenoffice.webapp.resource.ResourceBundleUiMessageSource;
 import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;

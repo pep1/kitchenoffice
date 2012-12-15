@@ -20,6 +20,7 @@ import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
+@LocaleResourceName("event.name")
 public abstract class Event extends AbstractPersistable{
 
 	@Indexed

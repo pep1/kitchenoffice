@@ -1,6 +1,7 @@
 package com.gentics.kitchenoffice;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -61,7 +62,7 @@ public class ServiceTest {
 		
 		log.debug("starting first Test");
 		
-		List<Class<? extends Event>> events = eventService.getAvailableEvents();
+		Collection<Class<? extends Event>> events = eventService.getAvailableEvents();
 		
 		log.debug("found event classes: " + events);
 		

@@ -12,7 +12,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
 @Component
-@Scope("prototype")
+@Scope("singleton")
 public class ImageColumnGenerator implements ColumnGenerator{
 	
 	private static Logger log = Logger.getLogger(ImageColumnGenerator.class);

@@ -1,4 +1,4 @@
-package org.vaadin.mvp.uibinder;
+package com.gentics.kitchenoffice.webapp.resource;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

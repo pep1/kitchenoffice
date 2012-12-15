@@ -1,4 +1,4 @@
-package org.vaadin.mvp.uibinder.resource;
+package com.gentics.kitchenoffice.webapp.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +15,9 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.vaadin.mvp.uibinder.IUiMessageSource;
 
 
@@ -24,6 +27,9 @@ import org.vaadin.mvp.uibinder.IUiMessageSource;
  * 
  * @author tam
  */
+
+@Component
+@Scope("singleton")
 public class ResourceBundleUiMessageSource implements IUiMessageSource {
 	
 	protected static final String BUNDLE_EXTENSION = "properties";
@@ -31,10 +37,14 @@ public class ResourceBundleUiMessageSource implements IUiMessageSource {
 	protected static final Control UTF8_CONTROL = new UTF8Control();
 
   /** Map of resource bundles by locale */
-  private transient Map<Locale, ResourceBundle> resourceBundles;
+  private transient Map<Locale, ResourceBundle> resourceBundles = new HashMap<Locale, ResourceBundle>();
 
   /** ResourceBundle base name */
+  @Value("${i18n.basename}")
   private String baseName;
+  
+  public ResourceBundleUiMessageSource() {
+  }
 
   /**
    * Constructor; takes a <code>baseName</code> of the message properties files.
@@ -45,7 +55,6 @@ public class ResourceBundleUiMessageSource implements IUiMessageSource {
    */
   public ResourceBundleUiMessageSource(String baseName) {
     this.baseName = baseName;
-    this.resourceBundles = new HashMap<Locale, ResourceBundle>();
   }
 
   public String getMessage(String key, Locale locale) {
@@ -76,7 +85,7 @@ public class ResourceBundleUiMessageSource implements IUiMessageSource {
    *          requested locale
    * @return A resource bundle for the locale
    */
-  private ResourceBundle getBundle(Locale locale) {
+  public ResourceBundle getBundle(Locale locale) {
     if (resourceBundles.containsKey(locale)) {
       return resourceBundles.get(locale);
     }
