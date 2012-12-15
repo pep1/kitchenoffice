@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 
 @NodeEntity
 @LocaleResourceName("event.orderevent.name")
+@PathName("order")
 public class OrderEvent extends Event{
 	
 	@Fetch

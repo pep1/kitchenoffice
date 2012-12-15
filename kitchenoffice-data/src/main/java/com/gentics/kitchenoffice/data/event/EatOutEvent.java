@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 
 @NodeEntity
 @LocaleResourceName("event.eatoutevent.name")
+@PathName("eatout")
 public class EatOutEvent extends Event {
 	
 	

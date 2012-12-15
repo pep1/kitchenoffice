@@ -9,6 +9,7 @@ import com.gentics.kitchenoffice.data.Recipe;
 
 @NodeEntity
 @LocaleResourceName("event.cookevent.name")
+@PathName("cook")
 public class CookEvent extends Event{
 	
 	@Fetch

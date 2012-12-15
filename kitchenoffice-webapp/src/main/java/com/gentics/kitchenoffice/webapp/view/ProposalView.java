@@ -15,7 +15,7 @@ import org.vaadin.mvp.uibinder.annotation.UiField;
 import ru.xpoft.vaadin.VaadinView;
 
 import com.gentics.kitchenoffice.data.event.LocaleResourceName;
-import com.gentics.kitchenoffice.resourcemessage.ResourceMessage;
+import com.gentics.kitchenoffice.data.event.PathName;
 import com.gentics.kitchenoffice.service.EventService;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 import com.gentics.kitchenoffice.webapp.resource.ResourceBundleUiMessageSource;
@@ -23,8 +23,8 @@ import com.gentics.kitchenoffice.webapp.view.util.KitchenOfficeView;
 import com.gentics.kitchenoffice.webapp.view.util.MenuEntrySortOrder;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.ComboBox;
@@ -76,14 +76,14 @@ public class ProposalView extends KitchenOfficeView implements IUiBindable, IUiI
 	@Override
 	public void init() {
 		
+		log.debug("initializing view " + this.toString());
+		
 		eventMaxPersonsInput.setConverter(Integer.class);
 		
 		eventDateSelection.setValue(new Date());
 		eventDateSelection.setDateFormat("yyyy-MM-dd hh:mm");
 		eventDateSelection.setResolution(Resolution.MINUTE);
 		eventDateSelection.setShowISOWeekNumbers(true);
-		
-		//BeanItemContainer<String> eventContainer = new BeanItemContainer<String>(String.class);
 		
 		eventTypeSelect.setImmediate(true);
 		for(Class<? extends com.gentics.kitchenoffice.data.event.Event> event  : eventservice.getAvailableEvents()) {
@@ -103,7 +103,47 @@ public class ProposalView extends KitchenOfficeView implements IUiBindable, IUiI
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		log.debug("entering " + this.getClass().getSimpleName());
+
+		Class<? extends com.gentics.kitchenoffice.data.event.Event> toSelect = null;
+
+		// check if we can select a recipe specified by id in the parameters
+		if (event.getParameters() != null) {
+
+			String[] msgs = event.getParameters().split("/");
+
+			if (msgs.length == 1 && msgs[0] instanceof String
+					&& !((String) msgs[0]).isEmpty()) {
+				
+				String eventType = (String)msgs[0];
+				
+				for(Class<? extends com.gentics.kitchenoffice.data.event.Event> availableEvent  : eventservice.getAvailableEvents()) {
+					PathName annotation = availableEvent.getAnnotation(PathName.class);
+					String path = annotation.value();
+					if(path != null && path.equals(eventType)) {
+						toSelect = availableEvent;
+						break;
+					}
+				}
+			}
+		}
 		
+		// if no toSelect could be found default Uri Fragment
+		if(toSelect == null) {
+			if(Page.getCurrent() != null) {
+				// set view to this view
+				String uriFragment = "!" + this.getName();
+				Page.getCurrent().setUriFragment(uriFragment, false);
+			}
+			
+			return;
+		}
+		
+		if(toSelect != null) {
+			LocaleResourceName annotation = toSelect.getAnnotation(LocaleResourceName.class);
+			String resourceKey = annotation.value();
+			eventTypeSelect.select(ms.getMessage(resourceKey, VaadinSession.getCurrent().getLocale()));
+		}
 	}
 
 	@Override
@@ -119,6 +159,20 @@ public class ProposalView extends KitchenOfficeView implements IUiBindable, IUiI
 	@Override
 	public void valueChange(ValueChangeEvent event) {
 		log.debug("Selected event: " + eventTypeSelect.getConvertedValue() + " " + eventTypeSelect.getConvertedValue().getClass());
+		
+		if(eventTypeSelect.getConvertedValue() != null && Page.getCurrent() != null) {
+			// set view to this view
+			String uriFragment = "!" + this.getName();
+			
+			PathName annotation = (PathName) ((Class)eventTypeSelect.getConvertedValue()).getAnnotation(PathName.class);
+			String pathName = annotation.value();
+			
+			if(pathName != null) {
+				uriFragment += "/" + pathName;
+			}
+			
+			Page.getCurrent().setUriFragment(uriFragment, false);
+		}
 	}
 
 }
