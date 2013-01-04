@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder 
+  xmlns:ui="urn:org.vaadin.mvp.uibinder"
+  xmlns:m="urn:org.vaadin.mvp.uibinder.message"
+  xmlns:v="urn:import:com.vaadin.ui" >
+	<v:Table ui:field="table" width="100%" height="100%" immediate="true"></v:Table>
+	<v:HorizontalLayout ui:field="recipeContainer" width="100%" height="100%">
+		<v:Embedded ui:field="recipeImage" width="160px" height="160px">
+		</v:Embedded>
+		<v:VerticalLayout ui:field="infoContainer" width="100%" height="100%" >
+			<v:Label ui:field="recipeName"></v:Label>
+			<v:Label ui:field="recipeDescription"></v:Label>
+		</v:VerticalLayout>
+	</v:HorizontalLayout>
+</ui:UiBinder>
