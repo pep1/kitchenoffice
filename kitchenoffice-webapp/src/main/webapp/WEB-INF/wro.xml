@@ -1,0 +1,10 @@
+<groups xmlns="http://www.isdc.ro/wro">
+	<group name='vendor'>
+		<js>classpath:/META-INF/resources/webjars/**</js>
+		<css>classpath:/META-INF/resources/webjars/**</css>
+	</group>
+	<group name='app'>
+		<js>/javascript/**</js>
+		<css>/less/**</css>
+	</group>
+</groups>

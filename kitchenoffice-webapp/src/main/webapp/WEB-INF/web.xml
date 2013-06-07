@@ -12,7 +12,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:spring/applicationContext-dev.xml
+			${spring.app.context}
 			classpath:spring/applicationContextSecurity.xml
 		</param-value>
 	</context-param>
@@ -41,22 +41,4 @@
         <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
     </listener>
 
-	<!-- Vaadin servlet -->
-	<servlet>
-		<servlet-name>Vaadin Sample Application</servlet-name>
-		<servlet-class>ru.xpoft.vaadin.SpringVaadinServlet</servlet-class>
-		<init-param>
-			<param-name>beanName</param-name>
-			<param-value>webAppUI</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>Vaadin Sample Application</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Vaadin Sample Application</servlet-name>
-		<url-pattern>/VAADIN/*</url-pattern>
-	</servlet-mapping>
 </web-app>

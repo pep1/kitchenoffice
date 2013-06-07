@@ -1,0 +1,36 @@
+@base: #f5f5f5;
+
+.box-shadow (@style , @c) when (iscolor(@c)) {
+	box-shadow: @style @c;
+	-webkit-box-shadow: @style @c;
+	-moz-box-shadow: @style @c;
+}
+
+.border-radius (@radius) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+
+.box-shadow (@style , @alpha: 50%) when (isnumber(@alpha)) {
+	.box-shadow (@style , rgba(0, 0, 0, @alpha));
+}
+
+.gradient (@origin: left , @start: #ffffff , @stop: #000000) {
+	background-color: @start;
+	background-image: -webkit-linear-gradient(@origin, @start, @stop);
+	background-image: -moz-linear-gradient(@origin, @start, @stop);
+	background-image: -o-linear-gradient(@origin, @start, @stop);
+	background-image: -ms-linear-gradient(@origin, @start, @stop);
+	background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.size (@size) {
+	width: @size;
+	height: @size;
+}
+
+
+.test {
+	padding: 4px;
+}
