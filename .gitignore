@@ -4,6 +4,8 @@ target/
 .classpath
 *.orig
 
+kitchenoffice-webapp/src/main/webapp/assets/
+
 widgetsets/
 gwt-unitCache/
 

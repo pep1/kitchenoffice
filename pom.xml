@@ -55,7 +55,6 @@
 		<module>kitchenoffice-restapi-webapp</module>
 		<module>kitchenoffice-server</module>
 		<module>kitchenoffice-webapp</module>
-		<module>kitchenoffice-vaadintools</module>
 	</modules>
 
 	<properties>
