@@ -26,6 +26,7 @@ public abstract class Event extends AbstractPersistable{
 	@Indexed
 	private Date date;
 	
+	@Indexed
 	private String note;
 	
 	@Fetch

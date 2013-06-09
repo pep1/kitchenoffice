@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-asm</artifactId>
-			<version>${spring.version}</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -82,7 +82,6 @@
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-spring</artifactId>
-			<version>1.14</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -131,27 +130,6 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.enunciate</groupId>
-				<artifactId>maven-enunciate-plugin</artifactId>
-				<version>1.25</version>
-				<configuration>
-					<configFile>src/main/conf/enunciate.xml</configFile>
-					<includes>
-						<include>com.gentics.kitchenoffice.rest.**</include>
-					</includes>
-					<compileDebug>true</compileDebug>
-					<docsDir>${project.build.directory}/docs</docsDir>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>docs</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
