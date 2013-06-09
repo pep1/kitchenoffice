@@ -1,5 +1,7 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>  
 <jsp:include page="include/header.jsp" />
-<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -7,7 +9,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">KitchenOffice</a>
+          <a class="brand" href="#">
+          	<spring:message code="header.brand" />
+          	<small><spring:message code="header.beta" /> - ${project.version}</small>
+          </a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
               Logged in as <a href="#" class="navbar-link">Username</a>
