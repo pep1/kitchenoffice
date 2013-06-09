@@ -24,6 +24,7 @@
 		<beans:property name="paramName" value="lang" />
 	</beans:bean>
 
+	<beans:bean class = "org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
 
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -33,6 +34,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<mvc:resources mapping="/assets/**" location="/assets/" />
+	<mvc:resources mapping="/assets/css/**" location="/assets/css/" />
+	<mvc:resources mapping="/assets/js/**" location="/assets/js/" />
+	<!-- font awesome mapping -->
+	<mvc:resources mapping="/assets/font/**" location="classpath:/META-INF/resources/webjars/font-awesome/3.1.1/font/"/>
 
 </beans:beans>

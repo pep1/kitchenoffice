@@ -10,12 +10,11 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">
-          	<spring:message code="header.brand" />
-          	<small><spring:message code="header.beta" /> - ${project.version}</small>
+          	<spring:message code="header.brand" /> <small>${project.version}</small>
           </a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
+            <spring:message code="header.greeting" /> <a href="#" class="navbar-link">Username</a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -31,7 +30,7 @@
       <div class="row-fluid">
         <div class="hero-unit">
 
-           <h2>Selectable food...</h2><hr><div class="row-fluid">
+           <h2><i class="icon-food"></i> Selectable food...</h2><hr><div class="row-fluid">
             <div class="span4">
               <h2>Heading</h2>
               <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
