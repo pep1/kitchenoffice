@@ -94,6 +94,27 @@ public class User extends AbstractPersistable implements UserDetails {
 		return enabled;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @return Gravatar url
+	 *
+	public String getGravatar(Integer size) {
+		
+		if(size == null) {
+			size = 50;
+		}
+		
+		return new Gravatar()
+	    .setSize(size)
+	    .setHttps(true)
+	    .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
+	    .setStandardDefaultImage(DefaultImage.MONSTER)
+	    .getUrl(email);
+	}
+	
+	*/
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;

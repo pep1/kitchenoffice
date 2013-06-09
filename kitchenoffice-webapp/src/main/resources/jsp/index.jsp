@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>  
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
+<%@ taglib prefix="grav" uri="/WEB-INF/classes/tld/gravatarTag.tld"%> 
 <jsp:include page="include/header.jsp" />
 	<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -14,7 +15,7 @@
           </a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-            <spring:message code="header.greeting" /> <a href="#" class="navbar-link">Username</a>
+            <img src='<grav:gravatar email="${user.email}" size="20" />' /><spring:message code="header.greeting" /> <a href="#" class="navbar-link">${user.username}</a>
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>

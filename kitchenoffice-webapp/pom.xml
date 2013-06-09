@@ -104,6 +104,11 @@
 			<artifactId>prettytime</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>de.bripkens</groupId>
+			<artifactId>gravatar4java</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
@@ -116,6 +121,13 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
 
