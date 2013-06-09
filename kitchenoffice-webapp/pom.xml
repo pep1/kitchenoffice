@@ -11,6 +11,7 @@
 	<packaging>war</packaging>
 
 	<name>Kitchenoffice Webapplication</name>
+	<description>Experimental food organisation for your office!</description>
 
 	<properties>
 		<neo4j.db.location>/tmp/kitchenoffice/neo4j-database</neo4j.db.location>
