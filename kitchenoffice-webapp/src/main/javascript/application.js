@@ -1,4 +1,4 @@
-angular.module('kitchenOfficeApp', [])
+angular.module('kitchenOfficeApp', ['linkModule'])
 .config([ '$routeProvider', '$locationProvider', '$httpProvider', 
 		function($routeProvider, $locationProvider) {
 	
