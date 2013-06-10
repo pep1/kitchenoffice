@@ -7,7 +7,7 @@ function(location) {
 			var path = attrs.href;
 			// hack because path does bot return
 			// including hashbang
-			path = path.substring(2);
+			path = '/kitchenoffice-webapp/' + path;
 			scope.location = location;
 			scope.$watch('location.path()', function(newPath) {
 				if (path === newPath) {
