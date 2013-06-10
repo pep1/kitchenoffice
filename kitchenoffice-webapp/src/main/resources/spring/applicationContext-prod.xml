@@ -20,6 +20,16 @@
 	<context:spring-configured />
 	<context:annotation-config />
 	<context:component-scan base-package="com.gentics.kitchenoffice" />
+	
+	<!-- multilanguage -->
+	<b:bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<b:property name="basenames">
+			<b:list>
+				<b:value>classpath:i18n/messages</b:value>
+			</b:list>
+		</b:property>
+	</b:bean>
 
 	<b:bean id="graphDatabaseService"
 		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
