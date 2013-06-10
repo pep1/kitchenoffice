@@ -4,13 +4,13 @@
 <jsp:include page="include/header.jsp" />
 	<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">
+          <a class="brand" href="#!/home">
           	<spring:message code="header.brand" />
           </a>
           <div class="nav-collapse collapse">
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="container-fluid" data-ng-view>
+    <div class="container" data-ng-view>
 	</div>
 
     <footer>
