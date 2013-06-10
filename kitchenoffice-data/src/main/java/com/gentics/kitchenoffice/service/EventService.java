@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.data.user.User;
+import com.gentics.kitchenoffice.repository.EventRepository;
 
 @Service
 @Scope("singleton")
@@ -23,13 +24,23 @@ public class EventService {
 	private static Logger log = Logger.getLogger(EventService.class);
 	
 	@Autowired
-	private EventService eventService;
+	private EventRepository eventRepository;
 	
 	private Collection<Class<? extends Event>> availableEvents = new ArrayList<Class<? extends Event>>();
 	
 	@PostConstruct
 	public void initialize() {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
+	}
+	
+	
+	public List<String> getAvailableEventTypes() {
+		
+		List<String> availableEventTypes = new ArrayList<String>();
+		
+		
+		
+		return availableEventTypes;
 	}
 	
 	public Collection<Class<? extends Event>> getAvailableEvents() {

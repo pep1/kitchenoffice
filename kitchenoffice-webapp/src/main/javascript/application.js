@@ -5,18 +5,18 @@ angular.module('kitchenOfficeApp', ['linkModule'])
 	
 	$locationProvider.html5Mode(true);
 	
-	$routeProvider.when('/home', {
+	$routeProvider.when('/kitchenoffice-webapp/home', {
 		templateUrl : '/kitchenoffice-webapp/partials/home',
 		controller : EventDisplayController
 	});
 	
-	$routeProvider.when('/event/create', {
+	$routeProvider.when('/kitchenoffice-webapp/event/create', {
 		templateUrl : '/kitchenoffice-webapp/partials/event/create',
 		controller : EventCreateController
 	});
 	
 	$routeProvider.otherwise({
-		redirectTo : '/home'
+		redirectTo : '/kitchenoffice-webapp/home'
 	});
 	
 	$locationProvider.hashPrefix('!');
