@@ -20,7 +20,7 @@ import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
-public abstract class Event extends AbstractPersistable{
+public class Event extends AbstractPersistable{
 	
 	private EventType type;
 
@@ -28,11 +28,7 @@ public abstract class Event extends AbstractPersistable{
 	private Date date;
 	
 	@Indexed
-	private String note;
-	
-	@Fetch
-	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH)
-	private Set<Participant> participants = new HashSet<Participant>();
+	private String description;
 	
 	@Fetch
     @RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH)
@@ -43,11 +39,16 @@ public abstract class Event extends AbstractPersistable{
 	private Recipe recipe;
 	
 	@Fetch
+	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH)
+	private Set<Participant> participants = new HashSet<Participant>();
+	
+	@Fetch
 	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.BOTH)
 	private Set<Comment> comments = new HashSet<Comment>();
 	
 	public Event() {
-		
+		super();
+		this.date = new Date();
 	}
 	
 	public Event(Date date) {
@@ -71,12 +72,12 @@ public abstract class Event extends AbstractPersistable{
 		this.date = date;
 	}
 
-	public String getNote() {
-		return note;
+	public String getDesciption() {
+		return description;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Set<Participant> getParticipants() {
