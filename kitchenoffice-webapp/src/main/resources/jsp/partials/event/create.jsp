@@ -20,7 +20,7 @@
 <h4>2. What type?</h4>
 <div class="row-fluid" ng-model="event.type" bs-buttons-radio>
 	<div class="span4">
-		<button type="button" class="btn btn-large btn-block btn-info" value="goout">
+		<button type="button" class="btn btn-large btn-block btn-info" value="EXTERNAL">
 			<spring:message code="event.goout.name" />
 		</button>
 		<p>
@@ -29,7 +29,7 @@
 	</div>
 	<!--/span-->
 	<div class="span4">
-		<button type="button" class="btn btn-large btn-block btn-info" value="cook">
+		<button type="button" class="btn btn-large btn-block btn-info" value="INTERNAL">
 			<spring:message code="event.cook.name" />
 		</button>
 		<p>
@@ -38,7 +38,7 @@
 	</div>
 	<!--/span-->
 	<div class="span4">
-		<button type="button" class="btn btn-large btn-block btn-info" value="order">
+		<button type="button" class="btn btn-large btn-block btn-info" value="ORDER">
 			<spring:message code="event.order.name" />
 		</button>
 		<p>
