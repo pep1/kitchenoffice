@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,9 +204,6 @@ public class RecipeTest {
 		Recipe result2 = recipeRepository.findByPropertyValue("name",
 				"Nudeln mit Tomatensoße");
 
-		Calendar cal = Calendar.getInstance();
-
-		cal.add(Calendar.DATE, 1);
 
 		Job job1 = new Job();
 		job1.setName("Teller waschen");
@@ -218,18 +217,16 @@ public class RecipeTest {
 
 		Event m1 = new Event();
 		m1.setRecipe(result);
-		m1.setDate(cal.getTime());
+		m1.setDate(DateTime.now());
 		m1.addParticipant(u1, job1);
 		mealRepository.save(m1);
 
 		m1.addComment(u2, "is gut geworden! nächstes mal mehr chili..");
 		mealRepository.save(m1);
 
-		cal.add(Calendar.DATE, 1);
-
 		Event m2 = new Event();
 		m2.setRecipe(result2);
-		m2.setDate(cal.getTime());
+		m2.setDate(DateTime.now().plus(Duration.standardHours(2)));
 		m2.addParticipant(u1, job1);
 		mealRepository.save(m2);
 		m2.addParticipant(u2, job2);

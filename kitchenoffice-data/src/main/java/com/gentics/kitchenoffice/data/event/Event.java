@@ -1,9 +1,9 @@
 package com.gentics.kitchenoffice.data.event;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -25,7 +25,7 @@ public class Event extends AbstractPersistable{
 	private EventType type;
 
 	@Indexed
-	private Date date;
+	private DateTime date;
 	
 	@Indexed
 	private String description;
@@ -48,10 +48,10 @@ public class Event extends AbstractPersistable{
 	
 	public Event() {
 		super();
-		this.date = new Date();
+		this.date = DateTime.now();
 	}
 	
-	public Event(Date date) {
+	public Event(DateTime date) {
 		super();
 		this.date = date;
 	}
@@ -64,11 +64,11 @@ public class Event extends AbstractPersistable{
 		this.type = type;
 	}
 
-	public Date getDate() {
+	public DateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(DateTime date) {
 		this.date = date;
 	}
 

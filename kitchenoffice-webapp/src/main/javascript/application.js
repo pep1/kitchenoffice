@@ -1,4 +1,4 @@
-angular.module('kitchenOfficeApp', ['linkModule'])
+angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives'])
 
 .config([ '$routeProvider', '$locationProvider', '$httpProvider', 
 		function($routeProvider, $locationProvider) {
@@ -7,7 +7,7 @@ angular.module('kitchenOfficeApp', ['linkModule'])
 	
 	$routeProvider.when('/kitchenoffice-webapp/home', {
 		templateUrl : '/kitchenoffice-webapp/partials/home',
-		controller : EventDisplayController
+		controller : HomeController
 	});
 	
 	$routeProvider.when('/kitchenoffice-webapp/event/create', {
@@ -26,10 +26,10 @@ angular.module('kitchenOfficeApp', ['linkModule'])
 });
 
 
-function EventDisplayController($rootScope, $location) {
+function HomeController($rootScope, $scope, $location) {
 	
 };
 
-function EventCreateController($rootScope, $location) {
-	
+function EventCreateController($rootScope, $scope, $location) {
+	$scope.event = {};
 };
