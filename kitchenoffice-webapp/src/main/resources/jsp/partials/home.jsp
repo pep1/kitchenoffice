@@ -9,9 +9,9 @@
 	</div>
 	<div class="span3">
 		<div class="pull-right">
-			or&nbsp;&nbsp;&nbsp;<a href="#!/event/create"
-				class="btn btn-large btn-primary"><spring:message
-					code="event.create" /></a>
+			or&nbsp;&nbsp;&nbsp;<a href="event/create"
+				class="btn btn-large btn-primary">
+				<i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</div>
 	</div>
 </div>

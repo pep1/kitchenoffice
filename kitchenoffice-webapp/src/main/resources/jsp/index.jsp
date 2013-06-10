@@ -10,7 +10,7 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="brand" href="#!/home"> <spring:message
+			<a class="brand" href="home"> <spring:message
 					code="header.brand" />
 			</a>
 			<div class="nav-collapse collapse">
@@ -20,9 +20,9 @@
 						src='<gravatar:gravatar email="${user.email}" size="40" />' />
 				</p>
 				<ul class="nav">
-					<li><a href="#!/home" data-active-link="active"><i
+					<li><a href="home" data-active-link="active"><i
 							class="icon-home"></i> Home</a></li>
-					<li><a href="#!/event/create" data-active-link="active"><i
+					<li><a href="event/create" data-active-link="active"><i
 							class="icon-edit"></i> create Event</a></li>
 				</ul>
 			</div>

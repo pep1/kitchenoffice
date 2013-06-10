@@ -14,7 +14,7 @@
 	<context:component-scan base-package="com.gentics.kitchenoffice.controller" />
 
 	<beans:bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<beans:property name="defaultLocale" value="en" />
 	</beans:bean>
 
@@ -23,13 +23,10 @@
 		<beans:property name="paramName" value="lang" />
 	</beans:bean>
 
-	<beans:bean
-		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	<beans:bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
 
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<beans:property name="prefix" value="/WEB-INF/classes/jsp/" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="exposedContextBeanNames">

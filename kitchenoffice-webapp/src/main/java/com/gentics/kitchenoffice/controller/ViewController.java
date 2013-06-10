@@ -30,4 +30,16 @@ public class ViewController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView getHomepage(Model model) {
+		
+		return getIndexRootpage(model);
+	}
+	
+	@RequestMapping(value = "/event/*", method = RequestMethod.GET)
+	public ModelAndView getEventpage(Model model) {
+		
+		return getIndexRootpage(model);
+	}
+	
 }
