@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 @RelationshipEntity
-public class Incredient extends AbstractPersistable{
+public class Ingredient extends AbstractPersistable{
 	
 	@Fetch
 	@StartNode
@@ -18,11 +18,11 @@ public class Incredient extends AbstractPersistable{
     
     private double amount;
     
-    public Incredient(){
+    public Ingredient(){
     	
     }
 
-	public Incredient(Article article, Recipe recipe, double amount) {
+	public Ingredient(Article article, Recipe recipe, double amount) {
 		super();
 		this.article = article;
 		this.recipe = recipe;

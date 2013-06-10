@@ -38,7 +38,7 @@ public class Recipe extends AbstractPersistable{
 
     @Fetch
     @RelatedToVia(type = "IS_NEEDED_FOR", direction = Direction.BOTH)
-    private Set<Incredient> incredients = new HashSet<Incredient>();
+    private Set<Ingredient> incredients = new HashSet<Ingredient>();
     
     @Fetch
     @RelatedTo(type = "RECIPE_HAS_COMMENT", direction = Direction.BOTH)
@@ -117,11 +117,11 @@ public class Recipe extends AbstractPersistable{
 		this.creator = user;
 	}
 
-	public Set<Incredient> getIncredients() {
+	public Set<Ingredient> getIncredients() {
 		return incredients;
 	}
 
-	public void setIncredients(Set<Incredient> incredients) {
+	public void setIncredients(Set<Ingredient> incredients) {
 		this.incredients = incredients;
 	}
 	
@@ -141,11 +141,11 @@ public class Recipe extends AbstractPersistable{
 		this.tags = tags;
 	}
 
-	public Incredient addArticle(Article article, double amount) {
+	public Ingredient addArticle(Article article, double amount) {
 		
 		Assert.notNull(article, "article may not be null");
 		
-		Incredient in = new Incredient(article, this, amount);
+		Ingredient in = new Ingredient(article, this, amount);
 		this.incredients.add(in);
 		
 		return in;
@@ -166,7 +166,7 @@ public class Recipe extends AbstractPersistable{
 		
 		double price = 0;
 		
-		for (Incredient incredient : incredients) {
+		for (Ingredient incredient : incredients) {
 			price += incredient.getArticle().getPrice() * incredient.getAmount();
 		}
 		

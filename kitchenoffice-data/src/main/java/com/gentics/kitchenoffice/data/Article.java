@@ -26,7 +26,7 @@ public class Article extends AbstractPersistable {
     
     @Fetch
     @RelatedToVia(type = "IS_NEEDED_IN", direction = Direction.BOTH)
-    private Set<Incredient> incredients = new HashSet<Incredient>();
+    private Set<Ingredient> incredients = new HashSet<Ingredient>();
     
     public Article() {
     	
@@ -71,11 +71,11 @@ public class Article extends AbstractPersistable {
 		this.image = image;
 	}
 	
-	public Set<Incredient> getIncredients() {
+	public Set<Ingredient> getIncredients() {
 		return incredients;
 	}
 
-	public void setIncredients(Set<Incredient> incredients) {
+	public void setIncredients(Set<Ingredient> incredients) {
 		this.incredients = incredients;
 	}
 
