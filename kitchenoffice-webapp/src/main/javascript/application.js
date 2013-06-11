@@ -51,14 +51,24 @@ function EventCreateController($scope) {
 	$scope.timeString = moment(now).format('hh:mm A');
 	$scope.dateString = moment().startOf('day').add(2, 'hours').toDate();
 	
-	// calculating the real date value
-	$scope.date = function() {
+	$scope.dateFromNow = function() {
 		var dateDate = moment($scope.dateString);
 		var dateTime = moment($scope.timeString, 'hh:mm A');
 		var duration = moment.duration({ 'hours': dateTime.hours(), 'minutes': dateTime.minutes()});
 		
 		dateDate.add(duration);
 		
+		return dateDate.fromNow();
+	};
+	
+	// calculating the real date value
+	$scope.date = function() {
+		var dateDate = moment($scope.dateString);
+		var dateTime = moment($scope.timeString, 'hh:mm A');
+		var duration = moment.duration({ 'hours': dateTime.hours(), 'minutes': dateTime.minutes()});
+		
+		// set the values
+		dateDate.add(duration);
 		$scope.event.date = dateDate;
 		
 		return dateDate;

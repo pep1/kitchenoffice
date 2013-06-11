@@ -7,16 +7,21 @@
 </div>
 <hr>
 <h4>1. When?</h4>
-
-<div class="control-group input-append">
-  <input type="text" ng-model="dateString" data-date-format="DD yyyy.mm.dd" bs-datepicker>
-  <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-</div>
-<div class="control-group input-append">
-  <input type="text" ng-model="timeString" bs-timepicker>
-  <button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></buttoni>
-</div>
-
+<form class="form-inline">
+	<div class="control-group input-append">
+		<input type="text" ng-model="dateString" data-date-format="DD yyyy.mm.dd" bs-datepicker>
+		<button type="button" class="btn" data-toggle="datepicker">
+			<i class="icon-calendar"></i>
+		</button>
+	</div>
+	<div class="control-group input-append">
+		<input type="text" ng-model="timeString" bs-timepicker>
+		<button type="button" class="btn" data-toggle="timepicker">
+			<i class="icon-time"></i>
+			</buttoni>
+	</div>
+	<span class="help-inline">{{dateFromNow()}}</span>
+</form>
 <h4>2. What type?</h4>
 <div class="row-fluid" ng-model="event.type" bs-buttons-radio>
 	<div class="span4">
@@ -48,14 +53,7 @@
 	<!--/span-->
 </div>
 <hr>
-
 <pre>
 DEBUG:
 Event {{event}}
-
-timeString {{timeString}}
-dateString {{dateString}}
-
-date {{date()}}
-
 </pre>
