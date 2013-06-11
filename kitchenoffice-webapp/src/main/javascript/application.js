@@ -48,13 +48,13 @@ function EventCreateController($scope) {
 	now.setMinutes((quarterHours*15)%60);
 	
 	// initial values for date and time
-	$scope.timeString = moment(now).format('HH:mm a');
-	$scope.dateString;
+	$scope.timeString = moment(now).format('hh:mm A');
+	$scope.dateString = moment().startOf('day').add(2, 'hours').toDate();
 	
 	// calculating the real date value
 	$scope.date = function() {
 		var dateDate = moment($scope.dateString);
-		var dateTime = moment($scope.timeString, 'HH:mm a');
+		var dateTime = moment($scope.timeString, 'hh:mm A');
 		var duration = moment.duration({ 'hours': dateTime.hours(), 'minutes': dateTime.minutes()});
 		
 		dateDate.add(duration);

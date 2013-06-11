@@ -9,7 +9,7 @@
 <h4>1. When?</h4>
 
 <div class="control-group input-append">
-  <input type="text" ng-model="dateString" data-date-format="DD mm.dd.yyyy" bs-datepicker>
+  <input type="text" ng-model="dateString" data-date-format="DD yyyy.mm.dd" bs-datepicker>
   <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
 </div>
 <div class="control-group input-append">
