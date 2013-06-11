@@ -6,7 +6,9 @@
 		
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js</js>
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/locales/**</js>
-		<js>classpath:META-INF/resources/webjars/bootstrap-timepicker/0.2.1/js/bootstrap-timepicker.js</js>
+		
+		<js>https://raw.github.com/jdewit/bootstrap-timepicker/master/js/bootstrap-timepicker.js</js>
+		<js>https://raw.github.com/timrwood/moment/develop/moment.js</js>
 		
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.7/angular.js</js>
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.7/angular-resource.js</js>
@@ -16,7 +18,7 @@
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap-responsive.css</css>
 		
 		<css>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/css/datepicker.css</css>
-		<css>classpath:META-INF/resources/webjars/bootstrap-timepicker/0.2.1/css/bootstrap-timepicker.css</css>
+		<css>https://raw.github.com/jdewit/bootstrap-timepicker/master/css/bootstrap-timepicker.css</css>
 		
 		<css>classpath:META-INF/resources/webjars/font-awesome/3.1.1/css/font-awesome.css</css>
 	</group>
