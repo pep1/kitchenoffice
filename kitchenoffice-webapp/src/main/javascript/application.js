@@ -47,20 +47,19 @@ function EventCreateController($scope) {
 			date: null
 	};
 	
-	// calculate actual now rounded to quarter of an hour
-	var now = new Date();
-	var mins = now.getMinutes();
-	var quarterHours = Math.round(mins/15);
-	if (quarterHours == 4) {
-	    now.setHours(now.getHours()+1);
-	}
-	now.setMinutes((quarterHours*15)%60);
-	
+	var now = moment();
+	var todayStart = now.local().startOf('day');
 	
 	// initial values for date and time
-	$scope.timeString = moment(now).local().format('hh:mm A');
-	$scope.dateString = moment().local().startOf('day').format('YYYY.MM.DD');
+	$scope.timeString = todayStart.add(12, 'hours').format('hh:mm A');
 	
+	if (moment().hours() > 12) {
+		// afternoon so set to tommorrow
+		$scope.dateString = todayStart.add(1, 'days').format('YYYY.MM.DD');
+	} else {
+		// before highnoon
+		$scope.dateString = todayStart.format('YYYY.MM.DD');
+	}
 	
 	// calculating time and update it to the variables
 	$scope.dateFromNow = function() {
