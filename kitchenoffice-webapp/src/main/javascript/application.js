@@ -1,8 +1,7 @@
-angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives'])
-
+var app = angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives'])
 .config([ '$routeProvider', '$locationProvider', '$httpProvider', 
 		function($routeProvider, $locationProvider) {
-	
+
 	$locationProvider.html5Mode(true);
 	
 	$routeProvider.when('/kitchenoffice-webapp/home', {
@@ -21,7 +20,17 @@ angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives'])
 	
 	$locationProvider.hashPrefix('!');
 
-}]).run(function($rootScope, $location) {
+}]);
+app.value(
+	'$strapConfig', 
+	{
+		datepicker: {
+			language: 'en',
+			format: 'yyyy.mm.dd',
+			todayHighlight: true
+	}
+});
+app.run(function($rootScope, $location) {
 
 });
 
@@ -47,30 +56,21 @@ function EventCreateController($scope) {
 	}
 	now.setMinutes((quarterHours*15)%60);
 	
+	
 	// initial values for date and time
-	$scope.timeString = moment(now).format('hh:mm A');
-	$scope.dateString = moment().startOf('day').add(2, 'hours').toDate();
+	$scope.timeString = moment(now).local().format('hh:mm A');
+	$scope.dateString = moment().local().startOf('day').format('YYYY.MM.DD');
 	
+	
+	// calculating time and update it to the variables
 	$scope.dateFromNow = function() {
-		var dateDate = moment($scope.dateString);
+		var dateDate = moment($scope.dateString)	;
 		var dateTime = moment($scope.timeString, 'hh:mm A');
-		var duration = moment.duration({ 'hours': dateTime.hours(), 'minutes': dateTime.minutes()});
+		var concatenatedDate = moment([dateDate.years(), dateDate.month(), dateDate.date(), dateTime.hours(), dateTime.minutes()]);
 		
-		dateDate.add(duration);
+		$scope.event.date = concatenatedDate.format();
 		
-		return dateDate.fromNow();
+		return concatenatedDate.fromNow();
 	};
 	
-	// calculating the real date value
-	$scope.date = function() {
-		var dateDate = moment($scope.dateString);
-		var dateTime = moment($scope.timeString, 'hh:mm A');
-		var duration = moment.duration({ 'hours': dateTime.hours(), 'minutes': dateTime.minutes()});
-		
-		// set the values
-		dateDate.add(duration);
-		$scope.event.date = dateDate;
-		
-		return dateDate;
-	};
 };

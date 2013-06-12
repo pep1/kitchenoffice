@@ -12,7 +12,7 @@
 		
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.7/angular.js</js>
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.7/angular-resource.js</js>
-		<js>classpath:META-INF/resources/webjars/angular-strap/0.7.3/angular-strap.js</js>
+		<js>https://raw.github.com/mgcrea/angular-strap/master/dist/angular-strap.js</js>
 
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap.css</css>
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap-responsive.css</css>
