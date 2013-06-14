@@ -20,7 +20,8 @@
 	<!-- Activate Spring annotation support -->
 	<context:spring-configured />
 	<context:annotation-config />
-	<context:component-scan base-package="com.gentics.kitchenoffice.service,com.gentics.kitchenoffice.repository" />
+	
+	<context:component-scan base-package="com.gentics.kitchenoffice.repository, com.gentics.kitchenoffice.service" />
 	
 	<!-- multilanguage -->
 	<b:bean id="messageSource"

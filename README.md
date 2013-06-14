@@ -1,5 +1,9 @@
 ### Kitchen Office Project
 
-# Experimental food organisation for your office!
+#### Experimental food organisation for your office!
 
-For Documentation please take a look at the [Project Homepage](http://gentics.github.com/kitchenoffice/site/0.0.1-SNAPSHOT/index.html)
+#### Technologies used in the Project
+
+1. [Spring](http://www.springsource.org/)
+2. [Spring Data NEO4j](http://www.springsource.org/spring-data/neo4j)
+3. [Angular JS](http://angularjs.org/)

@@ -11,121 +11,17 @@
 	<packaging>war</packaging>
 
 	<name>Kitchenoffice Webapplication</name>
-	<description>Experimental food organisation for your office!</description>
 
 	<properties>
 		<neo4j.db.location>/tmp/kitchenoffice/neo4j-database</neo4j.db.location>
 	</properties>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>com.gentics</groupId>
-			<artifactId>kitchenoffice-data</artifactId>
+			<artifactId>kitchenoffice-api</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-		</dependency>
-
-		<!-- Jersey -->
-		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-multipart</artifactId>
-		</dependency>
-
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
-
-		<!-- Spring Security CAS -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-cas</artifactId>
-		</dependency>
-
-		<!-- Spring Data Neo4j -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-neo4j-rest</artifactId>
-		</dependency>
-
-		<!-- Tools -->
-		<dependency>
-			<groupId>net.coobird</groupId>
-			<artifactId>thumbnailator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.imgscalr</groupId>
-			<artifactId>imgscalr-lib</artifactId>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>jmimemagic</groupId>
-			<artifactId>jmimemagic</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.ocpsoft.prettytime</groupId>
-			<artifactId>prettytime</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.bripkens</groupId>
-			<artifactId>gravatar4java</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- JS Frameworks -->
@@ -152,6 +48,24 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap-timepicker</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+			<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<version>4.8.2</version>
 		</dependency>
 	</dependencies>
 
@@ -227,7 +141,6 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>C:/TEMP/neo4j-db</db.location>
-				<spring.app.context>classpath:spring/applicationContext-dev.xml</spring.app.context>
 			</properties>
 		</profile>
 		<profile>
@@ -242,7 +155,6 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
-				<spring.app.context>classpath:spring/applicationContext-dev.xml</spring.app.context>
 			</properties>
 		</profile>
 		<profile>
@@ -251,7 +163,6 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
-				<spring.app.context>classpath:spring/applicationContext-prod.xml</spring.app.context>
 			</properties>
 		</profile>
 	</profiles>

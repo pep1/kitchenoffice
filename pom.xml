@@ -10,9 +10,10 @@
 	<packaging>pom</packaging>
 
 	<name>Kitchenoffice Project</name>
+	<description>Experimental food organisation for your office!</description>
 
 	<url>https://github.com/gentics/kitchenoffice</url>
-	<inceptionYear>2012</inceptionYear>
+	<inceptionYear>2013</inceptionYear>
 
 	<organization>
 		<name>Gentics Software GmbH</name>
@@ -49,12 +50,11 @@
 		<developerConnection>scm:git:git@github.com:gentics/kitchenoffice.git</developerConnection>
 	</scm>
 
-
 	<modules>
 		<module>kitchenoffice-data</module>
-		<module>kitchenoffice-restapi-webapp</module>
 		<module>kitchenoffice-server</module>
 		<module>kitchenoffice-webapp</module>
+		<module>kitchenoffice-api</module>
 	</modules>
 
 	<properties>
@@ -90,45 +90,15 @@
 
 	<build>
 		<plugins>
-
-			<!-- START for site creation -->
 			<plugin>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.1</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<skipDeploy>true</skipDeploy>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.kohsuke</groupId>
-						<artifactId>doxia-module-markdown</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
-
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>0.7</version>
-				<configuration>
-					<message>Creating site for ${project.artifactId},
-						${project.version}</message>
-					<!-- this does the trick to place every module in the correct subfolder -->
-					<path>${project.distributionManagement.site.url}</path>
-					<merge>true</merge>
-				</configuration>
-				<executions>
-					<execution>
-						<id>github-site</id>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>site-deploy</phase>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- END for site creation -->
 
 		</plugins>
 	</build>
@@ -213,17 +183,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-apects</artifactId>
+				<artifactId>spring-aspects</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aspects</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
@@ -495,47 +460,8 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.6</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>project-team</report>
-							<report>cim</report>
-							<report>scm</report>
-							<report>issue-tracking</report>
-							<report>help</report>
-							<report>summary</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.12.4</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9</version>
-			</plugin>
-		</plugins>
-	</reporting>
-
 
 	<distributionManagement>
-		<!-- Dummy github site deploy -->
-		<site>
-			<id>github-pages-site</id>
-			<name>Deployment through GitHub's site deployment plugin (Dummy)</name>
-			<url>site/${project.version}</url>
-		</site>
-
 		<!-- Gentics Distribution Management -->
 		<repository>
 			<id>archiva.com.gentics.public</id>
