@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.webservice;
 
 import java.util.Iterator;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
@@ -39,6 +40,12 @@ public class EventWebService {
 
 	@Autowired
 	private EventService eventService;
+	
+	@PostConstruct
+	public void initialize() {
+		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
+		
+	}
 
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")

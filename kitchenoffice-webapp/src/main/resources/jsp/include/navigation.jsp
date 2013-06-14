@@ -15,8 +15,8 @@
 					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" />' />
 				</p>
 				<ul class="nav">
-					<li><a href="home" data-active-link="active"><i class="icon-home"></i> Home</a></li>
-					<li><a href="event/create" data-active-link="active"><i class="icon-edit"></i> create Event</a></li>
+					<li><a href="/kitchenoffice-webapp/home" data-active-link="active"><i class="icon-home"></i> Home</a></li>
+					<li><a href="/kitchenoffice-webapp/event/create" data-active-link="active"><i class="icon-edit"></i> create Event</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
