@@ -55,6 +55,11 @@
 <div class="row-fluid" ng-switch on="event.type">
 	<div ng-switch-when="EXTERNAL">
 		<h4>3. Specify where to go</h4>
+		<form class="form-inline">
+			<input type="text" ng-model="locationSearchString" placeholder="Enter location here" >
+			<button class="btn" ng-click="findLocation(locationSearchString)" href=""> <i class="icon-screenshot"></i> find</button>
+		</form>
+		<google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="true" style="height: 400px; display: block;"></google-map>
 	</div>
 	<div ng-switch-when="INTERNAL">
 		<h4>3. Specify what to eat</h4>
@@ -68,4 +73,6 @@
 <pre>
 DEBUG:
 Event {{event}}
+
+Location {{locationSearch}}
 </pre>

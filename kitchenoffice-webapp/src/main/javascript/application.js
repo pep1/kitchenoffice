@@ -1,4 +1,4 @@
-var app = angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives'])
+var app = angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives', 'google-maps'])
 .config([ '$routeProvider', '$locationProvider', '$httpProvider', 
 		function($routeProvider, $locationProvider) {
 
@@ -41,6 +41,15 @@ function HomeController($rootScope, $scope, $location) {
 
 function EventCreateController($scope) {
 	
+	angular.extend( $scope, {
+		center: {
+			latitude: 0, // initial map center latitude
+			longitude: 0, // initial map center longitude
+		},
+		markers: [], // an array of markers,
+		zoom: 15, // the zoom level
+	});
+	
 	// the new event object
 	$scope.event = {
 			type: null,
@@ -72,4 +81,33 @@ function EventCreateController($scope) {
 		return concatenatedDate.fromNow();
 	};
 	
+	$scope.save = function() {
+		eventService.save($scope.event);
+	};
+	
+	
+	/* Google Maps stuff */
+	
+	$scope.geolocationAvailable = navigator.geolocation ? true : false;
+		
+	if ($scope.geolocationAvailable) {
+		
+		navigator.geolocation.getCurrentPosition(function (position) {
+			
+			$scope.center = {
+				latitude: position.coords.latitude,
+				longitude: position.coords.longitude
+			};
+			
+			$scope.$apply();
+		}, function () {
+			
+		});
+	}
+	
+	$scope.locationSearchString;
+	
+	$scope.findLocation = function(string) {
+		console.log("check: " + string);
+	};
 };
