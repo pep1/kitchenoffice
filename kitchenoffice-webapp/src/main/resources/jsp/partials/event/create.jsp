@@ -52,6 +52,18 @@
 	</div>
 	<!--/span-->
 </div>
+<div class="row-fluid" ng-switch on="event.type">
+	<div ng-switch-when="EXTERNAL">
+		<h4>3. Specify where to go</h4>
+	</div>
+	<div ng-switch-when="INTERNAL">
+		<h4>3. Specify what to eat</h4>
+	</div>
+	<div ng-switch-when="ORDER">
+		<h4>3. Specify order</h4>
+	</div>
+
+</div>
 <hr>
 <pre>
 DEBUG:
