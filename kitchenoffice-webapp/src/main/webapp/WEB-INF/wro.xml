@@ -1,4 +1,6 @@
-<groups xmlns="http://www.isdc.ro/wro">
+<groups xmlns="http://www.isdc.ro/wro"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
 	<group name='vendor'>
 		<js>classpath:META-INF/resources/webjars/jquery/1.9.0/jquery.js</js>
 		
@@ -6,7 +8,6 @@
 		
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js</js>
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/locales/**</js>
-		
 		<js>https://raw.github.com/jdewit/bootstrap-timepicker/master/js/bootstrap-timepicker.js</js>
 		<js>https://raw.github.com/timrwood/moment/develop/moment.js</js>
 		
@@ -16,7 +17,8 @@
 		
 		<js>classpath:META-INF/resources/webjars/angular-ui/0.4.0/angular-ui.js</js>
 		<js>classpath:META-INF/resources/webjars/angular-ui-bootstrap/0.3.0/ui-bootstrap.js</js>
-		<js>https://raw.github.com/angular-ui/ui-map/master/ui-map.js</js>j
+		<js>https://raw.github.com/angular-ui/ui-utils/master/modules/event/event.js</js>
+		<js>https://raw.github.com/angular-ui/ui-map/master/ui-map.js</js>
 		
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap.css</css>
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap-responsive.css</css>

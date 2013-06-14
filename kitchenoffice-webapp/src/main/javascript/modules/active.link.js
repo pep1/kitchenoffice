@@ -1,4 +1,4 @@
-angular.module('linkModule', []).directive('activeLink', ['$location',
+angular.module('active.link', []).directive('activeLink', ['$location',
 function(location) {
 	return {
 		restrict : 'A',

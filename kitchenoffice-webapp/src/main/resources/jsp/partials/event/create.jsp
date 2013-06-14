@@ -52,17 +52,42 @@
 	</div>
 	<!--/span-->
 </div>
-
-<div id="map_canvas" ui-map="myMap" style="height: 300px; width: 400px; border: 2px solid #777777; margin: 3px; border: 1px solid" ui-options="mapOptions" ui-event="{'map-idle' : 'onMapIdle()'}"></div>
-<div class="row-fluid" ng-switch on="event.type">
+<div class="cointainer-fluid" ng-switch on="event.type">
 	<div ng-switch-when="EXTERNAL">
 		<h4>3. Specify where to go</h4>
 		<form class="form-inline">
-			<input type="text" ng-model="locationSearchString" placeholder="Enter location here">
-			<button class="btn" ng-click="findLocation(locationSearchString)" href="">
+			<input type="text" class="search-query" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location here">
+			<button class="btn">
 				<i class="icon-screenshot"></i> find
 			</button>
 		</form>
+		<div class="row-fluid">
+			<div class="span6">
+				<div id="map_canvas" class="ko-map-canvas" ui-map="locationMap" ui-options="mapOptions"></div>
+			</div>
+			<div class="span6">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label">Name</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" ng-model="event.location.name" placeholder="Location name">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Address</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" ng-model="event.location.address" placeholder="Location address">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Website</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" ng-model="event.location.website" placeholder="Location Website">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 	<div ng-switch-when="INTERNAL">
 		<h4>3. Specify what to eat</h4>

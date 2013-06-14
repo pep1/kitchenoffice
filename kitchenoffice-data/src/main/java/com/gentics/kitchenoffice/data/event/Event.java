@@ -23,6 +23,8 @@ import com.gentics.kitchenoffice.data.user.User;
 public class Event extends AbstractPersistable{
 	
 	private EventType type;
+	
+	private User creator;
 
 	@Indexed
 	private DateTime date;
@@ -54,6 +56,14 @@ public class Event extends AbstractPersistable{
 	public Event(DateTime date) {
 		super();
 		this.date = date;
+	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
 	public EventType getType() {
