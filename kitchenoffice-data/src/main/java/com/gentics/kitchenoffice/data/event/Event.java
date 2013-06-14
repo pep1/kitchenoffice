@@ -32,7 +32,7 @@ public class Event extends AbstractPersistable{
 	
 	@Fetch
     @RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH)
-	private Location location = new Location();
+	private Location location;
 	
 	@Fetch
     @RelatedTo(type = "COOKING", direction = Direction.BOTH)
@@ -43,7 +43,7 @@ public class Event extends AbstractPersistable{
 	private Set<Participant> participants = new HashSet<Participant>();
 	
 	@Fetch
-	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.BOTH)
+	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.OUTGOING)
 	private Set<Comment> comments = new HashSet<Comment>();
 	
 	public Event() {

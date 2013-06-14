@@ -2,7 +2,6 @@ package com.gentics.kitchenoffice;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -26,6 +25,8 @@ import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.event.Event;
+import com.gentics.kitchenoffice.data.event.EventType;
+import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.ArticleRepository;
 import com.gentics.kitchenoffice.repository.CommentRepository;
@@ -35,7 +36,7 @@ import com.gentics.kitchenoffice.repository.RecipeRepository;
 import com.gentics.kitchenoffice.repository.TagRepository;
 import com.gentics.kitchenoffice.repository.UserRepository;
 
-@ContextConfiguration(locations = "classpath:/spring/kitchenContext.xml")
+@ContextConfiguration(locations = "classpath:/spring/applicationContext.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class RecipeTest {
@@ -101,13 +102,6 @@ public class RecipeTest {
 		createSomeMealsAndComments();
 
 		log.debug("mealcount: " + mealRepository.count());
-
-		EndResult<Event> meals = mealRepository.findAll();
-
-		for (Event meal : meals) {
-			log.debug("meal: \n" + meal);
-		}
-
 		log.debug("comments: " + commentRepository.count());
 	}
 
@@ -216,6 +210,7 @@ public class RecipeTest {
 		jobRepository.save(job2);
 
 		Event m1 = new Event();
+		m1.setType(EventType.INTERNAL);
 		m1.setRecipe(result);
 		m1.setDate(DateTime.now());
 		m1.addParticipant(u1, job1);
@@ -225,6 +220,7 @@ public class RecipeTest {
 		mealRepository.save(m1);
 
 		Event m2 = new Event();
+		m1.setType(EventType.EXTERNAL);
 		m2.setRecipe(result2);
 		m2.setDate(DateTime.now().plus(Duration.standardHours(2)));
 		m2.addParticipant(u1, job1);

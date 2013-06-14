@@ -1,4 +1,4 @@
-var app = angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives', 'google-maps'])
+var app = angular.module('kitchenOfficeApp', ['linkModule', '$strap.directives', 'ui.bootstrap', 'ui.map'])
 .config([ '$routeProvider', '$locationProvider', '$httpProvider', 
 		function($routeProvider, $locationProvider) {
 
@@ -41,15 +41,6 @@ function HomeController($rootScope, $scope, $location) {
 
 function EventCreateController($scope) {
 	
-	angular.extend( $scope, {
-		center: {
-			latitude: 0, // initial map center latitude
-			longitude: 0, // initial map center longitude
-		},
-		markers: [], // an array of markers,
-		zoom: 15, // the zoom level
-	});
-	
 	// the new event object
 	$scope.event = {
 			type: null,
@@ -81,12 +72,16 @@ function EventCreateController($scope) {
 		return concatenatedDate.fromNow();
 	};
 	
-	$scope.save = function() {
-		eventService.save($scope.event);
+	
+	/**
+	 *  Google Maps stuff 
+	 *  */
+	
+	$scope.mapOptions = {
+		center : ll,
+		zoom : 15,
+		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
-	
-	
-	/* Google Maps stuff */
 	
 	$scope.geolocationAvailable = navigator.geolocation ? true : false;
 		
@@ -94,7 +89,7 @@ function EventCreateController($scope) {
 		
 		navigator.geolocation.getCurrentPosition(function (position) {
 			
-			$scope.center = {
+			$scope.mapOptions.center = {
 				latitude: position.coords.latitude,
 				longitude: position.coords.longitude
 			};

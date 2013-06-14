@@ -23,9 +23,9 @@
 	<span class="help-inline">{{dateFromNow()}}</span>
 </form>
 <h4>2. What type?</h4>
-<div class="row-fluid" ng-model="event.type" bs-buttons-radio>
+<div class="row-fluid">
 	<div class="span4">
-		<button type="button" class="btn btn-large btn-block btn-info" value="EXTERNAL">
+		<button type="button" class="btn btn-large btn-block btn-info" ng-model="event.type" btn-radio="'EXTERNAL'">
 			<spring:message code="event.goout.name" />
 		</button>
 		<p>
@@ -34,7 +34,7 @@
 	</div>
 	<!--/span-->
 	<div class="span4">
-		<button type="button" class="btn btn-large btn-block btn-info" value="INTERNAL">
+		<button type="button" class="btn btn-large btn-block btn-info" ng-model="event.type" btn-radio="'INTERNAL'">
 			<spring:message code="event.cook.name" />
 		</button>
 		<p>
@@ -43,7 +43,7 @@
 	</div>
 	<!--/span-->
 	<div class="span4">
-		<button type="button" class="btn btn-large btn-block btn-info" value="ORDER">
+		<button type="button" class="btn btn-large btn-block btn-info" ng-model="event.type" btn-radio="'ORDER'">
 			<spring:message code="event.order.name" />
 		</button>
 		<p>
@@ -52,14 +52,17 @@
 	</div>
 	<!--/span-->
 </div>
+
+<div id="map_canvas" ui-map="myMap" style="height: 300px; width: 400px; border: 2px solid #777777; margin: 3px; border: 1px solid" ui-options="mapOptions" ui-event="{'map-idle' : 'onMapIdle()'}"></div>
 <div class="row-fluid" ng-switch on="event.type">
 	<div ng-switch-when="EXTERNAL">
 		<h4>3. Specify where to go</h4>
 		<form class="form-inline">
-			<input type="text" ng-model="locationSearchString" placeholder="Enter location here" >
-			<button class="btn" ng-click="findLocation(locationSearchString)" href=""> <i class="icon-screenshot"></i> find</button>
+			<input type="text" ng-model="locationSearchString" placeholder="Enter location here">
+			<button class="btn" ng-click="findLocation(locationSearchString)" href="">
+				<i class="icon-screenshot"></i> find
+			</button>
 		</form>
-		<google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="true" style="height: 400px; display: block;"></google-map>
 	</div>
 	<div ng-switch-when="INTERNAL">
 		<h4>3. Specify what to eat</h4>
