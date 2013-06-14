@@ -146,7 +146,6 @@
 		<profile>
 			<id>dev-linux</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
 				<os>
 					<family>Linux</family>
 				</os>
