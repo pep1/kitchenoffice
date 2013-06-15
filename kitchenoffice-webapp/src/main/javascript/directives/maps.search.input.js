@@ -1,4 +1,5 @@
-angular.module('maps.search.input', []).directive('mapsSearch', ['$location', '$timeout',
+angular.module('maps.search.input', [])
+.directive('mapsSearch', ['$location', '$timeout',
 function(location, $timeout) {
 	return {
 		restrict : 'A',
@@ -44,6 +45,8 @@ function(location, $timeout) {
       			  $scope.event.location.address = place.formatted_address;
       			  $scope.event.location.website = place.website;
       			  
+      			  $scope.event.location.latitude = place.geometry.location.lat();
+      			  $scope.event.location.longitude = place.geometry.location.lng();
       			});
                 
             }, 50);

@@ -73,8 +73,10 @@ public class EventWebService {
 		log.debug("calling createEvent");
 
 		try {
-
 			Assert.notNull(event);
+			
+			// set actual logged in user as creator
+			event.setCreator(userService.getUser());
 			// TODO validate event
 			return eventService.saveEvent(event);
 

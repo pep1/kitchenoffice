@@ -18,6 +18,10 @@ public class Location extends AbstractPersistable {
 	private String address;
 
 	private String website;
+	
+	private Float latitude;
+	
+	private Float longitude;
 
 	@Fetch
 	@RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
@@ -49,6 +53,22 @@ public class Location extends AbstractPersistable {
 
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
 	}
 
 	public Image getImage() {

@@ -52,7 +52,7 @@
 	</div>
 	<!--/span-->
 </div>
-<div class="container-fluid" ng-switch on="event.type">
+<div ng-switch on="event.type">
 	<div ng-switch-when="EXTERNAL">
 		<h4>3. Where to go?</h4>
 		<div class="row-fluid">
@@ -86,6 +86,21 @@
 						</div>
 						<div class="span8">
 							<input type="text" class="input-block-level" ng-model="event.location.website" placeholder="Location website">
+						</div>
+					</div>
+					<hr>
+					<div class="row-fluid">
+						<div class="span3">
+							<label class="pull-right help-inline">Latitude</label>
+						</div>
+						<div class="span3">
+							<input type="number" class="input-block-level" ng-model="event.location.latitude" placeholder="Latitude" disabled>
+						</div>
+						<div class="span3">
+							<label class="pull-right help-inline">Longitude</label>
+						</div>
+						<div class="span3">
+							<input type="number" class="input-block-level" ng-model="event.location.longitude" placeholder="Longitude" disabled>
 						</div>
 					</div>
 				</form>

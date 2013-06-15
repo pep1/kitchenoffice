@@ -45,13 +45,26 @@ function HomeController($rootScope, $scope, $location) {
 
 function EventCreateController($rootScope, $scope) {
 
-	// the new event object
+	/**
+	 * the new event object to be saved
+	 */
 	$scope.event = {
 		type : null,
 		date : null,
 		location: {}
 	};
+	
+	/**
+	 * saves the event to the api
+	 */
+	$scope.saveEvent = function() {
+		// TODO Frontend Validation
+		$rootScope.events.post($scope.event);
+	};
 
+	/**
+	 * Time calulations
+	 */
 	var now = moment();
 	var todayStart = now.local().startOf('day');
 
@@ -77,16 +90,10 @@ function EventCreateController($rootScope, $scope) {
 
 		return concatenatedDate.fromNow();
 	};
-	
-	$scope.saveEvent = function() {
-		// TODO Frontend Validation
-		$rootScope.events.post($scope.event);
-	};
 
 	/**
 	 * Google Maps stuff
 	 */
-	
 	$scope.mapOptions = {
 			center : new google.maps.LatLng(35.784, -78.670),
 			zoom : 15,
@@ -109,40 +116,4 @@ function EventCreateController($rootScope, $scope) {
 
 		});
 	}
-
-	$scope.searchLocation = function(string, locationMap) {
-		
-		var map = locationMap;
-		var infoWindow = infowindow = new google.maps.InfoWindow();
-		var service = new google.maps.places.PlacesService(map);
-
-		var request = {
-			location : map.center,
-			radius : '1000'
-		};
-
-		var callback = function(results, status) {
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				for ( var i = 0; i < results.length; i++) {
-					var place = results[i];
-					createMarker(place);
-				}
-			}
-		};
-		
-		function createMarker(place) {
-			var placeLoc = place.geometry.location;
-			var marker = new google.maps.Marker({
-				map : map,
-				position : place.geometry.location
-			});
-
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.setContent(place.name);
-				infowindow.open(map, this);
-			});
-		}
-
-		service.search(request, callback);
-	};
 }
