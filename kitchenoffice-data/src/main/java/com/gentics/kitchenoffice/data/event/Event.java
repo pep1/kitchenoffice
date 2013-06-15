@@ -1,7 +1,11 @@
 package com.gentics.kitchenoffice.data.event;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
 import org.neo4j.graphdb.Direction;
@@ -12,6 +16,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.util.Assert;
 
+import com.gentics.kitchenoffice.adapter.DateAdapter;
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Comment;
 import com.gentics.kitchenoffice.data.Job;
@@ -20,40 +25,42 @@ import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
-public class Event extends AbstractPersistable{
-	
+@XmlRootElement
+public class Event extends AbstractPersistable {
+
 	private EventType type;
-	
+
 	private User creator;
 
 	@Indexed
-	private DateTime date;
-	
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	private Date date;
+
 	@Indexed
 	private String description;
-	
+
 	@Fetch
-    @RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH)
 	private Location location;
-	
+
 	@Fetch
-    @RelatedTo(type = "COOKING", direction = Direction.BOTH)
+	@RelatedTo(type = "COOKING", direction = Direction.BOTH)
 	private Recipe recipe;
-	
+
 	@Fetch
 	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH)
 	private Set<Participant> participants = new HashSet<Participant>();
-	
+
 	@Fetch
 	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.OUTGOING)
 	private Set<Comment> comments = new HashSet<Comment>();
-	
+
 	public Event() {
 		super();
-		this.date = DateTime.now();
+		this.date = DateTime.now().toDate();
 	}
-	
-	public Event(DateTime date) {
+
+	public Event(Date date) {
 		super();
 		this.date = date;
 	}
@@ -74,11 +81,11 @@ public class Event extends AbstractPersistable{
 		this.type = type;
 	}
 
-	public DateTime getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(DateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -97,7 +104,7 @@ public class Event extends AbstractPersistable{
 	public void setParticipants(Set<Participant> participants) {
 		this.participants = participants;
 	}
-	
+
 	public Set<Comment> getComments() {
 		return comments;
 	}
@@ -105,7 +112,7 @@ public class Event extends AbstractPersistable{
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
-	
+
 	public Location getLocation() {
 		return location;
 	}
@@ -125,30 +132,32 @@ public class Event extends AbstractPersistable{
 	public Comment addComment(User user, String comment) {
 		Assert.notNull(user, "User may not be null!");
 		Assert.hasLength(comment, "comment may not be null or empty!");
-		
+
 		Comment c = new Comment(user, comment);
-		
+
 		comments.add(c);
-		
+
 		return c;
 	}
 
-	public Participant addParticipant (User user, Job job) {
-		
+	public Participant addParticipant(User user, Job job) {
+
 		Assert.notNull(user, "user may not be null");
 		Assert.notNull(job, "job may not be null");
-		
+
 		Participant p = new Participant(this, user, job);
-		
+
 		participants.add(p);
-		
+
 		return p;
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("Event{\n date=%s,\n  participants=%s\n, comments=%s\n}", date.toString(), participants.toString(), comments.toString());
+		return String.format(
+				"Event{\n date=%s,\n  participants=%s\n, comments=%s\n}",
+				date.toString(), participants.toString(), comments.toString());
 	}
-	
+
 }

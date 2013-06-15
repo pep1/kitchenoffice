@@ -37,10 +37,15 @@ app.value('$strapConfig', {
 });
 app.run(function($rootScope, $location, Restangular) {
 	$rootScope.events = Restangular.all('events');
+	
 });
 
 function HomeController($rootScope, $scope, $location) {
 	$scope.homeEvents = $rootScope.events.getList();
+	
+	$scope.fromNow = function(date) {
+		return (date) ? moment(date).fromNow() : "not specified";
+	};
 };
 
 function EventCreateController($rootScope, $scope) {

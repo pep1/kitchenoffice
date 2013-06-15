@@ -19,7 +19,7 @@
 	<div class="row-fluid">
 		<div data-ng-switch data-on="event.type" class="span4" data-ng-repeat="event in homeEvents">
 			<h3 data-ng-switch="EXTERNAL">{{event.location.name}}</h3>
-			<span class="label label-info" data-ng-switch="EXTERNAL"><i class="icon-food"></i> go out eating to</span>
+			<span class="label label-info" data-ng-switch="EXTERNAL"><i class="icon-food"></i> go out eating to</span> {{fromNow(event)}}
 			<p data-ng-switch="EXTERNAL">{{event.location.address}}</p>
 			<p data-ng-switch="EXTERNAL">
 				<a class="btn" href="#">View details »</a>

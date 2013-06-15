@@ -78,7 +78,9 @@ public class EventWebService {
 			// set actual logged in user as creator
 			event.setCreator(userService.getUser());
 			// TODO validate event
-			return eventService.saveEvent(event);
+			
+			Event savedEvent = eventService.saveEvent(event);
+			return savedEvent;
 
 		} catch (ConstraintViolationException e) {
 
