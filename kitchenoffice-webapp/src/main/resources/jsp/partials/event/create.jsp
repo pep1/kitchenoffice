@@ -55,14 +55,11 @@
 <div class="cointainer-fluid" ng-switch on="event.type">
 	<div ng-switch-when="EXTERNAL">
 		<h4>3. Specify where to go</h4>
-		<form class="form-inline">
-			<input type="text" class="search-query" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location here">
-			<button class="btn">
-				<i class="icon-screenshot"></i> find
-			</button>
-		</form>
 		<div class="row-fluid">
 			<div class="span6">
+				<form class="form-inline">
+					<input type="text" class="search-query input-block-level" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location here">
+				</form>
 				<div id="map_canvas" class="ko-map-canvas" ui-map="locationMap" ui-options="mapOptions"></div>
 			</div>
 			<div class="span6">
@@ -96,11 +93,10 @@
 		<h4>3. Specify order</h4>
 	</div>
 </div>
+<hr>
 <button class="btn btn-primary btn-large" ng-click="saveEvent()">save event</button>
 <hr>
 <pre>
 DEBUG:
 Event {{event}}
-
-Location {{locationSearch}}
 </pre>
