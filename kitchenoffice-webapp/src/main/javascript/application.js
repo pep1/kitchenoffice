@@ -81,7 +81,7 @@ function EventCreateController($rootScope, $scope) {
 	$scope.saveEvent = function() {
 		// TODO Frontend Validation
 		$rootScope.events.post($scope.event);
-	}
+	};
 
 	/**
 	 * Google Maps stuff
@@ -128,7 +128,7 @@ function EventCreateController($rootScope, $scope) {
 					createMarker(place);
 				}
 			}
-		}
+		};
 		
 		function createMarker(place) {
 			var placeLoc = place.geometry.location;
@@ -145,4 +145,4 @@ function EventCreateController($rootScope, $scope) {
 
 		service.search(request, callback);
 	};
-};
+}

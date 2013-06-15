@@ -52,9 +52,9 @@
 	</div>
 	<!--/span-->
 </div>
-<div class="cointainer-fluid" ng-switch on="event.type">
+<div class="container-fluid" ng-switch on="event.type">
 	<div ng-switch-when="EXTERNAL">
-		<h4>3. Specify where to go</h4>
+		<h4>3. Where to go?</h4>
 		<div class="row-fluid">
 			<div class="span6">
 				<form class="form-inline">
@@ -63,23 +63,29 @@
 				<div id="map_canvas" class="ko-map-canvas" ui-map="locationMap" ui-options="mapOptions"></div>
 			</div>
 			<div class="span6">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label">Name</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" ng-model="event.location.name" placeholder="Location name">
+				<form class="form-horizontal ko-form-fluid">
+					<div class="row-fluid">
+						<div class="span4">
+							<label class="pull-right help-inline">Name</label>
+						</div>
+						<div class="span8">
+							<input type="text" class="input-block-level" ng-model="event.location.name" placeholder="Location name">
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label">Address</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" ng-model="event.location.address" placeholder="Location address">
+					<div class="row-fluid">
+						<div class="span4">
+							<label class="pull-right help-inline">Address</label>
+						</div>
+						<div class="span8">
+							<input type="text" class="input-block-level" ng-model="event.location.address" placeholder="Location address">
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label">Website</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" ng-model="event.location.website" placeholder="Location Website">
+					<div class="row-fluid">
+						<div class="span4">
+							<label class="pull-right help-inline">Website</label>
+						</div>
+						<div class="span8">
+							<input type="text" class="input-block-level" ng-model="event.location.website" placeholder="Location website">
 						</div>
 					</div>
 				</form>
@@ -87,10 +93,10 @@
 		</div>
 	</div>
 	<div ng-switch-when="INTERNAL">
-		<h4>3. Specify what to eat</h4>
+		<h4>3. What to eat?</h4>
 	</div>
 	<div ng-switch-when="ORDER">
-		<h4>3. Specify order</h4>
+		<h4>3. Where to order?</h4>
 	</div>
 </div>
 <hr>
