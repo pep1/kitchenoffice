@@ -95,8 +95,8 @@
 	<div ng-switch-when="ORDER">
 		<h4>3. Specify order</h4>
 	</div>
-
 </div>
+<button class="btn btn-primary btn-large" ng-click="saveEvent()">save event</button>
 <hr>
 <pre>
 DEBUG:

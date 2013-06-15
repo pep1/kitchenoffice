@@ -1,6 +1,7 @@
 package com.gentics.kitchenoffice.webservice;
 
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
@@ -18,7 +19,6 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 
 @Component
 @Scope("singleton")
-@Path("/event")
+@Path("/events")
 public class EventWebService {
 
 	private static Logger log = Logger.getLogger(EventWebService.class);
@@ -50,7 +50,7 @@ public class EventWebService {
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Page<Event> getEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+	public List<Event> getEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
 
 		log.debug("calling getEvents");
 

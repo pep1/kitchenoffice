@@ -1,10 +1,12 @@
 var app = angular.module('kitchenOfficeApp',
-		['active.link', '$strap.directives', 'ui', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event' ])
+		['active.link', '$strap.directives', 'restangular', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event' ])
 .config([
 	'$routeProvider',
 	'$locationProvider',
-	'$httpProvider',
-	function($routeProvider, $locationProvider) {
+	'RestangularProvider',
+	function($routeProvider, $locationProvider, RestangularProvider) {
+		
+		RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
 
 		$locationProvider.html5Mode(true);
 
@@ -33,15 +35,15 @@ app.value('$strapConfig', {
 		todayHighlight : true
 	}
 });
-app.run(function($rootScope, $location) {
-
+app.run(function($rootScope, $location, Restangular) {
+	$rootScope.events = Restangular.all('events');
 });
 
 function HomeController($rootScope, $scope, $location) {
-
+	$scope.homeEvents = $rootScope.events.getList();
 };
 
-function EventCreateController($scope) {
+function EventCreateController($rootScope, $scope) {
 
 	// the new event object
 	$scope.event = {
@@ -75,6 +77,11 @@ function EventCreateController($scope) {
 
 		return concatenatedDate.fromNow();
 	};
+	
+	$scope.saveEvent = function() {
+		// TODO Frontend Validation
+		$rootScope.events.post($scope.event);
+	}
 
 	/**
 	 * Google Maps stuff

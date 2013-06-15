@@ -37,8 +37,8 @@ public class EventService {
 		return availableEventTypes;
 	}
 
-	public Page<Event> getEvents(PageRequest pagerequest) {
-		return eventRepository.findAll(pagerequest);
+	public List<Event> getEvents(PageRequest pagerequest) {
+		return eventRepository.findAll(pagerequest).getContent();
 	}
 
 	public Event saveEvent(Event event) {

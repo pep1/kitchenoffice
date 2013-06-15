@@ -10,45 +10,45 @@ import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Image;
 
 @NodeEntity
-public class Location extends AbstractPersistable{
-	
+public class Location extends AbstractPersistable {
+
 	@Indexed(unique = true)
-	private String location;
-	
-	private String locationPage;
-	
-	private String description;
-	
+	private String name;
+
+	private String address;
+
+	private String website;
+
 	@Fetch
-    @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
+	@RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
 	private Image image;
-	
-	public Location()  {
+
+	public Location() {
 		super();
 	}
 
-	public String getLocation() {
-		return location;
+	public String getName() {
+		return name;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLocationPage() {
-		return locationPage;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setLocationPage(String locationPage) {
-		this.locationPage = locationPage;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getWebsite() {
+		return website;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	public Image getImage() {
