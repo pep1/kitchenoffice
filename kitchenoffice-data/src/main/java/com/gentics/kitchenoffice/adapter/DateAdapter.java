@@ -11,6 +11,9 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 public class DateAdapter extends XmlAdapter<String, Date> {
+	
+	// Strict ISO 8601 date format with UTC offset
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	public Date unmarshal(String v) throws Exception {
 		DateTime dateTime = new DateTime(v);
@@ -18,8 +21,7 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 	}
 
 	public String marshal(Date v) throws Exception {
-		DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
-		return fmt.print(new DateTime(v));
+		return dateFormat.format(v);
 	}
 
 }
