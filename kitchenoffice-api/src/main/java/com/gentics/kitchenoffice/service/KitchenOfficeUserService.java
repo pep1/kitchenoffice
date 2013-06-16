@@ -77,7 +77,8 @@ public class KitchenOfficeUserService extends
 			user.setEmail(emails[0]);
 		}
 
-		return user;
+		// persist fetched user.
+		return userRepository.save(user);
 	}
 
 	private void checkAndCreateRoles() {

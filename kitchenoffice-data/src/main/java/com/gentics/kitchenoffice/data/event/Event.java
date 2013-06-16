@@ -30,6 +30,7 @@ public class Event extends AbstractPersistable {
 
 	private EventType type;
 
+	@Fetch
 	private User creator;
 
 	@Indexed

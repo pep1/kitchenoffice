@@ -1,12 +1,10 @@
 var app = angular.module('kitchenOfficeApp',
-		['active.link', '$strap.directives', 'restangular', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event' ])
+		['active.link', '$strap.directives', 'restangular', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event', 'ui-gravatar' ])
 .config([
 	'$routeProvider',
 	'$locationProvider',
 	'RestangularProvider',
 	function($routeProvider, $locationProvider, RestangularProvider) {
-		
-		RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
 
 		$locationProvider.html5Mode(true);
 
@@ -35,20 +33,19 @@ app.value('$strapConfig', {
 		todayHighlight : true
 	}
 });
-app.run(function($rootScope, $location, Restangular) {
-	$rootScope.events = Restangular.all('events');
-	
+app.run(function($rootScope, $location) {
 });
 
-function HomeController($rootScope, $scope, $location) {
-	$scope.homeEvents = $rootScope.events.getList();
+function HomeController($rootScope, $scope, eventService) {
+	
+	$scope.homeEvents = eventService.getHomeEvents();
 	
 	$scope.fromNow = function(date) {
-		return (date) ? moment(date).fromNow() : "not specified";
+		return (date) ? moment(date).calendar() : "not specified";
 	};
 };
 
-function EventCreateController($rootScope, $scope) {
+function EventCreateController($rootScope, $scope, eventService) {
 
 	/**
 	 * the new event object to be saved
@@ -64,11 +61,11 @@ function EventCreateController($rootScope, $scope) {
 	 */
 	$scope.saveEvent = function() {
 		// TODO Frontend Validation
-		$rootScope.events.post($scope.event);
+		eventService.save($scope.event);
 	};
 
 	/**
-	 * Time calulations
+	 * Time calculations
 	 */
 	var now = moment();
 	var todayStart = now.local().startOf('day');

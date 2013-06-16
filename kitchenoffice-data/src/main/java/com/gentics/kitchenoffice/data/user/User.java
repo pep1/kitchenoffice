@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -24,10 +25,12 @@ public class User extends AbstractPersistable implements UserDetails {
 	@Indexed
 	private String username;
 	
+	@JsonIgnore
 	private String password;
 	
 	private String email;
 	
+	@JsonIgnore
 	private boolean enabled;
 	
 	@Fetch
@@ -94,51 +97,36 @@ public class User extends AbstractPersistable implements UserDetails {
 		return enabled;
 	}
 
-	/**
-	 * 
-	 * 
-	 * @return Gravatar url
-	 *
-	public String getGravatar(Integer size) {
-		
-		if(size == null) {
-			size = 50;
-		}
-		
-		return new Gravatar()
-	    .setSize(size)
-	    .setHttps(true)
-	    .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
-	    .setStandardDefaultImage(DefaultImage.MONSTER)
-	    .getUrl(email);
-	}
-	
-	*/
-
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return isEnabled();
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return isEnabled();
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return isEnabled();
 	}
 
+	@JsonIgnore
 	public Set<Role> getRoles() {
 		return roles;
 	}
 
+	@JsonIgnore
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
