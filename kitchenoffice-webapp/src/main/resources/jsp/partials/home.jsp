@@ -7,7 +7,7 @@
 			<i class="icon-food"></i> Selectable food...
 		</h1>
 	</div>
-	<div class="span3">
+	<div class="span3" data-ng-show="!areEventsEmpty">
 		<div class="pull-right">
 			or&nbsp;&nbsp;&nbsp;<a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</div>
@@ -36,6 +36,11 @@
 			<button class="btn btn-small">View details »</button>
 			<button class="btn btn-small btn-primary">attend</button>
 		</div>
+	</div>
+	<div data-ng-show="areEventsEmpty">
+		<p class="center" >there are no events yet<br/>
+			<a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
+		</p>
 	</div>
 </div>
 

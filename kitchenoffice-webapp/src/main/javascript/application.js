@@ -43,6 +43,10 @@ function HomeController($rootScope, $scope, eventService) {
 	$scope.fromNow = function(date) {
 		return (date) ? moment(date).calendar() : "not specified";
 	};
+
+	$scope.areEventsEmpty = $scope.homeEvents.then(function(events) {
+		return !(events.length > 0);
+	});
 };
 
 function EventCreateController($rootScope, $scope, eventService) {
