@@ -11,13 +11,15 @@ app.factory('eventService', function(Restangular) {
 
 	/**
 	 * returns the events for the home view
-	 *  - serves only future events
+	 * 
+	 * - serves only future events
+	 * - first three events
 	 */
 	eventService.getHomeEvents = function() {
 		return this.getList().then(function(events) {
-			return _.filter(events, function(event) {
+			return _.first(_.filter(events, function(event) {
 				return moment(event.date).isAfter(moment());
-			});
+			}), 3);
 		});
 	};
 
