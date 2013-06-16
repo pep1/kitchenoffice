@@ -1,10 +1,9 @@
 var app = angular.module('kitchenOfficeApp',
-		['active.link', '$strap.directives', 'restangular', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event', 'ui-gravatar' ])
+		['ko.services', 'active.link', '$strap.directives', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event', 'ui-gravatar', 'flash' ])
 .config([
 	'$routeProvider',
 	'$locationProvider',
-	'RestangularProvider',
-	function($routeProvider, $locationProvider, RestangularProvider) {
+	function($routeProvider, $locationProvider) {
 
 		$locationProvider.html5Mode(true);
 

@@ -17,7 +17,8 @@
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.7/angular-resource.js</js>
 		<js>https://raw.github.com/mgcrea/angular-strap/master/dist/angular-strap.js</js>
 		
-		<js>http://cdn.jsdelivr.net/restangular/latest/restangular.js</js>
+		<!-- Rest and Angularjs -->
+		<js>https://raw.github.com/mgonto/restangular/master/src/restangular.js</js>
 		
 		<js>classpath:META-INF/resources/webjars/angular-ui/0.4.0/angular-ui.js</js>
 		<js>classpath:META-INF/resources/webjars/angular-ui-bootstrap/0.3.0/ui-bootstrap.js</js>
