@@ -44,7 +44,7 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 		eventService.save($scope.event).then(function(event) {
 			$scope.doSave = false;
 			$location.path('/kitchenoffice-webapp/home');
-			flash('success', 'New event <strong>'+eventService.displayName(event)+'</strong> saved');
+			flash('success', 'New event '+eventService.displayName(event)+' saved');
 		});
 	};
 

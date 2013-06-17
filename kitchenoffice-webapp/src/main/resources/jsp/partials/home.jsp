@@ -20,7 +20,7 @@
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<button class="btn btn-small">View details »</button>
-			<button class="btn btn-small btn-primary">attend</button>
+			<button class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">attend</button>
 		</div>
 	</div>
 	<div data-ng-show="areEventsEmpty">
@@ -29,6 +29,4 @@
 		</p>
 	</div>
 </div>
-
-<!--/span-->
-<!--/row-->
+<jsp:include page="../include/event/attendModal.jsp"></jsp:include>
