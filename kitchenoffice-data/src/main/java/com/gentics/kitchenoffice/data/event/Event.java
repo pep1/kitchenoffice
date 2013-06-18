@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -32,6 +33,9 @@ public class Event extends AbstractPersistable {
 
 	@Fetch
 	private User creator;
+	
+	@JsonIgnore
+	private Date creationDate;
 
 	@Indexed
 	@XmlJavaTypeAdapter(DateAdapter.class)
@@ -57,13 +61,6 @@ public class Event extends AbstractPersistable {
 	private Set<Comment> comments = new HashSet<Comment>();
 
 	public Event() {
-		super();
-		this.date = DateTime.now().toDate();
-	}
-
-	public Event(Date date) {
-		super();
-		this.date = date;
 	}
 
 	public User getCreator() {
@@ -72,6 +69,14 @@ public class Event extends AbstractPersistable {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public EventType getType() {

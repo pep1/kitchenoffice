@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +27,6 @@ public class EventService {
 	public void initialize() {
 		log.debug("initializing " + this.getClass().getSimpleName()
 				+ " instance ...");
-	}
-
-	public List<String> getAvailableEventTypes() {
-
-		List<String> availableEventTypes = new ArrayList<String>();
-
-		return availableEventTypes;
 	}
 
 	public List<Event> getEvents(PageRequest pagerequest) {

@@ -1,5 +1,6 @@
 package com.gentics.kitchenoffice.webservice;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -78,6 +79,8 @@ public class EventWebService {
 			eventService.saveEvent(event);
 			// set actual logged in user as creator
 			event.setCreator(userService.getUser());
+			// set creation date to now
+			event.setCreationDate(new Date());
 			// TODO validate event
 			eventService.saveEvent(event);
 			

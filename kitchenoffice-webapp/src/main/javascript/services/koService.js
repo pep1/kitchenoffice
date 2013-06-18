@@ -1,23 +1,30 @@
-angular.module('ko.services',['restangular'])
-.config([
- 	'RestangularProvider',
-     function(RestangularProvider) {
- 		// set base URL
- 		RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
-		// set client caching to true
- 		RestangularProvider.setDefaultHttpFields({
+angular.module('ko.services', [ 'restangular' ])
+.config([ 'RestangularProvider', function(RestangularProvider) {
+	// set base URL
+	RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
+	// set client caching to true
+	RestangularProvider.setDefaultHttpFields({
+		cache : true
+	});
+} ]).factory('eventService', function(Restangular) {
+
+	var eventService = Restangular.withConfig(function(RestangularConfigurer) {
+		RestangularConfigurer.setDefaultHttpFields({
 			cache : true
 		});
-}])
-.factory('eventService', function(Restangular) {
-
-	var eventService = Restangular.all('events');
+		
+//		RestangularConfigurer.addElementTransformer('events', true, function(one, two, three) {
+//			
+//		});
+//		
+//		RestangularConfigurer.addElementTransformer('events', false, function(one, two, three) {
+//			debugger;
+//		});
+	}).all('events');
 
 	/**
-	 * returns the events for the home view
-	 * 
-	 * - serves only future events
-	 * - first three events
+	 * returns the events for the home view - serves only future events - first
+	 * three events
 	 */
 	eventService.getHomeEvents = function() {
 		return this.getList().then(function(events) {
@@ -36,13 +43,17 @@ angular.module('ko.services',['restangular'])
 		}
 		return this.post(event);
 	};
-	
+
 	eventService.displayName = function(event) {
 		switch (event.type) {
-			case "EXTERNAL": return (event.location.name) ? event.location.name : "";
-			case "INTERNAL": return (event.recipe.name) ? event.recipe.name : "";
-			case "ORDER": return (event.location.name) ? event.location.name : "";
-			default : return "";
+		case "EXTERNAL":
+			return (event.location.name) ? event.location.name : "";
+		case "INTERNAL":
+			return (event.recipe.name) ? event.recipe.name : "";
+		case "ORDER":
+			return (event.location.name) ? event.location.name : "";
+		default:
+			return "";
 		}
 	};
 
