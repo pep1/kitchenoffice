@@ -12,16 +12,12 @@
 
 	<name>Kitchenoffice Webapplication</name>
 
-	<properties>
-		<neo4j.db.location>/tmp/kitchenoffice/neo4j-database</neo4j.db.location>
-	</properties>
-
 	<dependencies>
 
 		<dependency>
 			<groupId>com.gentics</groupId>
 			<artifactId>kitchenoffice-api</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
