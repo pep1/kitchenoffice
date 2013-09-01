@@ -1,5 +1,15 @@
 var app = angular.module('kitchenOfficeApp',
-		['ko.services', 'active.link', '$strap.directives', 'ui.bootstrap', 'ui.bootstrap.carousel', 'ui.map', 'maps.search.input', 'ui.event', 'ui-gravatar', 'flash' ])
+		['ko.services', 
+		 'active.link', 
+		 '$strap.directives', 
+		 'ui.bootstrap', 
+		 'ui.bootstrap.carousel', 
+		 'ui.map', 
+		 'maps.search.input', 
+		 'ui.event', 
+		 'ui-gravatar', 
+		 'flash' 
+		 ])
 .config([
 	'$routeProvider',
 	'$locationProvider',
@@ -15,6 +25,11 @@ var app = angular.module('kitchenOfficeApp',
 		$routeProvider.when('/kitchenoffice-webapp/event/create', {
 			templateUrl : '/kitchenoffice-webapp/partials/event/create',
 			controller : 'EventCreateController'
+		});
+		
+		$routeProvider.when('/kitchenoffice-webapp/location/create', {
+			templateUrl : '/kitchenoffice-webapp/partials/location/create',
+			controller : 'LocationCreateController'
 		});
 
 		$routeProvider.otherwise({

@@ -1,0 +1,65 @@
+app.controller('LocationCreateController', function($scope, $rootScope, $location, locationService, flash) {
+	
+	$scope.location = {};
+	
+	$scope.isValid = function(locationForm) {
+		return locationForm.$valid;
+	};
+	
+	/**
+	 * saves the event to the api
+	 */
+	$scope.saveLocation = function(locationForm) {
+		// TODO Frontend Validation
+		if($scope.isValid(locationForm)){
+			$scope.saveModal.open();
+		}
+	};
+	
+	$scope.doSaveLocation = function() {
+		locationService.save($scope.location).then(function(location) {
+			$scope.doSave = false;
+			$location.path('/kitchenoffice-webapp/home');
+			flash('success', 'New location '+location.name+' saved');
+		});
+	};
+	
+	/**
+	 * Google Maps stuff
+	 */
+	$scope.mapOptions = {
+		center : new google.maps.LatLng(35.784, -78.670),
+		zoom : 15,
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+
+	$scope.geolocationAvailable = navigator.geolocation ? true : false;
+
+	if ($scope.geolocationAvailable) {
+
+		navigator.geolocation.getCurrentPosition(function(position) {
+
+			$scope.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			$scope.$apply();
+		}, function() {
+
+		});
+	}
+	
+	/**
+	 * location create modal
+	 */
+	$scope.doSave = false;
+	$scope.saveModal = {
+			opts: {
+				backdropFade : true,
+				dialogFade : true
+			},
+			close: function() {
+				$scope.doSave = false;
+			},
+			open: function() {
+				$scope.doSave = true;
+			}
+	};
+});

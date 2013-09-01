@@ -23,15 +23,23 @@ function(location, $timeout) {
                 
                 // when the user drags the marker
                 google.maps.event.addListener($scope.marker, 'dragend', function() {
-                	$scope.event.location.latitude = $scope.marker.getPosition().lat();
-        			$scope.event.location.longitude = $scope.marker.getPosition().lng();
+                	
+                	if($scope.location == null) {
+                		$scope.location = {};
+                	}
+                	
+                	$scope.location.latitude = $scope.marker.getPosition().lat();
+        			$scope.location.longitude = $scope.marker.getPosition().lng();
         			
         			// if previously searched a place, truncate all inputs
         			if($scope.isPlace) {
+        				
+//        				$scope.isPlace = false;
+//        				$scope.location.name = "";
+//            			$scope.location.address = "";
+//            			$scope.location.website = "";
         				$scope.isPlace = false;
-        				$scope.event.location.name = "";
-            			$scope.event.location.address = "";
-            			$scope.event.location.website = "";
+        				$scope.location = null;
         			};
                 });
                 
@@ -63,12 +71,11 @@ function(location, $timeout) {
       			  $scope.infowindow.setContent(place.name);
       			  $scope.infowindow.open($scope.locationMap, $scope.marker);
       			  
-      			  $scope.event.location.name = place.name;
-      			  $scope.event.location.address = place.formatted_address;
-      			  $scope.event.location.website = place.website;
-      			  
-      			  $scope.event.location.latitude = $scope.marker.getPosition().lat();
-      			  $scope.event.location.longitude = $scope.marker.getPosition().lng();
+      			  $scope.location.name = place.name;
+      			  $scope.location.address = place.formatted_address;
+      			  $scope.location.website = place.website;
+      			  $scope.location.latitude = $scope.marker.getPosition().lat();
+      			  $scope.location.longitude = $scope.marker.getPosition().lng();
       			  
       			  // remember that this was found by google place
       			  $scope.isPlace = true;

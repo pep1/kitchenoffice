@@ -38,4 +38,8 @@ public class LocationService {
 			return locationRepository.getLastUsedLocations(user, pageable);
 		}
 	}
+	
+	public Location saveLocation(Location location) {
+		return locationRepository.save(location);
+	}
 }

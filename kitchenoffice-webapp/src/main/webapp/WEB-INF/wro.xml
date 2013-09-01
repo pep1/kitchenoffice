@@ -13,12 +13,13 @@
 		<js>https://raw.github.com/jdewit/bootstrap-timepicker/master/js/bootstrap-timepicker.js</js>
 		<js>https://raw.github.com/timrwood/moment/develop/moment.js</js>
 		
+		<!-- Rest and Angularjs -->
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.8/angular.js</js>
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.8/angular-resource.js</js>
 		<js>https://raw.github.com/mgcrea/angular-strap/master/dist/angular-strap.js</js>
 		
-		<!-- Rest and Angularjs -->
-		<js>classpath:META-INF/resources/webjars/restangular/0.6.3/restangular.js</js>
+		<js>classpath:META-INF/resources/webjars/lodash/1.2.0/lodash.js</js>
+		<js>https://raw.github.com/mgonto/restangular/master/src/restangular.js</js>
 		
 		<js>classpath:META-INF/resources/webjars/angular-ui/0.4.0/angular-ui.js</js>
 		<js>classpath:META-INF/resources/webjars/angular-ui-bootstrap/0.5.0/ui-bootstrap-tpls.js</js>

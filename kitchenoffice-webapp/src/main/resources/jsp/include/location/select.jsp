@@ -1,11 +1,11 @@
-<!-- Carousel -->
+<!-- Location Carousel -->
 <div ng-controller="LocationSelectController">
-	<div> 
-		<div ng-repeat="location in locations">
+	<carousel> 
+		<slide ng-repeat="slide in slides">
 			<div class="carousel-caption">
-				<h4>location.name</h4>
-				<p>location.description</p>
+				<h4>{{slide.name}}</h4>
+				<p>{{slide.description}}</p>
 			</div>
-		</div> 
-	</div>
+		</slide> 
+	</carousel>
 </div>

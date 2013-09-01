@@ -6,20 +6,14 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 	$scope.event = {
 		type : null,
 		date : null,
-		location : {
-			name : null,
-			address : null,
-			website : null,
-			latitude : null,
-			longitude : null
-		},
-		recipe : {},
+		location : null,
+		recipe : null,
 		validate: function(eventForm) {
 			if (!this.type || !this.date) return false;
 			var isValid = false;
 			
 			if (this.type === 'EXTERNAL') {
-				isValid =  eventForm.locationForm.$valid;
+				isValid =  !_.isNull(this.location);
 			}
 			return isValid;
 		}
@@ -28,7 +22,6 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 	$scope.isValid = function(eventForm) {
 		return $scope.event.validate(eventForm);
 	};
-
 
 	/**
 	 * saves the event to the api
@@ -93,27 +86,4 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 
 		return concatenatedDate.fromNow();
 	};
-
-	/**
-	 * Google Maps stuff
-	 */
-	$scope.mapOptions = {
-		center : new google.maps.LatLng(35.784, -78.670),
-		zoom : 15,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
-	};
-
-	$scope.geolocationAvailable = navigator.geolocation ? true : false;
-
-	if ($scope.geolocationAvailable) {
-
-		navigator.geolocation.getCurrentPosition(function(position) {
-
-			$scope.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-			$scope.$apply();
-		}, function() {
-
-		});
-	}
 });

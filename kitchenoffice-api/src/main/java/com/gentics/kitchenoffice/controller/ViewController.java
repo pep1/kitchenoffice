@@ -42,4 +42,10 @@ public class ViewController {
 		return getIndexRootpage(model);
 	}
 	
+	@RequestMapping(value = "/location/*", method = RequestMethod.GET)
+	public ModelAndView getLocationpage(Model model) {
+		
+		return getIndexRootpage(model);
+	}
+	
 }

@@ -18,7 +18,7 @@
 		<input type="text" ng-model="timeString" bs-timepicker>
 		<button type="button" class="btn" data-toggle="timepicker">
 			<i class="icon-time"></i>
-			</buttoni>
+		</button>
 	</div>
 	<span class="help-inline">{{dateFromNow()}}</span>
 	<h4>2. What type?</h4>
@@ -32,7 +32,6 @@
 				<spring:message code="event.goout.desc" />
 			</p>
 		</div>
-		<!--/span-->
 		<div class="span4">
 			<button type="button" class="btn btn-large btn-block btn-info" ng-model="event.type" btn-radio="'INTERNAL'">
 				<spring:message code="event.cook.name" />
@@ -41,7 +40,6 @@
 				<spring:message code="event.cook.desc" />
 			</p>
 		</div>
-		<!--/span-->
 		<div class="span4">
 			<button type="button" class="btn btn-large btn-block btn-info" ng-model="event.type" btn-radio="'ORDER'">
 				<spring:message code="event.order.name" />
@@ -50,13 +48,15 @@
 				<spring:message code="event.order.desc" />
 			</p>
 		</div>
-		<!--/span-->
 	</div>
 
 	<div ng-switch on="event.type">
 		<div ng-switch-when="EXTERNAL">
 			<h4>3. Where to go?</h4>
-			<jsp:include page="../../include/location/select.jsp"></jsp:include>
+				<jsp:include page="../../include/location/select.jsp"></jsp:include>
+				<div>
+					<button class="btn btn-large" ng-click="locationCreateModal.open()" >add new Location</button>
+				</div>
 		</div>
 		<div ng-switch-when="INTERNAL">
 			<h4>3. What to eat?</h4>
@@ -75,3 +75,4 @@ Event {{event}}
 </pre>
 
 <jsp:include page="../../include/event/createModal.jsp"></jsp:include>
+<jsp:include page="../../include/location/createModal.jsp"></jsp:include>

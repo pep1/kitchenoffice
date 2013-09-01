@@ -7,7 +7,7 @@ angular.module('ko.services', [ 'restangular' ])
 		cache : true
 	});
 } ]).factory('eventService', function(Restangular) {
-
+	
 	var eventService = Restangular.withConfig(function(RestangularConfigurer) {
 		RestangularConfigurer.setDefaultHttpFields({
 			cache : true
@@ -68,7 +68,14 @@ angular.module('ko.services', [ 'restangular' ])
 	}).all('locations');
 	
 	locationService.getLastUsed = function() {
-		return this.getList("lastused");
+		return this.getList();
+	};
+	
+	locationService.save = function(location) {
+		if (!location) {
+			return;
+		}
+		return this.post(location);
 	};
 	
 	return locationService;

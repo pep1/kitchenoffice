@@ -19,6 +19,8 @@ public class Location extends AbstractPersistable {
 
 	private String website;
 	
+	private String description;
+	
 	private Float latitude;
 	
 	private Float longitude;
@@ -53,6 +55,14 @@ public class Location extends AbstractPersistable {
 
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Float getLatitude() {
