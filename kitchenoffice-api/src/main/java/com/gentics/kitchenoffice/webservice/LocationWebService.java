@@ -35,18 +35,16 @@ public class LocationWebService {
 
 	@PostConstruct
 	public void initialize() {
-		log.debug("Initializing " + this.getClass().getSimpleName()
-				+ " instance ...");
+		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
 
 	}
 
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Location> getLocations(@QueryParam("page") Integer page,
-			@QueryParam("size") Integer size) {
+	public List<Location> getLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
 
-		log.debug("calling getEvents");
+		log.debug("calling getLocations");
 
 		if (page == null) {
 			page = 0;
@@ -62,10 +60,9 @@ public class LocationWebService {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/lastused")
-	public List<Location> getUserLastLocations(@QueryParam("page") Integer page,
-			@QueryParam("size") Integer size) {
+	public List<Location> getUserLastLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
 
-		log.debug("calling getEvents");
+		log.debug("calling getLastUsedLocations");
 
 		if (page == null) {
 			page = 0;
@@ -76,5 +73,5 @@ public class LocationWebService {
 
 		return locationService.getLastUsedLocations(new PageRequest(page, size), null).getContent();
 	}
-	
+
 }

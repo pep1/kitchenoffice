@@ -74,6 +74,10 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>angular-ui-bootstrap</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>restangular</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

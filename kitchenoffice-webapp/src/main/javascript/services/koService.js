@@ -58,4 +58,18 @@ angular.module('ko.services', [ 'restangular' ])
 	};
 
 	return eventService;
+}).factory('locationService', function(Restangular) {
+	
+	var locationService = Restangular.withConfig(function(RestangularConfigurer) {
+		RestangularConfigurer.setDefaultHttpFields({
+			cache : true
+		});
+		
+	}).all('locations');
+	
+	locationService.getLastUsed = function() {
+		return this.getList("lastused");
+	};
+	
+	return locationService;
 });

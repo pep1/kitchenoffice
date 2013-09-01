@@ -1,5 +1,5 @@
 var app = angular.module('kitchenOfficeApp',
-		['ko.services', 'active.link', '$strap.directives', 'ui.bootstrap', 'ui.map', 'maps.search.input', 'ui.event', 'ui-gravatar', 'flash' ])
+		['ko.services', 'active.link', '$strap.directives', 'ui.bootstrap', 'ui.bootstrap.carousel', 'ui.map', 'maps.search.input', 'ui.event', 'ui-gravatar', 'flash' ])
 .config([
 	'$routeProvider',
 	'$locationProvider',
