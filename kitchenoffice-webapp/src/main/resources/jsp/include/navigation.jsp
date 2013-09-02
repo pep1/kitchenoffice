@@ -17,7 +17,7 @@
 				<ul class="nav">
 					<li><a href="/kitchenoffice-webapp/home" data-active-link="active"><i class="icon-home"></i> Home</a></li>
 					<li><a href="/kitchenoffice-webapp/event/create" data-active-link="active"><i class="icon-edit"></i> create Event</a></li>
-					<li><a href="/kitchenoffice-webapp/location/create" data-active-link="active"><i class="icon-edit"></i> add Location</a></li>
+					<li><a href="/kitchenoffice-webapp/location/create" data-active-link="active"><i class="icon-map-marker"></i> add Location</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
