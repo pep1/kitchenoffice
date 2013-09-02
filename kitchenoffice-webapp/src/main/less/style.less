@@ -1,5 +1,7 @@
 @base: #f5f5f5;
 @light: #ddd;
+@selected: #08c;
+@hover: #839EF1;
 
 .box-shadow (@style , @c) when (iscolor(@c)) {
 	box-shadow: @style @c;
@@ -70,11 +72,11 @@ body {
 	
 	&.selected {
 		background: white;
-		border-color: #839EF1;
+		border-color: @selected;
 	}
 	
 	&:hover { 
-		border-color: #08c;
+		border-color: @hover;
 	}
 }
 

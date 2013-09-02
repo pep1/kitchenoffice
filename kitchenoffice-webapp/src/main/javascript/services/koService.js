@@ -71,8 +71,8 @@ angular.module('ko.services', [ 'restangular' ])
 		return this.getList();
 	};
 	
-	locationService.getPages = function(pageSize) {
-		return this.getList().then(function(locations) {
+	locationService.getPages = function(pageSize, search) {
+		return this.getList({'search': search}).then(function(locations) {
 			var resultSize = locations.length;
 			var pageAmount = Math.ceil(resultSize/pageSize);
 			var pointer = 0;

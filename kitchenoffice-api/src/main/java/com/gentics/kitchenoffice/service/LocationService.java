@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
@@ -31,11 +32,27 @@ public class LocationService {
 		return locationRepository.findAll(pageable);
 	}
 	
-	public Page<Location> getLastUsedLocations(Pageable pageable, User user) {
-		if(user == null) {
-			return locationRepository.getLastUsedLocations(pageable);
+	public Page<Location> getLocationsByName(Pageable pageable, String search) {
+		if(StringUtils.hasLength(search)) {
+			return locationRepository.findAllByName(pageable, search);
 		} else {
-			return locationRepository.getLastUsedLocations(user, pageable);
+			return locationRepository.findAll(pageable);
+		}
+	}
+	
+	public Page<Location> getLastUsedLocations(Pageable pageable, User user, String search) {
+		if(user == null) {
+			if(StringUtils.hasLength(search) && search.length() > 2) {
+				return locationRepository.getLastUsedLocations(pageable, search);
+			} else {
+				return locationRepository.getLastUsedLocations(pageable);
+			}
+		} else {
+			if(StringUtils.hasLength(search) && search.length() > 2) {
+				return locationRepository.getLastUsedLocations(user, pageable, search);
+			} else {
+				return locationRepository.getLastUsedLocations(user, pageable);
+			}
 		}
 	}
 	

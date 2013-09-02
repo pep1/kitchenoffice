@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
@@ -50,7 +51,7 @@ public class LocationWebService {
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Location> getLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+	public List<Location> getLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size, @QueryParam("search") String search) {
 
 		log.debug("calling getLocations");
 
@@ -61,14 +62,14 @@ public class LocationWebService {
 			size = 25;
 		}
 
-		return locationService.getLocations(new PageRequest(page, size)).getContent();
+		return locationService.getLocationsByName(new PageRequest(page, size), search).getContent();
 	}
 
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/lastused")
-	public List<Location> getUserLastLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+	public List<Location> getUserLastLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size, @QueryParam("search") String search) {
 
 		log.debug("calling getLastUsedLocations");
 
@@ -79,7 +80,8 @@ public class LocationWebService {
 			size = 25;
 		}
 
-		return locationService.getLastUsedLocations(new PageRequest(page, size), null).getContent();
+		return locationService.getLastUsedLocations(new PageRequest(page, size), null, search).getContent();
+
 	}
 	
 	@POST
