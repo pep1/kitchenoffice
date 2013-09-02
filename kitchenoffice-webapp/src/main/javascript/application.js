@@ -47,7 +47,7 @@ app.value('$strapConfig', {
 		todayHighlight : true
 	}
 });
-app.run(function($rootScope, $location) {
+app.run(function($rootScope, $location, locationService) {
 	
 	$rootScope.fromNow = function(date) {
 		return (date) ? moment(date).calendar() : "not specified";

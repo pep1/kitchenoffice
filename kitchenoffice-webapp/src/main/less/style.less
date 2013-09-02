@@ -1,4 +1,5 @@
 @base: #f5f5f5;
+@light: #ddd;
 
 .box-shadow (@style , @c) when (iscolor(@c)) {
 	box-shadow: @style @c;
@@ -50,6 +51,29 @@ body {
 		.help-inline {
 			margin-top: 5px;
 		}
+	}
+}
+
+.ko-location-carousel {
+	padding: 40px 75px 40px 75px;
+	background: #ddd;
+}
+
+.ko-location-thumb {
+	min-height: 150px;
+	display: block;
+	padding: 15px;
+	background: @base;
+	border: 1px solid @base;
+	.border-radius(4px);
+	cursor: pointer;
+	
+	.selected {
+		background: white;
+	}
+	
+	&:hover { 
+		border-color: #08c;
 	}
 }
 

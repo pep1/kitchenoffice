@@ -2,8 +2,12 @@ package com.gentics.kitchenoffice.data;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.neo4j.annotation.GraphId;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractPersistable implements Serializable {
 
 	/**
@@ -29,6 +33,7 @@ public abstract class AbstractPersistable implements Serializable {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public boolean isNew() {
 
 		return null == getId();

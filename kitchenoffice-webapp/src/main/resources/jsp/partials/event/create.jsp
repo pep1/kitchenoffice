@@ -53,16 +53,14 @@
 	<div ng-switch on="event.type">
 		<div ng-switch-when="EXTERNAL">
 			<h4>3. Where to go?</h4>
-				<jsp:include page="../../include/location/select.jsp"></jsp:include>
-				<div>
-					<button class="btn btn-large" ng-click="locationCreateModal.open()" >add new Location</button>
-				</div>
+			<jsp:include page="../../include/location/select.jsp"></jsp:include>
 		</div>
 		<div ng-switch-when="INTERNAL">
 			<h4>3. What to eat?</h4>
 		</div>
 		<div ng-switch-when="ORDER">
 			<h4>3. Where to order?</h4>
+			<jsp:include page="../../include/location/select.jsp"></jsp:include>
 		</div>
 	</div>
 </form>
@@ -75,4 +73,3 @@ Event {{event}}
 </pre>
 
 <jsp:include page="../../include/event/createModal.jsp"></jsp:include>
-<jsp:include page="../../include/location/createModal.jsp"></jsp:include>

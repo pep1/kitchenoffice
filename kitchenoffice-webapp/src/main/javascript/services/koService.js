@@ -71,6 +71,29 @@ angular.module('ko.services', [ 'restangular' ])
 		return this.getList();
 	};
 	
+	locationService.getPages = function(pageSize) {
+		return this.getList().then(function(locations) {
+			var resultSize = locations.length;
+			var pageAmount = Math.ceil(resultSize/pageSize);
+			var pointer = 0;
+			var output = new Array();
+			
+			for ( var i = 0; i < pageAmount; i++) {
+				if(i < (pageAmount - 1)) {
+					output.push({
+						locations: locations.slice(pointer, pointer + pageSize)
+					});
+				} else {
+					// if we are on the last page, only take the rest
+					output.push({
+						locations: locations.slice(pointer, pointer + (resultSize % pageSize))
+					});
+				};
+				pointer += pageSize;
+			};
+			return output;
+		});
+	};
 	locationService.save = function(location) {
 		if (!location) {
 			return;
