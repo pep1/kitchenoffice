@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Image;
@@ -12,7 +13,7 @@ import com.gentics.kitchenoffice.data.Image;
 @NodeEntity
 public class Location extends AbstractPersistable {
 
-	@Indexed(unique = true)
+	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "locationsearch")
 	private String name;
 
 	private String address;

@@ -1,8 +1,14 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <div class="row-fluid">
+	<h1>
+		<i class="icon-map-marker"></i> Add a location to get some food
+	</h1>
+</div>
+<hr>
+<div class="row-fluid">
 	<div class="span6">
 		<form class="form-inline">
-			<input type="text" class="search-query input-block-level" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location here">
+			<input type="text" class="search-query input-block-level" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location name here to search with Google">
 		</form>
 		<div id="map_canvas" class="ko-map-canvas" ui-map="locationMap" ui-options="mapOptions"></div>
 	</div>
@@ -39,6 +45,16 @@
 					<input name="locationWebsite" type="text"
 						class="input-block-level" ng-model="location.website"
 						placeholder="Location website">
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span4">
+					<label class="pull-right help-inline">Description</label>
+				</div>
+				<div class="span8">
+					<textarea name="locationDescription" rows="4"
+						class="input-block-level" ng-model="location.description"
+						placeholder="Location description"></textarea>
 				</div>
 			</div>
 			<hr>

@@ -32,24 +32,24 @@ public class LocationService {
 		return locationRepository.findAll(pageable);
 	}
 	
-	public Page<Location> getLocationsByName(Pageable pageable, String search) {
-		if(StringUtils.hasLength(search)) {
-			return locationRepository.findAllByName(pageable, search);
+	public Page<Location> getLocationsByName(Pageable pageable, String name) {
+		if(StringUtils.hasLength(name) && name.length() > 2) {
+			return locationRepository.findByNameLike(name, pageable);
 		} else {
-			return locationRepository.findAll(pageable);
+			return getLocations(pageable);
 		}
 	}
 	
 	public Page<Location> getLastUsedLocations(Pageable pageable, User user, String search) {
 		if(user == null) {
 			if(StringUtils.hasLength(search) && search.length() > 2) {
-				return locationRepository.getLastUsedLocations(pageable, search);
+				return locationRepository.getLastUsedLocations(search, pageable);
 			} else {
 				return locationRepository.getLastUsedLocations(pageable);
 			}
 		} else {
 			if(StringUtils.hasLength(search) && search.length() > 2) {
-				return locationRepository.getLastUsedLocations(user, pageable, search);
+				return locationRepository.getLastUsedLocations(user, search, pageable);
 			} else {
 				return locationRepository.getLastUsedLocations(user, pageable);
 			}

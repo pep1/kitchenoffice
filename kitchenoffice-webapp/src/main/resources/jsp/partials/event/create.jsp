@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <div class="row-fluid">
 	<h1>
-		<i class="icon-food"></i> Create new food event
+		<i class="icon-edit"></i> Create new food event
 	</h1>
 </div>
 <hr>
@@ -62,6 +62,12 @@
 			<h4>3. Where to order?</h4>
 			<jsp:include page="../../include/location/select.jsp"></jsp:include>
 		</div>
+	</div>
+	
+	<div class="row-fluid" ng-show="event.location || event.recipe">
+		<h4>4. Some optional description</h4>
+		<textarea rows="4" class="input-block-level" ng-model="event.description"
+						placeholder="Event description"></textarea>
 	</div>
 </form>
 <hr>

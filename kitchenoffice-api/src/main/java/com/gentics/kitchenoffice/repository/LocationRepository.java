@@ -20,11 +20,10 @@ public interface LocationRepository extends GraphRepository<Location> {
 	@Query("start locations=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Location\") "
 			+ "match locations<-[:HAS_LOCATION]-event "
 			+ "where event.creator={0} "
-			+ "and locations.name =~ '.*{2}.*'"
+			+ "and locations.name =~ '.*{1}.*'"
 			+ "return locations "
 			+ "order by event.creationDate asc")
-	public Page<Location> getLastUsedLocations(User user, Pageable pageable,
-			String search);
+	public Page<Location> getLastUsedLocations(User user, String search, Pageable pageable);
 
 	@Query("start locations=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Location\") "
 			+ "match locations<-[:HAS_LOCATION]-event "
@@ -34,11 +33,11 @@ public interface LocationRepository extends GraphRepository<Location> {
 
 	@Query("start locations=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Location\") "
 			+ "match locations<-[:HAS_LOCATION]-event "
-			+ "where locations.name =~ '.*{1}.*'"
+			+ "where locations.name =~ '.*{0}.*'"
 			+ "return locations "
 			+ "order by event.creationDate desc")
-	public Page<Location> getLastUsedLocations(Pageable pageable, String search);
+	public Page<Location> getLastUsedLocations(String search, Pageable pageable);
 
-	public Page<Location> findAllByName(Pageable pageable, String name);
+	public Page<Location> findByNameLike(String name, Pageable pageable);
 
 }

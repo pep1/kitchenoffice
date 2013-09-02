@@ -1,27 +1,32 @@
 <!-- location select carousel -->
-<div ng-controller="LocationSelectController">
-	<div class="row-fluid">
-		<form class="form-search form-horizontal pull-right">
-	    	<div class="input-append span12">
-	        	<input type="text" class="location-search-query" placeholder="Search for locations" ng-model="locationSearchString">
+<div data-ng-controller="LocationSelectController">
+	<div class="row-fluid" data-ng-hide="areLocationsEmpty">
+		<form class="form-search form-horizontal pull-left">
+	    	<div class="input-append">
+	        	<input type="text" class="location-search-query" placeholder="Search for locations" data-ng-model="locationSearchString">
 	        	<button type="submit" class="btn"><i class="icon-search"></i></button>
 	    	</div>
 		</form>
+		<div class="pull-right">
+			<span>Can't find the right location?&nbsp;&nbsp;</span><a class="btn" href="/kitchenoffice-webapp/location/create" >add new location</a>
+		</div>
 	</div>
 	<div class="row-fluid">
 		<carousel class="ko-location-carousel well"> 
 			<slide ng-repeat="page in pages" active="page.active">
 				<div class="row-fluid">
-					<div class="span3" ng-repeat="location in page.locations">
-						<div class="ko-location-thumb" ng-class="{selected: selectedLocation==location }" ng-click="setLocation(location)">
+					<div class="span3" data-ng-repeat="location in page.locations">
+						<div class="ko-location-thumb" data-ng-class="{selected: selectedLocation==location }" data-ng-click="setLocation(location)">
 							<jsp:include page="viewThumb.jsp"></jsp:include>
 						</div>
 					</div>
 				</div>
 	    	</slide>
+	    	<div data-ng-show="areLocationsEmpty" class="center">
+	    		<p class="center">there are no location entries yet<br>
+					<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> create location</a>
+				</p>
+	    	</div>
 		</carousel>
-	</div>
-	<div class="row-fluid">
-		<span>Can't find the right location?&nbsp;&nbsp;</span><a class="btn" href="/kitchenoffice-webapp/location/create" >add new location</a>
 	</div>
 </div>

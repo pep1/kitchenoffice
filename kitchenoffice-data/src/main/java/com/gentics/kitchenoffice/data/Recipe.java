@@ -9,6 +9,7 @@ import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
+import org.springframework.data.neo4j.support.index.IndexType;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.user.User;
@@ -16,7 +17,7 @@ import com.gentics.kitchenoffice.data.user.User;
 @NodeEntity
 public class Recipe extends AbstractPersistable{
     
-    @Indexed
+	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "recipesearch")
     private String name;
     
     @Indexed
