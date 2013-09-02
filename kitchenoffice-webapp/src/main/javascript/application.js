@@ -61,4 +61,6 @@ app.run(function($rootScope, $location, locationService) {
 
 		return true;
 	};
+	
+	$rootScope.processing = false;
 });
