@@ -1,8 +1,11 @@
 app.controller('LocationSelectController', function($scope, $rootScope, $location, $timeout, locationService, flash) {
+	
+	if(!$scope.locationSearchString) {
+		$scope.locationSearchString = '';
+	}
+	
 	$scope.pages = locationService.getPages(4, null);
-
 	$scope.selectedLocation = null;
-	$scope.locationSearchString = '';
 	$scope.filterText;
 	var filterTextTimeout;
 
@@ -19,8 +22,9 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	};
 
 	$scope.$watch('locationSearchString', function(val) {
-		if (filterTextTimeout)
-			$timeout.cancel(filterTextTimeout);
+		
+		if(!val) return;
+		if (filterTextTimeout) $timeout.cancel(filterTextTimeout);
 
 		tempFilterText = val;
 		filterTextTimeout = $timeout(function() {

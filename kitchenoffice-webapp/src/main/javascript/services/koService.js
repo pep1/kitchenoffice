@@ -10,7 +10,7 @@ angular.module('ko.services', [ 'restangular' ])
 	
 	var eventService = Restangular.withConfig(function(RestangularConfigurer) {
 		RestangularConfigurer.setDefaultHttpFields({
-			cache : true
+			cache : false
 		});
 		
 //		RestangularConfigurer.addElementTransformer('events', true, function(one, two, three) {
