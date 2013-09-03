@@ -1,10 +1,11 @@
 <!-- location select carousel -->
 <div data-ng-controller="LocationSelectController">
 	<div class="row-fluid" data-ng-hide="areLocationsEmpty">
-		<form class="form-search form-horizontal pull-left">
+		<form class="form-search form-horizontal pull-left" data-ng-submit="doSearch(locationSearchString)">
 	    	<div class="input-append">
-	        	<input type="text" class="location-search-query" placeholder="Search for locations" data-ng-model="locationSearchString">
-	        	<button type="submit" class="btn"><i class="icon-search"></i></button>
+	        	<input type="text" placeholder="Search for locations" data-ng-model="locationSearchString">
+	        	<button type="submit" class="btn" data-ng-click="cleanSearch()"><i class="icon-eraser"></i></button>
+	        	<button type="submit" class="btn" data-ng-click="doSearch(locationSearchString)"><i class="icon-search"></i></button>
 	    	</div>
 		</form>
 		<div class="pull-right">

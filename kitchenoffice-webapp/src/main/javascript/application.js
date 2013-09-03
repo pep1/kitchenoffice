@@ -1,5 +1,5 @@
 var app = angular.module('kitchenOfficeApp',
-		['ko.services', 
+		['ko.services',
 		 'active.link', 
 		 '$strap.directives', 
 		 'ui.bootstrap', 

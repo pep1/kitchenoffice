@@ -4,7 +4,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	$scope.selectedLocation = null;
 	$scope.locationSearchString = '';
 	$scope.filterText;
-	var filterTextTimeout = 300;
+	var filterTextTimeout;
 
 	$scope.areLocationsEmpty = $scope.pages.then(function(pages) {
 		return !(pages.length > 0);
@@ -24,13 +24,15 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 
 		tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
-			$scope.pages = locationService.getPages(4, (tempFilterText) ? tempFilterText : null);
-		});
+			$scope.doSearch(tempFilterText);
+		}, 500);
 	});
-
-	/*
-	 * $scope.selectLocation = function(location) { debugger; if($scope.event) {
-	 * //$scope.event.location = location; } };
-	 */
-
+	
+	$scope.doSearch = function(searchString) {
+		$scope.pages = locationService.getPages(4, (searchString) ? searchString : null);
+	};
+	
+	$scope.cleanSearch = function() {
+		$scope.locationSearchString = '';
+	};
 });
