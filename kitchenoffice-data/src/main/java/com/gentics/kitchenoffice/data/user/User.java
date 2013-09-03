@@ -10,6 +10,7 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.support.index.IndexType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,11 +19,12 @@ import com.gentics.kitchenoffice.data.AbstractPersistable;
 @NodeEntity
 public class User extends AbstractPersistable implements UserDetails {
 
+	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "userfirstnamesearch")
 	private String firstName;
 	
 	private String lastName;
 	
-	@Indexed
+	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "userusernamesearch")
 	private String username;
 	
 	@JsonIgnore
