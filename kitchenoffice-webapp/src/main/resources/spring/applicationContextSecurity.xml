@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- $Id$ -->
 <b:beans xmlns:b="http://www.springframework.org/schema/beans"
 	xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -14,11 +13,13 @@
 
 	<context:property-placeholder location="classpath:/config/webapp.properties" />
 
+	<!-- http entry-point-ref="restAuthenticationEntryPoint"> <intercept-url 
+		pattern="/api/**" access="ROLE_USER" /> <http-basic /> </http -->
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
 		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-		
+
 		<intercept-url pattern="/index.jsp" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/assets/**" access="permitAll" />
 		<intercept-url pattern="/cas-logout.jsp" access="permitAll" />
@@ -33,6 +34,10 @@
 	<authentication-manager alias="authManager">
 		<authentication-provider ref="casAuthProvider" />
 	</authentication-manager>
+
+	<b:bean id="restAuthenticationEntryPoint"
+		class="com.gentics.kitchenoffice.webservice.authentication.RestAuthenticationEntryPoint">
+	</b:bean>
 
 	<!-- This filter handles a Single Logout Request from the CAS Server -->
 	<b:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
@@ -87,7 +92,6 @@
 				<b:constructor-arg value="https://${cas.server.host}/cas-server" />
 			</b:bean>
 		</b:property>
-
 	</b:bean>
 
 </b:beans>
