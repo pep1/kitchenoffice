@@ -17,7 +17,6 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 			window.scrollTo(0, 0);
 			$rootScope.processing = false;
 			$scope.attendModal.close();
-			$scope.homeEvents = eventService.getHomeEvents();
 			flash('error', data[0].data.description);
 		});
 	};

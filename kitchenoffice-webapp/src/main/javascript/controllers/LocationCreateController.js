@@ -43,10 +43,10 @@ app.controller('LocationCreateController', function($scope, $rootScope, $locatio
 
 		navigator.geolocation.getCurrentPosition(function(position) {
 
-			$scope.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			$scope.$apply();
-		}, function() {
-
+			var newCenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			
+			$scope.locationMap.setCenter(newCenter);
+			$scope.marker.setPosition(newCenter);
 		});
 	}
 	
