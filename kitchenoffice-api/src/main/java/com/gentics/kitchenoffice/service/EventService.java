@@ -37,7 +37,7 @@ public class EventService {
 
 	@Autowired
 	private JobRepository jobRepository;
-	
+
 	@Autowired
 	private ParticipantRepository participantRepository;
 
@@ -55,20 +55,7 @@ public class EventService {
 	}
 
 	public Event saveEvent(Event event) {
-
 		Assert.notNull(event);
-
-		// refresh
-		if(!event.isNew()) {
-			event = getEventById(event.getId());
-		}
-		
-		Assert.notNull(event);
-
-		checkIfUserCanCreateEvent(event, userService.getUser());
-		
-		event.setCreator(userService.getUser());
-		
 		return eventRepository.save(event);
 	}
 
@@ -91,7 +78,9 @@ public class EventService {
 			throw new IllegalStateException("You already attend this event");
 		}
 
-		checkIfUserCanAttendEvent(event, userService.getUser());
+		if (checkIfUserCanAttendEvent(event, userService.getUser())) {
+			throw new IllegalStateException("You already attend an event at this time!");
+		}
 
 		event.addParticipant(userService.getUser(), job);
 		return eventRepository.save(event);
@@ -102,7 +91,7 @@ public class EventService {
 		Assert.isTrue(!event.isNew());
 		// refresh
 		event = getEventById(event.getId());
-		
+
 		Set<Participant> participants = event.getParticipants();
 		CollectionUtils.filter(participants, new Predicate() {
 			@Override
@@ -111,18 +100,18 @@ public class EventService {
 			}
 		});
 		// return if we got no participant
-		if(!participants.isEmpty() && participants.size() != 1) {
+		if (!participants.isEmpty() && participants.size() != 1) {
 			return event;
 		}
 		Participant participant = participants.iterator().next();
-		
+
 		// remove the participant from the list
 		event.getParticipants().remove(participant);
 		event = eventRepository.save(event);
-		
+
 		// delete the participant itself
 		participantRepository.delete(participant);
-		
+
 		return event;
 	}
 
@@ -138,8 +127,9 @@ public class EventService {
 		Assert.notNull(event);
 		Assert.notNull(user);
 
-		return (CollectionUtils.isEmpty(getCreatedEventsFromUserInPeriod(event.getStartDate(), event.getEndDate()))) ? true
-				: false;
+		boolean output = CollectionUtils.isEmpty(getCreatedEventsFromUserInPeriod(event.getStartDate(),
+				event.getEndDate()));
+		return (output) ? true : false;
 	}
 
 	public List<Event> getAttendedEventsFromUserInFutureOf(Date date) {
@@ -161,6 +151,8 @@ public class EventService {
 	public List<Event> getCreatedEventsFromUserInPeriod(Date startDate, Date endDate) {
 		Assert.notNull(startDate);
 		Assert.notNull(endDate);
-		return eventRepository.findAllCreatedInPeriodOf(userService.getUser(), startDate.getTime(), endDate.getTime());
+		
+		List<Event> output = eventRepository.findAllCreatedInPeriodOf(userService.getUser(), startDate.getTime(), endDate.getTime());
+		return output;
 	}
 }

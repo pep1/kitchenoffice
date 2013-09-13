@@ -114,7 +114,10 @@ public class EventWebService {
 		try {
 			Assert.notNull(event);
 			
-			eventService.saveEvent(event);
+			if (!eventService.checkIfUserCanCreateEvent(event, userService.getUser())) {
+				throw new IllegalStateException("You already have an event created in this time");
+			}
+			
 			// set actual logged in user as creator
 			event.setCreator(userService.getUser());
 			// set creation date to now

@@ -17,6 +17,9 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 				isValid =  !_.isNull(this.location);
 			}
 			return isValid;
+		},
+		reset: function() {
+			this.type = this.location = this.recipe = null;
 		}
 	};
 	
@@ -39,11 +42,16 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 		$rootScope.processing = true;
 		
 		eventService.save($scope.event).then(function(event) {
-			
 			$rootScope.processing = false;
 			$scope.doSave = false;
 			$location.path('/kitchenoffice-webapp/home');
 			flash('success', 'New event '+eventService.displayName(event)+' saved');
+		}, function(data) {
+			window.scrollTo(0, 0);
+			$rootScope.processing = false;
+			$scope.doSave = false;
+			$scope.event.reset();
+			flash('error', data[0].data.description);
 		});
 	};
 

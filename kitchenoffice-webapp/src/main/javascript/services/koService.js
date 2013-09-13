@@ -17,9 +17,7 @@ angular.module('ko.services', [ 'restangular' ])
 	 */
 	eventService.getHomeEvents = function() {
 		return this.getList().then(function(events) {
-			return _.first(_.filter(events, function(event) {
-				return moment(event.date).isAfter(moment());
-			}), 3);
+			return _.first( events , 3 );
 		});
 	};
 	
@@ -29,8 +27,12 @@ angular.module('ko.services', [ 'restangular' ])
 	eventService.attendEvent = function(event, job) {
 		if(_.isNull(event)) return false;
 		
-		return Restangular.one('events', event.id).customGET("attend" + (job) ? "/" + job.id : "", function(event) {
-			console.log(event);
+		var attendPath = "attend";
+		if(!_.isUndefined(job)) {
+			attendPath += "/" + job.id;
+		}
+		return Restangular.one('events', event.id).customGET(attendPath, function(event) {
+			return event;
 		});
 	};
 
@@ -96,6 +98,7 @@ angular.module('ko.services', [ 'restangular' ])
 			return output;
 		});
 	};
+	
 	locationService.save = function(location) {
 		if (!location) {
 			return;

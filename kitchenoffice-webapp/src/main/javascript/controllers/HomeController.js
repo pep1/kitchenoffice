@@ -1,4 +1,4 @@
-app.controller('HomeController', function($rootScope, $scope, eventService) {
+app.controller('HomeController', function($rootScope, $scope, eventService, flash) {
 	
 	$scope.homeEvents = eventService.getHomeEvents();
 
@@ -7,7 +7,19 @@ app.controller('HomeController', function($rootScope, $scope, eventService) {
 	});
 	
 	$scope.attendEvent = function(event) {
-		eventService.attendEvent(event);
+		eventService.attendEvent(event).then( function(event) {
+			window.scrollTo(0, 0);
+			$rootScope.processing = false;
+			$scope.attendModal.close();
+			$scope.homeEvents = eventService.getHomeEvents();
+			flash('success', 'You successfully attend event '+eventService.displayName(event)+'.');
+		}, function(data) {
+			window.scrollTo(0, 0);
+			$rootScope.processing = false;
+			$scope.attendModal.close();
+			$scope.homeEvents = eventService.getHomeEvents();
+			flash('error', data[0].data.description);
+		});
 	};
 	
 	$scope.doAttend = false;
