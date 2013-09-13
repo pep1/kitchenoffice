@@ -35,6 +35,8 @@ public class Event extends AbstractPersistable {
 	private User creator;
 	
 	@JsonIgnore
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	@GraphProperty(propertyType=Long.class)
 	private Date creationDate;
 
 	@XmlJavaTypeAdapter(DateAdapter.class)

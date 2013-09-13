@@ -18,7 +18,7 @@
 		<!-- Rest and Angularjs -->
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.8/angular.js</js>
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.8/angular-resource.js</js>
-		<js>classpath:META-INF/resources/webjars/angularstrap/0.7.4/angular-strap.js</js>
+		<js>classpath:META-INF/resources/webjars/angular-strap/0.7.4/angular-strap.js</js>
 		
 		<js>classpath:META-INF/resources/webjars/lodash/1.2.0/lodash.js</js>
 		<js>http://cdnjs.cloudflare.com/ajax/libs/restangular/0.5.1/restangular.js</js>

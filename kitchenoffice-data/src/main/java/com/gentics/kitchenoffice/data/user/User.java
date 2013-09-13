@@ -19,9 +19,10 @@ import com.gentics.kitchenoffice.data.AbstractPersistable;
 @NodeEntity
 public class User extends AbstractPersistable implements UserDetails {
 
-	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "userfirstnamesearch")
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userfirstnamesearch")
 	private String firstName;
 	
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userlastnamesearch")
 	private String lastName;
 	
 	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "userusernamesearch")
