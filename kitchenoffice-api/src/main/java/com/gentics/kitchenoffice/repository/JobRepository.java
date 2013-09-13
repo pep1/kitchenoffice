@@ -6,4 +6,5 @@ import com.gentics.kitchenoffice.data.Job;
 
 public interface JobRepository extends GraphRepository<Job>{
 
+	public Job findByName(String name);
 }

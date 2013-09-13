@@ -4,7 +4,7 @@
 	<span class="label label-info" data-ng-switch="EXTERNAL"><i class="icon-food"></i> go out eating to</span>
 </p>
 <p>
-	<i class="icon-time"></i> {{fromNow(event.date)}}
+	<i class="icon-time"></i> {{fromNow(event.startDate)}}
 <p>
 <p data-ng-switch="EXTERNAL">
 	<i class="icon-map-marker"></i> {{event.location.address}}

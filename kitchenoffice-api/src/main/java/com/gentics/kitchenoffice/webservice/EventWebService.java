@@ -11,23 +11,27 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.NumberUtils;
 
+import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.service.EventService;
+import com.gentics.kitchenoffice.service.JobService;
 import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
 
 @Component
@@ -43,10 +47,12 @@ public class EventWebService {
 	@Autowired
 	private EventService eventService;
 	
+	@Autowired
+	private JobService jobService;
+	
 	@PostConstruct
 	public void initialize() {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
-		
 	}
 
 	@GET
@@ -63,7 +69,38 @@ public class EventWebService {
 			size = 25;
 		}
 
-		return eventService.getEvents(new PageRequest(page, size));
+		return eventService.getFutureEvents(new PageRequest(page, size));
+	}
+	
+	@GET
+	@Path("/{id}/attend")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Event attendEvent(@PathParam("id") String id) {
+		return attendEventWithJob(id, null);
+	}
+	
+	@GET
+	@Path("/{id}/attend/{jobid}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Event attendEventWithJob(@PathParam("id") String id, @PathParam("jobid") String jobId) {
+
+		log.debug("calling attendEvent");
+		
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId);
+		
+		Job job = null;
+		
+		// if there is given a job, is should be found in the repository
+		if(StringUtils.isNotBlank(jobId)) {
+			job = jobService.getJobByName(jobId);
+			Assert.notNull(job);
+		}
+		
+		return eventService.attendEvent(eventService.getEventById(parsedId), job);
 	}
 
 	@POST

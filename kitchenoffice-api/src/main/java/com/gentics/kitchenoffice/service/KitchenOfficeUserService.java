@@ -7,15 +7,18 @@ import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.jasig.cas.client.validation.Assertion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 
+import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.user.Role;
 import com.gentics.kitchenoffice.data.user.User;
+import com.gentics.kitchenoffice.repository.JobRepository;
 import com.gentics.kitchenoffice.repository.RoleRepository;
 import com.gentics.kitchenoffice.repository.UserRepository;
 
@@ -30,12 +33,18 @@ public class KitchenOfficeUserService extends
 	public static final String ROLE_USER_NAME = "ROLE_USER";
 
 	public static final String ROLE_ADMIN_NAME = "ROLE_ADMIN";
+	
+	@Value("${webapp.job.defaults}")
+	private String[] defaultJobIds;
 
 	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
 	RoleRepository roleRepository;
+	
+	@Autowired
+	JobRepository jobRepository;
 
 	@PostConstruct
 	public void initialize() {
@@ -44,7 +53,9 @@ public class KitchenOfficeUserService extends
 		
 		// initially create two roles
 		checkAndCreateRoles();
-
+		
+		// check and create default jobs
+		checkAndCreateDefaultJobs();
 	}
 
 	@Override
@@ -107,6 +118,18 @@ public class KitchenOfficeUserService extends
 
 		return userRepository.save(user);
 
+	}
+	
+	private void checkAndCreateDefaultJobs() {
+		
+		for(String jobId : defaultJobIds) {
+			if(jobRepository.findByName(jobId) == null){
+				log.debug("Creating initial job with name: " + jobId);
+				Job newJob = new Job();
+				newJob.setName(jobId);
+				jobRepository.save(newJob);
+			};
+		}
 	}
 
 	public final boolean hasRole(String role) {

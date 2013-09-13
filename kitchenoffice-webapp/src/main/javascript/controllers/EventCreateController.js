@@ -5,11 +5,12 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 	 */
 	$scope.event = {
 		type : null,
-		date : null,
+		startDate : null,
+		endDate : null,
 		location : null,
 		recipe : null,
 		validate: function(eventForm) {
-			if (!this.type || !this.date) return false;
+			if (!this.type || !this.startDate || !this.endDate) return false;
 			var isValid = false;
 			
 			if (this.type === 'EXTERNAL') {
@@ -87,8 +88,11 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 		var concatenatedDate = moment([ dateDate.years(), dateDate.month(), dateDate.date(), dateTime.hours(),
 				dateTime.minutes() ]);
 
-		$scope.event.date = concatenatedDate.format();
-
-		return concatenatedDate.fromNow();
+		var saveDate = concatenatedDate;
+		
+		$scope.event.startDate = concatenatedDate.format();
+		$scope.event.endDate = concatenatedDate.add('hours', 1).format();
+		
+		return saveDate.fromNow();
 	};
 });

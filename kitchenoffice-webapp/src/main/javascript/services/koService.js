@@ -2,25 +2,14 @@ angular.module('ko.services', [ 'restangular' ])
 .config([ 'RestangularProvider', function(RestangularProvider) {
 	// set base URL
 	RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
-	// set client caching to true
-	RestangularProvider.setDefaultHttpFields({
+
+	/*RestangularProvider.setDefaultHttpFields({
 		cache : false
-	});
-} ]).factory('eventService', function(Restangular) {
+	});*/
 	
-	var eventService = Restangular.withConfig(function(RestangularConfigurer) {
-		RestangularConfigurer.setDefaultHttpFields({
-			cache : false
-		});
-		
-//		RestangularConfigurer.addElementTransformer('events', true, function(one, two, three) {
-//			
-//		});
-//		
-//		RestangularConfigurer.addElementTransformer('events', false, function(one, two, three) {
-//			debugger;
-//		});
-	}).all('events');
+}]).factory('eventService', function(Restangular) {
+	
+	var eventService = Restangular.all('events');
 
 	/**
 	 * returns the events for the home view - serves only future events - first
@@ -33,12 +22,23 @@ angular.module('ko.services', [ 'restangular' ])
 			}), 3);
 		});
 	};
+	
+	/**
+	 * Attend to an event with an optional job
+	 */
+	eventService.attendEvent = function(event, job) {
+		if(_.isNull(event)) return false;
+		
+		return Restangular.one('events', event.id).customGET("attend" + (job) ? "/" + job.id : "", function(event) {
+			console.log(event);
+		});
+	};
 
 	/**
 	 * saves a given event
 	 */
 	eventService.save = function(event) {
-		if (!event) {
+		if (_.isNull(event) || _.isUndefined(event)) {
 			return;
 		}
 		return this.post(event);
@@ -60,12 +60,7 @@ angular.module('ko.services', [ 'restangular' ])
 	return eventService;
 }).factory('locationService', function(Restangular) {
 	
-	var locationService = Restangular.withConfig(function(RestangularConfigurer) {
-		RestangularConfigurer.setDefaultHttpFields({
-			cache : false
-		});
-		
-	}).all('locations');
+	var locationService = Restangular.all('locations');
 	
 	locationService.getLastUsed = function() {
 		return this.getList();

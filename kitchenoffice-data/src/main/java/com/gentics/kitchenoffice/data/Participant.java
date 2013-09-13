@@ -1,5 +1,6 @@
 package com.gentics.kitchenoffice.data;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -15,6 +16,7 @@ public class Participant extends AbstractPersistable{
 
 	@Fetch
 	@StartNode
+	@JsonIgnore
     private Event event;
 	
 	@Fetch
