@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.joda.time.DateTime;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -37,9 +37,13 @@ public class Event extends AbstractPersistable {
 	@JsonIgnore
 	private Date creationDate;
 
-	@Indexed
 	@XmlJavaTypeAdapter(DateAdapter.class)
-	private Date date;
+	@GraphProperty(propertyType=Long.class)
+	private Date startDate;
+	
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	@GraphProperty(propertyType=Long.class)
+	private Date endDate;
 
 	@Indexed
 	private String description;
@@ -87,12 +91,20 @@ public class Event extends AbstractPersistable {
 		this.type = type;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setStartDate(Date date) {
+		this.startDate = date;
+	}
+	
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date date) {
+		this.endDate = date;
 	}
 
 	public String getDesciption() {
@@ -149,7 +161,9 @@ public class Event extends AbstractPersistable {
 	public Participant addParticipant(User user, Job job) {
 
 		Assert.notNull(user, "user may not be null");
-		Assert.notNull(job, "job may not be null");
+		
+		// TODO: check if job can be null
+		//Assert.notNull(job, "job may not be null");
 
 		Participant p = new Participant(this, user, job);
 
@@ -163,7 +177,7 @@ public class Event extends AbstractPersistable {
 	public String toString() {
 		return String.format(
 				"Event{\n date=%s,\n  participants=%s\n, comments=%s\n}",
-				date.toString(), participants.toString(), comments.toString());
+				startDate.toString(), participants.toString(), comments.toString());
 	}
 
 }

@@ -212,7 +212,7 @@ public class RecipeTest {
 		Event m1 = new Event();
 		m1.setType(EventType.INTERNAL);
 		m1.setRecipe(result);
-		m1.setDate(DateTime.now().toDate());
+		m1.setStartDate(DateTime.now().toDate());
 		m1.addParticipant(u1, job1);
 		mealRepository.save(m1);
 
@@ -222,7 +222,7 @@ public class RecipeTest {
 		Event m2 = new Event();
 		m1.setType(EventType.EXTERNAL);
 		m2.setRecipe(result2);
-		m2.setDate(DateTime.now().plus(Duration.standardHours(2)).toDate());
+		m2.setStartDate(DateTime.now().plus(Duration.standardHours(2)).toDate());
 		m2.addParticipant(u1, job1);
 		mealRepository.save(m2);
 		m2.addParticipant(u2, job2);

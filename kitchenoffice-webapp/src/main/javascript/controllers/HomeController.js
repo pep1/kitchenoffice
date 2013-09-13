@@ -6,6 +6,10 @@ app.controller('HomeController', function($rootScope, $scope, eventService) {
 		return !(events.length > 0);
 	});
 	
+	$scope.attendEvent = function(event) {
+		eventService.attendEvent(event);
+	};
+	
 	$scope.doAttend = false;
 	$scope.selectedEvent = null;
 	$scope.attendModal = {

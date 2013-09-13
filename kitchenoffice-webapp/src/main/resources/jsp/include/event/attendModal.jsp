@@ -21,6 +21,6 @@
 	</div>
 	<div class="modal-footer">
 		<button class="btn cancel" data-ng-click="attendModal.close()">Cancel</button>
-		<button class="btn btn-primary" data-ng-click="doAttendEvent()">Ok</button>
+		<button class="btn btn-primary" data-ng-click="attendEvent(selectedEvent)">Attend</button>
 	</div>
 </div>

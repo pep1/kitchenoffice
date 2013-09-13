@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 @NodeEntity
 public class Job extends AbstractPersistable{
@@ -13,7 +14,7 @@ public class Job extends AbstractPersistable{
     @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
 	private Image image;
 	
-	@Indexed(unique = true)
+	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "jobsearch")
 	private String name;
 	
 	private String description;

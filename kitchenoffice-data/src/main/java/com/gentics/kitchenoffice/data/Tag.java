@@ -2,13 +2,20 @@ package com.gentics.kitchenoffice.data;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+
+import com.gentics.kitchenoffice.adapter.DateAdapter;
 
 
 @NodeEntity
 public class Tag extends AbstractPersistable{
 	
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	@GraphProperty(propertyType=Long.class)
 	private Date timeStamp;
 	
 	@Indexed(unique = true)

@@ -2,13 +2,19 @@ package com.gentics.kitchenoffice.data;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import com.gentics.kitchenoffice.adapter.DateAdapter;
 import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
 public class Comment extends AbstractPersistable{
 
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	@GraphProperty(propertyType=Long.class)
 	private Date timeStamp;
 	
 	private User user;
