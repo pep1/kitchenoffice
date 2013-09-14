@@ -39,6 +39,9 @@ public class UserService extends
 	
 	@Value("${webapp.job.defaults}")
 	private String[] defaultJobIds;
+	
+	@Value("${webapp.security.enabled}")
+	private String[] adminEmails;
 
 	@Autowired
 	UserRepository userRepository;

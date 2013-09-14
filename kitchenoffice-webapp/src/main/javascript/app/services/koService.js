@@ -113,6 +113,17 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 			return event;
 		});
 	};
+	
+	/**
+	 * Attend to an event with an optional job
+	 */
+	eventService.dismissEvent = function(event, job) {
+		if(_.isNull(event) || _.isUndefined(event)) return false;
+
+		return event.customGET("dismiss", function(event) {
+			return event;
+		});
+	};
 
 	/**
 	 * saves a given event

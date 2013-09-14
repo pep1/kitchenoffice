@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- $Id$ -->
-<b:beans 
-	xmlns:b="http://www.springframework.org/schema/beans"
-    xmlns="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:neo4j="http://www.springframework.org/schema/data/neo4j" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/security
@@ -16,13 +15,14 @@
 			http://www.springframework.org/schema/data/neo4j
 			http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
 
-	<context:property-placeholder location="classpath:/config/webapp.properties"/>
+	<context:property-placeholder location="classpath:/config/webapp.properties" />
 	<!-- Activate Spring annotation support -->
 	<context:spring-configured />
 	<context:annotation-config />
-	
-	<context:component-scan base-package="com.gentics.kitchenoffice.service,com.gentics.kitchenoffice.webservice" />
-	
+
+	<context:component-scan
+		base-package="com.gentics.kitchenoffice.service,com.gentics.kitchenoffice.webservice" />
+
 	<!-- multilanguage -->
 	<b:bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -32,7 +32,14 @@
 			</b:list>
 		</b:property>
 	</b:bean>
-	
+
+
+	<!-- neo4j:config graphDatabaseService="graphDatabaseService" />
+	<b:bean id="graphDatabaseService"
+		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+		<b:constructor-arg index="0" value="${db.neo4j.host}:${db.neo4j.port}/db/data" />
+	</b:bean -->
+
 	<neo4j:config storeDirectory="${db.location}" />
 	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
 

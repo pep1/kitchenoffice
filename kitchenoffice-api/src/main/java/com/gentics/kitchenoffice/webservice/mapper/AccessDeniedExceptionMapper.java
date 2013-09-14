@@ -6,18 +6,19 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.access.AccessDeniedException;
 
 import com.gentics.kitchenoffice.data.SystemMessage;
 import com.gentics.kitchenoffice.data.SystemMessage.MessageType;
 import com.sun.jersey.api.client.ClientResponse.Status;
 
 @Provider
-public class IllegalStateMapper implements ExceptionMapper<IllegalStateException> {
+public class AccessDeniedExceptionMapper implements ExceptionMapper<AccessDeniedException> {
 	
-	private static Logger log = Logger.getLogger(IllegalArgumentMapper.class);
+	private static Logger log = Logger.getLogger(AccessDeniedExceptionMapper.class);
 
 	@Override
-	public Response toResponse(IllegalStateException ex) {
+	public Response toResponse(AccessDeniedException ex) {
 		
 		log.info(ex);
 		
@@ -25,7 +26,7 @@ public class IllegalStateMapper implements ExceptionMapper<IllegalStateException
 		message.setDescription(ex.getLocalizedMessage());
 		message.setType(MessageType.error);
 		
-		return Response.status(Status.CONFLICT).entity(message).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(Status.UNAUTHORIZED).entity(message).type(MediaType.APPLICATION_JSON).build();
 	}
 
 }

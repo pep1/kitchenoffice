@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -49,8 +50,17 @@ public class EventService {
 	public List<Event> getFutureEvents(PageRequest pagerequest) {
 		return eventRepository.findAllinFutureOf(new Date().getTime(), pagerequest);
 	}
+	
+	public List<Event> getMyAttendedEvents(PageRequest pagerequest) {
+		return eventRepository.findAllAttended(userService.getUser(), pagerequest);
+	}
+	
+	public List<Event> getEventsOfUser(PageRequest pagerequest) {
+		return eventRepository.findByCreator(userService.getUser(), pagerequest);
+	}
 
 	public Event getEventById(Long id) {
+		Assert.notNull(id);
 		return eventRepository.findById(id);
 	}
 
@@ -58,15 +68,17 @@ public class EventService {
 		Assert.notNull(event);
 		return eventRepository.save(event);
 	}
+	
+	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	public void deleteEvent(Event event) {
+		Assert.notNull(event);
+		eventRepository.delete(event);
+	}
 
 	public Event attendEvent(Event event, Job job) {
-
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
 		// TODO: check if job can be null
-
-		// refresh
-		event = getEventById(event.getId());
 
 		// check if user already attend this event
 		if (CollectionUtils.countMatches(event.getParticipants(), new Predicate() {
@@ -78,7 +90,7 @@ public class EventService {
 			throw new IllegalStateException("You already attend this event");
 		}
 
-		if (checkIfUserCanAttendEvent(event, userService.getUser())) {
+		if (!checkIfUserCanAttendEvent(event, userService.getUser())) {
 			throw new IllegalStateException("You already attend an event at this time!");
 		}
 
@@ -86,31 +98,34 @@ public class EventService {
 		return eventRepository.save(event);
 	}
 
-	public Event unAttendEvent(Event event) {
+	public Event dismissEvent(Event event) {
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
-		// refresh
-		event = getEventById(event.getId());
+		return unAttendUserFromEvent(event, userService.getUser());
+	}
+
+	public Event unAttendUserFromEvent(Event event, final User user) {
+		Assert.notNull(event);
+		Assert.isTrue(!event.isNew());
+		Assert.notNull(user);
 
 		Set<Participant> participants = event.getParticipants();
-		CollectionUtils.filter(participants, new Predicate() {
+
+		Participant participant = (Participant) CollectionUtils.find(participants, new Predicate() {
 			@Override
 			public boolean evaluate(Object object) {
-				return userService.getUser().equals(((Participant) object).getUser());
+				return user.equals(((Participant) object).getUser());
 			}
 		});
 		// return if we got no participant
-		if (!participants.isEmpty() && participants.size() != 1) {
-			return event;
+		if (participant == null) {
+			throw new IllegalArgumentException("User is not in the list of participants!");
 		}
-		Participant participant = participants.iterator().next();
-
+		
 		// remove the participant from the list
 		event.getParticipants().remove(participant);
+		// and save the event. Spring will take care about all unnecessary references
 		event = eventRepository.save(event);
-
-		// delete the participant itself
-		participantRepository.delete(participant);
 
 		return event;
 	}
@@ -119,8 +134,9 @@ public class EventService {
 		Assert.notNull(event);
 		Assert.notNull(user);
 
-		return (CollectionUtils.isEmpty(getAttendedEventsFromUserInPeriod(event.getStartDate(), event.getEndDate()))) ? true
-				: false;
+		boolean output = CollectionUtils.isEmpty(getAttendedEventsFromUserInPeriod(event.getStartDate(),
+				event.getEndDate()));
+		return output;
 	}
 
 	public boolean checkIfUserCanCreateEvent(Event event, User user) {
@@ -129,12 +145,12 @@ public class EventService {
 
 		boolean output = CollectionUtils.isEmpty(getCreatedEventsFromUserInPeriod(event.getStartDate(),
 				event.getEndDate()));
-		return (output) ? true : false;
+		return output;
 	}
 
 	public List<Event> getAttendedEventsFromUserInFutureOf(Date date) {
 		Assert.notNull(date);
-		return eventRepository.findAllAttendedInFutureOf(userService.getUser(), date.getTime());
+		return eventRepository.findAllAttendedInFuture(userService.getUser(), date.getTime());
 	}
 
 	public List<Event> getAttendedEventsFromUserInPeriod(Date startDate, Date endDate) {
@@ -151,8 +167,9 @@ public class EventService {
 	public List<Event> getCreatedEventsFromUserInPeriod(Date startDate, Date endDate) {
 		Assert.notNull(startDate);
 		Assert.notNull(endDate);
-		
-		List<Event> output = eventRepository.findAllCreatedInPeriodOf(userService.getUser(), startDate.getTime(), endDate.getTime());
+
+		List<Event> output = eventRepository.findAllCreatedInPeriodOf(userService.getUser(), startDate.getTime(),
+				endDate.getTime());
 		return output;
 	}
 }

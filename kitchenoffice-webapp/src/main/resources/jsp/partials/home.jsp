@@ -20,7 +20,8 @@
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<button class="btn btn-small">View details »</button>
-			<button class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">attend »</button>
+			<button data-ng-show="(event.participants | filter:isMe).length == 0" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">attend »</button>
+			<button data-ng-hide="(event.participants | filter:isMe).length == 0" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)">dismiss »</button>
 		</div>
 	</div>
 	<div data-ng-show="areEventsEmpty">
@@ -29,4 +30,6 @@
 		</p>
 	</div>
 </div>
+
 <jsp:include page="../include/event/attendModal.jsp"></jsp:include>
+<jsp:include page="../include/event/dismissModal.jsp"></jsp:include>

@@ -13,4 +13,5 @@
 		<p>Project Version: ${project.version}</p>
 	</footer>
 </div>
+
 <jsp:include page="include/footer.jsp" />

@@ -87,7 +87,11 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 
 	// calculating time and update it to the variables
 	$scope.dateFromNow = function() {
-		var dateDate = moment($scope.dateString, 'YYYY.MM.DD');
+		var dateDate = moment($scope.dateString);
+		// strange behaviour
+		if($rootScope.checkBrowserName('firefox')) {
+			dateDate = moment($scope.dateString, 'YYYY.MM.DD');
+		}
 		var dateTime = moment($scope.timeString, 'hh:mm A');
 		var concatenatedDate = moment([ dateDate.years(), dateDate.month(), dateDate.date(), dateTime.hours(),
 				dateTime.minutes() ]);

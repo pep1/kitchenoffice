@@ -50,7 +50,24 @@ app.value('$strapConfig', {
 });
 app.run(function($rootScope, $location, locationService, userService) {
 	
-	$rootScope.user = userService.getUser();
+	$rootScope.me = userService.getUser();
+	
+	$rootScope.isMe = function(object) {
+		if(_.isNull(object) || _.isUndefined(object)) return false;
+		// object can be participant or a user object itself
+		user = (!_.isUndefined(object.user)) ? object.user : object;
+		
+		return $rootScope.me.then(function(me) {
+			return me.id === user.id;
+		});
+	};
+	
+	$rootScope.checkBrowserName = function (name){  
+		var agent = navigator.userAgent.toLowerCase();  
+		if (agent.indexOf(name.toLowerCase())>-1) {  
+			return true;  
+		}  
+	};
 	
 	$rootScope.fromNow = function(date) {
 		return (date) ? moment(date).calendar() : "not specified";
