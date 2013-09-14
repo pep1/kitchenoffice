@@ -11,6 +11,6 @@
 	<div class="modal-footer">
 		<span class="help-inline">do you really want to attend this event?&nbsp;&nbsp;</span>
 		<button class="btn cancel" data-ng-click="attendModal.close()" data-ng-disabled="processing">Cancel</button>
-		<button class="btn btn-primary" data-ng-click="attendEvent(event, job)" data-ng-disabled="processing">Attend</button>
+		<button class="btn btn-primary" data-ng-click="attendEvent(event, job)" data-ng-disabled="processing"><i class="icon-flag-alt"></i> Attend</button>
 	</div>
 </div>

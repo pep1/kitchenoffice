@@ -34,7 +34,7 @@ public class LocationService {
 	
 	public Page<Location> getLocationsByName(Pageable pageable, String name) {
 		if(StringUtils.hasLength(name) && name.length() > 2) {
-			return locationRepository.findByNameLike(name, pageable);
+			return locationRepository.findByNameLike("*" + name + "*", pageable);
 		} else {
 			return getLocations(pageable);
 		}

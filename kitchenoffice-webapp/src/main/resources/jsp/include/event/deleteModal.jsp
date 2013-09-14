@@ -11,6 +11,6 @@
 	<div class="modal-footer">
 		<span class="help-inline">do you really want to delete this event?&nbsp;&nbsp;</span>
 		<button class="btn cancel" data-ng-click="deleteModal.close()" data-ng-disabled="processing">Cancel</button>
-		<button class="btn btn-danger" data-ng-click="deleteEvent(event)" data-ng-disabled="processing">Delete</button>
+		<button class="btn btn-danger" data-ng-click="deleteEvent(event)" data-ng-disabled="processing"><i class="icon-trash"></i> Delete</button>
 	</div>
 </div>

@@ -79,7 +79,7 @@
 		</form>
 	</div>
 </div>
-<button class="btn btn-primary btn-large" ng-click="saveLocation(locationForm)" ng-disabled="!isValid(locationForm)">save location</button>
+<button class="btn btn-primary btn-large" ng-click="saveLocation(locationForm)" ng-disabled="!isValid(locationForm)"><i class="icon-save"></i> save location</button>
 <hr>
 <pre>
 DEBUG:

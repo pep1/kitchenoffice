@@ -1,13 +1,13 @@
 <!-- location select carousel -->
 <div data-ng-controller="LocationSelectController">
 	<div class="row-fluid" data-ng-hide="areLocationsEmpty">
-		<form class="form-search form-horizontal pull-left" data-ng-submit="doSearch(locationSearchString)">
+		<div class="pull-left" data-ng-submit="doSearch(locationSearchString)">
 	    	<div class="input-append">
 	        	<input type="text" placeholder="Search for locations" data-ng-model="locationSearchString">
 	        	<button type="submit" class="btn" data-ng-click="cleanSearch()"><i class="icon-eraser"></i></button>
 	        	<button type="submit" class="btn" data-ng-click="doSearch(locationSearchString)"><i class="icon-search"></i></button>
 	    	</div>
-		</form>
+		</div>
 		<div class="pull-right">
 			<span>Can't find the right location?&nbsp;&nbsp;</span><a class="btn" href="/kitchenoffice-webapp/location/create" >add new location</a>
 		</div>

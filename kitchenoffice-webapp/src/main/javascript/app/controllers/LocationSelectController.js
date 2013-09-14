@@ -29,7 +29,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 		tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
 			$scope.doSearch(tempFilterText);
-		}, 500);
+		}, 200);
 	});
 	
 	$scope.doSearch = function(searchString) {
@@ -38,5 +38,6 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	
 	$scope.cleanSearch = function() {
 		$scope.locationSearchString = '';
+		$scope.doSearch();
 	};
 });

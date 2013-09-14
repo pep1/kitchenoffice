@@ -8,19 +8,21 @@
 <hr>
 <form name="eventForm">
 	<h4>1. When?</h4>
-	<div class="control-group input-append">
-		<input type="text" ng-model="dateString" bs-datepicker>
-		<button type="button" class="btn" data-toggle="datepicker">
-			<i class="icon-calendar"></i>
-		</button>
+	<div class="row-fluid form-inline" >
+		<div class="control-group input-append">
+			<input type="text" ng-model="dateString" bs-datepicker>
+			<button type="button" class="btn" data-toggle="datepicker">
+				<i class="icon-calendar"></i>
+			</button>
+		</div>
+		<div class="control-group input-append">
+			<input type="text" ng-model="timeString" bs-timepicker>
+			<button type="button" class="btn" data-toggle="timepicker">
+				<i class="icon-time"></i>
+			</button>
+		</div>
+		<span class="help-inline">{{dateFromNow()}}</span>
 	</div>
-	<div class="control-group input-append">
-		<input type="text" ng-model="timeString" bs-timepicker>
-		<button type="button" class="btn" data-toggle="timepicker">
-			<i class="icon-time"></i>
-		</button>
-	</div>
-	<span class="help-inline">{{dateFromNow()}}</span>
 	<h4>2. What type?</h4>
 	<div class="row-fluid">
 		<div class="span3">
@@ -83,7 +85,7 @@
 	</div>
 </form>
 <hr>
-<button class="btn btn-primary btn-large" ng-click="saveEvent(eventForm)" ng-disabled="!isValid(eventForm)">save event</button>
+<button class="btn btn-primary btn-large" ng-click="saveEvent(eventForm)" ng-disabled="!isValid(eventForm)"><i class="icon-save"></i> save event</button>
 <hr>
 <pre>
 DEBUG:
