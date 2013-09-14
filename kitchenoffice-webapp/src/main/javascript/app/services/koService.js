@@ -1,41 +1,41 @@
 angular.module('ko.services', [ 'restangular', 'flash' ])
-.factory( 'httpInterceptor', function($rootScope, $q, $window) {
-	
-	// this will be correct for Angularjs version 2.x !!!
-		
-	function request(config) {
-		$rootScope.processing = true;
-	}
-
-	function success(response) {
-		$rootScope.processing = false;
-		return response;
-	}
-
-	function error(response) {
-
-		var status = response.status;
-		var config = response.config;
-		var method = config.method;
-		var url = config.url;
-
-		if (status == 401 || status == 403) {
-			$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname;
-		} else {
-			$rootScope.processing = false;
-			window.scrollTo(0, 0);
-			//flash('error', method + " on " + url + " failed with status " + status + ": " + response.data);
-		}
-
-		return $q.reject(response);
-	}
-
-	return {
-		'request': request,
-		'response': success,
-		'responseError': error
-	};
-})
+//.factory( 'httpInterceptor', function($rootScope, $q, $window) {
+//	
+//	// this will be correct for Angularjs version 2.x !!!
+//		
+//	function request(config) {
+//		$rootScope.processing = true;
+//	}
+//
+//	function success(response) {
+//		$rootScope.processing = false;
+//		return response;
+//	}
+//
+//	function error(response) {
+//
+//		var status = response.status;
+//		var config = response.config;
+//		var method = config.method;
+//		var url = config.url;
+//
+//		if (status == 401 || status == 403) {
+//			$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname;
+//		} else {
+//			$rootScope.processing = false;
+//			window.scrollTo(0, 0);
+//			//flash('error', method + " on " + url + " failed with status " + status + ": " + response.data);
+//		}
+//
+//		return $q.reject(response);
+//	}
+//
+//	return {
+//		'request': request,
+//		'response': success,
+//		'responseError': error
+//	};
+//})
 .config([ 'RestangularProvider', '$httpProvider', function(RestangularProvider, $httpProvider) {
 	
 	/**
@@ -134,7 +134,20 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		}
 		return this.post(event);
 	};
+	
+	/**
+	 * deletes a given event
+	 */
+	eventService.save = function(event) {
+		if (_.isNull(event) || _.isUndefined(event)) {
+			return;
+		}
+		return event.remove();
+	};
 
+	/**
+	 * displays a human readable name of the event
+	 */
 	eventService.displayName = function(event) {
 		switch (event.type) {
 		case "EXTERNAL":
@@ -142,6 +155,8 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		case "INTERNAL":
 			return (event.recipe.name) ? event.recipe.name : "";
 		case "ORDER":
+			return (event.location.name) ? event.location.name : "";
+		case "FETCH":
 			return (event.location.name) ? event.location.name : "";
 		default:
 			return "";
@@ -201,7 +216,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	var userService = Restangular.all('users');
 	
 	userService.getUser = function() {
-		return this.customGET("me");
+		return this.customGET('me');
 	};
 	
 	userService.getAllUsers = function() {

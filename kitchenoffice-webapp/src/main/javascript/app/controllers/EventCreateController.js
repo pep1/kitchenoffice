@@ -13,9 +13,25 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 			if (!this.type || !this.startDate || !this.endDate) return false;
 			var isValid = false;
 			
-			if (this.type === 'EXTERNAL') {
+			switch (this.type) {
+			case "EXTERNAL":
 				isValid =  !_.isNull(this.location);
+				break;
+			case "FETCH":
+				isValid =  !_.isNull(this.location);
+				break;
+			case "ORDER":
+				isValid =  !_.isNull(this.location);
+				break;
+			case "INTERNAL":
+				// TODO
+				//isValid =  !_.isNull(this.recipe);
+				isValid = true;
+				break;
+			default:
+				break;
 			}
+			
 			return isValid;
 		},
 		reset: function() {

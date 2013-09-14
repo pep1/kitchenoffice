@@ -48,18 +48,31 @@ app.value('$strapConfig', {
 		todayHighlight : true
 	}
 });
-app.run(function($rootScope, $location, locationService, userService) {
+app.run(function($rootScope, $location, locationService, userService, $q) {
 	
 	$rootScope.me = userService.getUser();
 	
 	$rootScope.isMe = function(object) {
-		if(_.isNull(object) || _.isUndefined(object)) return false;
-		// object can be participant or a user object itself
-		user = (!_.isUndefined(object.user)) ? object.user : object;
+		//if(_.isNull(object) || _.isUndefined(object)) return false;
 		
-		return $rootScope.me.then(function(me) {
-			return me.id === user.id;
+		var deferred = $q.defer();
+		// object can be participant or a user object itself
+		//user = (!_.isUndefined(object.user)) ? object.user : object;
+		
+		$rootScope.me.then(function(me) {
+			deferred.resolve(me.id === user.id);
 		});
+		
+		return deferred.promise;
+	};
+	
+	$rootScope.checkIfPresent = function(participants, user) {
+		
+		for ( var participant in participants) {
+			
+		}
+		
+		return false;
 	};
 	
 	$rootScope.checkBrowserName = function (name){  

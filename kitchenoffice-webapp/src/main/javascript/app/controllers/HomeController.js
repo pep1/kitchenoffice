@@ -2,10 +2,9 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	
 	$scope.doAttend = false;
 	$scope.doDismiss = false;
+	$scope.doDelete = false;
 	$scope.event = null;
 	$scope.homeEvents = eventService.getHomeEvents();
-	
-	$scope.user = $rootScope.me;
 
 	$scope.areEventsEmpty = $scope.homeEvents.then(function(events) {
 		return !(events.length > 0);
@@ -39,6 +38,18 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 		});
 	};
 	
+	$scope.deleteEvent = function(event) {
+		$rootScope.processing = true;
+		eventService.deleteEvent(event).then( function(event) {
+			window.scrollTo(0, 0);
+			$scope.homeEvents = eventService.getHomeEvents();
+			flash('success', 'You successfully deleted event an event.');
+			$scope.deleteModal.close();
+		}, function() {
+			$scope.deleteModal.close();
+		});
+	};
+	
 	$scope.attendModal = {
 			opts: {
 				backdropFade : true,
@@ -65,6 +76,21 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 			},
 			open: function(event) {
 				$scope.doDismiss = true;
+				$scope.event = event;
+			}
+	};
+	
+	$scope.deleteModal = {
+			opts: {
+				backdropFade : true,
+				dialogFade : true
+			},
+			close: function() {
+				$scope.doDelete = false;
+				$scope.event = null;
+			},
+			open: function(event) {
+				$scope.doDelete = true;
 				$scope.event = event;
 			}
 	};

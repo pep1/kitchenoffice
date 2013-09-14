@@ -38,7 +38,6 @@ public class User extends AbstractPersistable implements UserDetails {
 	
 	@Fetch
 	@RelatedTo(type = "HAS_ROLES", direction = Direction.BOTH)
-	@JsonIgnore
 	private Set<Role> roles = new HashSet<Role>();
 	
 	public User() {

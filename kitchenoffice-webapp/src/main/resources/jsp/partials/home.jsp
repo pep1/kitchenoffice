@@ -17,6 +17,7 @@
 
 <div class="row-fluid">
 	<div data-ng-switch data-on="event.type" class="span4 well" data-ng-repeat="event in homeEvents">
+		<!-- button data-ng-show="isMe(event.creator)" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button> -->
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<button class="btn btn-small">View details »</button>
@@ -33,3 +34,4 @@
 
 <jsp:include page="../include/event/attendModal.jsp"></jsp:include>
 <jsp:include page="../include/event/dismissModal.jsp"></jsp:include>
+<jsp:include page="../include/event/deleteModal.jsp"></jsp:include>
