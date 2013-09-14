@@ -26,7 +26,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import com.gentics.kitchenoffice.data.event.Location;
-import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
+import com.gentics.kitchenoffice.service.UserService;
 import com.gentics.kitchenoffice.service.LocationService;
 
 @Component
@@ -37,7 +37,7 @@ public class LocationWebService {
 	private static Logger log = Logger.getLogger(LocationWebService.class);
 
 	@Autowired
-	private KitchenOfficeUserService userService;
+	private UserService userService;
 
 	@Autowired
 	private LocationService locationService;

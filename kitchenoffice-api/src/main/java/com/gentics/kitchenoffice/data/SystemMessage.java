@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SystemMessage {
 
 	public enum MessageType {
-		NOTE, WARNING, ERROR
+		note, warning, error
 	}
 
 	private MessageType type;

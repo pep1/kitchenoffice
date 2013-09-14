@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
+import com.gentics.kitchenoffice.service.UserService;
 
 
 @Controller
@@ -17,7 +17,7 @@ public class ViewController {
 	private static Logger log = Logger.getLogger(ViewController.class);
 	
 	@Autowired
-	private KitchenOfficeUserService userService;
+	private UserService userService;
 
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)

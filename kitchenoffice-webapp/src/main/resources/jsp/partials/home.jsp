@@ -4,7 +4,7 @@
 
 	<div class="span9">
 		<h1>
-			<i class="icon-food"></i> Selectable food...
+			<i class="icon-food"></i> Selectable food ...
 		</h1>
 	</div>
 	<div class="span3" data-ng-show="!areEventsEmpty">
@@ -20,7 +20,7 @@
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<button class="btn btn-small">View details »</button>
-			<button class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">attend</button>
+			<button class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">attend »</button>
 		</div>
 	</div>
 	<div data-ng-show="areEventsEmpty">

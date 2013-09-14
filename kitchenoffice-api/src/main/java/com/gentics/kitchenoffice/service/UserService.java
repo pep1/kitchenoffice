@@ -1,6 +1,7 @@
 package com.gentics.kitchenoffice.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -9,11 +10,13 @@ import org.jasig.cas.client.validation.Assertion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.user.Role;
@@ -24,11 +27,11 @@ import com.gentics.kitchenoffice.repository.UserRepository;
 
 @Service("KitchenOfficeUserService")
 @Scope("singleton")
-public class KitchenOfficeUserService extends
+public class UserService extends
 		AbstractCasAssertionUserDetailsService {
 
 	private static Logger log = Logger
-			.getLogger(KitchenOfficeUserService.class);
+			.getLogger(UserService.class);
 
 	public static final String ROLE_USER_NAME = "ROLE_USER";
 
@@ -159,6 +162,11 @@ public class KitchenOfficeUserService extends
 			userDetails = (User) principal;
 		}
 		return userDetails;
+	}
+	
+	public List<User> findAll(PageRequest pageRequest) {
+		Assert.notNull(pageRequest);
+		return userRepository.findAll(pageRequest).getContent();
 	}
 
 	/**

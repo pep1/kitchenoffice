@@ -33,7 +33,7 @@ public class EventService {
 	private EventRepository eventRepository;
 
 	@Autowired
-	private KitchenOfficeUserService userService;
+	private UserService userService;
 
 	@Autowired
 	private JobRepository jobRepository;

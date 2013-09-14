@@ -32,7 +32,7 @@ import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.service.EventService;
 import com.gentics.kitchenoffice.service.JobService;
-import com.gentics.kitchenoffice.service.KitchenOfficeUserService;
+import com.gentics.kitchenoffice.service.UserService;
 
 @Component
 @Scope("singleton")
@@ -42,7 +42,7 @@ public class EventWebService {
 	private static Logger log = Logger.getLogger(EventWebService.class);
 
 	@Autowired
-	private KitchenOfficeUserService userService;
+	private UserService userService;
 
 	@Autowired
 	private EventService eventService;

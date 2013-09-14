@@ -7,6 +7,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	});
 	
 	$scope.attendEvent = function(event) {
+		$rootScope.processing = true;
 		eventService.attendEvent(event).then( function(event) {
 			window.scrollTo(0, 0);
 			$rootScope.processing = false;
@@ -14,15 +15,12 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 			$scope.homeEvents = eventService.getHomeEvents();
 			flash('success', 'You successfully attend event '+eventService.displayName(event)+'.');
 		}, function(data) {
-			window.scrollTo(0, 0);
-			$rootScope.processing = false;
 			$scope.attendModal.close();
-			flash('error', data[0].data.description);
 		});
 	};
 	
 	$scope.doAttend = false;
-	$scope.selectedEvent = null;
+	$scope.event = null;
 	$scope.attendModal = {
 			opts: {
 				backdropFade : true,
@@ -30,15 +28,12 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 			},
 			close: function() {
 				$scope.doAttend = false;
-				$scope.selectedEvent = null;
+				$scope.event = null;
 			},
 			open: function(event) {
 				$scope.doAttend = true;
-				$scope.selectedEvent = event;
+				$scope.event = event;
 			}
 	};
 	
-	$scope.doAttendEvent = function(event) {
-		
-	};
 });

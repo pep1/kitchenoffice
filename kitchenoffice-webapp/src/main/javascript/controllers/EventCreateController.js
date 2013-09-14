@@ -42,16 +42,12 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 		$rootScope.processing = true;
 		
 		eventService.save($scope.event).then(function(event) {
-			$rootScope.processing = false;
 			$scope.doSave = false;
 			$location.path('/kitchenoffice-webapp/home');
 			flash('success', 'New event '+eventService.displayName(event)+' saved');
 		}, function(data) {
-			window.scrollTo(0, 0);
-			$rootScope.processing = false;
 			$scope.doSave = false;
 			$scope.event.reset();
-			flash('error', data[0].data.description);
 		});
 	};
 
@@ -91,7 +87,7 @@ app.controller('EventCreateController', function($scope, $rootScope, $location, 
 
 	// calculating time and update it to the variables
 	$scope.dateFromNow = function() {
-		var dateDate = moment($scope.dateString);
+		var dateDate = moment($scope.dateString, 'YYYY.MM.DD');
 		var dateTime = moment($scope.timeString, 'hh:mm A');
 		var concatenatedDate = moment([ dateDate.years(), dateDate.month(), dateDate.date(), dateTime.hours(),
 				dateTime.minutes() ]);

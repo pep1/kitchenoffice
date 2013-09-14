@@ -13,7 +13,8 @@ var app = angular.module('kitchenOfficeApp',
 .config([
 	'$routeProvider',
 	'$locationProvider',
-	function($routeProvider, $locationProvider) {
+	'$httpProvider',
+	function($routeProvider, $locationProvider, $httpProvider) {
 
 		$locationProvider.html5Mode(true);
 
@@ -47,7 +48,9 @@ app.value('$strapConfig', {
 		todayHighlight : true
 	}
 });
-app.run(function($rootScope, $location, locationService) {
+app.run(function($rootScope, $location, locationService, userService) {
+	
+	$rootScope.user = userService.getUser();
 	
 	$rootScope.fromNow = function(date) {
 		return (date) ? moment(date).calendar() : "not specified";

@@ -17,7 +17,7 @@ public class IllegalStateMapper implements ExceptionMapper<IllegalStateException
 		
 		SystemMessage message = new SystemMessage();
 		message.setDescription(ex.getLocalizedMessage());
-		message.setType(MessageType.ERROR);
+		message.setType(MessageType.error);
 		
 		return Response.status(Status.CONFLICT).entity(message).type(MediaType.APPLICATION_JSON).build();
 	}
