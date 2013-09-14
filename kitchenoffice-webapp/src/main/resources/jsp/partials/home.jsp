@@ -17,7 +17,7 @@
 
 <div class="row-fluid">
 	<div data-ng-switch data-on="event.type" class="span4 well" data-ng-repeat="event in homeEvents">
-		<!-- button data-ng-show="isMe(event.creator)" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button> -->
+		<button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button>
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<button class="btn btn-small">View details »</button>

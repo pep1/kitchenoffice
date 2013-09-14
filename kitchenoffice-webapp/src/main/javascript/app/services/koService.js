@@ -138,7 +138,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	/**
 	 * deletes a given event
 	 */
-	eventService.save = function(event) {
+	eventService.deleteEvent = function(event) {
 		if (_.isNull(event) || _.isUndefined(event)) {
 			return;
 		}

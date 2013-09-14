@@ -1,3 +1,4 @@
+@white: #ffffff;
 @base: #f5f5f5;
 @light: #ddd;
 @selected: #08c;
@@ -78,6 +79,27 @@ body {
 	
 	&:hover { 
 		border-color: @hover;
+	}
+}
+
+.ko-thumb-container {
+	background: @white;
+	border: 1px solid @light;
+	.border-radius(5px);
+	padding: 0px 12px;
+	margin: 0 0 10px 0;
+	
+	ul.ko-attendees-list {
+		margin: 10px 5px;
+		
+		li {
+			border-bottom: 1px solid @base;
+			padding: 3px;
+			
+			&:last-child {
+				border-bottom: none;
+			}
+		}
 	}
 }
 
