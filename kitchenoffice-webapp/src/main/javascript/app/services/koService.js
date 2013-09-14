@@ -172,9 +172,13 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		return this.getList();
 	};
 	
-	locationService.getPages = function(pageSize, search) {
-		
-		var params = {};
+	locationService.getPages = function(pageSize, page, maxPageFetchCount, search) {
+
+		if(_.isUndefined(maxPageFetchCount)) maxPageFetchCount = 2;
+		var params = {
+				page: page,
+				size: pageSize * maxPageFetchCount
+		};
 		
 		if (search) params.search = search; 
 		

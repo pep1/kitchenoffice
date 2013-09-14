@@ -4,7 +4,20 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 		$scope.locationSearchString = '';
 	}
 	
-	$scope.pages = locationService.getPages(4, null);
+	$scope.pageCount = 0;
+	$scope.pageSize = 4;
+	$scope.maxPageCount = 10;
+	
+	$scope.update = function(searchString) {
+		$scope.pages = $scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString);
+	};
+	
+	$scope.getPages = function(pageSize, pageCount, maxPages, searchString) {
+		return locationService.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, (searchString) ? searchString : null);
+	};
+	
+	$scope.update();
+	
 	$scope.selectedLocation = null;
 	$scope.filterText;
 	var filterTextTimeout;
@@ -22,22 +35,19 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	};
 
 	$scope.$watch('locationSearchString', function(val) {
-		
 		if(!val) return;
 		if (filterTextTimeout) $timeout.cancel(filterTextTimeout);
 
 		tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
-			$scope.doSearch(tempFilterText);
+			$scope.update(tempFilterText);
+			$timeout.cancel(filterTextTimeout);
 		}, 200);
 	});
 	
-	$scope.doSearch = function(searchString) {
-		$scope.pages = locationService.getPages(4, (searchString) ? searchString : null);
-	};
-	
 	$scope.cleanSearch = function() {
 		$scope.locationSearchString = '';
-		$scope.doSearch();
+		$scope.update();
 	};
+	
 });
