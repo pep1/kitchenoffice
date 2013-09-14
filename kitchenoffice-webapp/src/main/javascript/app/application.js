@@ -53,11 +53,11 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 	$rootScope.me = userService.getUser();
 	
 	$rootScope.isMe = function(object) {
-		//if(_.isNull(object) || _.isUndefined(object)) return false;
+		if(_.isNull(object) || _.isUndefined(object)) return false;
 		
 		var deferred = $q.defer();
 		// object can be participant or a user object itself
-		//user = (!_.isUndefined(object.user)) ? object.user : object;
+		user = (!_.isUndefined(object.user)) ? object.user : object;
 		
 		$rootScope.me.then(function(me) {
 			deferred.resolve(me.id === user.id);
