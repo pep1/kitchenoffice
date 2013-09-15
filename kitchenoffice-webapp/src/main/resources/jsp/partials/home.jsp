@@ -20,7 +20,7 @@
 		<button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button>
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
-			<button class="btn btn-small">View details »</button>
+			<a class="btn btn-small" data-ng-href="event/{{event.id}}">View details »</a>
 			<button data-ng-show="(event.participants | filter:isMe).length == 0" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
 			<button data-ng-hide="(event.participants | filter:isMe).length == 0" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
 		</div>
