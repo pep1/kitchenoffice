@@ -100,6 +100,14 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 	
 	/**
+	 * returns the event with specified id
+	 */
+	eventService.getEventById = function(id) {
+		if(isNaN(id)) return false;
+		return Restangular.one("events", id).get();
+	};
+	
+	/**
 	 * Attend to an event with an optional job
 	 */
 	eventService.attendEvent = function(event, job) {

@@ -31,6 +31,12 @@ private static Logger log = Logger.getLogger(PartialsController.class);
 		return "partials/event/create";
 	}
 	
+	@RequestMapping(value = "/event/details", method = RequestMethod.GET)
+	public String getDetailsPage(Model model) {
+		log.debug("event details partial called");
+		return "partials/event/details";
+	}
+	
 	@RequestMapping(value = "/location/create", method = RequestMethod.GET)
 	public String getLocationPage(Model model) {
 		log.debug("location create partial called");

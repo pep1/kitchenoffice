@@ -28,6 +28,11 @@ var app = angular.module('kitchenOfficeApp',
 			controller : 'EventCreateController'
 		});
 		
+		$routeProvider.when('/kitchenoffice-webapp/event/:eventId', {
+			templateUrl : '/kitchenoffice-webapp/partials/event/details',
+			controller : 'EventDetailsController'
+		});
+		
 		$routeProvider.when('/kitchenoffice-webapp/location/create', {
 			templateUrl : '/kitchenoffice-webapp/partials/location/create',
 			controller : 'LocationCreateController'
