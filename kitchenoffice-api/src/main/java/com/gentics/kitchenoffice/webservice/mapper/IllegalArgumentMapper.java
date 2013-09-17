@@ -22,7 +22,7 @@ public class IllegalArgumentMapper implements ExceptionMapper<IllegalArgumentExc
 		log.info(ex);
 		
 		SystemMessage message = new SystemMessage();
-		message.setDescription(ex.getLocalizedMessage());
+		message.setDescription("Please provide a valid value: " + ex);
 		message.setType(MessageType.error);
 		
 		return Response.status(Status.NOT_ACCEPTABLE).entity(message).type(MediaType.APPLICATION_JSON).build();

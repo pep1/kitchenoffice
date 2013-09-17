@@ -23,7 +23,7 @@ public class AccessDeniedExceptionMapper implements ExceptionMapper<AccessDenied
 		log.info(ex);
 		
 		SystemMessage message = new SystemMessage();
-		message.setDescription(ex.getLocalizedMessage());
+		message.setDescription("Sorry, access denied: " + ex.getLocalizedMessage());
 		message.setType(MessageType.error);
 		
 		return Response.status(Status.UNAUTHORIZED).entity(message).type(MediaType.APPLICATION_JSON).build();

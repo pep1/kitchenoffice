@@ -22,7 +22,7 @@ public class IllegalStateMapper implements ExceptionMapper<IllegalStateException
 		log.info(ex);
 		
 		SystemMessage message = new SystemMessage();
-		message.setDescription(ex.getLocalizedMessage());
+		message.setDescription("Sorry, conflict: " + ex.getLocalizedMessage());
 		message.setType(MessageType.error);
 		
 		return Response.status(Status.CONFLICT).entity(message).type(MediaType.APPLICATION_JSON).build();

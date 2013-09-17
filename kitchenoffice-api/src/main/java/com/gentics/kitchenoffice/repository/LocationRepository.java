@@ -10,6 +10,8 @@ import com.gentics.kitchenoffice.data.user.User;
 
 public interface LocationRepository extends GraphRepository<Location> {
 
+	public Location findById(Long id);
+	
 	@Query("start locations=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Location\") "
 			+ "match locations<-[:HAS_LOCATION]-event "
 			+ "where event.creator={0} "

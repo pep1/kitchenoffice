@@ -47,6 +47,11 @@ public class LocationService {
 		}
 	}
 	
+	public Location getLocationById(Long id) {
+		Assert.notNull(id);
+		return locationRepository.findById(id);
+	}
+	
 	public Page<Location> getLastUsedLocations(Pageable pageable, User user, String search) {
 		if(user == null) {
 			if(StringUtils.hasLength(search) && search.length() > 2) {
@@ -68,6 +73,7 @@ public class LocationService {
 	}
 	
 	public Location addTagToLocation(Location location, String tagString) {
+		Assert.notNull(location);
 		Assert.hasText(tagString);
 		
 		Tag tag = tagService.findByTag(tagString); 
@@ -81,7 +87,7 @@ public class LocationService {
 		}
 		
 		if(location.getTags().contains(tag)) {
-			throw new IllegalStateException("Location already has this tag: " + tag.getTag());
+			throw new IllegalStateException("Location " + location.getName() + " already has this tag: " + tag.getTag());
 		}
 		
 		location.getTags().add(tag);
@@ -91,6 +97,7 @@ public class LocationService {
 	}
 	
 	public Location removeTagFromLocation(Location location, String tagString) {
+		Assert.notNull(location);
 		Assert.hasText(tagString);
 		
 		Tag tag = tagService.findByTag(tagString); 
@@ -104,12 +111,14 @@ public class LocationService {
 		}
 		
 		if(!location.getTags().contains(tag)) {
-			throw new IllegalStateException("Location is not tagged with this tag: " + tag.getTag());
+			throw new IllegalStateException("Location: " + location.getName() + " is not tagged with this tag: " + tag.getTag());
 		}
 		
 		location.getTags().remove(tag);
 		locationRepository.save(location);
+		tagService.checkAndCleanUp(tag);
 		
 		return location;
 	}
+
 }

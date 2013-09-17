@@ -22,7 +22,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
 		log.info(ex);
 		
 		SystemMessage message = new SystemMessage();
-		message.setDescription(ex.getLocalizedMessage());
+		message.setDescription("Ooops, something went wrong: " + ex.getLocalizedMessage());
 		message.setType(MessageType.error);
 		
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(message).type(MediaType.APPLICATION_JSON).build();

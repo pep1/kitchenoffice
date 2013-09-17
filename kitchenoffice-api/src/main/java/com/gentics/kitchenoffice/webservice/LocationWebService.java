@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -23,11 +24,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
+import org.springframework.util.NumberUtils;
 
 import com.gentics.kitchenoffice.data.event.Location;
-import com.gentics.kitchenoffice.service.UserService;
 import com.gentics.kitchenoffice.service.LocationService;
+import com.gentics.kitchenoffice.service.UserService;
 
 @Component
 @Scope("singleton")
@@ -45,7 +46,6 @@ public class LocationWebService {
 	@PostConstruct
 	public void initialize() {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
-
 	}
 
 	@GET
@@ -63,6 +63,43 @@ public class LocationWebService {
 		}
 
 		return locationService.getLocationsByName(new PageRequest(page, size), search).getContent();
+	}
+	
+	@GET
+	@Path("/{id}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location getLocation(@PathParam("id") String id) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+		return locationService.getLocationById(parsedId);
+	}
+	
+	@GET
+	@Path("/{id}/addtag/{tagstring}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location addTagToLocation(@PathParam("id") String id, @PathParam("tagstring") String tagString) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+		Assert.hasText(tagString);
+		Assert.isTrue(tagString.length() > 2, "Tag name should be longer than 2 characters");
+		return locationService.addTagToLocation(locationService.getLocationById(parsedId), tagString);
+	}
+	
+	@GET
+	@Path("/{id}/removetag/{tagstring}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location removeFromLocation(@PathParam("id") String id, @PathParam("tagstring") String tagString) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+		Assert.hasText(tagString);
+		Assert.isTrue(tagString.length() > 2, "Tag name should be longer than 2 characters");
+		return locationService.removeTagFromLocation(locationService.getLocationById(parsedId), tagString);
 	}
 
 	@GET
