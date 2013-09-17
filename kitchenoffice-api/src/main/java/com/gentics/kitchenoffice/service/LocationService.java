@@ -1,5 +1,7 @@
 package com.gentics.kitchenoffice.service;
 
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
@@ -7,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.LocationRepository;
@@ -22,6 +26,9 @@ public class LocationService {
 	
 	@Autowired
 	LocationRepository locationRepository;
+	
+	@Autowired
+	TagService tagService;
 	
 	@PostConstruct
 	public void initialize() {
@@ -58,5 +65,51 @@ public class LocationService {
 	
 	public Location saveLocation(Location location) {
 		return locationRepository.save(location);
+	}
+	
+	public Location addTagToLocation(Location location, String tagString) {
+		Assert.hasText(tagString);
+		
+		Tag tag = tagService.findByTag(tagString); 
+		
+		if(tag == null) {
+			tag = new Tag();
+			tag.setTag(tagString);
+			tag.setTimeStamp(new Date());
+			
+			tag = tagService.save(tag);
+		}
+		
+		if(location.getTags().contains(tag)) {
+			throw new IllegalStateException("Location already has this tag: " + tag.getTag());
+		}
+		
+		location.getTags().add(tag);
+		locationRepository.save(location);
+		
+		return location;
+	}
+	
+	public Location removeTagFromLocation(Location location, String tagString) {
+		Assert.hasText(tagString);
+		
+		Tag tag = tagService.findByTag(tagString); 
+		
+		if(tag == null) {
+			tag = new Tag();
+			tag.setTag(tagString);
+			tag.setTimeStamp(new Date());
+			
+			tag = tagService.save(tag);
+		}
+		
+		if(!location.getTags().contains(tag)) {
+			throw new IllegalStateException("Location is not tagged with this tag: " + tag.getTag());
+		}
+		
+		location.getTags().remove(tag);
+		locationRepository.save(location);
+		
+		return location;
 	}
 }

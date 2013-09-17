@@ -1,5 +1,8 @@
 package com.gentics.kitchenoffice.data.event;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -9,6 +12,7 @@ import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Image;
+import com.gentics.kitchenoffice.data.Tag;
 
 @NodeEntity
 public class Location extends AbstractPersistable {
@@ -25,6 +29,10 @@ public class Location extends AbstractPersistable {
 	private Float latitude;
 	
 	private Float longitude;
+	
+	@Fetch
+    @RelatedTo(type = "HAS_TAG", direction = Direction.BOTH)
+	private Set<Tag> tags = new HashSet<Tag>();
 
 	@Fetch
 	@RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
@@ -88,5 +96,13 @@ public class Location extends AbstractPersistable {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public Set<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 }

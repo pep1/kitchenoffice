@@ -154,7 +154,6 @@ public class Event extends AbstractPersistable {
 		Assert.hasLength(comment, "comment may not be null or empty!");
 
 		Comment c = new Comment(user, comment);
-
 		comments.add(c);
 
 		return c;
@@ -168,7 +167,6 @@ public class Event extends AbstractPersistable {
 		//Assert.notNull(job, "job may not be null");
 
 		Participant p = new Participant(this, user, job);
-
 		participants.add(p);
 
 		return p;

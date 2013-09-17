@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.support.index.IndexType;
+import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.adapter.DateAdapter;
 
@@ -18,13 +20,18 @@ public class Tag extends AbstractPersistable{
 	@GraphProperty(propertyType=Long.class)
 	private Date timeStamp;
 	
-	@Indexed(unique = true)
+	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "tagsearch")
 	private String tag;
 	
 	public Tag() {
+		timeStamp = new Date();
+	}
+	
+	public Tag(String tagName) {
+		Assert.hasText(tagName);
 		
 		timeStamp = new Date();
-		
+		tag = tagName;
 	}
 
 	public Date getTimeStamp() {
