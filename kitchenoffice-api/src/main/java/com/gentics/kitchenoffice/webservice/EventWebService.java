@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.NumberUtils;
 
+import com.gentics.kitchenoffice.data.Comment;
 import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.service.EventService;
@@ -164,6 +165,21 @@ public class EventWebService {
 		Assert.notNull(parsedId, "event id could not be parsed");
 
 		return eventService.dismissEvent(eventService.getEventById(parsedId));
+	}
+	
+	@POST
+	@Path("/{id}/comment")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Comment commentEvent(@PathParam("id") String id, Comment comment) {
+
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "event id could not be parsed");
+		Assert.notNull(comment);
+		Assert.hasText(comment.getComment(), "Comment should have text");
+
+		return eventService.commentEvent(eventService.getEventById(parsedId), comment);
 	}
 
 	@POST

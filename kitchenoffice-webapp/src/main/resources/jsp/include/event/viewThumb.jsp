@@ -9,7 +9,7 @@
 <div class="ko-thumb-container">
 	<h5>Details</h5>
 	<p>
-		<i class="icon-fixed-width icon-time"></i> {{fromNow(event.startDate)}}
+		<i class="icon-fixed-width icon-time"></i> {{calendar(event.startDate)}}
 	<p>
 	<p data-ng-switch="EXTERNAL">
 		<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
@@ -19,7 +19,7 @@
 		<gravatar-image data-email="event.creator.email" data-size="30" data-secure="true"></gravatar-image>&nbsp;&nbsp;{{event.creator.username}}
 	</p>
 </div>
-<div class="ko-thumb-container tags" data-ng-hide="event.location.tags == 0" data-ng-switch="EXTERNAL">
+<div class="ko-thumb-container tags" data-ng-hide="event.location.tags.length == 0" >
 	<h5><i class="icon-tags"></i> Tags</h5>
 	<div class="ko-tag-list">
 		<span data-ng-repeat="(idx, tag) in event.location.tags" class="badge badge-info tag">{{tag.name}}</span>

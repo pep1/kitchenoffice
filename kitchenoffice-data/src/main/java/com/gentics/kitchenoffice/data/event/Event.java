@@ -63,7 +63,7 @@ public class Event extends AbstractPersistable {
 	private Set<Participant> participants = new HashSet<Participant>();
 
 	@Fetch
-	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.OUTGOING)
+	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.OUTGOING, enforceTargetType=true)
 	private Set<Comment> comments = new HashSet<Comment>();
 
 	public Event() {
@@ -149,14 +149,11 @@ public class Event extends AbstractPersistable {
 		this.recipe = recipe;
 	}
 
-	public Comment addComment(User user, String comment) {
-		Assert.notNull(user, "User may not be null!");
-		Assert.hasLength(comment, "comment may not be null or empty!");
+	public Comment addComment(Comment comment) {
+		Assert.notNull(comment, "comment may not be null or empty!");
 
-		Comment c = new Comment(user, comment);
-		comments.add(c);
-
-		return c;
+		comments.add(comment);
+		return comment;
 	}
 
 	public Participant addParticipant(User user, Job job) {

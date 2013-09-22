@@ -11,8 +11,6 @@ angular.module('ko.tag.input', ['ko.services', 'ui.bootstrap.typeahead'])
             '<a class="btn" ng-click="add()">Add</a>',
         link: function ( $scope, $element ) {
         	
-        	$scope.suggestion = undefined;
-        	
             // FIXME: this is lazy and error-prone
             var input = angular.element( $element.children()[1] );
             
@@ -21,7 +19,7 @@ angular.module('ko.tag.input', ['ko.services', 'ui.bootstrap.typeahead'])
             // This adds the new tag to the tags array
             $scope.add = function() {
             	
-            	if(_.isEmpty($scope.new_value)) return false;
+            	if(_.isEmpty($scope.new_value) || $scope.new_value.length < 3) return false;
             	
             	// ensure that we have loaded the suggestions
             	$scope.suggestions.then( function(tags) {

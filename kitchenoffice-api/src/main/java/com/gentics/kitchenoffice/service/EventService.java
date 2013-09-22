@@ -17,10 +17,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.gentics.kitchenoffice.data.Comment;
 import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.Participant;
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.data.user.User;
+import com.gentics.kitchenoffice.repository.CommentRepository;
 import com.gentics.kitchenoffice.repository.EventRepository;
 import com.gentics.kitchenoffice.repository.JobRepository;
 import com.gentics.kitchenoffice.repository.ParticipantRepository;
@@ -42,6 +44,9 @@ public class EventService {
 
 	@Autowired
 	private ParticipantRepository participantRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 
 	@PostConstruct
 	public void initialize() {
@@ -174,5 +179,20 @@ public class EventService {
 		List<Event> output = eventRepository.findAllCreatedInPeriodOf(userService.getUser(),
 				new DateTime(startDate).getMillis(), new DateTime(endDate).getMillis());
 		return output;
+	}
+
+	public Comment commentEvent(Event event, Comment comment) {
+		Assert.notNull(event);
+		Assert.notNull(comment);
+		
+		comment.setTimeStamp(new DateTime().toDateTimeISO().toDate());
+		comment.setUser(userService.getUser());
+		
+		commentRepository.save(comment);
+		
+		event.addComment(comment);
+		eventRepository.save(event);
+		
+		return comment;
 	}
 }

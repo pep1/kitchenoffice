@@ -1,7 +1,8 @@
 var app = angular.module(
 		'kitchenOfficeApp',
 		[ 'ko.services', 
-		  'ko.tag.input', 
+		  'ko.tag.input',
+		  'ko.textarea',
 		  'active.link', 
 		  '$strap.directives', 
 		  'ui.bootstrap', 
@@ -77,8 +78,12 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 		}
 	};
 
-	$rootScope.fromNow = function(date) {
+	$rootScope.calendar = function(date) {
 		return (date) ? moment(date).calendar() : "not specified";
+	};
+	
+	$rootScope.fromNow = function(date) {
+		return (date) ? moment(date).fromNow() : "not specified";
 	};
 
 	$rootScope.isEmpty = function(obj) {

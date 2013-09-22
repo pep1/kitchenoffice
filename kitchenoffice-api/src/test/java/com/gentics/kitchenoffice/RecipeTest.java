@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Article;
+import com.gentics.kitchenoffice.data.Comment;
 import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.Tag;
@@ -214,7 +215,10 @@ public class RecipeTest {
 		m1.addParticipant(u1, job1);
 		mealRepository.save(m1);
 
-		m1.addComment(u2, "is gut geworden! nächstes mal mehr chili..");
+		Comment c1 = new Comment();
+		c1.setComment("is gut geworden! nächstes mal mehr chili..");
+		c1.setUser(u1);
+		m1.addComment(c1);
 		mealRepository.save(m1);
 
 		Event m2 = new Event();
@@ -226,7 +230,11 @@ public class RecipeTest {
 		m2.addParticipant(u2, job2);
 		mealRepository.save(m2);
 
-		m2.addComment(u1, "das sollten wir öfter machen!");
+		Comment c2 = new Comment();
+		c2.setUser(u2);
+		c2.setComment("das sollten wir öfters machen!");
+		
+		m1.addComment(c2);
 		mealRepository.save(m2);
 
 	}

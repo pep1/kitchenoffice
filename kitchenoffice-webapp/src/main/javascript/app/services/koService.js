@@ -60,7 +60,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 			} else {
 				$rootScope.processing = false;
 				// scroll to top in order to see the flash message
-				window.scrollTo(0, 0);
+				//window.scrollTo(0, 0);
 				
 				if(_.isUndefined(response.data.type) || _.isUndefined(response.data.description)) {
 					flash("error", method + " on " + url + " failed with status " + status + ": " + response.data);
@@ -123,14 +123,28 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 	
 	/**
-	 * Attend to an event with an optional job
+	 * Dismiss an event
 	 */
-	eventService.dismissEvent = function(event, job) {
+	eventService.dismissEvent = function(event) {
 		if(_.isNull(event) || _.isUndefined(event)) return false;
 
 		return event.customGET("dismiss", function(event) {
 			return event;
 		});
+	};
+	
+	/**
+	 * Comment an event
+	 */
+	eventService.commentEvent = function(event, string) {
+		if(_.isNull(event) || _.isUndefined(event)) return {};
+		if(_.isNull(string) || _.isUndefined(string)) return event;
+
+		var comment = {
+				"comment": string
+		};
+		
+		return event.post("comment", comment);
 	};
 
 	/**

@@ -15,10 +15,10 @@
 	<div class="span6">
 		<form name="locationForm" class="form-horizontal ko-form-fluid">
 			<div class="row-fluid">
-				<div class="span4">
+				<div class="span3">
 					<label class="pull-right help-inline">Name</label>
 				</div>
-				<div class="span8">
+				<div class="span9">
 					<input name="locationName" type="text" class="input-block-level"
 						min="3" ng-model="location.name"
 						placeholder="Location name" required>
@@ -27,10 +27,10 @@
 					ng-show="locationForm.locationName.$error.min">Required!</span>
 			</div>
 			<div class="row-fluid">
-				<div class="span4">
+				<div class="span3">
 					<label class="pull-right help-inline">Address</label>
 				</div>
-				<div class="span8">
+				<div class="span9">
 					<input name="locationAddress" type="text"
 						class="input-block-level" min="3"
 						ng-model="location.address"
@@ -38,30 +38,30 @@
 				</div>
 			</div>
 			<div class="row-fluid">
-				<div class="span4">
+				<div class="span3">
 					<label class="pull-right help-inline">Website</label>
 				</div>
-				<div class="span8">
+				<div class="span9">
 					<input name="locationWebsite" type="text"
 						class="input-block-level" ng-model="location.website"
 						placeholder="Location website">
 				</div>
 			</div>
 			<div class="row-fluid">
-				<div class="span4">
+				<div class="span3">
 					<label class="pull-right help-inline">Description</label>
 				</div>
-				<div class="span8">
+				<div class="span9">
 					<textarea name="locationDescription" rows="4"
 						class="input-block-level" ng-model="location.description"
 						placeholder="Location description"></textarea>
 				</div>
 			</div>
 			<div class="row-fluid">
-				<div class="span4">
+				<div class="span3">
 					<label class="pull-right help-inline">Tags</label>
 				</div>
-				<div class="span8">
+				<div class="span9">
 					<tag-input tags="location.tags"></tag-input>
 				</div>
 			</div>
