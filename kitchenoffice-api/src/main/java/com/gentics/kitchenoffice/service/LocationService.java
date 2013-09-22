@@ -35,15 +35,20 @@ public class LocationService {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ... ");
 	}
 	
-	public Page<Location> getLocations(Pageable pageable) {
+	public Page<Location> findAll(Pageable pageable) {
 		return locationRepository.findAll(pageable);
 	}
 	
-	public Page<Location> getLocationsByName(Pageable pageable, String name) {
+	public Location findByName(String name) {
+		Assert.hasLength(name);
+		return locationRepository.findByName(name);
+	}
+	
+	public Page<Location> findByNameLike(Pageable pageable, String name) {
 		if(StringUtils.hasLength(name) && name.length() > 2) {
 			return locationRepository.findByNameLike("*" + name + "*", pageable);
 		} else {
-			return getLocations(pageable);
+			return findAll(pageable);
 		}
 	}
 	
@@ -76,18 +81,18 @@ public class LocationService {
 		Assert.notNull(location);
 		Assert.hasText(tagString);
 		
-		Tag tag = tagService.findByTag(tagString); 
+		Tag tag = tagService.findByName(tagString); 
 		
 		if(tag == null) {
 			tag = new Tag();
-			tag.setTag(tagString);
+			tag.setName(tagString);
 			tag.setTimeStamp(new Date());
 			
 			tag = tagService.save(tag);
 		}
 		
 		if(location.getTags().contains(tag)) {
-			throw new IllegalStateException("Location " + location.getName() + " already has this tag: " + tag.getTag());
+			throw new IllegalStateException("Location " + location.getName() + " already has this tag: " + tag.getName());
 		}
 		
 		location.getTags().add(tag);
@@ -100,18 +105,18 @@ public class LocationService {
 		Assert.notNull(location);
 		Assert.hasText(tagString);
 		
-		Tag tag = tagService.findByTag(tagString); 
+		Tag tag = tagService.findByName(tagString); 
 		
 		if(tag == null) {
 			tag = new Tag();
-			tag.setTag(tagString);
+			tag.setName(tagString);
 			tag.setTimeStamp(new Date());
 			
 			tag = tagService.save(tag);
 		}
 		
 		if(!location.getTags().contains(tag)) {
-			throw new IllegalStateException("Location: " + location.getName() + " is not tagged with this tag: " + tag.getTag());
+			throw new IllegalStateException("Location: " + location.getName() + " is not tagged with this tag: " + tag.getName());
 		}
 		
 		location.getTags().remove(tag);

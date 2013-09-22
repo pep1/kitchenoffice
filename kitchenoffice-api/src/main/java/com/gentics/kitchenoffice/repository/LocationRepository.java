@@ -12,6 +12,8 @@ public interface LocationRepository extends GraphRepository<Location> {
 
 	public Location findById(Long id);
 	
+	public Location findByName(String name);
+	
 	@Query("start locations=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Location\") "
 			+ "match locations<-[:HAS_LOCATION]-event "
 			+ "where event.creator={0} "

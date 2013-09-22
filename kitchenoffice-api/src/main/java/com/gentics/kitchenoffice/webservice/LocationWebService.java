@@ -62,7 +62,7 @@ public class LocationWebService {
 			size = 25;
 		}
 
-		return locationService.getLocationsByName(new PageRequest(page, size), search).getContent();
+		return locationService.findByNameLike(new PageRequest(page, size), search).getContent();
 	}
 	
 	@GET

@@ -1,9 +1,5 @@
 package com.gentics.kitchenoffice;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.service.EventService;
 
 

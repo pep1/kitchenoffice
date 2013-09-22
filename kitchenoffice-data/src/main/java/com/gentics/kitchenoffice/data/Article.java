@@ -14,7 +14,7 @@ import org.springframework.data.neo4j.support.index.IndexType;
 @NodeEntity
 public class Article extends AbstractPersistable {
   
-	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "articlesearch")
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "articlenamesearch")
     private String name;
 
     private String unit;

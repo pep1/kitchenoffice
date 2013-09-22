@@ -25,7 +25,7 @@ public class User extends AbstractPersistable implements UserDetails {
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userlastnamesearch")
 	private String lastName;
 	
-	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "userusernamesearch")
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userusernamesearch")
 	private String username;
 	
 	@JsonIgnore

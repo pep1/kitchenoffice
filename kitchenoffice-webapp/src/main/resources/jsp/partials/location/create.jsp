@@ -57,6 +57,16 @@
 						placeholder="Location description"></textarea>
 				</div>
 			</div>
+			
+			<div data-ng-controller="tagsController" class="row-fluid">
+				<div class="tag-input-ctn">
+					<div data-ng-repeat="(key, tag) in inputTags" class="input-tag">
+						{{ tag.name }}
+						<div class="delete-tag" data-ng-click="deleteTag(key)">&times;</div>
+					</div>
+					<input type="text" data-tag-input="" data-ng-model="tagText" data-ng-style="{width: inputWidth}" data-new-tag="addTag()" data-delete-tag="deleteTag()">
+				</div>
+			</div>
 			<hr>
 			<div class="row-fluid">
 				<div class="span3">

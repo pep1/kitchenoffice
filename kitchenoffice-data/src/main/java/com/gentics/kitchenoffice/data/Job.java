@@ -14,7 +14,7 @@ public class Job extends AbstractPersistable{
     @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
 	private Image image;
 	
-	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "jobsearch")
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "jobnamesearch")
 	private String name;
 	
 	private String description;

@@ -12,26 +12,25 @@ import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.adapter.DateAdapter;
 
-
 @NodeEntity
-public class Tag extends AbstractPersistable{
-	
+public class Tag extends AbstractPersistable {
+
 	@XmlJavaTypeAdapter(DateAdapter.class)
-	@GraphProperty(propertyType=Long.class)
+	@GraphProperty(propertyType = Long.class)
 	private Date timeStamp;
-	
-	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "tagsearch")
-	private String tag;
-	
+
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "tagnamesearch")
+	private String name;
+
 	public Tag() {
 		timeStamp = new Date();
 	}
-	
+
 	public Tag(String tagName) {
 		Assert.hasText(tagName);
-		
+
 		timeStamp = new Date();
-		tag = tagName;
+		name = tagName;
 	}
 
 	public Date getTimeStamp() {
@@ -42,17 +41,17 @@ public class Tag extends AbstractPersistable{
 		this.timeStamp = timeStamp;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getName() {
+		return name;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("Tag{\n  tag=%s\n}", tag.toString());
+		return String.format("Tag{\n  name=%s\n}", name.toString());
 	}
-	
+
 }

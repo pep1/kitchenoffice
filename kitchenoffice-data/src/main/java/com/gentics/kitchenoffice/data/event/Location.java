@@ -17,21 +17,21 @@ import com.gentics.kitchenoffice.data.Tag;
 @NodeEntity
 public class Location extends AbstractPersistable {
 
-	@Indexed(unique = true, indexType = IndexType.FULLTEXT, indexName = "locationsearch")
+	@Indexed(indexType = IndexType.FULLTEXT, indexName = "locationnamesearch")
 	private String name;
 
 	private String address;
 
 	private String website;
-	
+
 	private String description;
-	
+
 	private Float latitude;
-	
+
 	private Float longitude;
-	
+
 	@Fetch
-    @RelatedTo(type = "HAS_TAG", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH)
 	private Set<Tag> tags = new HashSet<Tag>();
 
 	@Fetch
@@ -105,4 +105,12 @@ public class Location extends AbstractPersistable {
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
 	}
+
+	@Override
+	public String toString() {
+		return String
+				.format("Location [name=%s, address=%s, website=%s, description=%s, latitude=%s, longitude=%s, tags=%s, image=%s]",
+						name, address, website, description, latitude, longitude, tags, image);
+	}
+
 }

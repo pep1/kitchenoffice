@@ -27,20 +27,18 @@ import com.gentics.kitchenoffice.repository.UserRepository;
 
 @Service("KitchenOfficeUserService")
 @Scope("singleton")
-public class UserService extends
-		AbstractCasAssertionUserDetailsService {
+public class UserService extends AbstractCasAssertionUserDetailsService {
 
-	private static Logger log = Logger
-			.getLogger(UserService.class);
+	private static Logger log = Logger.getLogger(UserService.class);
 
 	public static final String ROLE_USER_NAME = "ROLE_USER";
 
 	public static final String ROLE_ADMIN_NAME = "ROLE_ADMIN";
-	
+
 	@Value("${webapp.job.defaults}")
 	private String[] defaultJobIds;
-	
-	@Value("${webapp.security.enabled}")
+
+	@Value("${webapp.security.adminemails}")
 	private String[] adminEmails;
 
 	@Autowired
@@ -48,7 +46,7 @@ public class UserService extends
 
 	@Autowired
 	RoleRepository roleRepository;
-	
+
 	@Autowired
 	JobRepository jobRepository;
 
@@ -56,22 +54,20 @@ public class UserService extends
 	public void initialize() {
 
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
-		
+
 		// initially create two roles
 		checkAndCreateRoles();
-		
+
 		// check and create default jobs
 		checkAndCreateDefaultJobs();
 	}
 
 	@Override
 	protected UserDetails loadUserDetails(Assertion assertion) {
-		
-		log.debug("loading user details of cas assertion: " + assertion.getPrincipal()
-				.getName());
 
-		User user = userRepository.findUserByUsername(assertion.getPrincipal()
-				.getName());
+		log.debug("loading user details of cas assertion: " + assertion.getPrincipal().getName());
+
+		User user = userRepository.findUserByUsername(assertion.getPrincipal().getName());
 
 		if (user == null) {
 			// if user is not found in database, create one with specified
@@ -79,18 +75,16 @@ public class UserService extends
 			user = createUserByUsername(assertion.getPrincipal().getName());
 		}
 
-		user.setFirstName((String) assertion.getPrincipal().getAttributes()
-				.get("firstname"));
-		user.setLastName((String) assertion.getPrincipal().getAttributes()
-				.get("lastname"));
+		user.setFirstName((String) assertion.getPrincipal().getAttributes().get("firstname"));
+		user.setLastName((String) assertion.getPrincipal().getAttributes().get("lastname"));
 
 		Object email = assertion.getPrincipal().getAttributes().get("email");
 
 		if (email instanceof String) {
-			
-			String emailString = ((String)email).replace("[", "");
+
+			String emailString = ((String) email).replace("[", "");
 			emailString = emailString.replace("]", "");
-			String[] emails = emailString.split(","); 
+			String[] emails = emailString.split(",");
 			user.setEmail(emails[0]);
 		}
 
@@ -125,16 +119,17 @@ public class UserService extends
 		return userRepository.save(user);
 
 	}
-	
+
 	private void checkAndCreateDefaultJobs() {
-		
-		for(String jobId : defaultJobIds) {
-			if(jobRepository.findByName(jobId) == null){
+
+		for (String jobId : defaultJobIds) {
+			if (jobRepository.findByName(jobId) == null) {
 				log.debug("Creating initial job with name: " + jobId);
 				Job newJob = new Job();
 				newJob.setName(jobId);
 				jobRepository.save(newJob);
-			};
+			}
+			;
 		}
 	}
 
@@ -142,8 +137,7 @@ public class UserService extends
 		boolean hasRole = false;
 		UserDetails userDetails = getUser();
 		if (userDetails != null) {
-			Collection<? extends GrantedAuthority> authorities = userDetails
-					.getAuthorities();
+			Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 			if (isRolePresent(authorities, role)) {
 				hasRole = true;
 			}
@@ -157,8 +151,7 @@ public class UserService extends
 	 * @return User if found in the context, null otherwise
 	 */
 	public User getUser() {
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		User userDetails = null;
 		if (principal instanceof User) {
@@ -166,7 +159,7 @@ public class UserService extends
 		}
 		return userDetails;
 	}
-	
+
 	public List<User> findAll(PageRequest pageRequest) {
 		Assert.notNull(pageRequest);
 		return userRepository.findAll(pageRequest).getContent();
@@ -182,8 +175,7 @@ public class UserService extends
 	 * @return true if role is present in list of authorities assigned to
 	 *         current user, false otherwise
 	 */
-	private boolean isRolePresent(
-			Collection<? extends GrantedAuthority> authorities, String role) {
+	private boolean isRolePresent(Collection<? extends GrantedAuthority> authorities, String role) {
 		boolean isRolePresent = false;
 		for (GrantedAuthority grantedAuthority : authorities) {
 			isRolePresent = grantedAuthority.getAuthority().equals(role);

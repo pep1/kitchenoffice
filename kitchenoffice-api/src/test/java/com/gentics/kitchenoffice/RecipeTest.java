@@ -1,6 +1,6 @@
 package com.gentics.kitchenoffice;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ import org.joda.time.Duration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.node.Neo4jHelper;
 import org.springframework.test.annotation.Rollback;
@@ -26,7 +25,6 @@ import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.data.event.EventType;
-import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.ArticleRepository;
 import com.gentics.kitchenoffice.repository.CommentRepository;
@@ -112,7 +110,7 @@ public class RecipeTest {
 		createSomeRecipes();
 
 		Tag tag1 = new Tag();
-		tag1.setTag("testtag");
+		tag1.setName("testtag");
 
 		tagRepository.save(tag1);
 
