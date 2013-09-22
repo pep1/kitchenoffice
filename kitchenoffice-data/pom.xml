@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>kitchenoffice-data</artifactId>
-	<name>kitchenoffice-data</name>
+	<name>Kitchenoffice Data</name>
 
 	<build>
 		<plugins>

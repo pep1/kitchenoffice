@@ -6,7 +6,8 @@
 		
 		<js>classpath:META-INF/resources/webjars/bootstrap/2.3.2/js/bootstrap.js</js>
 		
-		<js>https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore.js</js>
+		<js>classpath:META-INF/resources/webjars/underscorejs/1.4.4/underscore.js</js>
+		<js>classpath:META-INF/resources/webjars/underscore.string/2.3.0/underscore.string.js</js>
 		
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js</js>
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/locales/**</js>

@@ -1,7 +1,5 @@
 package com.gentics.kitchenoffice.service;
 
-import java.util.Date;
-
 import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.LocationRepository;
@@ -77,6 +74,8 @@ public class LocationService {
 		return locationRepository.save(location);
 	}
 	
+	
+	/*
 	public Location addTagToLocation(Location location, String tagString) {
 		Assert.notNull(location);
 		Assert.hasText(tagString);
@@ -125,5 +124,5 @@ public class LocationService {
 		
 		return location;
 	}
-
+	*/
 }

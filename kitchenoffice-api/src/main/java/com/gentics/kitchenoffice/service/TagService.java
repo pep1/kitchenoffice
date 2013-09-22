@@ -3,6 +3,7 @@ package com.gentics.kitchenoffice.service;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +31,7 @@ public class TagService {
 		return tagRepository.findAll(pageable).getContent();
 	}
 	
-	public List<Tag> findByName(String name, Pageable pageable) {
+	public List<Tag> findByNameLike(String name, Pageable pageable) {
 		if(StringUtils.hasLength(name) && name.length() > 2) {
 			return tagRepository.findByNameLike("*" + name + "*", pageable);
 		} else {
@@ -57,7 +58,13 @@ public class TagService {
 	
 	protected void checkAndCleanUp() {
 		for(Tag tag : tagRepository.findWithoutRelation()) {
-			tagRepository.delete(tag);
+			
+			DateTime date = new DateTime(tag.getTimeStamp());
+			// check if the tag is older than one hour
+			if(date.isBefore((new DateTime()).minusHours(1))) {
+				log.info("Cleaning up tag: " + tag.getName());
+				tagRepository.delete(tag);
+			}
 		}
 	}
 }

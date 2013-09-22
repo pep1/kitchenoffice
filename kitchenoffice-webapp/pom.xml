@@ -72,6 +72,10 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>restangular</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>underscore.string</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

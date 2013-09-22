@@ -75,32 +75,6 @@ public class LocationWebService {
 		Assert.notNull(parsedId, "Id could not be parsed");
 		return locationService.getLocationById(parsedId);
 	}
-	
-	@GET
-	@Path("/{id}/addtag/{tagstring}")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Location addTagToLocation(@PathParam("id") String id, @PathParam("tagstring") String tagString) {
-		Assert.notNull(id);
-		Long parsedId = NumberUtils.parseNumber(id, Long.class);
-		Assert.notNull(parsedId, "Id could not be parsed");
-		Assert.hasText(tagString);
-		Assert.isTrue(tagString.length() > 2, "Tag name should be longer than 2 characters");
-		return locationService.addTagToLocation(locationService.getLocationById(parsedId), tagString);
-	}
-	
-	@GET
-	@Path("/{id}/removetag/{tagstring}")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Location removeFromLocation(@PathParam("id") String id, @PathParam("tagstring") String tagString) {
-		Assert.notNull(id);
-		Long parsedId = NumberUtils.parseNumber(id, Long.class);
-		Assert.notNull(parsedId, "Id could not be parsed");
-		Assert.hasText(tagString);
-		Assert.isTrue(tagString.length() > 2, "Tag name should be longer than 2 characters");
-		return locationService.removeTagFromLocation(locationService.getLocationById(parsedId), tagString);
-	}
 
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")

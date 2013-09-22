@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
@@ -48,13 +49,13 @@ public class EventService {
 	}
 
 	public List<Event> getFutureEvents(PageRequest pagerequest) {
-		return eventRepository.findAllinFutureOf(new Date().getTime(), pagerequest);
+		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pagerequest);
 	}
-	
+
 	public List<Event> getMyAttendedEvents(PageRequest pagerequest) {
 		return eventRepository.findAllAttended(userService.getUser(), pagerequest);
 	}
-	
+
 	public List<Event> getEventsOfUser(PageRequest pagerequest) {
 		return eventRepository.findByCreator(userService.getUser(), pagerequest);
 	}
@@ -68,7 +69,7 @@ public class EventService {
 		Assert.notNull(event);
 		return eventRepository.save(event);
 	}
-	
+
 	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
 	public void deleteEvent(Event event) {
 		Assert.notNull(event);
@@ -121,10 +122,11 @@ public class EventService {
 		if (participant == null) {
 			throw new IllegalArgumentException("User is not in the list of participants!");
 		}
-		
+
 		// remove the participant from the list
 		event.getParticipants().remove(participant);
-		// and save the event. Spring will take care about all unnecessary references
+		// and save the event. Spring will take care about all unnecessary
+		// references
 		event = eventRepository.save(event);
 
 		return event;
@@ -150,26 +152,27 @@ public class EventService {
 
 	public List<Event> getAttendedEventsFromUserInFutureOf(Date date) {
 		Assert.notNull(date);
-		return eventRepository.findAllAttendedInFuture(userService.getUser(), date.getTime());
+		return eventRepository.findAllAttendedInFuture(userService.getUser(), new DateTime(date).getMillis());
 	}
 
 	public List<Event> getAttendedEventsFromUserInPeriod(Date startDate, Date endDate) {
 		Assert.notNull(startDate);
 		Assert.notNull(endDate);
-		return eventRepository.findAllAttendedInPeriodOf(userService.getUser(), startDate.getTime(), endDate.getTime());
+		return eventRepository.findAllAttendedInPeriodOf(userService.getUser(), new DateTime(startDate).getMillis(),
+				new DateTime(endDate).getMillis());
 	}
 
 	public List<Event> getCreatedEventsFromUserInFutureOf(Date date) {
 		Assert.notNull(date);
-		return eventRepository.findAllCreatedInFutureOf(userService.getUser(), date.getTime());
+		return eventRepository.findAllCreatedInFutureOf(userService.getUser(), new DateTime(date).getMillis());
 	}
 
 	public List<Event> getCreatedEventsFromUserInPeriod(Date startDate, Date endDate) {
 		Assert.notNull(startDate);
 		Assert.notNull(endDate);
 
-		List<Event> output = eventRepository.findAllCreatedInPeriodOf(userService.getUser(), startDate.getTime(),
-				endDate.getTime());
+		List<Event> output = eventRepository.findAllCreatedInPeriodOf(userService.getUser(),
+				new DateTime(startDate).getMillis(), new DateTime(endDate).getMillis());
 		return output;
 	}
 }

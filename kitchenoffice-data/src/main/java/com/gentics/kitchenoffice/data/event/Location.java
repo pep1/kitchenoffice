@@ -31,7 +31,7 @@ public class Location extends AbstractPersistable {
 	private Float longitude;
 
 	@Fetch
-	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH, enforceTargetType=true)
 	private Set<Tag> tags = new HashSet<Tag>();
 
 	@Fetch

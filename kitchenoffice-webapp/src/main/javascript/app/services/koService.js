@@ -236,4 +236,23 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 	
 	return userService;
+}).factory('tagService', function(Restangular) {
+	
+	var tagService = Restangular.all('tags');
+	
+	tagService.getAllTags = function() {
+		return this.getList();
+	};
+	
+	tagService.createTag = function(tagName) {
+		if(_.isEmpty(tagName)) return false;
+		
+		var tag = {
+			name: tagName
+		};
+		
+		return this.post(tag);
+	};
+	
+	return tagService;
 });

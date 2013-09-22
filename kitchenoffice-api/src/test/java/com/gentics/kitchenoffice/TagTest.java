@@ -77,7 +77,6 @@ public class TagTest {
 		assertNotNull(tag2);
 		
 		loc1.getTags().add(tag1);
-		loc1 = locationService.saveLocation(loc1);
 		loc1.getTags().add(tag2);
 		loc1 = locationService.saveLocation(loc1);
 		

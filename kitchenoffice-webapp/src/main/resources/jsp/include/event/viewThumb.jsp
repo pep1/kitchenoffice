@@ -19,6 +19,12 @@
 		<gravatar-image data-email="event.creator.email" data-size="30" data-secure="true"></gravatar-image>&nbsp;&nbsp;{{event.creator.username}}
 	</p>
 </div>
+<div class="ko-thumb-container tags" data-ng-hide="event.location.tags == 0" data-ng-switch="EXTERNAL">
+	<h5><i class="icon-tags"></i> Tags</h5>
+	<div class="ko-tag-list">
+		<span data-ng-repeat="(idx, tag) in event.location.tags" class="badge badge-info tag">{{tag.name}}</span>
+	</div>
+</div>
 <div class="ko-thumb-container" data-ng-hide="event.participants.length == 0" data-ng-repeat="participant in event.participants">
 	<h5><i class="icon-fixed-width icon-group"></i> Attendees <small>({{event.participants.length}})</small></h5>
 	<ul class="unstyled ko-attendees-list" >
