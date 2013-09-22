@@ -84,7 +84,7 @@ public class TagTest {
 		log.debug("find tagged objects: " + tagRepository.findTaggedObjects(tag1));
 		log.debug("findwithoutrelation after adding: "  + tagRepository.findWithoutRelation());
 		
-		//assertTrue(tagRepository.findWithoutRelation().size() == 0);
+		assertTrue(tagRepository.findWithoutRelation().size() == 0);
 	}
 	
 	
