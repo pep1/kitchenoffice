@@ -31,7 +31,7 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 		var newCenter = new google.maps.LatLng(event.location.latitude, event.location.longitude);
 		$scope.locationMap.setCenter(newCenter);
 		
-		var marker = new google.maps.Marker({
+		new google.maps.Marker({
 			map : $scope.locationMap,
 			position : $scope.locationMap.center,
 			draggable : false

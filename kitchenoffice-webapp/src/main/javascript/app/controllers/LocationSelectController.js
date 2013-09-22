@@ -20,7 +20,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	
 	$scope.selectedLocation = null;
 	$scope.filterText;
-	var filterTextTimeout;
+	var filterTextTimeout = undefined;
 
 	$scope.areLocationsEmpty = $scope.pages.then(function(pages) {
 		return !(pages.length > 0);

@@ -1,8 +1,8 @@
 angular.module('flash', [])
 .factory('flash', function($rootScope, $timeout) {
   var messages = [];
-
-  var reset;
+  var reset = undefined;
+  
   var cleanup = function() {
     $timeout.cancel(reset);
     reset = $timeout(function() { messages = []; });
