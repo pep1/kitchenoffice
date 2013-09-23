@@ -186,8 +186,8 @@ public class EventService {
 		Assert.notNull(comment);
 		
 		comment.setTimeStamp(new DateTime().toDateTimeISO().toDate());
+		commentRepository.save(comment);
 		comment.setUser(userService.getUser());
-		
 		commentRepository.save(comment);
 		
 		event.addComment(comment);

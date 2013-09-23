@@ -195,13 +195,13 @@ public class EventWebService {
 			throw new IllegalStateException("You already have an event created in this time");
 		}
 
-		event = eventService.saveEvent(event);
+		eventService.saveEvent(event);
 		// set actual logged in user as creator
 		event.setCreator(userService.getUser());
 		// set creation date to now
 		event.setCreationDate((new DateTime()).toDateTimeISO().toDate());
 		// TODO validate event
-		event = eventService.saveEvent(event);
+		eventService.saveEvent(event);
 
 		return event;
 

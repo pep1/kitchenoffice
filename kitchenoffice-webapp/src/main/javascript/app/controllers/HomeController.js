@@ -4,7 +4,18 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	$scope.doDismiss = false;
 	$scope.doDelete = false;
 	$scope.event = null;
-	$scope.homeEvents = eventService.getHomeEvents();
+	
+	$scope.refresh = function() {
+		$scope.homeEvents = eventService.getHomeEvents().then(function(events) {
+			for ( var i = 0; i < events.length; i++) {
+				var event = events[i];
+				event.canAttend = $rootScope.containsMe( event.participants );
+			}
+			return events;
+		});
+	};
+	
+	$scope.refresh();
 
 	$scope.areEventsEmpty = $scope.homeEvents.then(function(events) {
 		return !(events.length > 0);
@@ -18,7 +29,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 		$rootScope.processing = true;
 		eventService.attendEvent(event).then( function(event) {
 			window.scrollTo(0, 0);
-			$scope.homeEvents = eventService.getHomeEvents();
+			$scope.refresh();
 			flash('success', 'You successfully attend event '+eventService.displayName(event)+'.');
 			$scope.attendModal.close();
 		}, function() {
@@ -30,7 +41,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 		$rootScope.processing = true;
 		eventService.dismissEvent(event).then( function(event) {
 			window.scrollTo(0, 0);
-			$scope.homeEvents = eventService.getHomeEvents();
+			$scope.refresh();
 			flash('success', 'You successfully dismissed event '+eventService.displayName(event)+'.');
 			$scope.dismissModal.close();
 		}, function() {
@@ -42,7 +53,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 		$rootScope.processing = true;
 		eventService.deleteEvent(event).then( function(event) {
 			window.scrollTo(0, 0);
-			$scope.homeEvents = eventService.getHomeEvents();
+			$scope.refresh();
 			flash('success', 'You successfully deleted event an event.');
 			$scope.deleteModal.close();
 		}, function() {

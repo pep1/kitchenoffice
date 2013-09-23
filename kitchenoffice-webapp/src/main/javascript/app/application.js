@@ -57,17 +57,35 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 	$rootScope.me = userService.getUser();
 
 	$rootScope.isMe = function(object) {
-		if (_.isNull(object) || _.isUndefined(object))
-			return false;
+		if (_.isNull(object) || _.isUndefined(object)) return false;
 
-		var deferred = $q.defer();
 		// object can be participant or a user object itself
 		user = (!_.isUndefined(object.user)) ? object.user : object;
 
-		$rootScope.me.then(function(me) {
-			deferred.resolve(me.id === user.id);
+		return $rootScope.me.then(function(me) {
+			return (me.id === user.id);
 		});
-
+	};
+	
+	$rootScope.containsMe = function(array) {
+		
+		var deferred = $q.defer();
+		
+		if (_.isNull(array) || _.isUndefined(array) || !_.isArray(array)) deferred.resolve(false);
+		
+		$rootScope.me.then(function(me) {
+			
+			for ( var int = 0; int < array.length; int++) {
+				var object = array[int];
+				user = (!_.isUndefined(object.user)) ? object.user : object;
+				if(me.id === user.id) {
+					deferred.resolve(true);
+				};
+			}
+			
+			return deferred.resolve(false);
+		});
+		
 		return deferred.promise;
 	};
 
