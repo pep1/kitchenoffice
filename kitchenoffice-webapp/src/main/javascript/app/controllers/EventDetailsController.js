@@ -5,7 +5,13 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 		flash('warning', 'Url was not valid: ' + $routeParams.eventId + " cannot be parsed to number");
 	}
 	
-	$scope.event = eventService.getById($routeParams.eventId);
+	$scope.refresh = function() {
+		$scope.event = eventService.getById($routeParams.eventId).then(function(event) {
+			event.canAttend = $rootScope.containsMe( event.participants );
+			return event;
+		});
+	};
+	$scope.refresh();
 	
 	$scope.comment = function(newComment) {
 		if(_.isUndefined(newComment) || newComment.length < 4) return;
@@ -38,4 +44,84 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 		});
 		
 	});
+	
+	$scope.attendEvent = function(event) {
+		$rootScope.processing = true;
+		eventService.attendEvent(event).then( function(event) {
+			window.scrollTo(0, 0);
+			$scope.refresh();
+			flash('success', 'You successfully attend event '+eventService.displayName(event)+'.');
+			$scope.attendModal.close();
+		}, function() {
+			$scope.attendModal.close();
+		});
+	};
+	
+	$scope.dismissEvent = function(event) {
+		$rootScope.processing = true;
+		eventService.dismissEvent(event).then( function(event) {
+			window.scrollTo(0, 0);
+			$scope.refresh();
+			flash('success', 'You successfully dismissed event '+eventService.displayName(event)+'.');
+			$scope.dismissModal.close();
+		}, function() {
+			$scope.dismissModal.close();
+		});
+	};
+	
+	$scope.deleteEvent = function(event) {
+		$rootScope.processing = true;
+		eventService.deleteEvent(event).then( function(event) {
+			$scope.deleteModal.close();
+			$location.path('/kitchenoffice-webapp/home');
+			window.scrollTo(0, 0);
+			flash('success', 'You successfully deleted an event.');
+			
+		}, function() {
+			$scope.deleteModal.close();
+		});
+	};
+	
+	$scope.doAttend = false;
+	$scope.doDismiss = false;
+	$scope.doDelete = false;
+	
+	$scope.attendModal = {
+			opts: {
+				backdropFade : true,
+				dialogFade : true
+			},
+			close: function() {
+				$scope.doAttend = false;
+			},
+			open: function(event) {
+				$scope.doAttend = true;
+			}
+	};
+	
+	$scope.dismissModal = {
+			opts: {
+				backdropFade : true,
+				dialogFade : true
+			},
+			close: function() {
+				$scope.doDismiss = false;
+			},
+			open: function(event) {
+				$scope.doDismiss = true;
+			}
+	};
+	
+	$scope.deleteModal = {
+			opts: {
+				backdropFade : true,
+				dialogFade : true
+			},
+			close: function() {
+				$scope.doDelete = false;
+			},
+			open: function(event) {
+				$scope.doDelete = true;
+			}
+	};
 });

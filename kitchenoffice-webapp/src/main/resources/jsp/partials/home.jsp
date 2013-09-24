@@ -8,7 +8,7 @@
 	</div>
 	<div class="span3" data-ng-show="!areEventsEmpty">
 		<div class="pull-right">
-			or&nbsp;&nbsp;&nbsp;<a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
+			or&nbsp;&nbsp;&nbsp;<a href="/${project.build.finalName}/event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</div>
 	</div>
 </div>
@@ -19,7 +19,7 @@
 		<button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button>
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
-			<a class="btn btn-small" data-ng-href="event/{{event.id}}">View details »</a>
+			<a class="btn btn-small" data-ng-href="/${project.build.finalName}/event/{{event.id}}">View details »</a>
 			<button ng-hide="event.canAttend" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
 			<button ng-show="event.canAttend" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
 		</div>

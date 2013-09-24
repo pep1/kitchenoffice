@@ -13,8 +13,11 @@
 			<p>
 				<i class="icon-fixed-width icon-time"></i> {{fromNow(event.startDate)}}
 			<p>
-			<p data-ng-switch="EXTERNAL">
+			<p data-ng-show="event.location">
 				<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
+			</p>
+			<p data-ng-show="event.location && event.location.website.length != 0">
+				<i class="icon-fixed-width icon-home"></i> <a target="_blank" ng-href="{{event.location.website}}" > Location Website</a>
 			</p>
 			<p data-ng-hide="isEmpty(event.creator)">
 				<i class="icon-fixed-width icon-user"></i>
@@ -41,6 +44,14 @@
 			<ul class="unstyled ko-attendees-list">
 				<li data-ng-repeat="participant in event.participants"><jsp:include page="../user/participantItem.jsp"></jsp:include></li>
 			</ul>
+		</div>
+		<div class="pull-left">
+			<button data-ng-hide="event.canAttend" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend to event</button>
+			<button data-ng-show="event.canAttend" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss event</button>
+			&nbsp;&nbsp;&nbsp;<button data-ng-show="event.creator.id == me.id" class="btn btn-small btn-danger" type="button" data-ng-click="deleteModal.open(event)"><i class="icon-trash"></i> delete event</button>
+		</div>
+		<div class="pull-right">
+			<a class="btn btn-small" data-ng-show="event.location" data-ng-href="/${project.build.finalName}/location/{{event.location.id}}">Show location details »</a>
 		</div>
 	</div>
 	<div class="span6" data-ng-show="event.location">

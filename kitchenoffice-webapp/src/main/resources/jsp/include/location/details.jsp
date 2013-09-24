@@ -7,7 +7,7 @@
 	</div>
 	<div class="span3">
 		<div class="pull-right">
-			<a class="btn btn-primary" data-ng-href="/kitchenoffice-webapp/location/{{location.id}}/edit" data-ng-disabled="processing"><i class="icon-edit"></i> Edit this event</a>
+			<a class="btn btn-primary" data-ng-href="/kitchenoffice-webapp/location/{{location.id}}/edit" data-ng-disabled="processing"><i class="icon-edit"></i> Edit this location</a>
 		</div>
 	</div>
 </div>
