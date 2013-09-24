@@ -1,4 +1,4 @@
-app.controller('LocationSelectController', function($scope, $rootScope, $location, $timeout, locationService, flash) {
+app.controller('LocationListController', function($scope, $rootScope, $location, $timeout, locationService, flash) {
 	
 	if(!$scope.locationSearchString) {
 		$scope.locationSearchString = '';
@@ -27,7 +27,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	});
 
 	$scope.selectLocation = function(location) {
-		$scope.$parent.event.location = $scope.selectedLocation = location;
+		$location.path('/kitchenoffice-webapp/location/' + location.id);
 	};
 
 	$scope.selected = function(location) {

@@ -1,12 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <div class="row-fluid">
 	<div class="span6">
-		<form class="form-inline">
-			<input type="text" class="search-query input-block-level" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location name here to search with Google">
-		</form>
-		<div id="map_canvas" class="ko-map-canvas" ui-map="locationMap" ui-options="mapOptions"></div>
-	</div>
-	<div class="span6">
 		<form name="locationForm" class="form-horizontal ko-form-fluid">
 			<div class="row-fluid">
 				<div class="span3">
@@ -79,5 +73,11 @@
 				</div>
 			</div>
 		</form>
+	</div>
+	<div class="span6">
+		<form class="form-inline">
+			<input type="text" class="search-query input-block-level" ng-model="locationSearchString" maps-search="locationMap" placeholder="Enter location name here to search with Google">
+		</form>
+		<div id="map_canvas" class="ko-map-canvas" ui-map="locationMap" ui-options="mapOptions"></div>
 	</div>
 </div>

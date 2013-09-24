@@ -1,7 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<div class="row">
-
+<div class="row-fluid">
 	<div class="span9">
 		<h1>
 			<i class="icon-food"></i> Selectable food ...

@@ -48,5 +48,17 @@ private static Logger log = Logger.getLogger(PartialsController.class);
 		log.debug("location edit partial called");
 		return "partials/location/edit";
 	}
+	
+	@RequestMapping(value = "/location/details", method = RequestMethod.GET)
+	public String getLocationDetailsPage(Model model) {
+		log.debug("location edit partial called");
+		return "partials/location/details";
+	}
+	
+	@RequestMapping(value = "/location/list", method = RequestMethod.GET)
+	public String getLocationlistPage(Model model) {
+		log.debug("location edit partial called");
+		return "partials/location/list";
+	}
 
 }

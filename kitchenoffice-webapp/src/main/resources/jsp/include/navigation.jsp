@@ -15,14 +15,20 @@
 					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" />' />
 				</p>
 				<ul class="nav">
-					<li><a href="/${project.build.finalName}/home" data-active-link="active"><i class="icon-home"></i> Home</a></li>
-					<li class="dropdown">
-                    	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
+					<li class="dropdown" >
+                    	<a href="#" class="dropdown-toggle" data-active-dropdown="active" data-toggle="dropdown"><i class="icon-food"></i> Events<b class="caret"></b></a>
                     	<ul class="dropdown-menu">
-                    		<li><a href="/${project.build.finalName}/event/create" data-active-link="active"><i class="icon-edit"></i> create Event</a></li>
+                    		<li><a href="/${project.build.finalName}/home" data-active-link="active"><i class="icon-fixed-width icon-home"></i> show Events</a></li>
+                    		<li><a href="/${project.build.finalName}/event/create" data-active-link="active"><i class="icon-fixed-width icon-edit"></i> create Event</a></li>
                     	</ul>
                     </li>
-					<li><a href="/${project.build.finalName}/location/create" data-active-link="active"><i class="icon-map-marker"></i> add Location</a></li>
+                    <li class="dropdown" data-active-dropdown="active">
+                    	<a href="#" class="dropdown-toggle" data-active-dropdown="active" data-toggle="dropdown"><i class="icon-map-marker"></i> Locations <b class="caret"></b></a>
+                    	<ul class="dropdown-menu">
+                    		<li><a href="/${project.build.finalName}/location" data-active-link="active"><i class="icon-fixed-width icon-map-marker"></i> show Locations</a></li>
+                    		<li><a href="/${project.build.finalName}/location/create" data-active-link="active"><i class="icon-fixed-width icon-edit"></i> add Location</a></li>
+                    	</ul>
+                    </li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->

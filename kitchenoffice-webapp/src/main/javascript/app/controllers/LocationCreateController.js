@@ -23,7 +23,7 @@ app.controller('LocationCreateController', function($scope, $rootScope, $locatio
 		locationService.save($scope.location).then(function(location) {
 			$rootScope.processing = false;
 			$scope.doSave = false;
-			$location.path('/kitchenoffice-webapp/home');
+			$window.history.back();
 			flash('success', 'New location '+location.name+' saved');
 		});
 	};

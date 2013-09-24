@@ -1,4 +1,4 @@
-app.controller('LocationEditController', function($scope, $rootScope, $location, $routeParams, locationService, flash) {
+app.controller('LocationDetailsController', function($scope, $rootScope, $location, $routeParams, locationService, flash) {
 
 	if(isNaN($routeParams.locationId)) {
 		$location.path('/kitchenoffice-webapp/home');
@@ -9,24 +9,14 @@ app.controller('LocationEditController', function($scope, $rootScope, $location,
 		$scope.location = location;
 		
 		var newCenter = new google.maps.LatLng(location.latitude, location.longitude);
-		
 		$scope.locationMap.setCenter(newCenter);
-		$scope.marker.setPosition(newCenter);
+		
+		new google.maps.Marker({
+			map : $scope.locationMap,
+			position : $scope.locationMap.center,
+			draggable : false
+		});
 	});
-	
-	$scope.isValid = function(locationForm) {
-		return locationForm.$valid;
-	};
-	
-	/**
-	 * saves the event to the api
-	 */
-	$scope.saveLocation = function(locationForm) {
-		// TODO Frontend Validation
-		if($scope.isValid(locationForm)){
-			$scope.saveModal.open();
-		}
-	};
 	
 	$scope.doSaveLocation = function() {
 		
@@ -48,21 +38,5 @@ app.controller('LocationEditController', function($scope, $rootScope, $location,
 		zoom : 15,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
-	
-	/**
-	 * location create modal
-	 */
-	$scope.doSave = false;
-	$scope.saveModal = {
-			opts: {
-				backdropFade : true,
-				dialogFade : true
-			},
-			close: function() {
-				$scope.doSave = false;
-			},
-			open: function() {
-				$scope.doSave = true;
-			}
-	};
+
 });
