@@ -13,6 +13,8 @@ import com.gentics.kitchenoffice.data.user.User;
 
 public interface EventRepository extends GraphRepository<Event>, RelationshipOperationsRepository<Event> {
 	
+	public Event findById(Long id);
+	
 	public List<Event> findByCreator(User user, PageRequest pagerequest);
 
 	@Query("start events=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Event\") "

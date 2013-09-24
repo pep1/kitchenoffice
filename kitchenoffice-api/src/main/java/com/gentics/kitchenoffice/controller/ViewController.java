@@ -35,12 +35,12 @@ public class ViewController {
 		return getIndexRootpage(model);
 	}
 	
-	@RequestMapping(value = "/event/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/event/**", method = RequestMethod.GET)
 	public ModelAndView getEventpage(Model model) {
 		return getIndexRootpage(model);
 	}
 	
-	@RequestMapping(value = "/location/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/location/**", method = RequestMethod.GET)
 	public ModelAndView getLocationpage(Model model) {
 		return getIndexRootpage(model);
 	}

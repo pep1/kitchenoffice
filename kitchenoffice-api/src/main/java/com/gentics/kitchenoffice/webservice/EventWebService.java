@@ -30,6 +30,7 @@ import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.service.EventService;
 import com.gentics.kitchenoffice.service.JobService;
 import com.gentics.kitchenoffice.service.UserService;
+import com.sun.jersey.api.NotFoundException;
 
 @Component
 @Scope("singleton")
@@ -113,7 +114,13 @@ public class EventWebService {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId);
 		
-		return eventService.getEventById(parsedId);
+		Event event = eventService.getEventById(parsedId);
+		
+		if(event == null) {
+			throw new NotFoundException("Sorry, no event found with id " + parsedId);
+		}
+		
+		return event;
 	}
 	
 	@DELETE

@@ -5,7 +5,9 @@ app.controller('LocationEditController', function($scope, $rootScope, $location,
 		flash('warning', 'Url was not valid: ' + $routeParams.locationId + " cannot be parsed to number");
 	}
 	
-	$scope.location = locationService.getById($routeParams.locationId);
+	locationService.getById($routeParams.locationId).then(function(location) {
+		$scope.location = location;
+	});
 	
 	$scope.isValid = function(locationForm) {
 		return locationForm.$valid;

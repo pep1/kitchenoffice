@@ -29,6 +29,7 @@ import org.springframework.util.NumberUtils;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.service.LocationService;
 import com.gentics.kitchenoffice.service.UserService;
+import com.sun.jersey.api.NotFoundException;
 
 @Component
 @Scope("singleton")
@@ -73,7 +74,14 @@ public class LocationWebService {
 		Assert.notNull(id);
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId, "Id could not be parsed");
-		return locationService.getLocationById(parsedId);
+		
+		Location location = locationService.getLocationById(parsedId);
+		
+		if(location == null) {
+			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
+		}
+		
+		return location;
 	}
 
 	@GET

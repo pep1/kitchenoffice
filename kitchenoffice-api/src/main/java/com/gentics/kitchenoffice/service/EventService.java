@@ -67,7 +67,7 @@ public class EventService {
 
 	public Event getEventById(Long id) {
 		Assert.notNull(id);
-		return eventRepository.findOne(id);
+		return eventRepository.findById(id);
 	}
 
 	public Event saveEvent(Event event) {
