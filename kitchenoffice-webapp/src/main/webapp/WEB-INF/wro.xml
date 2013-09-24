@@ -39,7 +39,7 @@
 		<css>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/css/datepicker.css</css>
 		<css>https://raw.github.com/jdewit/bootstrap-timepicker/master/css/bootstrap-timepicker.css</css>
 		
-		<css>classpath:META-INF/resources/webjars/font-awesome/3.1.1/css/font-awesome.css</css>
+		<css>classpath:META-INF/resources/webjars/font-awesome/3.2.1/css/font-awesome.css</css>
 	</group>
 	<group name='app'>
 		<js>/javascript/**</js>

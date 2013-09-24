@@ -10,7 +10,7 @@
 <div class="container">
 	<hr>
 	<footer>
-		<p>Project Version: ${project.version}</p>
+		<p><i class="icon-info"></i> Project Version: ${project.version} | <i class="icon-bug"></i> Found a bug? Got ideas? Please report here: <a target="_blank" href="${project.issueManagement.url}">${project.issueManagement.system}</a></p>
 	</footer>
 </div>
 

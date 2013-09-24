@@ -46,6 +46,6 @@
 	<mvc:resources mapping="/assets/css/**" location="/assets/css/" />
 	<mvc:resources mapping="/assets/js/**" location="/assets/js/" />
 	<!-- font awesome mapping -->
-	<mvc:resources mapping="/assets/font/**" location="classpath:/META-INF/resources/webjars/font-awesome/3.1.1/font/" />
+	<mvc:resources mapping="/assets/font/**" location="classpath:/META-INF/resources/webjars/font-awesome/3.2.1/font/" />
 
 </beans:beans>

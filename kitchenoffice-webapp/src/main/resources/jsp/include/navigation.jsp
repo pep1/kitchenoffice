@@ -7,7 +7,7 @@
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 			</button>
-			<a class="brand" href="home"> <spring:message code="header.brand" />
+			<a class="brand" href="/${project.build.finalName}/home"> <spring:message code="header.brand" />
 			</a>
 			<div class="nav-collapse collapse">
 				<p class="navbar-text pull-right">
@@ -15,14 +15,14 @@
 					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" />' />
 				</p>
 				<ul class="nav">
-					<li><a href="/kitchenoffice-webapp/home" data-active-link="active"><i class="icon-home"></i> Home</a></li>
+					<li><a href="/${project.build.finalName}/home" data-active-link="active"><i class="icon-home"></i> Home</a></li>
 					<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                          <li><a href="/kitchenoffice-webapp/event/create" data-active-link="active"><i class="icon-edit"></i> create Event</a></li>
+                          <li><a href="/${project.build.finalName}/event/create" data-active-link="active"><i class="icon-edit"></i> create Event</a></li>
                         </ul>
                       </li>
-					<li><a href="/kitchenoffice-webapp/location/create" data-active-link="active"><i class="icon-map-marker"></i> add Location</a></li>
+					<li><a href="/${project.build.finalName}/location/create" data-active-link="active"><i class="icon-map-marker"></i> add Location</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->

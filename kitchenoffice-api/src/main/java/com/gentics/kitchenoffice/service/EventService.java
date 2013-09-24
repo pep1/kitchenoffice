@@ -67,7 +67,7 @@ public class EventService {
 
 	public Event getEventById(Long id) {
 		Assert.notNull(id);
-		return eventRepository.findById(id);
+		return eventRepository.findOne(id);
 	}
 
 	public Event saveEvent(Event event) {
@@ -132,7 +132,7 @@ public class EventService {
 		event.getParticipants().remove(participant);
 		// and save the event. Spring will take care about all unnecessary
 		// references
-		event = eventRepository.save(event);
+		eventRepository.save(event);
 
 		return event;
 	}
@@ -186,7 +186,6 @@ public class EventService {
 		Assert.notNull(comment);
 		
 		comment.setTimeStamp(new DateTime().toDateTimeISO().toDate());
-		commentRepository.save(comment);
 		comment.setUser(userService.getUser());
 		commentRepository.save(comment);
 		

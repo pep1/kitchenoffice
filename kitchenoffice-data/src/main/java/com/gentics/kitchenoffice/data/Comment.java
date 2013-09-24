@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
@@ -17,6 +18,7 @@ public class Comment extends AbstractPersistable{
 	@GraphProperty(propertyType=Long.class)
 	private Date timeStamp;
 	
+	@Fetch
 	private User user;
 	
 	private String comment;
