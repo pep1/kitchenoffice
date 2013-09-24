@@ -16,10 +16,10 @@
 			<p data-ng-show="event.location">
 				<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
 			</p>
-			<p data-ng-show="event.location && event.location.website.length != 0">
-				<i class="icon-fixed-width icon-home"></i> <a target="_blank" ng-href="{{event.location.website}}" > Location Website</a>
+			<p data-ng-show="event.location && event.location.website">
+				<i class="icon-fixed-width icon-home"></i> <a target="_blank" data-ng-href="{{event.location.website}}" > Location Website</a>
 			</p>
-			<p data-ng-hide="isEmpty(event.creator)">
+			<p data-ng-show="event.creator">
 				<i class="icon-fixed-width icon-user"></i>
 				<gravatar-image data-email="event.creator.email" data-size="30" data-secure="true"></gravatar-image>
 				&nbsp;&nbsp;{{event.creator.username}}

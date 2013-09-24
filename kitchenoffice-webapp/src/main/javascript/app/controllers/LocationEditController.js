@@ -1,4 +1,4 @@
-app.controller('LocationEditController', function($scope, $rootScope, $location, $routeParams, locationService, flash) {
+app.controller('LocationEditController', function($scope, $rootScope, $location, $routeParams, $window, locationService, flash) {
 
 	if(isNaN($routeParams.locationId)) {
 		$location.path('/kitchenoffice-webapp/home');
@@ -11,7 +11,9 @@ app.controller('LocationEditController', function($scope, $rootScope, $location,
 		var newCenter = new google.maps.LatLng(location.latitude, location.longitude);
 		
 		$scope.locationMap.setCenter(newCenter);
-		$scope.marker.setPosition(newCenter);
+		if($scope.marker) {
+			$scope.marker.setPosition(newCenter);
+		}
 	});
 	
 	$scope.isValid = function(locationForm) {
@@ -35,7 +37,7 @@ app.controller('LocationEditController', function($scope, $rootScope, $location,
 		locationService.save($scope.location).then(function(location) {
 			$rootScope.processing = false;
 			$scope.doSave = false;
-			$location.path('/kitchenoffice-webapp/home');
+			$window.history.back();
 			flash('success', 'New location '+location.name+' saved');
 		});
 	};

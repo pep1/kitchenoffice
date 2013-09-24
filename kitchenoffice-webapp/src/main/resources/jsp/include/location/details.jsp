@@ -18,11 +18,11 @@
 			<p>
 				<i class="icon-map-marker"></i> {{location.address}}
 			</p>
-			<p data-ng-hide="location.website.length == 0">
+			<p data-ng-show="location.website">
 				<i class="icon-home"></i> <a target="_blank" ng-href="{{location.website}}" >website</a>
 			</p>
 		</div>
-		<div class="ko-thumb-container tags" data-ng-hide="location.tags == 0" >
+		<div class="ko-thumb-container tags" data-ng-show="location.tags" >
 			<h5><i class="icon-tags"></i> Tags</h5>
 			<div class="ko-tag-list">
 				<span data-ng-repeat="(idx, tag) in location.tags" class="badge badge-info tag">{{tag.name}}</span>

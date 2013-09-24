@@ -1,6 +1,7 @@
-app.controller('LocationCreateController', function($scope, $rootScope, $location, locationService, flash) {
+app.controller('LocationCreateController', function($scope, $rootScope, $location, $window, locationService, flash) {
 	
 	$scope.location = {};
+	
 	
 	$scope.isValid = function(locationForm) {
 		return locationForm.$valid;
@@ -21,9 +22,9 @@ app.controller('LocationCreateController', function($scope, $rootScope, $locatio
 		$rootScope.processing = true;
 		
 		locationService.save($scope.location).then(function(location) {
+			$window.history.back();
 			$rootScope.processing = false;
 			$scope.doSave = false;
-			$window.history.back();
 			flash('success', 'New location '+location.name+' saved');
 		});
 	};
@@ -46,7 +47,9 @@ app.controller('LocationCreateController', function($scope, $rootScope, $locatio
 			var newCenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			
 			$scope.locationMap.setCenter(newCenter);
-			$scope.marker.setPosition(newCenter);
+			if($scope.marker) {
+				$scope.marker.setPosition(newCenter);
+			}
 		});
 	}
 	
