@@ -32,10 +32,15 @@ var app = angular.module(
 		templateUrl : '/kitchenoffice-webapp/partials/event/details',
 		controller : 'EventDetailsController'
 	});
-
+	
 	$routeProvider.when('/kitchenoffice-webapp/location/create', {
 		templateUrl : '/kitchenoffice-webapp/partials/location/create',
 		controller : 'LocationCreateController'
+	});
+	
+	$routeProvider.when('/kitchenoffice-webapp/location/:locationId/edit', {
+		templateUrl : '/kitchenoffice-webapp/partials/location/edit',
+		controller : 'LocationEditController'
 	});
 
 	$routeProvider.otherwise({

@@ -102,8 +102,8 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	/**
 	 * returns the event with specified id
 	 */
-	eventService.getEventById = function(id) {
-		if(isNaN(id)) return false;
+	eventService.getById = function(id) {
+		if(isNaN(id)) return {};
 		return Restangular.one("events", id).get();
 	};
 	
@@ -192,6 +192,14 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	
 	locationService.getLastUsed = function() {
 		return this.getList();
+	};
+	
+	/**
+	 * returns the location with specified id
+	 */
+	locationService.getById = function(id) {
+		if(isNaN(id)) return {};
+		return Restangular.one("locations", id).get();
 	};
 	
 	locationService.getPages = function(pageSize, page, maxPageFetchCount, search) {

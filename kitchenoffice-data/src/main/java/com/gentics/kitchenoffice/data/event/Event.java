@@ -109,7 +109,7 @@ public class Event extends AbstractPersistable {
 		this.endDate = date;
 	}
 
-	public String getDesciption() {
+	public String getDescription() {
 		return description;
 	}
 

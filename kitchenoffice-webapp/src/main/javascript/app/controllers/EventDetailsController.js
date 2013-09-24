@@ -5,7 +5,7 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 		flash('warning', 'Url was not valid: ' + $routeParams.eventId + " cannot be parsed to number");
 	}
 	
-	$scope.event = eventService.getEventById($routeParams.eventId);
+	$scope.event = eventService.getById($routeParams.eventId);
 	
 	$scope.comment = function(newComment) {
 		if(_.isUndefined(newComment) || newComment.length < 4) return;

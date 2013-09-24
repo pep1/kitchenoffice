@@ -23,10 +23,16 @@
 			</p>
 		</div>
 		<div class="ko-thumb-container tags" data-ng-hide="event.location.tags.length == 0" >
-			<h5><i class="icon-tags"></i> Tags</h5>
+			<h5><i class="icon-fixed-width icon-tags"></i> Tags</h5>
 			<div class="ko-tag-list">
 				<span data-ng-repeat="(idx, tag) in event.location.tags" class="badge badge-info tag">{{tag.name}}</span>
 			</div>
+		</div>
+		<div class="ko-thumb-container tags" data-ng-hide="event.description.length == 0" >
+			<h5><i class="icon-fixed-width icon-info"></i> Description</h5>
+			<p class="ko-tag-list">
+				{{event.description}}
+			</p>
 		</div>
 		<div class="ko-thumb-container" data-ng-hide="event.participants.length == 0" >
 			<h5>
