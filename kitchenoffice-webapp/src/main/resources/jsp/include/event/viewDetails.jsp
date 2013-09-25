@@ -11,7 +11,7 @@
 		<div class="ko-thumb-container">
 			<h5>Details</h5>
 			<p>
-				<i class="icon-fixed-width icon-time"></i> {{fromNow(event.startDate)}}
+				<i class="icon-fixed-width icon-time"></i> {{calendar(event.startDate)}} <small>{{fromNow(event.startDate)}}</small>
 			<p>
 			<p data-ng-show="event.location">
 				<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
