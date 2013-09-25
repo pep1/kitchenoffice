@@ -128,4 +128,31 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 	};
 
 	$rootScope.processing = false;
+	
+	$rootScope.getPaging = function(objects, pageSize, name) {
+		var resultSize = objects.length;
+		var pageAmount = Math.ceil(resultSize/pageSize);
+		var pointer = 0;
+		var output = new Array();
+		var rest = resultSize % pageSize;
+		var itemsKeyName = (name) ? name : "items";
+		
+		for ( var i = 0; i < pageAmount; i++) {
+			var page = {};
+			page.index = i;
+			page.isFirst = (i == 0) ? true : false;
+			page.isLast = (i == pageAmount-1) ? true : false;
+			if(i < (pageAmount - 1) || (rest == 0)) {
+				page[itemsKeyName] = objects.slice(pointer, pointer + pageSize);
+			} else {
+				// if we are on the last page, and the rest is not null only take the rest
+				page[itemsKeyName] = objects.slice(pointer, pointer + rest);
+			};
+			
+			output.push(page);
+			pointer += pageSize;
+		};
+		
+		return output;
+	};
 });

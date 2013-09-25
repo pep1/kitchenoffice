@@ -85,7 +85,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	// set base URL
 	RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
 	
-}]).factory('eventService', function(Restangular) {
+}]).factory('eventService', function($rootScope, Restangular) {
 	
 	var eventService = Restangular.all('events');
 
@@ -186,7 +186,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 
 	return eventService;
-}).factory('locationService', function(Restangular) {
+}).factory('locationService', function($rootScope, Restangular) {
 	
 	var locationService = Restangular.all('locations');
 	
@@ -213,27 +213,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		if (search) params.search = search; 
 		
 		return this.getList(params).then(function(locations) {
-			var resultSize = locations.length;
-			var pageAmount = Math.ceil(resultSize/pageSize);
-			var pointer = 0;
-			var output = new Array();
-			var rest = resultSize % pageSize;
-			
-			for ( var i = 0; i < pageAmount; i++) {
-				
-				if(i < (pageAmount - 1) || (rest == 0)) {
-					output.push({
-						locations: locations.slice(pointer, pointer + pageSize)
-					});
-				} else {
-					// if we are on the last page, and the rest is not null only take the rest
-					output.push({
-						locations: locations.slice(pointer, pointer + rest)
-					});
-				};
-				pointer += pageSize;
-			};
-			return output;
+			return $rootScope.getPaging(locations, pageSize, "locations");
 		});
 	};
 	
