@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <div class="row-fluid">
 	<h1>
-		<i class="icon-edit"></i> List Locations
+		<i class="icon-map-marker"></i> List Locations
 	</h1>
 </div>
 <hr>
