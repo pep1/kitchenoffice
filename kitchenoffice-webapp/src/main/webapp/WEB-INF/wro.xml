@@ -9,6 +9,8 @@
 		<js>classpath:META-INF/resources/webjars/underscorejs/1.4.4/underscore.js</js>
 		<js>classpath:META-INF/resources/webjars/underscore.string/2.3.0/underscore.string.js</js>
 		
+		<js>http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js</js>
+		
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js</js>
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/locales/**</js>
 		<js>https://raw.github.com/jdewit/bootstrap-timepicker/master/js/bootstrap-timepicker.js</js>

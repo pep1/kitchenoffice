@@ -3,6 +3,7 @@ var app = angular.module(
 		[ 'ko.services', 
 		  'ko.tag.input',
 		  'ko.textarea',
+		  'ko.markdown',
 		  'active.link', 
 		  '$strap.directives', 
 		  'ui.bootstrap', 
