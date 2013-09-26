@@ -35,10 +35,10 @@ app.controller('LocationEditController', function($scope, $rootScope, $location,
 		$rootScope.processing = true;
 		
 		locationService.save($scope.location).then(function(location) {
+			$location.path('/kitchenoffice-webapp/location/' + location.id);
 			$rootScope.processing = false;
 			$scope.doSave = false;
-			$window.history.back();
-			flash('success', 'New location '+location.name+' saved');
+			flash('success', 'Location '+location.name+' saved');
 		});
 	};
 	

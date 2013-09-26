@@ -22,7 +22,7 @@ app.controller('LocationCreateController', function($scope, $rootScope, $locatio
 		$rootScope.processing = true;
 		
 		locationService.save($scope.location).then(function(location) {
-			$window.history.back();
+			$location.path('/kitchenoffice-webapp/location/' + location.id);
 			$rootScope.processing = false;
 			$scope.doSave = false;
 			flash('success', 'New location '+location.name+' saved');
