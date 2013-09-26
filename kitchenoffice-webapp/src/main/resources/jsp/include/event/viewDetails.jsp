@@ -23,7 +23,7 @@
 			</p>
 			<p data-ng-show="event.creator">
 				<i class="icon-fixed-width icon-user"></i>
-				<gravatar-image data-email="event.creator.email" data-size="30" data-secure="true"></gravatar-image>
+				<gravatar-image data-email="event.creator.email" data-size="30" data-default="retro"></gravatar-image>
 				&nbsp;&nbsp;{{event.creator.username}}
 			</p>
 		</div>

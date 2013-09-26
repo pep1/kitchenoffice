@@ -19,7 +19,7 @@ public class GravatarTag extends SimpleTagSupport {
 	
 	private Rating rating = Rating.GENERAL_AUDIENCE;
 	
-	private DefaultImage defaultImage = DefaultImage.MONSTER;
+	private String defaultImage = "monster";
 	
 	public void doTag() throws JspException {
 
@@ -33,7 +33,7 @@ public class GravatarTag extends SimpleTagSupport {
 		    .setSize(size)
 		    .setHttps(https)
 		    .setRating(rating)
-		    .setStandardDefaultImage(defaultImage)
+		    .setStandardDefaultImage(DefaultImage.RETRO)
 		    .getUrl(email));
 
 			out.println(sb.toString());
@@ -59,7 +59,7 @@ public class GravatarTag extends SimpleTagSupport {
 		this.rating = rating;
 	}
 
-	public void setDefaultImage(DefaultImage image) {
+	public void setDefaultImage(String image) {
 		this.defaultImage = image;
 	}
 }

@@ -9,14 +9,14 @@
 			<span data-ng-switch-when="INTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> cook something to eat</span>
 			<span data-ng-switch-when="ORDER" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> order something to eat</span>
 			<span data-ng-switch-when="FETCH" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> fetch something to eat</span>
-	</div>
+		</div>
 	</h5>
 	<p data-ng-switch="EXTERNAL">
 		<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
 	</p>
 	<p data-ng-hide="isEmpty(event.creator)">
 		<i class="icon-fixed-width icon-user"></i>
-		<gravatar-image data-email="event.creator.email" data-size="30" data-secure="true"></gravatar-image>&nbsp;&nbsp;{{event.creator.username}}
+		<gravatar-image data-email="event.creator.email" data-size="30" data-default="retro""></gravatar-image>&nbsp;&nbsp;{{event.creator.username}}
 	</p>
 </div>
 <div class="ko-thumb-container tags" data-ng-hide="event.location.tags.length == 0" >

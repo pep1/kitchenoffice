@@ -14,7 +14,7 @@
 
 	<div data-ng-hide="event.comments.length == 0">
 		<div class="media" data-ng-repeat="comment in event.comments | orderBy:'timeStamp':true">
-			<a class="pull-left" href="#"> <gravatar-image data-email="comment.user.email" data-size="50" data-secure="true"></gravatar-image>
+			<a class="pull-left" href="#"> <gravatar-image data-email="comment.user.email" data-size="50" data-default="retro"></gravatar-image>
 			</a>
 			<div class="media-body">
 				<h5 class="media-heading">
