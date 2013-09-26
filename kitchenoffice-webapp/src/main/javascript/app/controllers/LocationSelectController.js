@@ -6,7 +6,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	
 	$scope.pageCount = 0;
 	$scope.pageSize = 4;
-	$scope.maxPageCount = 1;
+	$scope.maxPageCount = 2;
 	$scope.lastPageFetched = false;
 	
 	$scope.update = function(searchString) {

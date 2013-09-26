@@ -82,6 +82,7 @@
 		<h4>4. Some optional description</h4>
 		<textarea rows="4" class="input-block-level" ng-model="event.description"
 						placeholder="Event description"></textarea>
+		<span class="help-block"><i class="icon-info"></i> You can use <a href="http://daringfireball.net/projects/markdown/" target="_blank" >Markdown</a>.</span>
 	</div>
 </form>
 <hr>

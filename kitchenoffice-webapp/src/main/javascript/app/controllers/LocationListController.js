@@ -6,15 +6,46 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 	
 	$scope.pageCount = 0;
 	$scope.pageSize = 4;
-	$scope.maxPageCount = 10;
+	$scope.maxPageCount = 2;
+	$scope.lastPageFetched = false;
 	
 	$scope.update = function(searchString) {
-		$scope.pages = $scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString);
+		$scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString).then(function(pages){
+			$scope.pages = pages;
+		});
 	};
 	
 	$scope.getPages = function(pageSize, pageCount, maxPages, searchString) {
 		return locationService.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, (searchString) ? searchString : null);
 	};
+	
+	$scope.$watch('pages', function(pages) {
+		if(!pages || $scope.lastPageFetched) return;
+		
+		var lastAndActivePage = _.find(pages, function(page) {
+			return page.isLast && page.active;
+		});
+		
+		if(lastAndActivePage) {
+
+			$scope.pageCount++;
+			// now the user displays the last loaded page
+			var morePages = $scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, $scope.locationSearchString);
+			morePages.then(function(pages) {
+				if(!pages || pages.length == 0){
+					// seems that we already fetched all pages
+					$scope.lastPageFetched = true;
+					return;
+				}
+				// unset the isLast switch on the current last item
+				lastAndActivePage.isLast = false;
+				// push new loaded values in the pages array
+				for ( var i = 0; i < pages.length; i++) {
+					$scope.pages.push(pages[i]);
+				}
+			});
+		}
+	}, true);
 	
 	$scope.update();
 	
@@ -22,9 +53,9 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 	$scope.filterText;
 	var filterTextTimeout = undefined;
 
-	$scope.areLocationsEmpty = $scope.pages.then(function(pages) {
-		return !(pages.length > 0);
-	});
+	$scope.areLocationsEmpty = function() {
+		return !($scope.pages.length > 0);
+	};
 
 	$scope.selectLocation = function(location) {
 		$location.path('/kitchenoffice-webapp/location/' + location.id);

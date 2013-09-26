@@ -23,7 +23,7 @@
 					</div>
 				</div>
 	    	</slide>
-	    	<div data-ng-show="areLocationsEmpty" class="center">
+	    	<div data-ng-show="areLocationsEmpty()" class="center">
 	    		<p class="center">there are no location entries yet<br>
 					<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary"><i class="icon-edit"></i> create location</a>
 				</p>
