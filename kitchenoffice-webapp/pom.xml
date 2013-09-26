@@ -178,7 +178,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
-				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
+				<db.location>/var/lib/kitchenoffice/neo4j-db</db.location>
 			</properties>
 		</profile>
 	</profiles>

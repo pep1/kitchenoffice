@@ -28,6 +28,12 @@ public interface EventRepository extends GraphRepository<Event>, RelationshipOpe
 			+ "return distinct events "
 			+ "order by events.startDate asc")
 	public List<Event> findAllinFutureOf(long date);
+	
+	@Query("start events=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Event\") "
+			+ "where has(events.startDate) and events.startDate < {0} "
+			+ "return distinct events "
+			+ "order by events.startDate desc")
+	public List<Event> findAllinPastOf(long date, PageRequest pageRequest);
 
 	@Query("start user=node({0}) "
 			+ "match user-[:TAKES_PART]-events "

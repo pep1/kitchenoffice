@@ -19,7 +19,7 @@
 				<i class="icon-map-marker"></i> {{location.address}}
 			</p>
 			<p data-ng-show="location.website">
-				<i class="icon-home"></i> <a target="_blank" ng-href="{{location.website}}" >website</a>
+				<i class="icon-globe"></i> <a target="_blank" ng-href="{{location.website}}" >Location Website</a>
 			</p>
 		</div>
 		<div class="ko-thumb-container tags" data-ng-show="location.tags" >

@@ -100,6 +100,13 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 	
 	/**
+	 * returns the past events for the home view - serves only past events
+	 */
+	eventService.getPastEvents = function() {
+		return this.customGETLIST('past');
+	};
+	
+	/**
 	 * returns the event with specified id
 	 */
 	eventService.getById = function(id) {

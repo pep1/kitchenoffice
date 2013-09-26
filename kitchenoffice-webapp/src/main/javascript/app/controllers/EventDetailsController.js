@@ -48,10 +48,10 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 	$scope.attendEvent = function(event) {
 		$rootScope.processing = true;
 		eventService.attendEvent(event).then( function(event) {
+			$scope.attendModal.close();
 			window.scrollTo(0, 0);
 			$scope.refresh();
 			flash('success', 'You successfully attend event '+eventService.displayName(event)+'.');
-			$scope.attendModal.close();
 		}, function() {
 			$scope.attendModal.close();
 		});
@@ -60,10 +60,10 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 	$scope.dismissEvent = function(event) {
 		$rootScope.processing = true;
 		eventService.dismissEvent(event).then( function(event) {
+			$scope.dismissModal.close();
 			window.scrollTo(0, 0);
 			$scope.refresh();
 			flash('success', 'You successfully dismissed event '+eventService.displayName(event)+'.');
-			$scope.dismissModal.close();
 		}, function() {
 			$scope.dismissModal.close();
 		});
@@ -76,7 +76,6 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 			$location.path('/kitchenoffice-webapp/home');
 			window.scrollTo(0, 0);
 			flash('success', 'You successfully deleted an event.');
-			
 		}, function() {
 			$scope.deleteModal.close();
 		});

@@ -33,6 +33,7 @@ public class UserWebService {
 	@Path("/me")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getMe(){
+		log.debug("Calling user getMe");
 		return userService.getUser();
 	}
 	
@@ -40,6 +41,7 @@ public class UserWebService {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> findAll(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+		log.debug("Calling user findAll");
 
 		if (page == null) {
 			page = 0;

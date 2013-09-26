@@ -53,16 +53,20 @@ public class EventService {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
 	}
 
-	public List<Event> getFutureEvents(PageRequest pagerequest) {
-		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pagerequest);
+	public List<Event> getFutureEvents(PageRequest pageRequest) {
+		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pageRequest);
+	}
+	
+	public List<Event> getPastEvents(PageRequest pageRequest) {
+		return eventRepository.findAllinPastOf(new DateTime().toDateTimeISO().getMillis(), pageRequest);
 	}
 
-	public List<Event> getMyAttendedEvents(PageRequest pagerequest) {
-		return eventRepository.findAllAttended(userService.getUser(), pagerequest);
+	public List<Event> getMyAttendedEvents(PageRequest pageRequest) {
+		return eventRepository.findAllAttended(userService.getUser(), pageRequest);
 	}
 
-	public List<Event> getEventsOfUser(PageRequest pagerequest) {
-		return eventRepository.findByCreator(userService.getUser(), pagerequest);
+	public List<Event> getEventsOfUser(PageRequest pageRequest) {
+		return eventRepository.findByCreator(userService.getUser(), pageRequest);
 	}
 
 	public Event getEventById(Long id) {

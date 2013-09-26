@@ -13,21 +13,27 @@
 	</div>
 </div>
 <hr>
-
 <div class="row-fluid">
 	<div data-ng-switch data-on="event.type" class="span4 well" data-ng-repeat="event in homeEvents">
 		<button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button>
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<a class="btn btn-small" data-ng-href="/${project.build.finalName}/event/{{event.id}}">View details »</a>
-			<button ng-hide="event.canAttend" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
-			<button ng-show="event.canAttend" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
+			<button data-ng-hide="event.canAttend" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
+			<button data-ng-show="event.canAttend" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
 		</div>
 	</div>
-	<div data-ng-show="areEventsEmpty">
+	<div data-ng-show="areHomeEventsEmpty">
 		<p class="center" >there are no events yet<br/>
 			<a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</p>
+	</div>
+</div>
+<hr>
+<div data-ng-hide="arePastEventsEmpty" class="row-fluid">
+	<h4>Past food events</h4>
+	<div class="well row-fluid" data-ng-repeat="event in pastEvents | filter:{hasParticipants:true}">
+		<jsp:include page="../include/event/viewBlockList.jsp"></jsp:include>
 	</div>
 </div>
 

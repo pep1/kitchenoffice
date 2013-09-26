@@ -71,6 +71,24 @@ public class EventWebService {
 	}
 	
 	@GET
+	@Path("/past")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Event> getPastEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+
+		log.debug("calling getPastEvents");
+
+		if (page == null) {
+			page = 0;
+		}
+		if (size == null) {
+			size = 25;
+		}
+
+		return eventService.getPastEvents(new PageRequest(page, size));
+	}
+	
+	@GET
 	@Path("/mine")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -1,15 +1,17 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <h3 data-ng-switch="EXTERNAL">{{event.location.name}}</h3>
-<p data-ng-switch data-on="event.type">
-	<span data-ng-switch-when="EXTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> go out eating</span>
-	<span data-ng-switch-when="INTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> cook something to eat</span> 
-	<span data-ng-switch-when="ORDER" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> order something to eat</span> 
-	<span data-ng-switch-when="FETCH" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> fetch something to eat</span>
-</p>
 <div class="row-fluid">
 	<div class="span6">
 		<div class="ko-thumb-container">
-			<h5>Details</h5>
+			<h5>
+				Details
+				<div class="pull-right" data-ng-switch data-on="event.type">
+					<span data-ng-switch-when="EXTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> go out eating</span>
+					<span data-ng-switch-when="INTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> cook something to eat</span>
+					<span data-ng-switch-when="ORDER" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> order something to eat</span>
+					<span data-ng-switch-when="FETCH" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> fetch something to eat</span>
+				</div>
+			</h5>
 			<p>
 				<i class="icon-fixed-width icon-time"></i> {{calendar(event.startDate)}} <small>{{fromNow(event.startDate)}}</small>
 			<p>
@@ -17,7 +19,7 @@
 				<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
 			</p>
 			<p data-ng-show="event.location && event.location.website">
-				<i class="icon-fixed-width icon-home"></i> <a target="_blank" data-ng-href="{{event.location.website}}" > Location Website</a>
+				<i class="icon-fixed-width icon-globe"></i> <a target="_blank" data-ng-href="{{event.location.website}}" > Location Website</a>
 			</p>
 			<p data-ng-show="event.creator">
 				<i class="icon-fixed-width icon-user"></i>
