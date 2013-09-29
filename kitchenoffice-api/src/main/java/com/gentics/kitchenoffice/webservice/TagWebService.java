@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.gentics.kitchenoffice.webservice;
 
 import java.util.List;
@@ -22,16 +25,31 @@ import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.service.TagService;
 
 
+/**
+ * The Class TagWebService.
+ * 
+ * Provides tag CRU functionality. Deletion of tags (cleanup) works automatically when not used anymore.
+ */
 @Component
 @Scope("singleton")
 @Path("/tags")
 public class TagWebService {
 
+	/** The log. */
 	private static Logger log = Logger.getLogger(TagWebService.class);
 	
+	/** The tag service. */
 	@Autowired
 	private TagService tagService;
 	
+	/**
+	 * Gets the tags.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @param search the search
+	 * @return the tags
+	 */
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -49,6 +67,12 @@ public class TagWebService {
 		return tagService.findByNameLike(search, new PageRequest(page, size));
 	}
 	
+	/**
+	 * Creates the or update tag.
+	 *
+	 * @param tag the tag
+	 * @return the tag
+	 */
 	@POST
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)

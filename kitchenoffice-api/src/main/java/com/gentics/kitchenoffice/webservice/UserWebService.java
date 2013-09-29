@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.gentics.kitchenoffice.webservice;
 
 import java.util.List;
@@ -18,16 +21,28 @@ import org.springframework.stereotype.Component;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.service.UserService;
 
+/**
+ * The Class UserWebService.
+ * 
+ * Provides user CRUD functionality.
+ */
 @Component
 @Scope("singleton")
 @Path("/users")
 public class UserWebService {
 	
+	/** The log. */
 	private static Logger log = Logger.getLogger(UserWebService.class);
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * Gets the user object of logged in user.
+	 *
+	 * @return the me
+	 */
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Path("/me")
@@ -37,6 +52,13 @@ public class UserWebService {
 		return userService.getUser();
 	}
 	
+	/**
+	 * Gets all users.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @return the list
+	 */
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.data;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.springframework.data.neo4j.annotation.GraphProperty;
@@ -17,6 +18,7 @@ public class Tag extends AbstractPersistable {
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType = Long.class)
+	@XmlAttribute(name="timstamp")
 	private Date timeStamp;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "tagnamesearch")

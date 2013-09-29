@@ -148,7 +148,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		if(_.isNull(string) || _.isUndefined(string)) return event;
 
 		var comment = {
-				"comment": string
+				"text": string
 		};
 		
 		return event.post("comment", comment);

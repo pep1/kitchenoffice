@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.gentics.kitchenoffice.webservice;
 
 import java.util.Iterator;
@@ -31,24 +34,43 @@ import com.gentics.kitchenoffice.service.LocationService;
 import com.gentics.kitchenoffice.service.UserService;
 import com.sun.jersey.api.NotFoundException;
 
+/**
+ * The Class LocationWebService.
+ * 
+ * Provides location CRUD functionality.
+ */
 @Component
 @Scope("singleton")
 @Path("/locations")
 public class LocationWebService {
 
+	/** The log. */
 	private static Logger log = Logger.getLogger(LocationWebService.class);
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/** The location service. */
 	@Autowired
 	private LocationService locationService;
 
+	/**
+	 * Initialize.
+	 */
 	@PostConstruct
 	public void initialize() {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
 	}
 
+	/**
+	 * Gets the locations.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @param search the search
+	 * @return the locations
+	 */
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -66,6 +88,12 @@ public class LocationWebService {
 		return locationService.findByNameLike(new PageRequest(page, size), search).getContent();
 	}
 	
+	/**
+	 * Gets the location.
+	 *
+	 * @param id the id
+	 * @return the location
+	 */
 	@GET
 	@Path("/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -84,6 +112,14 @@ public class LocationWebService {
 		return location;
 	}
 
+	/**
+	 * Gets the user last locations.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @param search the search
+	 * @return the user last locations
+	 */
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -103,6 +139,12 @@ public class LocationWebService {
 
 	}
 	
+	/**
+	 * Creates the event.
+	 *
+	 * @param location the location
+	 * @return the location
+	 */
 	@POST
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)

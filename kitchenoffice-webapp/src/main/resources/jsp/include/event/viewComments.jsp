@@ -20,7 +20,7 @@
 				<h5 class="media-heading">
 					{{comment.user.username}} wrote <small>{{fromNow(comment.timeStamp)}}</small>
 				</h5>
-				{{comment.comment}}
+				{{comment.text}}
 			</div>
 		</div>
 	</div>

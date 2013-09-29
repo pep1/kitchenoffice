@@ -1,3 +1,6 @@
+/*
+ * @author: Leonard Osang <leonard@osang.at>
+ */
 package com.gentics.kitchenoffice.webservice;
 
 import java.util.List;
@@ -32,27 +35,46 @@ import com.gentics.kitchenoffice.service.JobService;
 import com.gentics.kitchenoffice.service.UserService;
 import com.sun.jersey.api.NotFoundException;
 
+/**
+ * The Class EventWebService.
+ * 
+ * Provides event CRUD functionality.
+ */
 @Component
 @Scope("singleton")
 @Path("/events")
 public class EventWebService {
 
+	/** The log. */
 	private static Logger log = Logger.getLogger(EventWebService.class);
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/** The event service. */
 	@Autowired
 	private EventService eventService;
 
+	/** The job service. */
 	@Autowired
 	private JobService jobService;
 
+	/**
+	 * Initialize.
+	 */
 	@PostConstruct
 	public void initialize() {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
 	}
 
+	/**
+	 * Gets the events.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @return the events
+	 */
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -70,6 +92,13 @@ public class EventWebService {
 		return eventService.getFutureEvents(new PageRequest(page, size));
 	}
 	
+	/**
+	 * Gets the past events.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @return the past events
+	 */
 	@GET
 	@Path("/past")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -88,6 +117,13 @@ public class EventWebService {
 		return eventService.getPastEvents(new PageRequest(page, size));
 	}
 	
+	/**
+	 * Gets the my events.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @return the my events
+	 */
 	@GET
 	@Path("/mine")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -106,6 +142,13 @@ public class EventWebService {
 		return eventService.getEventsOfUser(new PageRequest(page, size));
 	}
 	
+	/**
+	 * Gets the my attended events.
+	 *
+	 * @param page the page
+	 * @param size the size
+	 * @return the my attended events
+	 */
 	@GET
 	@Path("/attended")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -124,6 +167,12 @@ public class EventWebService {
 		return eventService.getFutureEvents(new PageRequest(page, size));
 	}
 	
+	/**
+	 * Gets the event by the given Id.
+	 *
+	 * @param id the id
+	 * @return the event
+	 */
 	@GET
 	@Path("/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -141,6 +190,11 @@ public class EventWebService {
 		return event;
 	}
 	
+	/**
+	 * Removes the event.
+	 *
+	 * @param id the id
+	 */
 	@DELETE
 	@Path("/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -149,6 +203,12 @@ public class EventWebService {
 		eventService.deleteEvent(getEvent(id));
 	}
 
+	/**
+	 * Attend event.
+	 *
+	 * @param id the id
+	 * @return the event
+	 */
 	@GET
 	@Path("/{id}/attend")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -157,6 +217,13 @@ public class EventWebService {
 		return attendEventWithJob(id, null);
 	}
 
+	/**
+	 * Attend event with job.
+	 *
+	 * @param id the id
+	 * @param jobId the job id
+	 * @return the event
+	 */
 	@GET
 	@Path("/{id}/attend/{jobid}")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -180,6 +247,12 @@ public class EventWebService {
 		return eventService.attendEvent(eventService.getEventById(parsedId), job);
 	}
 
+	/**
+	 * Dismiss event.
+	 *
+	 * @param id the id
+	 * @return the event
+	 */
 	@GET
 	@Path("/{id}/dismiss")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -192,6 +265,13 @@ public class EventWebService {
 		return eventService.dismissEvent(eventService.getEventById(parsedId));
 	}
 	
+	/**
+	 * Comment event.
+	 *
+	 * @param id the id
+	 * @param comment the comment
+	 * @return the comment
+	 */
 	@POST
 	@Path("/{id}/comment")
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -202,11 +282,17 @@ public class EventWebService {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId, "event id could not be parsed");
 		Assert.notNull(comment);
-		Assert.hasText(comment.getComment(), "Comment should have text");
+		Assert.hasText(comment.getText(), "Comment should have text");
 
 		return eventService.commentEvent(eventService.getEventById(parsedId), comment);
 	}
 
+	/**
+	 * Creates the event.
+	 *
+	 * @param event the event
+	 * @return the event
+	 */
 	@POST
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -2,6 +2,8 @@ package com.gentics.kitchenoffice.data;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -16,22 +18,23 @@ public class Comment extends AbstractPersistable{
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
+	@XmlAttribute(name="timstamp")
 	private Date timeStamp;
 	
 	@Fetch
 	private User user;
 	
-	private String comment;
+	private String text;
 	
 	public Comment() {
 		
 	}
 
-	public Comment(User user, String comment) {
+	public Comment(User user, String text) {
 		super();
 		this.timeStamp = new Date();
 		this.user = user;
-		this.comment = comment;
+		this.text = text;
 	}
 
 	public Date getTimeStamp() {
@@ -50,16 +53,16 @@ public class Comment extends AbstractPersistable{
 		this.user = user;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getText() {
+		return text;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setText(String text) {
+		this.text = text;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Comment{\n  user='%s',\n  comment=%s\n}", user.getFirstName(), comment);
+		return String.format("Comment{\n  user='%s',\n  text=%s\n}", user.getFirstName(), text);
 	}
 }

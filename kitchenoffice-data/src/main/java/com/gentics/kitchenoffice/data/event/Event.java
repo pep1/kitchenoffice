@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -37,14 +38,17 @@ public class Event extends AbstractPersistable {
 	@JsonIgnore
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
+	@XmlAttribute(name="creationDate")
 	private Date creationDate;
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
+	@XmlAttribute(name="startDate")
 	private Date startDate;
 	
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
+	@XmlAttribute(name="endDate")
 	private Date endDate;
 
 	@Indexed

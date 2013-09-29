@@ -63,7 +63,7 @@
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>
 		<spring-data-neo4j.version>2.2.2.RELEASE</spring-data-neo4j.version>
-		
+
 		<github.url>https://github.com/gentics/kitchenoffice</github.url>
 
 		<aspectj.version>1.6.12</aspectj.version>
@@ -87,7 +87,7 @@
 		<maven-clover-plugin.version>3.1.8</maven-clover-plugin.version>
 		<maven-site-plugin.version>3.1</maven-site-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-
+		<maven-enunciate-plugin.version>1.27</maven-enunciate-plugin.version>
 	</properties>
 
 	<build>
@@ -97,11 +97,10 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 

@@ -216,7 +216,7 @@ public class RecipeTest {
 		mealRepository.save(m1);
 
 		Comment c1 = new Comment();
-		c1.setComment("is gut geworden! nächstes mal mehr chili..");
+		c1.setText("is gut geworden! nächstes mal mehr chili..");
 		c1.setUser(u1);
 		m1.addComment(c1);
 		mealRepository.save(m1);
@@ -232,7 +232,7 @@ public class RecipeTest {
 
 		Comment c2 = new Comment();
 		c2.setUser(u2);
-		c2.setComment("das sollten wir öfters machen!");
+		c2.setText("das sollten wir öfters machen!");
 		
 		m1.addComment(c2);
 		mealRepository.save(m2);
