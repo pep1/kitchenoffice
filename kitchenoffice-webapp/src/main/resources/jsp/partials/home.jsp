@@ -24,13 +24,13 @@
 		</div>
 	</div>
 	<div data-ng-show="areHomeEventsEmpty">
-		<p class="center" >there are no events yet<br/>
+		<p class="center" >there are no future events right now<br/>
 			<a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</p>
 	</div>
 </div>
-<hr>
 <div data-ng-hide="arePastEventsEmpty" class="row-fluid">
+	<hr>
 	<h4>Past food events</h4>
 	<div class="well row-fluid" data-ng-repeat="event in pastEvents | filter:{hasParticipants:true}">
 		<jsp:include page="../include/event/viewBlockList.jsp"></jsp:include>
