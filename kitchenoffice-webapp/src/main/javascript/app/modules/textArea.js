@@ -3,7 +3,7 @@ angular.module('ko.textarea', [])
     return {
         restrict: 'E',
         link: function( scope , element , attributes ) {
-            var threshold    = 35,
+            var threshold    = 10,
                 minHeight    = element[0].offsetHeight,
                 paddingLeft  = element.css('paddingLeft'),
                 paddingRight = element.css('paddingRight');
