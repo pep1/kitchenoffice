@@ -76,12 +76,22 @@ public class EventService {
 
 	public Event saveEvent(Event event) {
 		Assert.notNull(event);
+		
+		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+			throw new IllegalStateException("User can not create event in the past");
+		}
+		
 		return eventRepository.save(event);
 	}
 
 	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
 	public void deleteEvent(Event event) {
 		Assert.notNull(event);
+		
+		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+			throw new IllegalStateException("User can not delete past events");
+		}
+		
 		eventRepository.delete(event);
 	}
 
@@ -118,6 +128,10 @@ public class EventService {
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
 		Assert.notNull(user);
+		
+		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+			throw new IllegalStateException("User can not dismiss past events");
+		}
 
 		Set<Participant> participants = event.getParticipants();
 
@@ -144,6 +158,10 @@ public class EventService {
 	public boolean checkIfUserCanAttendEvent(Event event, User user) {
 		Assert.notNull(event);
 		Assert.notNull(user);
+	
+		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+			throw new IllegalStateException("User can not attend past events");
+		}
 
 		boolean output = CollectionUtils.isEmpty(getAttendedEventsFromUserInPeriod(event.getStartDate(),
 				event.getEndDate()));
@@ -153,6 +171,10 @@ public class EventService {
 	public boolean checkIfUserCanCreateEvent(Event event, User user) {
 		Assert.notNull(event);
 		Assert.notNull(user);
+		
+		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+			throw new IllegalArgumentException("Events startdate can not be in the past");
+		}
 
 		boolean output = CollectionUtils.isEmpty(getCreatedEventsFromUserInPeriod(event.getStartDate(),
 				event.getEndDate()));
