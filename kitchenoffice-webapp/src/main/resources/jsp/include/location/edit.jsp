@@ -30,7 +30,7 @@
 					<label class="pull-right help-inline">Website</label>
 				</div>
 				<div class="span9">
-					<input name="locationWebsite" type="text"
+					<input name="locationWebsite" type="url"
 						class="input-block-level" ng-model="location.website"
 						placeholder="Location website">
 				</div>
