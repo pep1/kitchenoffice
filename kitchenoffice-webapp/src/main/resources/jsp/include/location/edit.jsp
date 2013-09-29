@@ -43,7 +43,7 @@
 					<textarea name="locationDescription" rows="4"
 						class="input-block-level" ng-model="location.description"
 						placeholder="Location description"></textarea>
-						<span class="help-block"><i class="icon-info"></i> You can use <a href="http://daringfireball.net/projects/markdown/" target="_blank" >Markdown</a>.</span>
+						<span class="help-block"><i class="icon-lightbulb"></i> You can use <a href="http://daringfireball.net/projects/markdown/" target="_blank" >Markdown</a>.</span>
 				</div>
 			</div>
 			<hr>
