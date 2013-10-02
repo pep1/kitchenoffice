@@ -16,7 +16,7 @@
 	</p>
 	<p data-ng-hide="isEmpty(event.creator)">
 		<i class="icon-fixed-width icon-user"></i>
-		<gravatar-image data-email="event.creator.email" data-size="30" data-default="retro""></gravatar-image>&nbsp;&nbsp;{{event.creator.username}}
+		<gravatar-image gravatar-email="event.creator.email" gravatar-size="30" gravatar-default="retro"></gravatar-image>&nbsp;&nbsp;{{event.creator.username}}
 	</p>
 </div>
 <div class="ko-thumb-container tags" data-ng-hide="event.location.tags.length == 0" >

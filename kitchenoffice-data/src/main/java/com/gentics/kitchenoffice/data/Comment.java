@@ -18,7 +18,7 @@ public class Comment extends AbstractPersistable{
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
-	@XmlAttribute(name="timstamp")
+	@XmlAttribute(name="timeStamp")
 	private Date timeStamp;
 	
 	@Fetch

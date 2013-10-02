@@ -3,6 +3,7 @@ app.controller('EventDetailsController', function($scope, $rootScope, $location,
 	if(isNaN($routeParams.eventId)) {
 		$location.path('/kitchenoffice-webapp/home');
 		flash('warning', 'Url was not valid: ' + $routeParams.eventId + " cannot be parsed to number");
+		return;
 	}
 	
 	$scope.refresh = function() {

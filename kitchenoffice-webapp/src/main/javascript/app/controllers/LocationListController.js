@@ -54,6 +54,9 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 	var filterTextTimeout = undefined;
 
 	$scope.areLocationsEmpty = function() {
+		if(!$scope.pages) {
+			return true;
+		}
 		return !($scope.pages.length > 0);
 	};
 

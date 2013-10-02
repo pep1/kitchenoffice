@@ -5,7 +5,7 @@
 	</h4>
 	<div class="row-fluid">
 		<form data-ng-submit="comment(newComment)">
-				<textarea class="input-block-level" data-ng-model="newComment" placeholder="Comment this event ..." rows="1"></textarea>
+			<textarea class="input-block-level" data-ng-model="newComment" placeholder="Comment this event ..." rows="1"></textarea>
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary" value="comment" data-ng-disabled="processing">
 			</div>
@@ -14,7 +14,7 @@
 
 	<div data-ng-hide="event.comments.length == 0">
 		<div class="media" data-ng-repeat="comment in event.comments | orderBy:'timeStamp':true">
-			<a class="pull-left" href="#"> <gravatar-image data-email="comment.user.email" data-size="50" data-default="retro"></gravatar-image>
+			<a class="pull-left" href="#"> <gravatar-image gravatar-email="comment.user.email" gravatar-size="50" gravatar-default="retro"></gravatar-image>
 			</a>
 			<div class="media-body">
 				<h5 class="media-heading">
