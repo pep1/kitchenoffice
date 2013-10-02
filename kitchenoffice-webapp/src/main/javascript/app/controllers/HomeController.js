@@ -28,11 +28,11 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	$scope.refresh();
 
 	$scope.areHomeEventsEmpty = $scope.homeEvents.then(function(events) {
-		return !(events.length > 0);
+		return (events.length <= 0);
 	});
 	
 	$scope.arePastEventsEmpty = $scope.pastEvents.then(function(events) {
-		return !(events.length > 0);
+		return (events.length <= 0);
 	});
 	
 	$scope.containsArrayObject = function(array, obj) {

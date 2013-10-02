@@ -21,7 +21,7 @@ angular.module('maps.search.input', []).directive('mapsSearch', [ '$location', '
 				// when the user drags the marker
 				google.maps.event.addListener($scope.marker, 'dragend', function() {
 
-					if ($scope.location == null) {
+					if ($scope.location === null) {
 						$scope.location = {};
 					}
 
@@ -33,7 +33,6 @@ angular.module('maps.search.input', []).directive('mapsSearch', [ '$location', '
 						$scope.isPlace = false;
 						$scope.location = null;
 					}
-					;
 				});
 
 				// if the user did some input to the search field

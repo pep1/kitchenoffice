@@ -55,7 +55,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 			var method = config.method;
 			var url = config.url;
 
-			if (status == 401 || status == 403 || status == 0) {
+			if (status === 401 || status === 403 || status === 0) {
 				$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname;
 			} else {
 				$rootScope.processing = false;

@@ -32,7 +32,7 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 			// now the user displays the last loaded page
 			var morePages = $scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, $scope.locationSearchString);
 			morePages.then(function(pages) {
-				if(!pages || pages.length == 0){
+				if(!pages || pages.length === 0){
 					// seems that we already fetched all pages
 					$scope.lastPageFetched = true;
 					return;
@@ -50,14 +50,14 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 	$scope.update();
 	
 	$scope.selectedLocation = null;
-	$scope.filterText;
-	var filterTextTimeout = undefined;
+	$scope.filterText = "";
+	var filterTextTimeout = null;
 
 	$scope.areLocationsEmpty = function() {
 		if(!$scope.pages) {
 			return true;
 		}
-		return !($scope.pages.length > 0);
+		return ($scope.pages.length <= 0);
 	};
 
 	$scope.selectLocation = function(location) {
