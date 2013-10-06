@@ -12,7 +12,8 @@ var app = angular.module(
 		  'maps.search.input', 
 		  'ui.event', 
 		  'ui-gravatar', 
-		  'flash' 
+		  'flash',
+		  'infinite-scroll',
 ]).config(
 [ '$routeProvider', '$locationProvider', '$httpProvider',
   function($routeProvider, $locationProvider, $httpProvider) {

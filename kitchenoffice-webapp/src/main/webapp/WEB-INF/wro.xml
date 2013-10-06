@@ -42,9 +42,11 @@
 		<css>https://raw.github.com/jdewit/bootstrap-timepicker/master/css/bootstrap-timepicker.css</css>
 		
 		<css>classpath:META-INF/resources/webjars/font-awesome/3.2.1/css/font-awesome.css</css>
+		
+		<js>/javascript/vendor/**</js>
 	</group>
 	<group name='app'>
-		<js>/javascript/**</js>
+		<js>/javascript/app/**</js>
 		<css>/less/**</css>
 	</group>
 </groups>
