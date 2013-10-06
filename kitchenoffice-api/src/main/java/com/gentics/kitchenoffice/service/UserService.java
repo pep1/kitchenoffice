@@ -10,7 +10,7 @@ import org.jasig.cas.client.validation.Assertion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -160,9 +160,9 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		return userDetails;
 	}
 
-	public List<User> findAll(PageRequest pageRequest) {
-		Assert.notNull(pageRequest);
-		return userRepository.findAll(pageRequest).getContent();
+	public List<User> findAll(Pageable pageable) {
+		Assert.notNull(pageable);
+		return userRepository.findAll(pageable).getContent();
 	}
 
 	/**

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -53,20 +53,20 @@ public class EventService {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
 	}
 
-	public List<Event> getFutureEvents(PageRequest pageRequest) {
-		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pageRequest);
+	public List<Event> getFutureEvents(Pageable pageable) {
+		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pageable);
 	}
 	
-	public List<Event> getPastEvents(PageRequest pageRequest) {
-		return eventRepository.findAllinPastOf(new DateTime().toDateTimeISO().getMillis(), pageRequest);
+	public List<Event> getPastEvents(Pageable pageable) {
+		return eventRepository.findAllinPastOf(new DateTime().toDateTimeISO().getMillis(), pageable);
 	}
 
-	public List<Event> getMyAttendedEvents(PageRequest pageRequest) {
-		return eventRepository.findAllAttended(userService.getUser(), pageRequest);
+	public List<Event> getMyAttendedEvents(Pageable pageable) {
+		return eventRepository.findAllAttended(userService.getUser(), pageable);
 	}
 
-	public List<Event> getEventsOfUser(PageRequest pageRequest) {
-		return eventRepository.findByCreator(userService.getUser(), pageRequest);
+	public List<Event> getEventsOfUser(Pageable pageable) {
+		return eventRepository.findByCreator(userService.getUser(), pageable);
 	}
 
 	public Event getEventById(Long id) {

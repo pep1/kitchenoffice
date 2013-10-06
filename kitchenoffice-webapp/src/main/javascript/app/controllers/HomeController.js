@@ -26,6 +26,10 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	};
 	
 	$scope.refresh();
+	
+	$scope.addItems = function() {
+		
+	};
 
 	$scope.areHomeEventsEmpty = $scope.homeEvents.then(function(events) {
 		return (events.length <= 0);

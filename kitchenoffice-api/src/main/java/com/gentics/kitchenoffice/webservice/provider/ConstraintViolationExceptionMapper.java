@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.webservice.mapper;
+package com.gentics.kitchenoffice.webservice.provider;
 
 import java.util.Iterator;
 

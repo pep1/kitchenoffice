@@ -17,13 +17,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -74,18 +75,9 @@ public class LocationWebService {
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Location> getLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size, @QueryParam("search") String search) {
-
+	public List<Location> getLocations(@Context Pageable pageable, @QueryParam("search") String search) {
 		log.debug("calling getLocations");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return locationService.findByNameLike(new PageRequest(page, size), search).getContent();
+		return locationService.findByNameLike(pageable, search).getContent();
 	}
 	
 	/**
@@ -124,19 +116,9 @@ public class LocationWebService {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/lastused")
-	public List<Location> getUserLastLocations(@QueryParam("page") Integer page, @QueryParam("size") Integer size, @QueryParam("search") String search) {
-
+	public List<Location> getUserLastLocations(@Context Pageable pageable, @QueryParam("search") String search) {
 		log.debug("calling getLastUsedLocations");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return locationService.getLastUsedLocations(new PageRequest(page, size), null, search).getContent();
-
+		return locationService.getLastUsedLocations(pageable, null, search).getContent();
 	}
 	
 	/**

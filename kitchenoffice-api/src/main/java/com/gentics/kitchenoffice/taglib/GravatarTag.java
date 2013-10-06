@@ -5,6 +5,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+import org.springframework.util.Assert;
+
 import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
 import de.bripkens.gravatar.Rating;
@@ -19,7 +21,7 @@ public class GravatarTag extends SimpleTagSupport {
 	
 	private Rating rating = Rating.GENERAL_AUDIENCE;
 	
-	private String defaultImage = "monster";
+	private DefaultImage defaultImage = DefaultImage.RETRO;
 	
 	public void doTag() throws JspException {
 
@@ -33,7 +35,7 @@ public class GravatarTag extends SimpleTagSupport {
 		    .setSize(size)
 		    .setHttps(https)
 		    .setRating(rating)
-		    .setStandardDefaultImage(DefaultImage.RETRO)
+		    .setStandardDefaultImage(defaultImage)
 		    .getUrl(email));
 
 			out.println(sb.toString());
@@ -60,6 +62,8 @@ public class GravatarTag extends SimpleTagSupport {
 	}
 
 	public void setDefaultImage(String image) {
-		this.defaultImage = image;
+		DefaultImage parsedImage = DefaultImage.valueOf(image);
+		Assert.notNull(parsedImage);
+		this.defaultImage = parsedImage;
 	}
 }

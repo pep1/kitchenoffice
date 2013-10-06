@@ -214,7 +214,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		if(_.isUndefined(maxPageFetchCount)) maxPageFetchCount = 2;
 		var params = {
 				page: page,
-				size: pageSize * maxPageFetchCount
+				limit: pageSize * maxPageFetchCount
 		};
 		
 		if (search) params.search = search; 

@@ -13,7 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -78,18 +78,9 @@ public class EventWebService {
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Event> getEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
-
+	public List<Event> getEvents(@Context Pageable pageable) {
 		log.debug("calling getEvents");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return eventService.getFutureEvents(new PageRequest(page, size));
+		return eventService.getFutureEvents(pageable);
 	}
 	
 	/**
@@ -103,18 +94,9 @@ public class EventWebService {
 	@Path("/past")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Event> getPastEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
-
+	public List<Event> getPastEvents(@Context Pageable pageable) {
 		log.debug("calling getPastEvents");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return eventService.getPastEvents(new PageRequest(page, size));
+		return eventService.getPastEvents(pageable);
 	}
 	
 	/**
@@ -128,18 +110,9 @@ public class EventWebService {
 	@Path("/mine")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Event> getMyEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
-
+	public List<Event> getMyEvents(@Context Pageable pageable) {
 		log.debug("calling getMyEvents");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return eventService.getEventsOfUser(new PageRequest(page, size));
+		return eventService.getEventsOfUser(pageable);
 	}
 	
 	/**
@@ -153,18 +126,9 @@ public class EventWebService {
 	@Path("/attended")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Event> getMyAttendedEvents(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
-
+	public List<Event> getMyAttendedEvents(@Context Pageable pageable) {
 		log.debug("calling getMyAttendedEvents");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return eventService.getFutureEvents(new PageRequest(page, size));
+		return eventService.getFutureEvents(pageable);
 	}
 	
 	/**

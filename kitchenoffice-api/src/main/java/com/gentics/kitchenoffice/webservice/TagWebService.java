@@ -11,12 +11,13 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -53,18 +54,9 @@ public class TagWebService {
 	@GET
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Tag> getTags(@QueryParam("page") Integer page, @QueryParam("size") Integer size, @QueryParam("search") String search) {
-
+	public List<Tag> getTags(@Context Pageable pageable, @QueryParam("search") String search) {
 		log.debug("calling getTags");
-
-		if (page == null) {
-			page = 0;
-		}
-		if (size == null) {
-			size = 25;
-		}
-
-		return tagService.findByNameLike(search, new PageRequest(page, size));
+		return tagService.findByNameLike(search, pageable);
 	}
 	
 	/**

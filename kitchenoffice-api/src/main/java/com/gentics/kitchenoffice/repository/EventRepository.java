@@ -2,7 +2,6 @@ package com.gentics.kitchenoffice.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -15,13 +14,13 @@ public interface EventRepository extends GraphRepository<Event>, RelationshipOpe
 	
 	public Event findById(Long id);
 	
-	public List<Event> findByCreator(User user, PageRequest pagerequest);
+	public List<Event> findByCreator(User user, Pageable pageable);
 
 	@Query("start events=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Event\") "
 			+ "where has(events.startDate) and events.startDate > {0} "
 			+ "return distinct events "
 			+ "order by events.startDate asc")
-	public List<Event> findAllinFutureOf(long date, Pageable page);
+	public List<Event> findAllinFutureOf(long date, Pageable pageable);
 
 	@Query("start events=node:__types__(className=\"com.gentics.kitchenoffice.data.event.Event\") "
 			+ "where has(events.startDate) and events.startDate > {0} "
@@ -33,7 +32,7 @@ public interface EventRepository extends GraphRepository<Event>, RelationshipOpe
 			+ "where has(events.startDate) and events.startDate < {0} "
 			+ "return distinct events "
 			+ "order by events.startDate desc")
-	public List<Event> findAllinPastOf(long date, PageRequest pageRequest);
+	public List<Event> findAllinPastOf(long date, Pageable pageable);
 
 	@Query("start user=node({0}) "
 			+ "match user-[:TAKES_PART]-events "
@@ -52,7 +51,7 @@ public interface EventRepository extends GraphRepository<Event>, RelationshipOpe
 			+ "match user-[:TAKES_PART]-events "
 			+ "return distinct events "
 			+ "order by events.startDate asc")
-	public List<Event> findAllAttended(User user, Pageable page);
+	public List<Event> findAllAttended(User user, Pageable pageable);
 	
 	@Query("start user=node({0}) "
 			+ "match user-[:TAKES_PART]-events "

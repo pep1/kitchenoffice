@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.webservice.mapper;
+package com.gentics.kitchenoffice.webservice.provider;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
