@@ -5,24 +5,10 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	$scope.doDelete = false;
 	$scope.event = null;
 	
+	$scope.pastEvents = eventService.getPastEvents();
+	
 	$scope.refresh = function() {
-		$scope.homeEvents = eventService.getHomeEvents().then(function(events) {
-			for ( var i = 0; i < events.length; i++) {
-				var event = events[i];
-				event.canAttend = $rootScope.containsMe( event.participants );
-				event.hasParticipants = event.participants.length !== 0;
-			}
-			return events;
-		});
-		
-		$scope.pastEvents = eventService.getPastEvents().then(function(events) {
-			for ( var i = 0; i < events.length; i++) {
-				var event = events[i];
-				event.canAttend = $rootScope.containsMe( event.participants );
-				event.hasParticipants = event.participants.length !== 0;
-			}
-			return events;
-		});
+		$scope.homeEvents = eventService.getHomeEvents();
 	};
 	
 	$scope.refresh();

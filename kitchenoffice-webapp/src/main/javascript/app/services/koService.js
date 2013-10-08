@@ -87,7 +87,16 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	
 }]).factory('eventService', function($rootScope, Restangular) {
 	
-	var eventService = Restangular.all('events');
+	var eventService = Restangular.withConfig(function(RestangularConfigurer) {
+		RestangularConfigurer.setResponseInterceptor(function(events, operation, what, url, response, deferred) {
+			for ( var i = 0; i < events.length; i++) {
+				var event = events[i];
+				event.canAttend = $rootScope.containsMe( event.participants );
+				event.hasParticipants = event.participants.length !== 0;
+			}
+			return events;
+		});
+	}).all('events');
 
 	/**
 	 * returns the events for the home view - serves only future events - first
@@ -111,7 +120,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 */
 	eventService.getById = function(id) {
 		if(isNaN(id)) return {};
-		return Restangular.one("events", id).get();
+		return this.one(id).get();
 	};
 	
 	/**
