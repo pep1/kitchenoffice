@@ -4,12 +4,15 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 		$scope.locationSearchString = '';
 	}
 	
-	$scope.pageCount = 0;
-	$scope.pageSize = 4;
-	$scope.maxPageCount = 2;
-	$scope.lastPageFetched = false;
+	$scope.reset = function() {
+		$scope.pageCount = 0;
+		$scope.pageSize = 4;
+		$scope.maxPageCount = 2;
+		$scope.lastPageFetched = false;
+	};
 	
 	$scope.update = function(searchString) {
+		$scope.reset();
 		$scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString).then(function(pages){
 			$scope.pages = pages;
 		});
