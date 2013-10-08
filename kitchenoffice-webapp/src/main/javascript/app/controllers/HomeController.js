@@ -5,7 +5,12 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	$scope.doDelete = false;
 	$scope.event = null;
 	
-	$scope.pastEvents = eventService.getPastEvents();
+	$scope.pastParams = {
+			page: 0,
+			limit: 3
+	};
+	
+	$scope.pastEvents = eventService.getPastEvents($scope.pastParams);
 	
 	$scope.refresh = function() {
 		$scope.homeEvents = eventService.getHomeEvents();
@@ -14,7 +19,12 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	$scope.refresh();
 	
 	$scope.addItems = function() {
-		
+		$scope.pastParams.page++;
+		eventService.getPastEvents($scope.pastParams).then(function(moreEvents) {
+			for ( var i = 0; i < moreEvents.length; i++) {
+				$scope.pastEvents.push(moreEvents[i]);
+			}
+		});
 	};
 
 	$scope.areHomeEventsEmpty = $scope.homeEvents.then(function(events) {
