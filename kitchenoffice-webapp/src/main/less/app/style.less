@@ -105,6 +105,10 @@
 	}
 }
 
+.ko-pointer {
+	cursor: pointer;
+}
+
 .tags {
 
 	.ko-tag-list{
@@ -156,10 +160,6 @@ html, body, .container, .content {
     position: relative;
 }
  
-.proper-content {
-    padding-top: 60px; /* >= navbar height */
-}
- 
 .wrapper {
     min-height: 100%;
     height: auto !important;
@@ -180,7 +180,6 @@ html, body, .container, .content {
     }
 }
 
-/* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
 	#footer {
 		margin-left: -20px;
@@ -191,4 +190,7 @@ html, body, .container, .content {
 }
 
 @media (min-width: 979px) {
+	.proper-content {
+    	padding-top: 60px; /* >= navbar height */
+	}
 }

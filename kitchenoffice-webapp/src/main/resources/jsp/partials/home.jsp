@@ -30,13 +30,11 @@
 	</div>
 </div>
 <div data-ng-hide="arePastEventsEmpty" data-infinite-scroll="addItems()" class="row-fluid">
-		<hr>
-		<h4>Past food events</h4>
-		<div class="well" data-ng-repeat="event in pastEvents | filter:{hasParticipants:true}">
-			<div class="row-fluid">
-				<jsp:include page="../include/event/viewBlockList.jsp"></jsp:include>
-			</div>
-		</div>
+	<hr>
+	<h3>Past food events</h3>
+	<div class="well well-small" data-ng-repeat="event in pastEvents | filter:{hasParticipants:true}">
+		<jsp:include page="../include/event/viewBlockList.jsp"></jsp:include>
+	</div>
 </div>
 
 <jsp:include page="../include/event/attendModal.jsp"></jsp:include>

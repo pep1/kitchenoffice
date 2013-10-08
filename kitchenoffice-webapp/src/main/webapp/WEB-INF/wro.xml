@@ -12,8 +12,8 @@
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js</js>
 		<js>classpath:META-INF/resources/webjars/bootstrap-datepicker/1.0.1/js/locales/**</js>
 		
-		<js>classpath:META-INF/resources/webjars/momentjs/2.1.0/moment.js</js>
-		<js>classpath:META-INF/resources/webjars/momentjs/2.1.0/min/langs.min.js</js>
+		<js>classpath:META-INF/resources/webjars/momentjs/2.2.1/moment.js</js>
+		<js>classpath:META-INF/resources/webjars/momentjs/2.2.1/lang/en-ca.js</js>
 		
 		<!-- Rest and Angularjs -->
 		<js>classpath:META-INF/resources/webjars/angularjs/1.0.8/angular.js</js>
