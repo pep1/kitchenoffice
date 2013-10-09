@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>kitchenoffice</artifactId>
 		<groupId>com.gentics</groupId>
-		<version>0.0.2</version>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>kitchenoffice-webapp</artifactId>
 	<packaging>war</packaging>

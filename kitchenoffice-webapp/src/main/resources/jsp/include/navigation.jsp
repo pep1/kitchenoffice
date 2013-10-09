@@ -9,10 +9,10 @@
 			</button>
 			<a class="brand" href="/${project.build.finalName}/home"> <spring:message code="header.brand" />
 			</a>
-			<div class="nav-collapse collapse">
+			<div class="nav-collapse in collapse">
 				<p class="navbar-text pull-right">
 					<spring:message code="header.greeting" />
-					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" />' />
+					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" https="false" />' />
 				</p>
 				<ul class="nav">
 					<li class="dropdown" >
