@@ -120,7 +120,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 */
 	eventService.getById = function(id) {
 		if(isNaN(id)) return {};
-		return this.one(id).get();
+		return Restangular.one("events", id).get();
 	};
 	
 	/**

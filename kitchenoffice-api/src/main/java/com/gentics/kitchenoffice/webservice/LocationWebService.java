@@ -131,7 +131,7 @@ public class LocationWebService {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Location createEvent(Location location) {
+	public Location createLocation(Location location) {
 
 		log.debug("calling createLocation");
 

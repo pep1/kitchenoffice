@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Comment;
@@ -74,6 +75,7 @@ public class EventService {
 		return eventRepository.findById(id);
 	}
 
+	@Transactional
 	public Event saveEvent(Event event) {
 		Assert.notNull(event);
 		
@@ -85,6 +87,7 @@ public class EventService {
 	}
 
 	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@Transactional
 	public void deleteEvent(Event event) {
 		Assert.notNull(event);
 		
@@ -95,6 +98,7 @@ public class EventService {
 		eventRepository.delete(event);
 	}
 
+	@Transactional
 	public Event attendEvent(Event event, Job job) {
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
@@ -118,13 +122,14 @@ public class EventService {
 		return eventRepository.save(event);
 	}
 
+	@Transactional
 	public Event dismissEvent(Event event) {
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
 		return unAttendUserFromEvent(event, userService.getUser());
 	}
 
-	public Event unAttendUserFromEvent(Event event, final User user) {
+	private Event unAttendUserFromEvent(Event event, final User user) {
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
 		Assert.notNull(user);
@@ -158,6 +163,8 @@ public class EventService {
 	public boolean checkIfUserCanAttendEvent(Event event, User user) {
 		Assert.notNull(event);
 		Assert.notNull(user);
+		Assert.notNull(event.getStartDate());
+		Assert.notNull(event.getEndDate());
 	
 		if(new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not attend past events");
@@ -171,6 +178,8 @@ public class EventService {
 	public boolean checkIfUserCanCreateEvent(Event event, User user) {
 		Assert.notNull(event);
 		Assert.notNull(user);
+		Assert.notNull(event.getStartDate());
+		Assert.notNull(event.getEndDate());
 		
 		if(new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalArgumentException("Events startdate can not be in the past");
@@ -207,6 +216,7 @@ public class EventService {
 		return output;
 	}
 
+	@Transactional
 	public Comment commentEvent(Event event, Comment comment) {
 		Assert.notNull(event);
 		Assert.notNull(comment);

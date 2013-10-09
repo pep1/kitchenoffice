@@ -7,7 +7,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	
 	$scope.pastParams = {
 			page: 0,
-			limit: 3
+			limit: 4
 	};
 	
 	$scope.pastEvents = eventService.getPastEvents($scope.pastParams);

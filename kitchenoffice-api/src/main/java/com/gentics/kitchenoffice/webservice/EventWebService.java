@@ -270,7 +270,6 @@ public class EventWebService {
 			throw new IllegalStateException("You already have an event created in this time");
 		}
 
-		eventService.saveEvent(event);
 		// set actual logged in user as creator
 		event.setCreator(userService.getUser());
 		// set creation date to now

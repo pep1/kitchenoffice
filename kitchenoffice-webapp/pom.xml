@@ -123,7 +123,6 @@
 					<contextFolder>${basedir}/src/main/</contextFolder>
 					<wroFile>${basedir}/src/main/webapp/WEB-INF/wro.xml</wroFile>
 					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
-					<ignoreMissingResources>true</ignoreMissingResources>
 					<parallelProcessing>true</parallelProcessing>
 				</configuration>
 				<dependencies>

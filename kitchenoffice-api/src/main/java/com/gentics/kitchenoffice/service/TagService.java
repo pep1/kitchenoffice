@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -43,6 +44,7 @@ public class TagService {
 		return tagRepository.findAll(pageable).getContent();
 	}
 
+	@Transactional
 	public Tag save(Tag tag) {
 		Assert.notNull(tag);
 		return tagRepository.save(tag);
