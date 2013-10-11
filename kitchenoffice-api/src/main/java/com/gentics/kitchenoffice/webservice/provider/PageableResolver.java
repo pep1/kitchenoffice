@@ -53,7 +53,7 @@ public class PageableResolver extends AbstractHttpContextInjectable<Pageable> im
 	public Pageable getValue(HttpContext c) {
 
 		String sortBy = stringParam(c, PAGE_SORT_PROPERTY_PARAM, null);
-		Direction dir = Direction.fromStringOrNull(stringParam(c, PAGE_SORT_DIRECTION_PARAM, Direction.ASC.toString()));
+		Direction dir = Direction.fromString(stringParam(c, PAGE_SORT_DIRECTION_PARAM, Direction.ASC.toString()));
 
 		if (sortBy != null && dir != null) {
 			return new PageRequest(intParam(c, PAGE_NUMBER_PARAM, DEFAULT_PAGE_NUMBER), intParam(c, PAGE_SIZE_PARAM,

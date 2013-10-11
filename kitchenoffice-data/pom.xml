@@ -147,10 +147,10 @@
 			<artifactId>spring-data-neo4j</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-neo4j-rest</artifactId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<groupId>org.codehaus.jackson</groupId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
