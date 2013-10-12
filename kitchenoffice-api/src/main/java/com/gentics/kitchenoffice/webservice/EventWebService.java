@@ -33,6 +33,7 @@ import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.service.EventService;
 import com.gentics.kitchenoffice.service.JobService;
 import com.gentics.kitchenoffice.service.UserService;
+import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 import com.sun.jersey.api.NotFoundException;
 
 /**
@@ -43,6 +44,7 @@ import com.sun.jersey.api.NotFoundException;
 @Component
 @Scope("singleton")
 @Path("/events")
+@NoCache
 public class EventWebService {
 
 	/** The log. */

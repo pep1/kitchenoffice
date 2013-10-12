@@ -24,6 +24,7 @@ import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.service.TagService;
+import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 
 
 /**
@@ -34,6 +35,7 @@ import com.gentics.kitchenoffice.service.TagService;
 @Component
 @Scope("singleton")
 @Path("/tags")
+@NoCache
 public class TagWebService {
 
 	/** The log. */

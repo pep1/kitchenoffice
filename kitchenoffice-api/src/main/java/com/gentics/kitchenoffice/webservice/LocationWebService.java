@@ -33,6 +33,7 @@ import org.springframework.util.NumberUtils;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.service.LocationService;
 import com.gentics.kitchenoffice.service.UserService;
+import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 import com.sun.jersey.api.NotFoundException;
 
 /**
@@ -43,6 +44,7 @@ import com.sun.jersey.api.NotFoundException;
 @Component
 @Scope("singleton")
 @Path("/locations")
+@NoCache
 public class LocationWebService {
 
 	/** The log. */
