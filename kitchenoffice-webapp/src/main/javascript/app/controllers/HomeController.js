@@ -11,6 +11,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	};
 	
 	$scope.pastEvents = eventService.getPastEvents($scope.pastParams);
+	$scope.pastEvents.lastPagereached = false;
 	
 	$scope.refresh = function() {
 		$scope.homeEvents = eventService.getHomeEvents();
@@ -19,8 +20,15 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 	$scope.refresh();
 	
 	$scope.addItems = function() {
+		if($scope.lastPageReached) {
+			return;
+		}
 		$scope.pastParams.page++;
 		eventService.getPastEvents($scope.pastParams).then(function(moreEvents) {
+			if(moreEvents.length == 0) {
+				$scope.lastPageReached = true;
+				return;
+			}
 			for ( var i = 0; i < moreEvents.length; i++) {
 				$scope.pastEvents.push(moreEvents[i]);
 			}

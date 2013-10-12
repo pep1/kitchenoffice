@@ -143,20 +143,6 @@
 			<artifactId>thumbnailator</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.imgscalr</groupId>
-			<artifactId>imgscalr-lib</artifactId>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>jmimemagic</groupId>
-			<artifactId>jmimemagic</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.ocpsoft.prettytime</groupId>
-			<artifactId>prettytime</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>de.bripkens</groupId>
 			<artifactId>gravatar4java</artifactId>
 		</dependency>
