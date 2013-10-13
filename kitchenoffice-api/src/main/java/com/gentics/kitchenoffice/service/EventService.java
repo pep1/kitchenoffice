@@ -45,7 +45,7 @@ public class EventService {
 
 	@Autowired
 	private ParticipantRepository participantRepository;
-	
+
 	@Autowired
 	private CommentRepository commentRepository;
 
@@ -57,7 +57,7 @@ public class EventService {
 	public List<Event> getFutureEvents(Pageable pageable) {
 		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pageable);
 	}
-	
+
 	public List<Event> getPastEvents(Pageable pageable) {
 		return eventRepository.findAllinPastOf(new DateTime().toDateTimeISO().getMillis(), pageable);
 	}
@@ -78,11 +78,28 @@ public class EventService {
 	@Transactional
 	public Event saveEvent(Event event) {
 		Assert.notNull(event);
-		
-		if(new DateTime(event.getStartDate()).isBeforeNow()) {
-			throw new IllegalStateException("User can not create event in the past");
+
+		if (!event.isNew()) {
+			// check if the user really is the creator
+			if(getEventById(event.getId()).getCreator() != userService.getUser()) {
+				throw new IllegalStateException("You are not the creator of this event");
+			}
+		} else {
+			// set actual logged in user as creator
+			event.setCreator(userService.getUser());
+			// set creation date to now
+			event.setCreationDate((new DateTime()).toDateTimeISO().toDate());
+			
+			if (!checkIfUserCanCreateEvent(event, userService.getUser())) {
+				throw new IllegalStateException("You already have an event created in this time");
+			}
 		}
-		
+
+		if (new DateTime(event.getStartDate()).isBeforeNow()) {
+			throw new IllegalStateException("User can not create or edit an event in the past");
+		}
+
+		// TODO validate event
 		return eventRepository.save(event);
 	}
 
@@ -90,11 +107,11 @@ public class EventService {
 	@Transactional
 	public void deleteEvent(Event event) {
 		Assert.notNull(event);
-		
-		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+
+		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not delete past events");
 		}
-		
+
 		eventRepository.delete(event);
 	}
 
@@ -133,8 +150,8 @@ public class EventService {
 		Assert.notNull(event);
 		Assert.isTrue(!event.isNew());
 		Assert.notNull(user);
-		
-		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+
+		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not dismiss past events");
 		}
 
@@ -165,8 +182,8 @@ public class EventService {
 		Assert.notNull(user);
 		Assert.notNull(event.getStartDate());
 		Assert.notNull(event.getEndDate());
-	
-		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+
+		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not attend past events");
 		}
 
@@ -180,8 +197,8 @@ public class EventService {
 		Assert.notNull(user);
 		Assert.notNull(event.getStartDate());
 		Assert.notNull(event.getEndDate());
-		
-		if(new DateTime(event.getStartDate()).isBeforeNow()) {
+
+		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalArgumentException("Events startdate can not be in the past");
 		}
 
@@ -220,14 +237,14 @@ public class EventService {
 	public Comment commentEvent(Event event, Comment comment) {
 		Assert.notNull(event);
 		Assert.notNull(comment);
-		
+
 		comment.setTimeStamp(new DateTime().toDateTimeISO().toDate());
 		comment.setUser(userService.getUser());
 		commentRepository.save(comment);
-		
+
 		event.addComment(comment);
 		eventRepository.save(event);
-		
+
 		return comment;
 	}
 }

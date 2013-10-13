@@ -3,12 +3,10 @@
  */
 package com.gentics.kitchenoffice.webservice;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,10 +14,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,10 +64,13 @@ public class LocationWebService {
 
 	/**
 	 * Gets the locations.
-	 *
-	 * @param page the page
-	 * @param size the size
-	 * @param search the search
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
+	 * @param search
+	 *            the search
 	 * @return the locations
 	 */
 	@GET
@@ -81,11 +80,12 @@ public class LocationWebService {
 		log.debug("calling getLocations");
 		return locationService.findByNameLike(pageable, search).getContent();
 	}
-	
+
 	/**
 	 * Gets the location.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the location
 	 */
 	@GET
@@ -96,22 +96,25 @@ public class LocationWebService {
 		Assert.notNull(id);
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId, "Id could not be parsed");
-		
+
 		Location location = locationService.getLocationById(parsedId);
-		
-		if(location == null) {
+
+		if (location == null) {
 			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
 		}
-		
+
 		return location;
 	}
 
 	/**
 	 * Gets the user last locations.
-	 *
-	 * @param page the page
-	 * @param size the size
-	 * @param search the search
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
+	 * @param search
+	 *            the search
 	 * @return the user last locations
 	 */
 	@GET
@@ -122,45 +125,27 @@ public class LocationWebService {
 		log.debug("calling getLastUsedLocations");
 		return locationService.getLastUsedLocations(pageable, null, search).getContent();
 	}
-	
+
 	/**
-	 * Creates the event.
-	 *
-	 * @param location the location
+	 * Creates or updates a location.
+	 * 
+	 * @param location
+	 *            the location
 	 * @return the location
 	 */
 	@POST
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Location createLocation(Location location) {
+	public Location createOrUpdateLocation(@Valid Location location) {
 
 		log.debug("calling createLocation");
 
-		try {
-			Assert.notNull(location);
-			// TODO: Validation
-			locationService.saveLocation(location);
-			
-			return location;
+		Assert.notNull(location);
+		// TODO: Validation
+		locationService.saveLocation(location);
 
-		} catch (ConstraintViolationException e) {
-
-			String message = "";
-			Iterator<?> iterator = e.getConstraintViolations().iterator();
-
-			while (iterator.hasNext()) {
-				ConstraintViolation<?> current = (ConstraintViolation<?>) iterator.next();
-				message += current.getPropertyPath().toString() + ": ";
-				message += current.getMessage() + " ";
-			}
-
-			throw new WebApplicationException(Response.status(Response.Status.NOT_ACCEPTABLE).entity(message).build());
-		} catch (IllegalArgumentException e) {
-			log.error("Failed to save location", e);
-			throw new WebApplicationException(Response.status(Response.Status.NOT_ACCEPTABLE).entity("Failed to save location").build());
-		}
-
+		return location;
 	}
 
 }

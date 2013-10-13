@@ -6,6 +6,7 @@ package com.gentics.kitchenoffice.webservice;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,7 +19,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -254,7 +254,7 @@ public class EventWebService {
 	}
 
 	/**
-	 * Creates the event.
+	 * Creates or updates an event.
 	 *
 	 * @param event the event
 	 * @return the event
@@ -263,23 +263,13 @@ public class EventWebService {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Event createEvent(Event event) {
+	public Event createOrUpdateEvent(@Valid Event event) {
 
 		log.debug("calling createEvent");
 		Assert.notNull(event);
-
-		if (!eventService.checkIfUserCanCreateEvent(event, userService.getUser())) {
-			throw new IllegalStateException("You already have an event created in this time");
-		}
-
-		// set actual logged in user as creator
-		event.setCreator(userService.getUser());
-		// set creation date to now
-		event.setCreationDate((new DateTime()).toDateTimeISO().toDate());
-		// TODO validate event
+		
 		eventService.saveEvent(event);
 
 		return event;
-
 	}
 }

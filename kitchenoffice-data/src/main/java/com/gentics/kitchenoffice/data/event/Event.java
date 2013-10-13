@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -30,10 +32,15 @@ import com.gentics.kitchenoffice.data.user.User;
 @XmlRootElement
 public class Event extends AbstractPersistable {
 
+	@NotNull
 	private EventType type;
 
 	@Fetch
+	@NotNull
+	@Valid
 	private User creator;
+	
+	private Boolean locked = false;
 	
 	@JsonIgnore
 	@XmlJavaTypeAdapter(DateAdapter.class)
@@ -79,6 +86,14 @@ public class Event extends AbstractPersistable {
 
 	public void setCreator(User creator) {
 		this.creator = creator;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
 	public Date getCreationDate() {

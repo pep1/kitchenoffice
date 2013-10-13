@@ -34,10 +34,10 @@ public class TagTest {
 
 	@Autowired
 	private LocationService locationService;
-	
+
 	@Autowired
 	private TagService tagService;
-	
+
 	@Autowired
 	private TagRepository tagRepository;
 
@@ -54,70 +54,70 @@ public class TagTest {
 	public void firstTest() {
 		log.debug("starting first Test");
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Test
 	public void tagTest() {
-		
+
 		log.debug("starting tag Test");
-		log.debug("findall: "  + ((List)tagRepository.findAll().as(List.class)));
-		log.debug("findwithoutrelation: "  + tagRepository.findWithoutRelation());
-		
-		//assertTrue(tagRepository.findWithoutRelation().size() == 2);
-		
+		log.debug("findall: " + ((List<?>) tagRepository.findAll().as(List.class)));
+		log.debug("findwithoutrelation: " + tagRepository.findWithoutRelation());
+
+		// assertTrue(tagRepository.findWithoutRelation().size() == 2);
+
 		Location loc1 = locationService.findByName("test location 1");
 		assertNotNull(loc1);
-		
+
 		log.debug("location before adding: " + locationService.findByName("test location 1"));
-		
+
 		Tag tag1 = tagService.findByName("tag1");
 		assertNotNull(tag1);
 		log.debug("find tagged objects: " + tagRepository.findTaggedObjects(tag1));
-		
+
 		Tag tag2 = tagService.findByName("tag2");
 		assertNotNull(tag2);
-		
+
 		loc1.getTags().add(tag1);
 		loc1.getTags().add(tag2);
 		loc1 = locationService.saveLocation(loc1);
-		
+
 		log.debug("location after adding" + loc1);
 		log.debug("find tagged objects: " + tagRepository.findTaggedObjects(tag1));
-		log.debug("findwithoutrelation after adding: "  + tagRepository.findWithoutRelation());
-		
+		log.debug("findwithoutrelation after adding: " + tagRepository.findWithoutRelation());
+
 		assertTrue(tagRepository.findWithoutRelation().size() == 0);
 	}
-	
-	
+
 	@Before
 	public void setUp() {
 		log.debug("creating some data");
-		
+
 		Location loc = new Location();
 		loc.setName("test location 1");
 		loc.setAddress("test address 2");
 		loc.setWebsite("http://www1.example.com");
-		
+
 		locationService.saveLocation(loc);
-		
+
 		Location loc2 = new Location();
 		loc2.setName("test location 2");
 		loc2.setAddress("test address 2");
 		loc2.setWebsite("http://www2.example.com");
-		
+
 		locationService.saveLocation(loc2);
-		
+
 		Tag tag1 = new Tag();
 		tag1.setName("tag1");
 		tag1.setTimeStamp((new DateTime()).toDate());
-		
+
 		tagService.save(tag1);
-		
+
 		Tag tag2 = new Tag();
 		tag2.setName("tag2");
 		tag2.setTimeStamp((new DateTime()).plusDays(2).toDate());
-		
+
 		tagService.save(tag2);
-		
+
 	}
 
 }

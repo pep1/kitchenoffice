@@ -40,6 +40,8 @@
 		<b:constructor-arg index="0" value="${db.neo4j.host}:${db.neo4j.port}/db/data" />
 	</b:bean -->
 
+	<!-- JSR 303 Validation -->
+	<b:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 	<neo4j:config storeDirectory="${db.location}" />
 	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
 
