@@ -4,6 +4,7 @@ target/
 .classpath
 *.orig
 
+kitchenoffice-webapp/src/main/webapp/WEB-INF/wromapping.properties
 kitchenoffice-webapp/src/main/webapp/assets/
 
 widgetsets/
