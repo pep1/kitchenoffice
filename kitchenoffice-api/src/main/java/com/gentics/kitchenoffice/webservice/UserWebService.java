@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.service.UserService;
+import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 
 /**
  * The Class UserWebService.
@@ -29,6 +30,7 @@ import com.gentics.kitchenoffice.service.UserService;
 @Component
 @Scope("singleton")
 @Path("/users")
+@NoCache
 public class UserWebService {
 
 	/** The log. */

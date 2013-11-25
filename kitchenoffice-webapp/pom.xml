@@ -125,6 +125,7 @@
 					<groupNameMappingFile>${basedir}/src/main/webapp/WEB-INF/wromapping.properties</groupNameMappingFile>
 					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
 					<parallelProcessing>true</parallelProcessing>
+					<extraConfigFile>${basedir}/${wro4j.configfile.path}</extraConfigFile>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -149,6 +150,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>C:/TEMP/neo4j-db</db.location>
+				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
 		<profile>
@@ -162,6 +164,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<db.location>/tmp/kitchenoffice/neo4j-db</db.location>
+				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
 		<profile>
@@ -170,6 +173,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
 				<db.location>/var/lib/kitchenoffice/neo4j-db</db.location>
+				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-prod.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
 	</profiles>

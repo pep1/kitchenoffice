@@ -3,6 +3,11 @@ package com.gentics.kitchenoffice.data.event;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -20,18 +25,23 @@ public class Location extends AbstractPersistable {
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "locationnamesearch")
 	private String name;
 
+	@NotBlank(message = "Address is mandatory")
+	@Size(min = 5, message = "Address should have at least 5 characters")
 	private String address;
 
+	@URL
 	private String website;
 
 	private String description;
 
+	@NotNull
 	private Float latitude;
 
+	@NotNull
 	private Float longitude;
 
 	@Fetch
-	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH, enforceTargetType=true)
+	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH, enforceTargetType = true)
 	private Set<Tag> tags = new HashSet<Tag>();
 
 	@Fetch

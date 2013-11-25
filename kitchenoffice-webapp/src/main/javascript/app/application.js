@@ -14,6 +14,7 @@ var app = angular.module(
 		  'ui-gravatar', 
 		  'flash',
 		  'infinite-scroll',
+		  'frapontillo.bootstrap-switch',
 ]).config(
 [ '$routeProvider', '$locationProvider', '$httpProvider',
   function($routeProvider, $locationProvider, $httpProvider) {

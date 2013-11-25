@@ -19,6 +19,7 @@ public class JobService {
 	private JobRepository jobRepository;
 	
 	public Job getJobByName(String name) {
+		log.debug("calling get job by name");
 		Assert.notNull(name);
 		return jobRepository.findByName(name);
 	}
