@@ -36,16 +36,16 @@ angular.module('flash', [])
 .directive('flashMessages', function() {
   var directive = { restrict: 'E', replace: true };
   directive.template =
-	  '<div class="container" ><div ng-repeat="m in messages" class="alert alert-{{m.level}}">' + 
-	  '<button type="button" class="close" data-dismiss="alert">&times;</button>' + 
-	  '<div class="pull-left icon-container" ng-switch on="m.level" >' +
-	  '<i ng-switch-when="success" class="icon-ok icon-2x"></i>' +
-	  '<i ng-switch-when="error" class="icon-remove icon-2x"></i>' +
-	  '<i ng-switch-when="warning" class="icon-warning-sign icon-2x"></i>' +
-	  '<i ng-switch-when="info" class="icon-info icon-2x"></i>' +
-	  '</div>' +
-	  '<p>{{m.text}}</p>' + 
-	  '</div></div>';
+	'<div class="container" ><div ng-repeat="m in messages" class="alert alert-{{m.level}}">' + 
+	'<button type="button" class="close" data-dismiss="alert">&times;</button>' + 
+	'<div class="pull-left icon-container" ng-switch on="m.level" >' +
+	'<i ng-switch-when="success" class="icon-ok icon-2x"></i>' +
+	'<i ng-switch-when="error" class="icon-remove icon-2x"></i>' +
+	'<i ng-switch-when="warning" class="icon-warning-sign icon-2x"></i>' +
+	'<i ng-switch-when="info" class="icon-info icon-2x"></i>' +
+	'</div>' +
+	'<p>{{m.text}}</p>' + 
+	'</div></div>';
   
   directive.controller = function($scope, $rootScope) {
     $rootScope.$on('flash:message', function(_, messages, done) {

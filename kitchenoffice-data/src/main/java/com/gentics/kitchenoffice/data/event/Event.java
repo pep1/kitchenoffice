@@ -39,9 +39,9 @@ public class Event extends AbstractPersistable {
 	@NotNull
 	@Valid
 	private User creator;
-	
+
 	private Boolean locked = false;
-	
+
 	@JsonIgnore
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)

@@ -83,7 +83,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		Object email = assertion.getPrincipal().getAttributes().get("email");
 
 		if (email instanceof String) {
-
 			String emailString = ((String) email).replace("[", "");
 			emailString = emailString.replace("]", "");
 			String[] emails = emailString.split(",");
@@ -123,7 +122,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 	}
 
 	private void checkAndCreateDefaultJobs() {
-
 		for (String jobId : defaultJobIds) {
 			if (jobRepository.findByName(jobId) == null) {
 				log.debug("Creating initial job with name: " + jobId);
@@ -131,7 +129,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 				newJob.setName(jobId);
 				jobRepository.save(newJob);
 			}
-			;
 		}
 	}
 
@@ -181,8 +178,9 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		boolean isRolePresent = false;
 		for (GrantedAuthority grantedAuthority : authorities) {
 			isRolePresent = grantedAuthority.getAuthority().equals(role);
-			if (isRolePresent)
+			if (isRolePresent) {
 				break;
+			}
 		}
 		return isRolePresent;
 	}

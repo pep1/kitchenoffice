@@ -25,7 +25,7 @@ app.controller('HomeController', function($rootScope, $scope, eventService, flas
 		}
 		$scope.pastParams.page++;
 		eventService.getPastEvents($scope.pastParams).then(function(moreEvents) {
-			if(moreEvents.length == 0) {
+			if(moreEvents.length) {
 				$scope.lastPageReached = true;
 				return;
 			}
