@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.neo4j.graphdb.Direction;
@@ -18,6 +19,7 @@ import org.springframework.data.neo4j.support.index.IndexType;
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.Tag;
+import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
 public class Location extends AbstractPersistable {
@@ -47,6 +49,10 @@ public class Location extends AbstractPersistable {
 	@Fetch
 	@RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING)
 	private Image image;
+	
+	@Fetch
+	@RelatedTo(type = "SUBSCRIBES", direction = Direction.BOTH)
+	private Set<User> subscribers = new HashSet<User>();
 
 	public Location() {
 		super();
@@ -114,6 +120,14 @@ public class Location extends AbstractPersistable {
 
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public Set<User> getSubscribers() {
+		return subscribers;
+	}
+
+	public void setSubscribers(Set<User> subscribers) {
+		this.subscribers = subscribers;
 	}
 
 	@Override

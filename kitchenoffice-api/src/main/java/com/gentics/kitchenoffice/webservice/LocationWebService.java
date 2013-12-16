@@ -105,6 +105,56 @@ public class LocationWebService {
 
 		return location;
 	}
+	
+	/**
+	 * Subscribes the logged in user to this location.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the location
+	 */
+	@GET
+	@Path("/{id}/subscribe")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location subscribeLocation(@PathParam("id") String id) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+
+		Location location = locationService.getLocationById(parsedId);
+
+		if (location == null) {
+			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
+		}
+		
+		return locationService.subscribeToLocation(location);
+	}
+	
+	/**
+	 * Subscribes the logged in user to this location.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the location
+	 */
+	@GET
+	@Path("/{id}/unsubscribe")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location unSubscribeLocation(@PathParam("id") String id) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+
+		Location location = locationService.getLocationById(parsedId);
+
+		if (location == null) {
+			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
+		}
+		
+		return locationService.unSubscribeToLocation(location);
+	}
 
 	/**
 	 * Gets the user last locations.

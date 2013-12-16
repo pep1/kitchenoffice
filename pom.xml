@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.gentics</groupId>
@@ -59,9 +57,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<spring.version>3.2.3.RELEASE</spring.version>
+		<spring.version>3.2.5.RELEASE</spring.version>
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>
-		<spring-data-neo4j.version>2.2.3.RELEASE</spring-data-neo4j.version>
+		<spring-data-neo4j.version>2.3.3.RELEASE</spring-data-neo4j.version>
+		<quartz.version>2.2.1</quartz.version>
 
 		<github.url>https://github.com/gentics/kitchenoffice</github.url>
 		<slf4j.version>1.6.1</slf4j.version>
@@ -425,6 +424,21 @@
 				<groupId>commons-collections</groupId>
 				<artifactId>commons-collections</artifactId>
 				<version>3.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz-jobs</artifactId>
+				<version>${quartz.version}</version>
 			</dependency>
 
 			<dependency>
