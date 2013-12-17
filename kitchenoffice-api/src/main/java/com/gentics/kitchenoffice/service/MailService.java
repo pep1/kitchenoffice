@@ -2,10 +2,12 @@ package com.gentics.kitchenoffice.service;
 
 import static org.quartz.TriggerBuilder.newTrigger;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +26,9 @@ import org.quartz.jobs.ee.mail.SendMailJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -34,9 +39,17 @@ import com.gentics.kitchenoffice.data.user.User;
 @Service
 @Scope("singleton")
 public class MailService {
-	
+
 	private static Logger log = Logger.getLogger(MailService.class);
-	
+
+	private static final String MAIL_TEMPLATEPATH_KEY = "mail.templatepath";
+
+	private static final String MAIL_SENDER_KEY = "mail.sender";
+
+	private static final String MAIL_MIME_CONTENTTYPE_KEY = "mail.mime.contenttype";
+
+	private static final String MAIL_SMTP_HOST_KEY = "mail.smtp.host";
+
 	public static final String TEMPLATE_EXTENSION = "vm";
 
 	public static final String LASTNAME_KEY = "lastname";
@@ -51,52 +64,71 @@ public class MailService {
 
 	public static final String MAIL_JOB_DETAIL_KEY = "sendmailJobDetail";
 
-	public static final String CONTENT_TYPE = "text/html";
+	@Value("${mail.propertypath}")
+	public String mailpropertiesPath;
 
-	public static final String SMTP_PORT_KEY = "mail.smtp.port";
-	
-	public static final String SMTP_AUTH_KEY = "mail.smtp.auth";
+	private String contentType;
 
-	@Value("${mail.templatepath}")
 	private String templatePath;
 	
-	@Value("${mail.smtp.host}")
 	private String smtpHost;
-	
-	@Value("${mail.smtp.port}")
-	private String smtpPort;
-	
-	@Value("${mail.smtp.auth}")
-	private String smtpAuth;
 
-	@Value("${mail.sender}")
 	private String sender;
+
+	private Properties mailProperties;
 
 	@Autowired
 	private VelocityEngine velocityEngine;
 
 	@Autowired
 	private SchedulerFactoryBean scheduler;
-	
+
 	@PostConstruct
 	public void initialize() {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
-		
-		Assert.hasLength(templatePath);
-		Assert.hasLength(smtpHost);
-		Assert.hasLength(smtpPort);
-		Assert.hasLength(templatePath);
-		
-		if(!"/".equals(templatePath.substring(templatePath.length() - 1))) {
-			templatePath += templatePath + "/";
-		}		
+
+		try {
+			Resource resource = new ClassPathResource(mailpropertiesPath);
+			mailProperties = PropertiesLoaderUtils.loadProperties(resource);
+			Assert.notEmpty(mailProperties);
+
+			templatePath = mailProperties.getProperty(MAIL_TEMPLATEPATH_KEY);
+			mailProperties.remove(MAIL_TEMPLATEPATH_KEY);
+			Assert.hasLength(templatePath);
+
+			sender = mailProperties.getProperty(MAIL_SENDER_KEY);
+			mailProperties.remove(MAIL_SENDER_KEY);
+			Assert.hasLength(sender);
+
+			contentType = mailProperties.getProperty(MAIL_MIME_CONTENTTYPE_KEY);
+			mailProperties.remove(MAIL_MIME_CONTENTTYPE_KEY);
+			Assert.hasLength(contentType);
+			
+			smtpHost = mailProperties.getProperty(MAIL_SMTP_HOST_KEY);
+			Assert.hasLength(smtpHost);
+
+			if (!"/".equals(templatePath.substring(templatePath.length() - 1))) {
+				templatePath += templatePath + "/";
+			}
+
+			if (log.isDebugEnabled()) {
+				log.debug("Mail Properties:\n " + mailProperties);
+				log.debug("Mail smtp host: " + smtpHost);
+				log.debug("Mail template path: " + templatePath);
+				log.debug("Content Type: " + contentType);
+				log.debug("Sender: " + sender);
+			}
+
+		} catch (IOException e) {
+			log.error("Error while loading mail properties", e);
+		}
 	}
 
 	public void sendMailToUser(User user, String subject, String templateName, Map<String, Object> replacements) {
-		
+
 		Collection<User> users = new HashSet<User>();
 		users.add(user);
-		
+
 		sendMailToUsers(users, subject, templateName, replacements);
 	}
 
@@ -132,8 +164,8 @@ public class MailService {
 		replacements.put(FIRSTNAME_KEY, user.getFirstName());
 		replacements.put(LASTNAME_KEY, user.getLastName());
 
-		return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templatePath + templateName, CharEncoding.UTF_8,
-				replacements);
+		return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templatePath + templateName,
+				CharEncoding.UTF_8, replacements);
 	}
 
 	private void createAndTriggerMailJob(User user, String subject, String message) throws SchedulerException {
@@ -141,17 +173,22 @@ public class MailService {
 		JobDataMap map = new JobDataMap();
 		String jobDetailName = MAIL_JOB_DETAIL_KEY + "_user_" + user.getId();
 
+		// add all mail properties
+		for (String key : mailProperties.stringPropertyNames()) {
+			if (key.startsWith("mail.")) {
+				map.put(key, mailProperties.getProperty(key));
+			}
+		}
+
 		// put the data into the map
 		map.put(SendMailJob.PROP_SMTP_HOST, smtpHost);
-		map.put(SMTP_AUTH_KEY, smtpAuth);
-		map.put(SMTP_PORT_KEY, smtpPort);
 		map.put(SendMailJob.PROP_SENDER, sender);
-		map.put(SendMailJob.PROP_CONTENT_TYPE, CONTENT_TYPE);
+		map.put(SendMailJob.PROP_CONTENT_TYPE, contentType);
 		map.put(SendMailJob.PROP_RECIPIENT, user.getEmail());
 		map.put(SendMailJob.PROP_SUBJECT, subject);
 		map.put(SendMailJob.PROP_MESSAGE, message);
 
-		JobKey jobKey = new JobKey(jobDetailName , JOB_GROUP);
+		JobKey jobKey = new JobKey(jobDetailName, JOB_GROUP);
 
 		// create new Job
 		JobDetail job = JobBuilder.newJob(SendMailJob.class).usingJobData(map).storeDurably(true).withIdentity(jobKey)

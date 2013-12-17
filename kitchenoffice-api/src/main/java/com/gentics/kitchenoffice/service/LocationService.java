@@ -88,7 +88,7 @@ public class LocationService {
 		Assert.notNull(user);
 
 		if (location.getSubscribers().contains(user)) {
-			throw new IllegalArgumentException("User is already in the list of subscribers of location "
+			throw new IllegalStateException("User is already in the list of subscribers of location "
 					+ location.getName());
 		} else {
 			location.getSubscribers().add(user);
@@ -111,7 +111,7 @@ public class LocationService {
 		if (location.getSubscribers().contains(user)) {
 			location.getSubscribers().remove(user);
 		} else {
-			throw new IllegalArgumentException("User is not in the list of subscribers of location "
+			throw new IllegalStateException("User is not in the list of subscribers of location "
 					+ location.getName());
 		}
 
