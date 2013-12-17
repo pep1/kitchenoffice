@@ -27,6 +27,8 @@ import com.gentics.kitchenoffice.repository.CommentRepository;
 import com.gentics.kitchenoffice.repository.EventRepository;
 import com.gentics.kitchenoffice.repository.JobRepository;
 import com.gentics.kitchenoffice.repository.ParticipantRepository;
+import com.gentics.kitchenoffice.service.event.EventCreatedEvent;
+import com.google.common.eventbus.EventBus;
 
 @Service
 @Scope("singleton")
@@ -48,6 +50,9 @@ public class EventService {
 
 	@Autowired
 	private CommentRepository commentRepository;
+	
+	@Autowired
+	private EventBus eventBus;
 
 	@PostConstruct
 	public void initialize() {
@@ -98,9 +103,13 @@ public class EventService {
 		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not create or edit an event in the past");
 		}
+		
+		// save the event
+		eventRepository.save(event);
+		// publish create event
+		eventBus.post(new EventCreatedEvent(event));
 
-		// TODO validate event
-		return eventRepository.save(event);
+		return event; 
 	}
 
 	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")

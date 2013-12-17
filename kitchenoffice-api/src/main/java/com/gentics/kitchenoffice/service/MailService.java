@@ -36,6 +36,8 @@ import com.gentics.kitchenoffice.data.user.User;
 public class MailService {
 	
 	private static Logger log = Logger.getLogger(MailService.class);
+	
+	public static final String TEMPLATE_EXTENSION = "vm";
 
 	public static final String LASTNAME_KEY = "lastname";
 

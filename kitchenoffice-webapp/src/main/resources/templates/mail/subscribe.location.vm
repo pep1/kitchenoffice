@@ -2,7 +2,7 @@
     <body>
         <h1>Hello ${username},</h1>
         <p>
-        	There is scheduled a new event for location ${location}. Have a look <a href="${url}">here</a>.
+        	There is scheduled a new event for location ${event.location.name}. Have a look <a href="${url}">here</a>.
         </p>
         <p>
         	Best regards, </br>

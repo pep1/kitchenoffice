@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
-<b:beans 
-	xmlns:b="http://www.springframework.org/schema/beans"
-	xmlns="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+<b:beans xmlns:b="http://www.springframework.org/schema/beans" xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:neo4j="http://www.springframework.org/schema/data/neo4j" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/security
 			http://www.springframework.org/schema/security/spring-security-3.2.xsd
@@ -43,6 +36,10 @@
 			<b:value>applicationContext</b:value>
 		</b:property>
 	</b:bean>
+
+	<!-- EventBus -->
+	<b:bean id="eventBus" class="com.google.common.eventbus.EventBus" />
+	<b:bean id="eventBusPostProcessor" class="com.gentics.kitchenoffice.guava.EventBusPostProcessor" />
 
 	<!-- Velocity Engine for Mail -->
 	<b:bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
