@@ -3,7 +3,7 @@ package com.gentics.kitchenoffice.data;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.gentics.kitchenoffice.storage.Storable;
+import com.gentics.kitchenoffice.server.storage.Storable;
 
 @NodeEntity
 public class Image extends AbstractPersistable implements Storable{
