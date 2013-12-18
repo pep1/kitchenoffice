@@ -18,7 +18,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +49,7 @@ import com.sun.jersey.api.NotFoundException;
 public class EventWebService {
 
 	/** The log. */
-	private static Logger log = Logger.getLogger(EventWebService.class);
+	private static Logger log = LoggerFactory.getLogger(EventWebService.class);
 
 	/** The user service. */
 	@Autowired
@@ -72,9 +73,11 @@ public class EventWebService {
 
 	/**
 	 * Gets the events.
-	 *
-	 * @param page the page
-	 * @param size the size
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
 	 * @return the events
 	 */
 	@GET
@@ -84,12 +87,14 @@ public class EventWebService {
 		log.debug("calling getEvents");
 		return eventService.getFutureEvents(pageable);
 	}
-	
+
 	/**
 	 * Gets the past events.
-	 *
-	 * @param page the page
-	 * @param size the size
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
 	 * @return the past events
 	 */
 	@GET
@@ -100,12 +105,14 @@ public class EventWebService {
 		log.debug("calling getPastEvents");
 		return eventService.getPastEvents(pageable);
 	}
-	
+
 	/**
 	 * Gets the my events.
-	 *
-	 * @param page the page
-	 * @param size the size
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
 	 * @return the my events
 	 */
 	@GET
@@ -116,12 +123,14 @@ public class EventWebService {
 		log.debug("calling getMyEvents");
 		return eventService.getEventsOfUser(pageable);
 	}
-	
+
 	/**
 	 * Gets the my attended events.
-	 *
-	 * @param page the page
-	 * @param size the size
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
 	 * @return the my attended events
 	 */
 	@GET
@@ -132,11 +141,12 @@ public class EventWebService {
 		log.debug("calling getMyAttendedEvents");
 		return eventService.getFutureEvents(pageable);
 	}
-	
+
 	/**
 	 * Gets the event by the given Id.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the event
 	 */
 	@GET
@@ -146,20 +156,21 @@ public class EventWebService {
 	public Event getEvent(@PathParam("id") String id) {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId);
-		
+
 		Event event = eventService.getEventById(parsedId);
-		
-		if(event == null) {
+
+		if (event == null) {
 			throw new NotFoundException("Sorry, no event found with id " + parsedId);
 		}
-		
+
 		return event;
 	}
-	
+
 	/**
 	 * Removes the event.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -171,8 +182,9 @@ public class EventWebService {
 
 	/**
 	 * Attend event.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the event
 	 */
 	@GET
@@ -185,9 +197,11 @@ public class EventWebService {
 
 	/**
 	 * Attend event with job.
-	 *
-	 * @param id the id
-	 * @param jobId the job id
+	 * 
+	 * @param id
+	 *            the id
+	 * @param jobId
+	 *            the job id
 	 * @return the event
 	 */
 	@GET
@@ -215,8 +229,9 @@ public class EventWebService {
 
 	/**
 	 * Dismiss event.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the event
 	 */
 	@GET
@@ -230,12 +245,14 @@ public class EventWebService {
 
 		return eventService.dismissEvent(eventService.getEventById(parsedId));
 	}
-	
+
 	/**
 	 * Comment event.
-	 *
-	 * @param id the id
-	 * @param comment the comment
+	 * 
+	 * @param id
+	 *            the id
+	 * @param comment
+	 *            the comment
 	 * @return the comment
 	 */
 	@POST
@@ -255,8 +272,9 @@ public class EventWebService {
 
 	/**
 	 * Creates or updates an event.
-	 *
-	 * @param event the event
+	 * 
+	 * @param event
+	 *            the event
 	 * @return the event
 	 */
 	@POST
@@ -267,7 +285,7 @@ public class EventWebService {
 
 		log.debug("calling createEvent");
 		Assert.notNull(event);
-		
+
 		eventService.saveEvent(event);
 
 		return event;

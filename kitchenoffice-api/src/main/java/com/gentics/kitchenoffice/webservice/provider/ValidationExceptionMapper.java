@@ -6,7 +6,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gentics.kitchenoffice.data.SystemMessage;
 import com.gentics.kitchenoffice.data.SystemMessage.MessageType;
@@ -15,12 +16,12 @@ import com.sun.jersey.api.client.ClientResponse.Status;
 @Provider
 public class ValidationExceptionMapper implements ExceptionMapper<ValidationException> {
 	
-	private static Logger log = Logger.getLogger(ValidationExceptionMapper.class);
+	private static Logger log = LoggerFactory.getLogger(ValidationExceptionMapper.class);
 
 	@Override
 	public Response toResponse(ValidationException ex) {
 		
-		log.info(ex);
+		log.info("Validation exception", ex);
 		
 		SystemMessage message = new SystemMessage();
 		

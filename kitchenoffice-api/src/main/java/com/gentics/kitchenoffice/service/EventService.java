@@ -8,8 +8,9 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,7 @@ import com.google.common.eventbus.EventBus;
 @Scope("singleton")
 public class EventService {
 
-	private static Logger log = Logger.getLogger(EventService.class);
+	private static Logger log = LoggerFactory.getLogger(EventService.class);
 
 	@Autowired
 	private EventRepository eventRepository;
@@ -50,7 +51,7 @@ public class EventService {
 
 	@Autowired
 	private CommentRepository commentRepository;
-	
+
 	@Autowired
 	private EventBus eventBus;
 
@@ -86,7 +87,7 @@ public class EventService {
 
 		if (!event.isNew()) {
 			// check if the user really is the creator
-			if(getEventById(event.getId()).getCreator() != userService.getUser()) {
+			if (getEventById(event.getId()).getCreator() != userService.getUser()) {
 				throw new IllegalStateException("You are not the creator of this event");
 			}
 		} else {
@@ -94,7 +95,7 @@ public class EventService {
 			event.setCreator(userService.getUser());
 			// set creation date to now
 			event.setCreationDate((new DateTime()).toDateTimeISO().toDate());
-			
+
 			if (!checkIfUserCanCreateEvent(event, userService.getUser())) {
 				throw new IllegalStateException("You already have an event created in this time");
 			}
@@ -103,13 +104,13 @@ public class EventService {
 		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not create or edit an event in the past");
 		}
-		
+
 		// save the event
 		eventRepository.save(event);
 		// publish create event
 		eventBus.post(new EventCreatedEvent(event));
 
-		return event; 
+		return event;
 	}
 
 	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")

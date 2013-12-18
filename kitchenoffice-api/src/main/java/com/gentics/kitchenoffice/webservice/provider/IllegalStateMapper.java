@@ -5,7 +5,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gentics.kitchenoffice.data.SystemMessage;
 import com.gentics.kitchenoffice.data.SystemMessage.MessageType;
@@ -14,12 +15,12 @@ import com.sun.jersey.api.client.ClientResponse.Status;
 @Provider
 public class IllegalStateMapper implements ExceptionMapper<IllegalStateException> {
 	
-	private static Logger log = Logger.getLogger(IllegalArgumentMapper.class);
+	private static Logger log = LoggerFactory.getLogger(IllegalArgumentMapper.class);
 
 	@Override
 	public Response toResponse(IllegalStateException ex) {
 		
-		log.info(ex);
+		log.info("Illegal state", ex);
 		
 		SystemMessage message = new SystemMessage();
 		message.setDescription("Sorry, conflict: " + ex.getLocalizedMessage());

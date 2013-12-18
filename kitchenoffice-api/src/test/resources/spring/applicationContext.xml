@@ -23,6 +23,33 @@
 	
 	<context:component-scan base-package="com.gentics.kitchenoffice.service,com.gentics.kitchenoffice.webservice" />
 	
+	<!-- Quartz Scheduler -->
+	<b:bean name="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<b:property name="configLocation" value="classpath:config/quartz.properties" />
+		<b:property name="waitForJobsToCompleteOnShutdown" value="true" />
+		<b:property name="applicationContextSchedulerContextKey">
+			<b:value>applicationContext</b:value>
+		</b:property>
+	</b:bean>
+
+	<!-- EventBus -->
+	<b:bean id="eventBus" class="com.google.common.eventbus.EventBus" />
+	<b:bean id="eventBusPostProcessor" class="com.gentics.kitchenoffice.guava.EventBusPostProcessor" />
+	
+	<!-- Velocity Engine for Mail -->
+	<b:bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<b:property name="velocityProperties">
+			<b:props>
+				<b:prop key="resource.loader">
+					class
+				</b:prop>
+				<b:prop key="class.resource.loader.class">
+					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</b:prop>
+			</b:props>
+		</b:property>
+	</b:bean>
+	
 	<neo4j:config storeDirectory="target/neo4j-db" />
 	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
 

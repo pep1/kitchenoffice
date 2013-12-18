@@ -8,6 +8,11 @@ import com.gentics.kitchenoffice.storage.Storable;
 @NodeEntity
 public class Image extends AbstractPersistable implements Storable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3712876154954811045L;
+
 	@Indexed
 	private String fileName;
  

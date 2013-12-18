@@ -17,7 +17,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +45,7 @@ import com.sun.jersey.api.NotFoundException;
 public class LocationWebService {
 
 	/** The log. */
-	private static Logger log = Logger.getLogger(LocationWebService.class);
+	private static Logger log = LoggerFactory.getLogger(LocationWebService.class);
 
 	/** The user service. */
 	@Autowired
@@ -105,7 +106,7 @@ public class LocationWebService {
 
 		return location;
 	}
-	
+
 	/**
 	 * Subscribes the logged in user to this location.
 	 * 
@@ -127,10 +128,10 @@ public class LocationWebService {
 		if (location == null) {
 			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
 		}
-		
+
 		return locationService.subscribeToLocation(location);
 	}
-	
+
 	/**
 	 * Subscribes the logged in user to this location.
 	 * 
@@ -152,7 +153,7 @@ public class LocationWebService {
 		if (location == null) {
 			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
 		}
-		
+
 		return locationService.unSubscribeToLocation(location);
 	}
 

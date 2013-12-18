@@ -19,29 +19,34 @@ import com.gentics.kitchenoffice.data.AbstractPersistable;
 @NodeEntity
 public class User extends AbstractPersistable implements UserDetails {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1479792543611842572L;
+
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userfirstnamesearch")
 	private String firstName;
-	
+
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userlastnamesearch")
 	private String lastName;
-	
+
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userusernamesearch")
 	private String username;
-	
+
 	@JsonIgnore
 	private String password;
-	
+
 	private String email;
-	
+
 	@JsonIgnore
 	private boolean enabled;
-	
+
 	@Fetch
-	@RelatedTo(type = "HAS_ROLES", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_ROLES", direction = Direction.BOTH, elementClass = Role.class)
 	private Set<Role> roles = new HashSet<Role>();
-	
+
 	public User() {
-		
+
 	}
 
 	public User(String firstName, String lastName, String userName, boolean enabled) {
@@ -133,5 +138,5 @@ public class User extends AbstractPersistable implements UserDetails {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 }

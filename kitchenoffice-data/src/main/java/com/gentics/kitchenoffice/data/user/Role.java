@@ -7,15 +7,20 @@ import org.springframework.security.core.GrantedAuthority;
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 
 @NodeEntity
-public class Role extends AbstractPersistable implements GrantedAuthority{
-	
+public class Role extends AbstractPersistable implements GrantedAuthority {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4123551412665180604L;
+
 	@Indexed
 	private String roleName;
-	
+
 	public Role() {
-		
+
 	}
-	
+
 	public Role(String role) {
 		this.roleName = role;
 	}
@@ -32,5 +37,5 @@ public class Role extends AbstractPersistable implements GrantedAuthority{
 	public void setRoleName(String role) {
 		this.roleName = role;
 	}
-	
+
 }

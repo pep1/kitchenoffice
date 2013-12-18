@@ -13,7 +13,6 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.CharEncoding;
-import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.quartz.JobBuilder;
@@ -23,6 +22,8 @@ import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.jobs.ee.mail.SendMailJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -40,7 +41,7 @@ import com.gentics.kitchenoffice.data.user.User;
 @Scope("singleton")
 public class MailService {
 
-	private static Logger log = Logger.getLogger(MailService.class);
+	private static Logger log = LoggerFactory.getLogger(MailService.class);
 
 	private static final String MAIL_TEMPLATEPATH_KEY = "mail.templatepath";
 
@@ -70,7 +71,7 @@ public class MailService {
 	private String contentType;
 
 	private String templatePath;
-	
+
 	private String smtpHost;
 
 	private String sender;
@@ -103,7 +104,7 @@ public class MailService {
 			contentType = mailProperties.getProperty(MAIL_MIME_CONTENTTYPE_KEY);
 			mailProperties.remove(MAIL_MIME_CONTENTTYPE_KEY);
 			Assert.hasLength(contentType);
-			
+
 			smtpHost = mailProperties.getProperty(MAIL_SMTP_HOST_KEY);
 			Assert.hasLength(smtpHost);
 

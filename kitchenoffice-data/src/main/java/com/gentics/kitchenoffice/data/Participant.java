@@ -11,24 +11,29 @@ import org.springframework.data.neo4j.annotation.StartNode;
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.data.user.User;
 
-@RelationshipEntity(type="TAKES_PART")
-public class Participant extends AbstractPersistable{
+@RelationshipEntity(type = "TAKES_PART")
+public class Participant extends AbstractPersistable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5706768770697984647L;
 
 	@Fetch
 	@StartNode
 	@JsonIgnore
-    private Event event;
-	
-	@Fetch
-	@EndNode
-    private User user;
+	private Event event;
 
 	@Fetch
-    @RelatedTo(type = "HAS_JOB", direction = Direction.BOTH)
+	@EndNode
+	private User user;
+
+	@Fetch
+	@RelatedTo(type = "HAS_JOB", direction = Direction.BOTH, elementClass = Job.class)
 	private Job job;
-	
+
 	public Participant() {
-		
+
 	}
 
 	public Participant(Event event, User user, Job job) {
@@ -61,7 +66,7 @@ public class Participant extends AbstractPersistable{
 	public void setJob(Job job) {
 		this.job = job;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("Participant{\n  name='%s',\n  job=%s,\n}", user.getFirstName(), job);

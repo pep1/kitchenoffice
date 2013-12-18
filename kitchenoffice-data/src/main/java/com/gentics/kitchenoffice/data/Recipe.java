@@ -16,6 +16,10 @@ import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
 public class Recipe extends AbstractPersistable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6500169279341515356L;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "recipenamesearch")
 	private String name;
@@ -29,23 +33,23 @@ public class Recipe extends AbstractPersistable {
 	private int maxPersons;
 
 	@Fetch
-	@RelatedTo(type = "IS_CREATED_BY", direction = Direction.BOTH)
+	@RelatedTo(type = "IS_CREATED_BY", direction = Direction.BOTH, elementClass = User.class)
 	private User creator = new User();
 
 	@Fetch
-	@RelatedTo(type = "HAS_IMAGE", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_IMAGE", direction = Direction.BOTH, elementClass = Image.class)
 	private Image image = new Image();
 
 	@Fetch
-	@RelatedToVia(type = "IS_NEEDED_FOR", direction = Direction.BOTH)
+	@RelatedToVia(type = "IS_NEEDED_FOR", direction = Direction.BOTH, elementClass = Ingredient.class)
 	private Set<Ingredient> incredients = new HashSet<Ingredient>();
 
 	@Fetch
-	@RelatedTo(type = "RECIPE_HAS_COMMENT", direction = Direction.BOTH)
+	@RelatedTo(type = "RECIPE_HAS_COMMENT", direction = Direction.BOTH, enforceTargetType = true, elementClass = Comment.class)
 	private Set<Comment> comments = new HashSet<Comment>();
 
 	@Fetch
-	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH, enforceTargetType = true, elementClass = Tag.class)
 	private Set<Tag> tags = new HashSet<Tag>();
 
 	public Recipe() {

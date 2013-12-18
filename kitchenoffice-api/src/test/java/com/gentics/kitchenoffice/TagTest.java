@@ -5,11 +5,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.node.Neo4jHelper;
@@ -30,7 +31,7 @@ import com.gentics.kitchenoffice.service.TagService;
 @Transactional
 public class TagTest {
 
-	private static Logger log = Logger.getLogger(TagTest.class);
+	private static Logger log = LoggerFactory.getLogger(TagTest.class);
 
 	@Autowired
 	private LocationService locationService;

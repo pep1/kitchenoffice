@@ -2,7 +2,8 @@ package com.gentics.kitchenoffice.service;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ import com.gentics.kitchenoffice.repository.LocationRepository;
 @Service
 public class LocationService {
 
-	private static Logger log = Logger.getLogger(LocationService.class);
+	private static Logger log = LoggerFactory.getLogger(LocationService.class);
 
 	@Autowired
 	private LocationRepository locationRepository;
@@ -111,8 +112,7 @@ public class LocationService {
 		if (location.getSubscribers().contains(user)) {
 			location.getSubscribers().remove(user);
 		} else {
-			throw new IllegalStateException("User is not in the list of subscribers of location "
-					+ location.getName());
+			throw new IllegalStateException("User is not in the list of subscribers of location " + location.getName());
 		}
 
 		return locationRepository.save(location);

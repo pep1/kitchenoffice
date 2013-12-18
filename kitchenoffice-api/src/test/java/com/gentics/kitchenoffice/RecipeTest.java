@@ -1,14 +1,15 @@
 package com.gentics.kitchenoffice;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.node.Neo4jHelper;
@@ -40,7 +41,7 @@ import com.gentics.kitchenoffice.repository.UserRepository;
 @Transactional
 public class RecipeTest {
 
-	private static Logger log = Logger.getLogger(RecipeTest.class);
+	private static Logger log = LoggerFactory.getLogger(RecipeTest.class);
 
 	@Autowired
 	private RecipeRepository recipeRepository;
@@ -82,8 +83,7 @@ public class RecipeTest {
 		assertEquals(2, recipeRepository.count());
 		assertEquals(5, articleRepository.count());
 
-		Recipe result = recipeRepository.findAllByPropertyValue("name",
-				"Tortellini mit Tomatensoße").single();
+		Recipe result = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
 		List<Recipe> result2 = recipeRepository.findByNameContaining("Tomaten");
 
 		assertEquals(result, result2.get(0));
@@ -115,29 +115,25 @@ public class RecipeTest {
 
 		tagRepository.save(tag1);
 
-		Recipe recipeA = recipeRepository.findAllByPropertyValue("name",
-				"Tortellini mit Tomatensoße").single();
+		Recipe recipeA = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
 
 		log.debug("adding first tag");
 		recipeA.getTags().add(tag1);
 
 		recipeRepository.save(recipeA);
 
-		recipeA = recipeRepository.findAllByPropertyValue("name",
-				"Tortellini mit Tomatensoße").single();
+		recipeA = recipeRepository.findAllByPropertyValue("name", "Tortellini mit Tomatensoße").single();
 
 		Assert.notNull(recipeA.getTags());
 		log.debug("tagcount recipeA: " + recipeA.getTags());
 
-		Recipe recipeB = recipeRepository.findAllByPropertyValue("name",
-				"Nudeln mit Tomatensoße").single();
+		Recipe recipeB = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
 
 		log.debug("adding second tag");
 		recipeB.getTags().add(tag1);
 		recipeRepository.save(recipeB);
 
-		recipeB = recipeRepository.findAllByPropertyValue("name",
-				"Nudeln mit Tomatensoße").single();
+		recipeB = recipeRepository.findAllByPropertyValue("name", "Nudeln mit Tomatensoße").single();
 
 		Assert.notNull(recipeB.getTags());
 		log.debug("tagcount recipeB: " + recipeB.getTags());
@@ -150,8 +146,7 @@ public class RecipeTest {
 
 		Article i1 = new Article("Tortellini Pasta", "Package, 500g", 0.89);
 		articleRepository.save(i1);
-		Article i2 = new Article("Tomaten in der Dose, gestückelt",
-				"Dose, 400ml", 2.0);
+		Article i2 = new Article("Tomaten in der Dose, gestückelt", "Dose, 400ml", 2.0);
 		articleRepository.save(i2);
 		Article i3 = new Article("Zwiebeln", "Package", 0.89);
 		articleRepository.save(i3);
@@ -170,8 +165,7 @@ public class RecipeTest {
 
 		Recipe r2 = new Recipe("Nudeln mit Tomatensoße", "lecker", 10);
 
-		Article i5 = new Article("Nudeln Pasta, irgendeine Sorte",
-				"Package, 500g", 0.89);
+		Article i5 = new Article("Nudeln Pasta, irgendeine Sorte", "Package, 500g", 0.89);
 		articleRepository.save(i5);
 
 		r2.addArticle(i5, 1);
@@ -192,11 +186,8 @@ public class RecipeTest {
 		User u2 = new User("Helmut", "Tester", "helmi", true);
 		userRepository.save(u2);
 
-		Recipe result = recipeRepository.findByPropertyValue("name",
-				"Tortellini mit Tomatensoße");
-		Recipe result2 = recipeRepository.findByPropertyValue("name",
-				"Nudeln mit Tomatensoße");
-
+		Recipe result = recipeRepository.findByPropertyValue("name", "Tortellini mit Tomatensoße");
+		Recipe result2 = recipeRepository.findByPropertyValue("name", "Nudeln mit Tomatensoße");
 
 		Job job1 = new Job();
 		job1.setName("Teller waschen");
@@ -233,7 +224,7 @@ public class RecipeTest {
 		Comment c2 = new Comment();
 		c2.setUser(u2);
 		c2.setText("das sollten wir öfters machen!");
-		
+
 		m1.addComment(c2);
 		mealRepository.save(m2);
 
