@@ -28,13 +28,13 @@ public class StorageService {
 	private SecureRandom random = new SecureRandom();
 
 	private Storage storage;
-	
+
 	@Autowired
 	private ServletContext servletContext;
 
 	@Value("${storage.class}")
 	private Class<? extends Storage> storageClazz;
-	
+
 	@Value("${storage.basepath}")
 	private String basePath;
 
@@ -47,21 +47,27 @@ public class StorageService {
 
 		Assert.notNull(storageClazz);
 		Assert.notNull(basePath);
-		
+
 		// initialize storage
 		this.storage = storageClazz.newInstance();
 		storage.init(basePath);
-		
-		if(storage instanceof ServletContextAware) {
-			((ServletContextAware)storage).setServletContext(servletContext);
+
+		if (storage instanceof ServletContextAware) {
+			((ServletContextAware) storage).setServletContext(servletContext);
 		}
 
 		Assert.notNull(tempPath);
 		File tempDir = new File(tempPath);
 
-		// auto create temp directory if not exist
-		if (!tempDir.mkdirs()) {
-			throw new IOException("Could not create tempdir in filesystem.");
+		if (!tempDir.isDirectory()) {
+			// auto create temp directory if not exist
+			if (!tempDir.mkdirs()) {
+				throw new IOException("Could not create tempdir in filesystem.");
+			}
+		}
+
+		if (!tempDir.canWrite()) {
+			throw new InstantiationException("Can not write in temp file directory " + tempPath);
 		}
 	}
 

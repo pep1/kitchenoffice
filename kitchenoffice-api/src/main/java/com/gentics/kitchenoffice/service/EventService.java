@@ -125,6 +125,35 @@ public class EventService {
 		eventRepository.delete(event);
 	}
 
+	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@Transactional
+	public Event lockEvent(Event event) {
+
+		Assert.notNull(event);
+
+		if (event.isLocked()) {
+			throw new IllegalStateException("Event is already locked");
+		} else {
+			event.setLocked(true);
+		}
+
+		return eventRepository.save(event);
+	}
+
+	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@Transactional
+	public Event unlockEvent(Event event) {
+		Assert.notNull(event);
+
+		if (!event.isLocked()) {
+			throw new IllegalStateException("Event not locked");
+		} else {
+			event.setLocked(false);
+		}
+
+		return eventRepository.save(event);
+	}
+
 	@Transactional
 	public Event attendEvent(Event event, Job job) {
 		Assert.notNull(event);

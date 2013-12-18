@@ -41,7 +41,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 			builder.append(storable.getStorageType());
 			builder.append("/");
 
-			builder.append(storable.getFilename());
+			builder.append(storable.getFileName());
 			url = new URL(builder.toString());
 
 		} catch (MalformedURLException e) {
@@ -96,7 +96,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 			throw new IOException("could not move file, please check permissions!");
 		}
 
-		storable.setFilename(fileName);
+		storable.setFileName(fileName);
 
 		return storable;
 	}

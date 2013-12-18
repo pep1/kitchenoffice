@@ -4,8 +4,8 @@ public interface Storable {
 
 	public String getStorageType();
 
-	public String getFilename();
+	public String getFileName();
 
-	public void setFilename(String fileName);
+	public void setFileName(String fileName);
 
 }

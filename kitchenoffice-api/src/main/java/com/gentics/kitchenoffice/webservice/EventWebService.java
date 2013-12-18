@@ -45,6 +45,8 @@ import com.sun.jersey.api.NotFoundException;
 @Component
 @Scope("singleton")
 @Path("/events")
+@PreAuthorize("hasRole('ROLE_USER')")
+@Produces(MediaType.APPLICATION_JSON)
 @NoCache
 public class EventWebService {
 
@@ -81,8 +83,6 @@ public class EventWebService {
 	 * @return the events
 	 */
 	@GET
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getEvents(@Context Pageable pageable) {
 		log.debug("calling getEvents");
 		return eventService.getFutureEvents(pageable);
@@ -99,8 +99,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/past")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getPastEvents(@Context Pageable pageable) {
 		log.debug("calling getPastEvents");
 		return eventService.getPastEvents(pageable);
@@ -117,8 +115,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/mine")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getMyEvents(@Context Pageable pageable) {
 		log.debug("calling getMyEvents");
 		return eventService.getEventsOfUser(pageable);
@@ -135,8 +131,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/attended")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getMyAttendedEvents(@Context Pageable pageable) {
 		log.debug("calling getMyAttendedEvents");
 		return eventService.getFutureEvents(pageable);
@@ -151,8 +145,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/{id}")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Event getEvent(@PathParam("id") String id) {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId);
@@ -174,8 +166,6 @@ public class EventWebService {
 	 */
 	@DELETE
 	@Path("/{id}")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public void removeEvent(@PathParam("id") String id) {
 		eventService.deleteEvent(getEvent(id));
 	}
@@ -189,8 +179,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/{id}/attend")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Event attendEvent(@PathParam("id") String id) {
 		return attendEventWithJob(id, null);
 	}
@@ -206,8 +194,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/{id}/attend/{jobid}")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Event attendEventWithJob(@PathParam("id") String id, @PathParam("jobid") String jobId) {
 
@@ -236,8 +222,6 @@ public class EventWebService {
 	 */
 	@GET
 	@Path("/{id}/dismiss")
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Event dismissEvent(@PathParam("id") String id) {
 
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
@@ -257,9 +241,7 @@ public class EventWebService {
 	 */
 	@POST
 	@Path("/{id}/comment")
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Comment commentEvent(@PathParam("id") String id, Comment comment) {
 
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
@@ -270,6 +252,28 @@ public class EventWebService {
 		return eventService.commentEvent(eventService.getEventById(parsedId), comment);
 	}
 
+	@GET
+	@Path("/{id}/lock")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Event lockEvent(@PathParam("id") String id) {
+
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "event id could not be parsed");
+
+		return eventService.lockEvent(eventService.getEventById(parsedId));
+	}
+	
+	@GET
+	@Path("/{id}/unlock")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Event unlockEvent(@PathParam("id") String id) {
+
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "event id could not be parsed");
+
+		return eventService.unlockEvent(eventService.getEventById(parsedId));
+	}
+
 	/**
 	 * Creates or updates an event.
 	 * 
@@ -278,9 +282,7 @@ public class EventWebService {
 	 * @return the event
 	 */
 	@POST
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Event createOrUpdateEvent(@Valid Event event) {
 
 		log.debug("calling createEvent");

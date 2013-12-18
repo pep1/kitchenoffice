@@ -45,6 +45,7 @@ public class Event extends AbstractPersistable {
 	@Valid
 	private User creator;
 
+	@JsonIgnore
 	private Boolean locked = false;
 
 	@JsonIgnore
@@ -93,7 +94,7 @@ public class Event extends AbstractPersistable {
 		this.creator = creator;
 	}
 
-	public Boolean getLocked() {
+	public Boolean isLocked() {
 		return locked;
 	}
 

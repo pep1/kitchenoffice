@@ -1,49 +1,49 @@
 package com.gentics.kitchenoffice.data;
 
-import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.gentics.kitchenoffice.server.storage.Storable;
 
 @NodeEntity
-public class Image extends AbstractPersistable implements Storable{
+public class Image extends AbstractPersistable implements Storable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3712876154954811045L;
 
-	@Indexed
+	private static final String STORAGE_TYPE = "image";
+
 	private String fileName;
- 
-	private String type;
-	
+
+	private String mimeType;
+
 	private long size;
 
-	private String filePath;
-	
 	private int width;
-	
+
 	private int height;
-	
+
 	public Image() {
-		
+
 	}
 
+	@Override
 	public String getFileName() {
 		return fileName;
 	}
 
+	@Override
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-	public String getType() {
-		return type;
+	public String getMimeType() {
+		return mimeType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 
 	public long getSize() {
@@ -52,14 +52,6 @@ public class Image extends AbstractPersistable implements Storable{
 
 	public void setSize(long size) {
 		this.size = size;
-	}
-
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
 	}
 
 	public int getWidth() {
@@ -77,5 +69,10 @@ public class Image extends AbstractPersistable implements Storable{
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
+
+	@Override
+	public String getStorageType() {
+		return STORAGE_TYPE;
+	}
+
 }
