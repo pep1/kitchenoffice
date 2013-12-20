@@ -26,7 +26,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-
 		<!-- JS Frameworks -->
 		<dependency>
 			<groupId>org.webjars</groupId>
