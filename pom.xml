@@ -15,11 +15,6 @@
 	<url>https://github.com/gentics/kitchenoffice</url>
 	<inceptionYear>2013</inceptionYear>
 
-	<organization>
-		<name>Gentics Software GmbH</name>
-		<url>http://www.gentics.com</url>
-	</organization>
-
 	<developers>
 		<developer>
 			<name>Johannes Schüth</name>
@@ -92,8 +87,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 		</plugins>

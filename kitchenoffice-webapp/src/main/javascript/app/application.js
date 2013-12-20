@@ -89,7 +89,7 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 		
 		var deferred = $q.defer();
 		
-		if (_.isNull(array) || _.isUndefined(array) || !_.isArray(array)) deferred.resolve(false);
+		if (_.isNull(array) || _.isUndefined(array) || !_.isArray(array)) deferred.reject();
 		
 		$rootScope.me.then(function(me) {
 			
@@ -109,9 +109,7 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 
 	$rootScope.checkBrowserName = function(name) {
 		var agent = navigator.userAgent.toLowerCase();
-		if (agent.indexOf(name.toLowerCase()) > -1) {
-			return true;
-		}
+		return (agent.indexOf(name.toLowerCase()) > -1);
 	};
 
 	$rootScope.calendar = function(date) {

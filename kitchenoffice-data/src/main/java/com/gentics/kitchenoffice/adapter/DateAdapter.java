@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 public class DateAdapter extends XmlAdapter<String, Date> {
 	
 	// Strict ISO 8601 date format with UTC offset
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	public Date unmarshal(String v) throws Exception {
 		DateTime dateTime = new DateTime(v);
