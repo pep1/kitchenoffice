@@ -10,7 +10,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn cancel" data-ng-click="saveModal.close()">Cancel</button>
-		<button class="btn btn-primary" data-ng-click="doSaveEvent()">Save</button>
+		<button class="btn cancel" data-ng-click="saveModal.close()" data-ng-disabled="processing">Cancel</button>
+		<button class="btn btn-primary" data-ng-click="doSaveEvent()" data-ng-disabled="processing">Save</button>
 	</div>
 </div>

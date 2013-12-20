@@ -32,6 +32,11 @@ import com.gentics.kitchenoffice.data.user.User;
 @XmlRootElement
 public class Event extends AbstractPersistable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4856195825764426200L;
+
 	@NotNull
 	private EventType type;
 
@@ -39,9 +44,9 @@ public class Event extends AbstractPersistable {
 	@NotNull
 	@Valid
 	private User creator;
-	
+
 	private Boolean locked = false;
-	
+
 	@JsonIgnore
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
@@ -62,19 +67,19 @@ public class Event extends AbstractPersistable {
 	private String description;
 
 	@Fetch
-	@RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH)
+	@RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH, elementClass = Location.class)
 	private Location location;
 
 	@Fetch
-	@RelatedTo(type = "COOKING", direction = Direction.BOTH)
+	@RelatedTo(type = "COOKING", direction = Direction.BOTH, elementClass = Recipe.class)
 	private Recipe recipe;
 
 	@Fetch
-	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH)
+	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH, elementClass = Participant.class)
 	private Set<Participant> participants = new HashSet<Participant>();
 
 	@Fetch
-	@RelatedTo(type = "EVENT_HAS_COMMENT", direction = Direction.OUTGOING, enforceTargetType=true)
+	@RelatedTo(type = "HAS_COMMENT", direction = Direction.OUTGOING, enforceTargetType = true, elementClass = Comment.class)
 	private Set<Comment> comments = new HashSet<Comment>();
 
 	public Event() {
@@ -88,7 +93,7 @@ public class Event extends AbstractPersistable {
 		this.creator = creator;
 	}
 
-	public Boolean getLocked() {
+	public Boolean isLocked() {
 		return locked;
 	}
 

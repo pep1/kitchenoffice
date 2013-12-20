@@ -8,6 +8,11 @@ import org.springframework.data.neo4j.annotation.StartNode;
 @RelationshipEntity
 public class Ingredient extends AbstractPersistable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8100798945864077147L;
+
 	@Fetch
 	@StartNode
     private Recipe recipe;

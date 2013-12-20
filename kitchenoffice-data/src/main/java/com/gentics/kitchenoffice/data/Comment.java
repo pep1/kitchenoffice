@@ -18,6 +18,11 @@ import com.gentics.kitchenoffice.data.user.User;
 @NodeEntity
 public class Comment extends AbstractPersistable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5222339515058181833L;
+
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType=Long.class)
 	@XmlAttribute(name="timeStamp")

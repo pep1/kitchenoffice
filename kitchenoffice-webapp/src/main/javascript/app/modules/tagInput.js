@@ -6,11 +6,11 @@ angular.module('ko.tag.input', [ 'ko.services', 'ui.bootstrap.typeahead' ]).dire
 				scope : {
 					tags : '='
 				},
-				template : '<div class="well well-small tags">'
-					+ '<span ng-repeat="(idx, tag) in tags" class="badge badge-info tag" >{{tag.name}} <a ng-click="remove(idx)"><i class="icon-remove"></i></a></span>'
-					+ '</div>'
-					+ '<input type="text" placeholder="Add a tag..." ng-model="new_value" data-typeahead="suggestion.name for suggestion in suggestions | filter:$viewValue | limitTo:8" data-typeahead-min-length="2" data-typeahead-wait-ms="100" ></input> '
-					+ '<a class="btn" ng-click="add()">Add</a>',
+				template : '<div class="well well-small tags">' + 
+					'<span ng-repeat="(idx, tag) in tags" class="badge badge-info tag" >{{tag.name}} <a ng-click="remove(idx)"><i class="icon-remove"></i></a></span>' +
+					'</div>' + 
+					'<input type="text" placeholder="Add a tag..." ng-model="new_value" data-typeahead="suggestion.name for suggestion in suggestions | filter:$viewValue | limitTo:8" data-typeahead-min-length="2" data-typeahead-wait-ms="100" ></input> ' + 
+					'<a class="btn" ng-click="add()">Add</a>',
 				link : function($scope, $element, $rootScope) {
 
 					// FIXME: this is lazy and error-prone

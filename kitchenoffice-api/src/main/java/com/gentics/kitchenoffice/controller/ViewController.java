@@ -1,6 +1,7 @@
 package com.gentics.kitchenoffice.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ import com.gentics.kitchenoffice.service.UserService;
 @Controller
 public class ViewController {
 	
-	private static Logger log = Logger.getLogger(ViewController.class);
+	private static Logger log = LoggerFactory.getLogger(ViewController.class);
 	
 	@Autowired
 	private UserService userService;

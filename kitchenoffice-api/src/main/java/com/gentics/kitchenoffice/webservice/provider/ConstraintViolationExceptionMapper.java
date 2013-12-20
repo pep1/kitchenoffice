@@ -9,7 +9,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gentics.kitchenoffice.data.SystemMessage;
 import com.gentics.kitchenoffice.data.SystemMessage.MessageType;
@@ -17,16 +18,16 @@ import com.sun.jersey.api.client.ClientResponse.Status;
 
 @Provider
 public class ConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
-	
-	private static Logger log = Logger.getLogger(ConstraintViolationExceptionMapper.class);
+
+	private static Logger log = LoggerFactory.getLogger(ConstraintViolationExceptionMapper.class);
 
 	@Override
 	public Response toResponse(ConstraintViolationException ex) {
-		
-		log.info(ex);
-		
+
+		log.info("Constraint violation", ex);
+
 		SystemMessage message = new SystemMessage();
-		
+
 		String text = "";
 		Iterator<?> iterator = ex.getConstraintViolations().iterator();
 
@@ -35,10 +36,10 @@ public class ConstraintViolationExceptionMapper implements ExceptionMapper<Const
 			text += current.getPropertyPath().toString() + ": ";
 			text += current.getMessage() + " ";
 		}
-		
+
 		message.setDescription(text);
 		message.setType(MessageType.error);
-		
+
 		return Response.status(Status.NOT_ACCEPTABLE).entity(message).type(MediaType.APPLICATION_JSON).build();
 	}
 

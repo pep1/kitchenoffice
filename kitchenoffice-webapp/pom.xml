@@ -26,7 +26,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-
 		<!-- JS Frameworks -->
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -122,6 +121,7 @@
 					<jsDestinationFolder>${basedir}/src/main/webapp/assets/js/</jsDestinationFolder>
 					<contextFolder>${basedir}/src/main/</contextFolder>
 					<wroFile>${basedir}/src/main/webapp/WEB-INF/wro.xml</wroFile>
+					<groupNameMappingFile>${basedir}/src/main/webapp/WEB-INF/wromapping.properties</groupNameMappingFile>
 					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
 					<parallelProcessing>true</parallelProcessing>
 					<extraConfigFile>${basedir}/${wro4j.configfile.path}</extraConfigFile>

@@ -8,8 +8,9 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -27,12 +28,14 @@ import com.gentics.kitchenoffice.repository.CommentRepository;
 import com.gentics.kitchenoffice.repository.EventRepository;
 import com.gentics.kitchenoffice.repository.JobRepository;
 import com.gentics.kitchenoffice.repository.ParticipantRepository;
+import com.gentics.kitchenoffice.service.event.EventCreatedEvent;
+import com.google.common.eventbus.EventBus;
 
 @Service
 @Scope("singleton")
 public class EventService {
 
-	private static Logger log = Logger.getLogger(EventService.class);
+	private static Logger log = LoggerFactory.getLogger(EventService.class);
 
 	@Autowired
 	private EventRepository eventRepository;
@@ -48,6 +51,9 @@ public class EventService {
 
 	@Autowired
 	private CommentRepository commentRepository;
+
+	@Autowired
+	private EventBus eventBus;
 
 	@PostConstruct
 	public void initialize() {
@@ -81,7 +87,7 @@ public class EventService {
 
 		if (!event.isNew()) {
 			// check if the user really is the creator
-			if(getEventById(event.getId()).getCreator() != userService.getUser()) {
+			if (getEventById(event.getId()).getCreator() != userService.getUser()) {
 				throw new IllegalStateException("You are not the creator of this event");
 			}
 		} else {
@@ -89,7 +95,7 @@ public class EventService {
 			event.setCreator(userService.getUser());
 			// set creation date to now
 			event.setCreationDate((new DateTime()).toDateTimeISO().toDate());
-			
+
 			if (!checkIfUserCanCreateEvent(event, userService.getUser())) {
 				throw new IllegalStateException("You already have an event created in this time");
 			}
@@ -99,8 +105,12 @@ public class EventService {
 			throw new IllegalStateException("User can not create or edit an event in the past");
 		}
 
-		// TODO validate event
-		return eventRepository.save(event);
+		// save the event
+		eventRepository.save(event);
+		// publish create event
+		eventBus.post(new EventCreatedEvent(event));
+
+		return event;
 	}
 
 	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
@@ -113,6 +123,35 @@ public class EventService {
 		}
 
 		eventRepository.delete(event);
+	}
+
+	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@Transactional
+	public Event lockEvent(Event event) {
+
+		Assert.notNull(event);
+
+		if (event.isLocked()) {
+			throw new IllegalStateException("Event is already locked");
+		} else {
+			event.setLocked(true);
+		}
+
+		return eventRepository.save(event);
+	}
+
+	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@Transactional
+	public Event unlockEvent(Event event) {
+		Assert.notNull(event);
+
+		if (!event.isLocked()) {
+			throw new IllegalStateException("Event not locked");
+		} else {
+			event.setLocked(false);
+		}
+
+		return eventRepository.save(event);
 	}
 
 	@Transactional

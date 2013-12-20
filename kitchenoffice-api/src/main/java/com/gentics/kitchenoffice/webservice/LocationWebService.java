@@ -17,7 +17,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +45,7 @@ import com.sun.jersey.api.NotFoundException;
 public class LocationWebService {
 
 	/** The log. */
-	private static Logger log = Logger.getLogger(LocationWebService.class);
+	private static Logger log = LoggerFactory.getLogger(LocationWebService.class);
 
 	/** The user service. */
 	@Autowired
@@ -104,6 +105,56 @@ public class LocationWebService {
 		}
 
 		return location;
+	}
+
+	/**
+	 * Subscribes the logged in user to this location.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the location
+	 */
+	@GET
+	@Path("/{id}/subscribe")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location subscribeLocation(@PathParam("id") String id) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+
+		Location location = locationService.getLocationById(parsedId);
+
+		if (location == null) {
+			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
+		}
+
+		return locationService.subscribeToLocation(location);
+	}
+
+	/**
+	 * Subscribes the logged in user to this location.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the location
+	 */
+	@GET
+	@Path("/{id}/unsubscribe")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Location unSubscribeLocation(@PathParam("id") String id) {
+		Assert.notNull(id);
+		Long parsedId = NumberUtils.parseNumber(id, Long.class);
+		Assert.notNull(parsedId, "Id could not be parsed");
+
+		Location location = locationService.getLocationById(parsedId);
+
+		if (location == null) {
+			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
+		}
+
+		return locationService.unSubscribeToLocation(location);
 	}
 
 	/**

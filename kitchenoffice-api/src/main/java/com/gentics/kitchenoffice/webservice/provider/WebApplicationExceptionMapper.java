@@ -6,21 +6,22 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gentics.kitchenoffice.data.SystemMessage;
 import com.gentics.kitchenoffice.data.SystemMessage.MessageType;
 
 @Provider
 public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplicationException> {
-	
-	private static Logger log = Logger.getLogger(WebApplicationExceptionMapper.class);
+
+	private static Logger log = LoggerFactory.getLogger(WebApplicationExceptionMapper.class);
 
 	@Override
 	public Response toResponse(WebApplicationException ex) {
-		
-		log.info(ex);
-		
+
+		log.info("Webapplication exception", ex);
+
 		SystemMessage message = new SystemMessage();
 		message.setDescription("Ooops, something went wrong: " + ex.getResponse().getStatus());
 		message.setType(MessageType.error);

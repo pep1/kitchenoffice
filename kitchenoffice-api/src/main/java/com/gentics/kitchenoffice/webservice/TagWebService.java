@@ -14,7 +14,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +27,11 @@ import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.service.TagService;
 import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 
-
 /**
  * The Class TagWebService.
  * 
- * Provides tag CRU functionality. Deletion of tags (cleanup) works automatically when not used anymore.
+ * Provides tag CRU functionality. Deletion of tags (cleanup) works
+ * automatically when not used anymore.
  */
 @Component
 @Scope("singleton")
@@ -39,18 +40,21 @@ import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 public class TagWebService {
 
 	/** The log. */
-	private static Logger log = Logger.getLogger(TagWebService.class);
-	
+	private static Logger log = LoggerFactory.getLogger(TagWebService.class);
+
 	/** The tag service. */
 	@Autowired
 	private TagService tagService;
-	
+
 	/**
 	 * Gets the tags.
-	 *
-	 * @param page the page
-	 * @param size the size
-	 * @param search the search
+	 * 
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
+	 * @param search
+	 *            the search
 	 * @return the tags
 	 */
 	@GET
@@ -60,11 +64,12 @@ public class TagWebService {
 		log.debug("calling getTags");
 		return tagService.findByNameLike(search, pageable);
 	}
-	
+
 	/**
 	 * Creates the or update tag.
-	 *
-	 * @param tag the tag
+	 * 
+	 * @param tag
+	 *            the tag
 	 * @return the tag
 	 */
 	@POST
@@ -73,10 +78,10 @@ public class TagWebService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Tag createOrUpdateTag(Tag tag) {
 		log.debug("calling createOrUpdateTag");
-		
+
 		Assert.notNull(tag);
 		Assert.hasText(tag.getName());
-		
+
 		return tagService.save(tag);
 	}
 }

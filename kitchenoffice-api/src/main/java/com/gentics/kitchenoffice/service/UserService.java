@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.log4j.Logger;
 import org.jasig.cas.client.validation.Assertion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -30,7 +31,7 @@ import com.gentics.kitchenoffice.repository.UserRepository;
 @Scope("singleton")
 public class UserService extends AbstractCasAssertionUserDetailsService {
 
-	private static Logger log = Logger.getLogger(UserService.class);
+	private static Logger log = LoggerFactory.getLogger(UserService.class);
 
 	public static final String ROLE_USER_NAME = "ROLE_USER";
 
@@ -83,7 +84,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		Object email = assertion.getPrincipal().getAttributes().get("email");
 
 		if (email instanceof String) {
-
 			String emailString = ((String) email).replace("[", "");
 			emailString = emailString.replace("]", "");
 			String[] emails = emailString.split(",");
@@ -123,7 +123,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 	}
 
 	private void checkAndCreateDefaultJobs() {
-
 		for (String jobId : defaultJobIds) {
 			if (jobRepository.findByName(jobId) == null) {
 				log.debug("Creating initial job with name: " + jobId);
@@ -131,7 +130,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 				newJob.setName(jobId);
 				jobRepository.save(newJob);
 			}
-			;
 		}
 	}
 
@@ -181,8 +179,9 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		boolean isRolePresent = false;
 		for (GrantedAuthority grantedAuthority : authorities) {
 			isRolePresent = grantedAuthority.getAuthority().equals(role);
-			if (isRolePresent)
+			if (isRolePresent) {
 				break;
+			}
 		}
 		return isRolePresent;
 	}

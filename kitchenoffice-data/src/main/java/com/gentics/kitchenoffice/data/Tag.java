@@ -16,6 +16,11 @@ import com.gentics.kitchenoffice.adapter.DateAdapter;
 @NodeEntity
 public class Tag extends AbstractPersistable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7643855471172418354L;
+
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType = Long.class)
 	@XmlAttribute(name="timstamp")
