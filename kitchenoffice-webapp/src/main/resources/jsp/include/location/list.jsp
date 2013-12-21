@@ -25,16 +25,16 @@
 		</div>
 	</div>
 	</slide>
-	<div data-ng-show="areLocationsEmpty() && locationSearchString.length > 0" class="center">
+	<div data-ng-show="areLocationsEmpty() && !locationSearchString" class="center">
 		<p class="center">
-			there are no location entries yet<br>
+			<p>there are no location entries yet</p>
 			<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
 			<i class="icon-edit"></i> create location</a>
 		</p>
 	</div>
-	<div data-ng-show="areLocationsEmpty() && locationSearchString.length < 0" class="center">
+	<div data-ng-show="areLocationsEmpty() && locationSearchString" class="center">
 		<p class="center">
-			Sorry there is no location called "{{locationSearchString}}"<br>
+			<p>Sorry there is no location called "{{locationSearchString}}"</p>
 			<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
 			<i class="icon-edit"></i> create location</a>
 		</p>

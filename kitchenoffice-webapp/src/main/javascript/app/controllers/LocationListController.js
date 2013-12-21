@@ -1,4 +1,4 @@
-app.controller('LocationListController', function($scope, $rootScope, $location, $timeout, locationService, flash) {
+app.controller('LocationListController', function($scope, $rootScope, $q, $location, $timeout, locationService, flash) {
 
 	if (!$scope.locationSearchString) {
 		$scope.locationSearchString = '';
@@ -12,10 +12,17 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 	};
 
 	$scope.update = function(searchString) {
+		
+		var deferred = $q.defer();
+		
 		$scope.reset();
 		$scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString).then(function(pages) {
 			$scope.pages = pages;
+			$scope.$apply();
+			deferred.resolve(true);
 		});
+		
+		return deferred.promise;
 	};
 
 	$scope.getPages = function(pageSize, pageCount, maxPages, searchString) {
@@ -84,8 +91,8 @@ app.controller('LocationListController', function($scope, $rootScope, $location,
 
 		tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
-			$scope.update(tempFilterText);
 			$timeout.cancel(filterTextTimeout);
+			$scope.update(tempFilterText);
 		}, 200);
 	});
 

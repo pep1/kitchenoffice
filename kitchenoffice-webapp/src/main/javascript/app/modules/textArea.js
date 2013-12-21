@@ -31,7 +31,7 @@ angular.module('ko.textarea', []).directive('textarea', function() {
 
 				$shadow.html(val);
 
-				element.css('height', Math.max($shadow[0].offsetHeight + threshold, minHeight));
+				element.css('height', $shadow[0].offsetHeight);
 			};
 
 			scope.$on('$destroy', function() {
