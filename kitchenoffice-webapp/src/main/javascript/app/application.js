@@ -7,12 +7,13 @@ var app = angular.module(
 			'ko.markdown',
 			'ko.directives',
 			'active.link', 
-			'$strap.directives', 
+			'$strap.directives',
+			'ui.directives',
+			'ui.event',
 			'ui.bootstrap', 
 			'ui.bootstrap.carousel',
 			'ui.map', 
-			'maps.search.input', 
-			'ui.event', 
+			'maps.search.input',
 			'ui-gravatar', 
 			'flash',
 			'infinite-scroll',
@@ -77,7 +78,9 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 	$rootScope.me = userService.getUser();
 
 	$rootScope.isMe = function(object) {
-		if (_.isNull(object) || _.isUndefined(object)) return false;
+		if (_.isNull(object) || _.isUndefined(object)) {
+			return false;
+		}
 
 		// object can be participant or a user object itself
 		user = (!_.isUndefined(object.user)) ? object.user : object;
@@ -91,7 +94,9 @@ app.run(function($rootScope, $location, locationService, userService, $q) {
 		
 		var deferred = $q.defer();
 		
-		if (_.isNull(array) || _.isUndefined(array) || !_.isArray(array)) deferred.reject();
+		if (_.isNull(array) || _.isUndefined(array) || !_.isArray(array) || array.length === 0) {
+			return false;
+		};
 		
 		$rootScope.me.then(function(me) {
 			

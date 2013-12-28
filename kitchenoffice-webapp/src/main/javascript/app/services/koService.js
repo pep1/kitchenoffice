@@ -1,46 +1,48 @@
 angular.module('ko.services', [ 'restangular', 'flash' ])
-//.factory( 'httpInterceptor', function($rootScope, $q, $window) {
+// .factory( 'httpInterceptor', function($rootScope, $q, $window) {
 //	
-//	// this will be correct for Angularjs version 2.x !!!
+// // this will be correct for Angularjs version 2.x !!!
 //		
-//	function request(config) {
-//		$rootScope.processing = true;
-//	}
+// function request(config) {
+// $rootScope.processing = true;
+// }
 //
-//	function success(response) {
-//		$rootScope.processing = false;
-//		return response;
-//	}
+// function success(response) {
+// $rootScope.processing = false;
+// return response;
+// }
 //
-//	function error(response) {
+// function error(response) {
 //
-//		var status = response.status;
-//		var config = response.config;
-//		var method = config.method;
-//		var url = config.url;
+// var status = response.status;
+// var config = response.config;
+// var method = config.method;
+// var url = config.url;
 //
-//		if (status == 401 || status == 403) {
-//			$window.location = $window.location.protocol + "//" + $window.location.host + $window.location.pathname;
-//		} else {
-//			$rootScope.processing = false;
-//			window.scrollTo(0, 0);
-//			//flash('error', method + " on " + url + " failed with status " + status + ": " + response.data);
-//		}
+// if (status == 401 || status == 403) {
+// $window.location = $window.location.protocol + "//" + $window.location.host +
+// $window.location.pathname;
+// } else {
+// $rootScope.processing = false;
+// window.scrollTo(0, 0);
+// //flash('error', method + " on " + url + " failed with status " + status + ":
+// " + response.data);
+// }
 //
-//		return $q.reject(response);
-//	}
+// return $q.reject(response);
+// }
 //
-//	return {
-//		'request': request,
-//		'response': success,
-//		'responseError': error
-//	};
-//})
+// return {
+// 'request': request,
+// 'response': success,
+// 'responseError': error
+// };
+// })
 .config([ 'RestangularProvider', '$httpProvider', function(RestangularProvider, $httpProvider) {
-	
+
 	/**
 	 * Intercept http errors
-	 * */
+	 */
 	var interceptor = function($rootScope, $q, $window, flash) {
 
 		function success(response) {
@@ -60,9 +62,9 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 			} else {
 				$rootScope.processing = false;
 				// scroll to top in order to see the flash message
-				//window.scrollTo(0, 0);
-				
-				if(_.isUndefined(response.data.type) || _.isUndefined(response.data.description)) {
+				// window.scrollTo(0, 0);
+
+				if (_.isUndefined(response.data.type) || _.isUndefined(response.data.description)) {
 					flash("error", method + " on " + url + " failed with status " + status + ": " + response.data);
 				} else {
 					flash(response.data.type, response.data.description);
@@ -77,24 +79,43 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 			return promise.then(success, error);
 		};
 	};
-	
+
 	// set http interceptor
-	//$httpProvider.interceptors.push('httpInterceptor');
+	// $httpProvider.interceptors.push('httpInterceptor');
 	$httpProvider.responseInterceptors.push(interceptor);
-	
+
 	// set base URL
 	RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
-	
-}]).factory('eventService', function($rootScope, Restangular) {
-	
+
+} ]).factory('eventService', function($rootScope, Restangular) {
+
+	var prepareEvent = function(event) {
+		event.canAttend = function() {
+			return !$rootScope.containsMe(event.participants);
+		};
+
+		event.canDismiss = function() {
+			return $rootScope.containsMe(event.participants);
+		};
+		
+		event.participantsContainMe = $rootScope.containsMe(event.participants);
+		
+		event.hasParticipants = (!_.isNull(event.participants) && !_.isUndefined(event.participants)) ? event.participants.length !== 0 : false;
+	};
+
 	var eventService = Restangular.withConfig(function(RestangularConfigurer) {
-		RestangularConfigurer.setResponseInterceptor(function(events, operation, what, url, response, deferred) {
-			for ( var i = 0; i < events.length; i++) {
-				var event = events[i];
-				event.canAttend = $rootScope.containsMe( event.participants );
-				event.hasParticipants = event.participants.length !== 0;
+
+		RestangularConfigurer.setResponseInterceptor(function(object, operation, what, url, response, deferred) {
+
+			if (operation === 'getList') {
+				for (var i = 0; i < object.length; i++) {
+					prepareEvent(object[i]);
+				}
+			} else {
+				prepareEvent(object);
 			}
-			return events;
+
+			return object;
 		});
 	}).all('events');
 
@@ -104,63 +125,91 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 */
 	eventService.getHomeEvents = function() {
 		return this.getList().then(function(events) {
-			return _.first( events , 3 );
+			return _.first(events, 3);
 		});
 	};
-	
+
 	/**
 	 * returns the past events for the home view - serves only past events
 	 */
 	eventService.getPastEvents = function(params) {
 		return this.customGETLIST('past', params);
 	};
-	
+
 	/**
 	 * returns the event with specified id
 	 */
 	eventService.getById = function(id) {
-		if(isNaN(id)) return {};
-		return Restangular.one("events", id).get();
+		if (isNaN(id)) {
+			return {};
+		}
+		return this.one(id).get();
 	};
-	
+
 	/**
 	 * Attend to an event with an optional job
 	 */
 	eventService.attendEvent = function(event, job) {
-		if(_.isNull(event) || _.isUndefined(event)) return false;
-		
+		if (_.isNull(event) || _.isUndefined(event))
+			return false;
+
 		var attendPath = "attend";
-		if(!_.isUndefined(job)) {
+		if (!_.isUndefined(job)) {
 			attendPath += "/" + job.id;
 		}
-		return event.customGET(attendPath, function(event) {
-			return event;
-		});
+		return this.one(event.id, attendPath).get();
 	};
-	
+
 	/**
 	 * Dismiss an event
 	 */
 	eventService.dismissEvent = function(event) {
-		if(_.isNull(event) || _.isUndefined(event)) return false;
+		if (_.isNull(event) || _.isUndefined(event))
+			return false;
 
-		return event.customGET("dismiss", function(event) {
-			return event;
-		});
+		return this.one(event.id, "dismiss").get();
 	};
-	
+
 	/**
 	 * Comment an event
 	 */
 	eventService.commentEvent = function(event, string) {
-		if(_.isNull(event) || _.isUndefined(event)) return {};
-		if(_.isNull(string) || _.isUndefined(string)) return event;
+		if (_.isNull(event) || _.isUndefined(event))
+			return {};
+		if (_.isNull(string) || _.isUndefined(string))
+			return event;
 
 		var comment = {
-				"text": string
+			"text" : string
 		};
-		
-		return event.post("comment", comment);
+
+		return this.one(event.id).post("comment", comment);
+	};
+
+	eventService.lockEvent = function(event) {
+		if (_.isNull(event) || _.isUndefined(event) || typeof event.id !== 'number') {
+			return;
+		}
+
+		if (!$rootScope.isMe(event.creator)) {
+			flash("warning", "You are not allowed to lock this event");
+			return;
+		}
+
+		return this.one(event.id, "lock").get();
+	};
+
+	eventService.unlockEvent = function(event) {
+		if (_.isNull(event) || _.isUndefined(event) || typeof event.id !== 'number') {
+			return;
+		}
+
+		if (!$rootScope.isMe(event.creator)) {
+			flash("warning", "You are not allowed to unlock this event");
+			return;
+		}
+
+		return this.one(event.id, "unlock").get();
 	};
 
 	/**
@@ -172,7 +221,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		}
 		return this.post(event);
 	};
-	
+
 	/**
 	 * deletes a given event
 	 */
@@ -203,74 +252,78 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 
 	return eventService;
 }).factory('locationService', function($rootScope, Restangular) {
-	
+
 	var locationService = Restangular.all('locations');
-	
+
 	locationService.getLastUsed = function() {
 		return this.getList();
 	};
-	
+
 	/**
 	 * returns the location with specified id
 	 */
 	locationService.getById = function(id) {
-		if(isNaN(id)) return {};
+		if (isNaN(id))
+			return {};
 		return Restangular.one("locations", id).get();
 	};
-	
+
 	locationService.getPages = function(pageSize, page, maxPageFetchCount, search) {
 
-		if(_.isUndefined(maxPageFetchCount)) maxPageFetchCount = 2;
+		if (_.isUndefined(maxPageFetchCount))
+			maxPageFetchCount = 2;
 		var params = {
-				page: page,
-				limit: pageSize * maxPageFetchCount
+			page : page,
+			limit : pageSize * maxPageFetchCount
 		};
-		
-		if (search) params.search = search; 
-		
+
+		if (search)
+			params.search = search;
+
 		return this.getList(params).then(function(locations) {
 			return $rootScope.getPaging(locations, pageSize, "locations");
 		});
 	};
-	
+
 	locationService.save = function(location) {
 		if (!location) {
 			return;
 		}
 		return this.post(location);
 	};
-	
+
 	return locationService;
 }).factory('userService', function(Restangular) {
-	
+
 	var userService = Restangular.all('users');
-	
+
 	userService.getUser = function() {
 		return this.customGET('me');
 	};
-	
+
 	userService.getAllUsers = function() {
 		return this.getList();
 	};
-	
+
 	return userService;
 }).factory('tagService', function(Restangular) {
-	
+
 	var tagService = Restangular.all('tags');
-	
+
 	tagService.getAllTags = function() {
 		return this.getList();
 	};
-	
+
 	tagService.createTag = function(tagName) {
-		if(_.isEmpty(tagName)) return false;
-		
+		if (_.isEmpty(tagName))
+			return false;
+
 		var tag = {
-			name: tagName
+			name : tagName
 		};
-		
+
 		return this.post(tag);
 	};
-	
+
 	return tagService;
 });

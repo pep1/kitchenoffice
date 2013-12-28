@@ -168,11 +168,11 @@
                 $this.unbind('click');
               } else {
                 $this.on('mousemove touchmove', function (e) {
-                  var $element = $(this).closest('.make-switch')
-                    , relativeX = (e.pageX || e.originalEvent.targetTouches[0].pageX) - $element.offset().left
-                    , percent = (relativeX / $element.width()) * 100
-                    , left = 25
-                    , right = 75;
+                  var $element = $(this).closest('.make-switch');
+                  var relativeX = (e.pageX || e.originalEvent.targetTouches[0].pageX) - $element.offset().left;
+                  var percent = (relativeX / $element.width()) * 100;
+                  var left = 25;
+                  var right = 75;
 
                   moving = true;
 

@@ -19,8 +19,8 @@
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
 		<div>
 			<a class="btn btn-small" data-ng-href="/${project.build.finalName}/event/{{event.id}}">View details »</a>
-			<button data-ng-hide="event.canAttend" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
-			<button data-ng-show="event.canAttend" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
+			<button data-ng-show="event.canAttend()" data-ng-disabled="event.locked" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
+			<button data-ng-show="event.canDismiss()" data-ng-disabled="event.locked" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
 		</div>
 	</div>
 	<div data-ng-show="areHomeEventsEmpty">

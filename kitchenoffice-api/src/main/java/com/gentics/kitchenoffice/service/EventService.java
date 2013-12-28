@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,9 +114,9 @@ public class EventService {
 		return event;
 	}
 
-	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("(#event.creator.equals(principal)) or hasRole('ROLE_ADMIN')")
 	@Transactional
-	public void deleteEvent(Event event) {
+	public void deleteEvent(@Param("event") Event event) {
 		Assert.notNull(event);
 
 		if (new DateTime(event.getStartDate()).isBeforeNow()) {
@@ -125,9 +126,9 @@ public class EventService {
 		eventRepository.delete(event);
 	}
 
-	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("(#event.creator.equals(principal)) or hasRole('ROLE_ADMIN')")
 	@Transactional
-	public Event lockEvent(Event event) {
+	public Event lockEvent(@Param("event") Event event) {
 
 		Assert.notNull(event);
 
@@ -140,9 +141,9 @@ public class EventService {
 		return eventRepository.save(event);
 	}
 
-	@PreAuthorize("(#event.creator == authentication) or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("(#event.creator.equals(principal)) or hasRole('ROLE_ADMIN')")
 	@Transactional
-	public Event unlockEvent(Event event) {
+	public Event unlockEvent(@Param("event") Event event) {
 		Assert.notNull(event);
 
 		if (!event.isLocked()) {
@@ -194,6 +195,10 @@ public class EventService {
 			throw new IllegalStateException("User can not dismiss past events");
 		}
 
+		if (event.isLocked()) {
+			throw new IllegalStateException("User can not dismiss this event because it's locked");
+		}
+
 		Set<Participant> participants = event.getParticipants();
 
 		Participant participant = (Participant) CollectionUtils.find(participants, new Predicate() {
@@ -221,6 +226,10 @@ public class EventService {
 		Assert.notNull(user);
 		Assert.notNull(event.getStartDate());
 		Assert.notNull(event.getEndDate());
+
+		if (event.isLocked()) {
+			throw new IllegalStateException("User can not attend this event because it's locked");
+		}
 
 		if (new DateTime(event.getStartDate()).isBeforeNow()) {
 			throw new IllegalStateException("User can not attend past events");

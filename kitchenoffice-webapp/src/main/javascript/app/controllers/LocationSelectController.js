@@ -13,9 +13,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 
 	$scope.update = function(searchString) {
 		$scope.reset();
-		$scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString).then(function(pages) {
-			$scope.pages = pages;
-		});
+		$scope.pages = $scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString);
 	};
 
 	$scope.getPages = function(pageSize, pageCount, maxPages, searchString) {
@@ -23,11 +21,12 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	};
 
 	$scope.$watch('pages', function(pages) {
-		if (!pages || $scope.lastPageFetched)
+		if (!pages || $scope.lastPageFetched) {
 			return;
+		}
 
 		var lastAndActivePage = _.find(pages, function(page) {
-			return page.isLast && page.active;
+			return (page.isLast === true && page.active === true);
 		});
 
 		// if there is a last and active page and if this page is full load more
@@ -47,7 +46,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 				lastAndActivePage.isLast = false;
 				// push new loaded values in the pages array
 				for (var i = 0; i < pages.length; i++) {
-					$scope.pages.push(pages[i]);
+					$scope.pages.$$v.push(pages[i]);
 				}
 			});
 		}
@@ -60,8 +59,9 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	var filterTextTimeout = null;
 
 	$scope.areLocationsEmpty = function() {
-		if (!$scope.pages)
-			return false;
+		if (!$scope.pages) {
+			return true;
+		}
 		return ($scope.pages.length <= 0);
 	};
 
@@ -83,8 +83,8 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 
 		tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
-			$scope.update(tempFilterText);
 			$timeout.cancel(filterTextTimeout);
+			$scope.update(tempFilterText);
 		}, 200);
 	});
 

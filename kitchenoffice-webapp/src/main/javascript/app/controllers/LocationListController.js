@@ -12,17 +12,8 @@ app.controller('LocationListController', function($scope, $rootScope, $q, $locat
 	};
 
 	$scope.update = function(searchString) {
-		
-		var deferred = $q.defer();
-		
 		$scope.reset();
-		$scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString).then(function(pages) {
-			$scope.pages = pages;
-			$scope.$apply();
-			deferred.resolve(true);
-		});
-		
-		return deferred.promise;
+		$scope.pages = $scope.getPages($scope.pageSize, $scope.pageCount, $scope.maxPageCount, searchString);
 	};
 
 	$scope.getPages = function(pageSize, pageCount, maxPages, searchString) {
@@ -54,7 +45,7 @@ app.controller('LocationListController', function($scope, $rootScope, $q, $locat
 				lastAndActivePage.isLast = false;
 				// push new loaded values in the pages array
 				for (var i = 0; i < pages.length; i++) {
-					$scope.pages.push(pages[i]);
+					$scope.pages.$$v.push(pages[i]);
 				}
 			});
 		}

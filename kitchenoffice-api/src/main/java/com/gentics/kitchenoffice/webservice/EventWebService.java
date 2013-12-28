@@ -262,7 +262,7 @@ public class EventWebService {
 
 		return eventService.lockEvent(eventService.getEventById(parsedId));
 	}
-	
+
 	@GET
 	@Path("/{id}/unlock")
 	@Consumes(MediaType.APPLICATION_JSON)
