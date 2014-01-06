@@ -59,10 +59,10 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 	var filterTextTimeout = null;
 
 	$scope.areLocationsEmpty = function() {
-		if (!$scope.pages) {
+		if (_.isNull($scope.pages.$$v) || _.isUndefined($scope.pages.$$v)) {
 			return true;
 		}
-		return ($scope.pages.length <= 0);
+		return ($scope.pages.$$v.length <= 0);
 	};
 
 	$scope.selectLocation = function(location) {

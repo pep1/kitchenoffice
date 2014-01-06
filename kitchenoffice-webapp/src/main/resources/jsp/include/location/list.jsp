@@ -29,14 +29,14 @@
 		<div class="center">
 			<p>there are no location entries yet</p>
 			<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
-			<i class="icon-edit"></i> create location</a>
+			<i class="icon-edit"></i> add new location</a>
 		</div>
 	</div>
 	<div data-ng-show="areLocationsEmpty() && locationSearchString" class="center">
 		<div class="center">
 			<p>Sorry there is no location called "{{locationSearchString}}"</p>
 			<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
-			<i class="icon-edit"></i> create location</a>
+			<i class="icon-edit"></i> add new location</a>
 		</div>
 	</div>
 	</carousel>
