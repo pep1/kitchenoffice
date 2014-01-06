@@ -16,28 +16,29 @@
 	</div>
 </div>
 <div class="row-fluid">
-	<carousel class="ko-location-carousel well"> <slide ng-repeat="page in pages" active="page.active">
-	<div class="row-fluid">
-		<div class="span3" data-ng-repeat="location in page.locations">
-			<div class="ko-location-thumb" data-ng-class="{selected: selectedLocation==location }" data-ng-click="selectLocation(location)">
-				<jsp:include page="viewThumb.jsp"></jsp:include>
+	<carousel class="ko-location-carousel well">
+		<slide ng-repeat="page in pages" active="page.active">
+			<div class="row-fluid">
+				<div class="span3" data-ng-repeat="location in page.locations">
+					<div class="ko-location-thumb" data-ng-class="{selected: selectedLocation==location }" data-ng-click="selectLocation(location)">
+						<jsp:include page="viewThumb.jsp"></jsp:include>
+					</div>
+				</div>
+			</div>
+		</slide>
+		<div data-ng-show="areLocationsEmpty() && !locationSearchString" class="center">
+			<div class="center">
+				<p>there are no location entries yet</p>
+				<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
+				<i class="icon-edit"></i> add new location</a>
 			</div>
 		</div>
-	</div>
-	</slide>
-	<div data-ng-show="areLocationsEmpty() && !locationSearchString" class="center">
-		<div class="center">
-			<p>there are no location entries yet</p>
-			<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
-			<i class="icon-edit"></i> add new location</a>
+		<div data-ng-show="areLocationsEmpty() && locationSearchString" class="center">
+			<div class="center">
+				<p>Sorry there is no location called "{{locationSearchString}}"</p>
+				<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
+				<i class="icon-edit"></i> add new location</a>
+			</div>
 		</div>
-	</div>
-	<div data-ng-show="areLocationsEmpty() && locationSearchString" class="center">
-		<div class="center">
-			<p>Sorry there is no location called "{{locationSearchString}}"</p>
-			<a href="/kitchenoffice-webapp/location/create" class="btn btn-large btn-primary">
-			<i class="icon-edit"></i> add new location</a>
-		</div>
-	</div>
 	</carousel>
 </div>

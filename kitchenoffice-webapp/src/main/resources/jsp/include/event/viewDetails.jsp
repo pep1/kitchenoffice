@@ -54,7 +54,7 @@
 			<button data-ng-switch-when="true" data-ng-disabled="event.locked" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)">
 				<i class="icon-flag"></i> dismiss event
 			</button>
-			<input bs-switch ng-model="eventLocked" switch-size="small" switch-on-label="locked" switch-off-label="unlocked" switch-on="warning" switch-type="checkbox" switch-animate="true" class="make-switch" switch-active="{{!processing}}" switch-icon="icon-lock"> &nbsp;&nbsp;&nbsp;
+			<input data-ng-show="event.creator.id == me.id" bs-switch ng-model="eventLocked" switch-size="small" switch-on-label="locked" switch-off-label="unlocked" switch-on="warning" switch-type="checkbox" switch-animate="true" class="make-switch" switch-active="{{!processing}}" switch-icon="icon-lock">
 			<button data-ng-show="event.creator.id == me.id" data-ng-disabled="event.locked" class="btn btn-small btn-danger" type="button" data-ng-click="deleteModal.open(event)">
 				<i class="icon-trash"></i> delete event
 			</button>
