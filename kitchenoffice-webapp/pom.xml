@@ -115,7 +115,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<minimize>true</minimize>
 					<destinationFolder>${basedir}/src/main/webapp/</destinationFolder>
 					<cssDestinationFolder>${basedir}/src/main/webapp/assets/css/</cssDestinationFolder>
 					<jsDestinationFolder>${basedir}/src/main/webapp/assets/js/</jsDestinationFolder>
@@ -124,6 +123,7 @@
 					<groupNameMappingFile>${basedir}/src/main/webapp/WEB-INF/wromapping.properties</groupNameMappingFile>
 					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
 					<parallelProcessing>true</parallelProcessing>
+					<incrementalBuildEnabled>true</incrementalBuildEnabled>
 					<extraConfigFile>${basedir}/${wro4j.configfile.path}</extraConfigFile>
 				</configuration>
 				<dependencies>
