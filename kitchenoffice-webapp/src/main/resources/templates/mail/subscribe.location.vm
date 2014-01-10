@@ -5,7 +5,7 @@
         	There is scheduled a new event for location ${event.location.name}. Have a look <a href="${url}">here</a>.
         </p>
         <p>
-        	Best regards, </br>
+        	Best regards,</br>
         	Kitchenoffice team.
         </p>
     </body>

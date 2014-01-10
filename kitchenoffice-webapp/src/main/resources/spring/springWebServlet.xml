@@ -30,11 +30,17 @@
 		<beans:property name="prefix" value="/WEB-INF/classes/jsp/" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="exposedContextBeanNames">
-            <beans:list>
-             <beans:value>gravatar</beans:value>
-            </beans:list>
-          </beans:property>
+			<beans:list>
+				<beans:value>gravatar</beans:value>
+			</beans:list>
+		</beans:property>
 	</beans:bean>
+	
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" >
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	
+	<beans:bean id="rssViewer" class="com.gentics.kitchenoffice.controller.RSSEventViewer" />
 
 	<!-- Gravatar -->
 	<beans:bean id="gravatar" class="de.bripkens.gravatar.Gravatar">

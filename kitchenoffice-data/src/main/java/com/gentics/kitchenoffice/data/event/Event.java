@@ -30,7 +30,7 @@ import com.gentics.kitchenoffice.data.user.User;
 
 @NodeEntity
 @XmlRootElement
-public class Event extends AbstractPersistable {
+public class Event extends AbstractPersistable implements Feedable {
 
 	/**
 	 * 
@@ -49,18 +49,18 @@ public class Event extends AbstractPersistable {
 
 	@JsonIgnore
 	@XmlJavaTypeAdapter(DateAdapter.class)
-	@GraphProperty(propertyType=Long.class)
-	@XmlAttribute(name="creationDate")
+	@GraphProperty(propertyType = Long.class)
+	@XmlAttribute(name = "creationDate")
 	private Date creationDate;
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
-	@GraphProperty(propertyType=Long.class)
-	@XmlAttribute(name="startDate")
+	@GraphProperty(propertyType = Long.class)
+	@XmlAttribute(name = "startDate")
 	private Date startDate;
-	
+
 	@XmlJavaTypeAdapter(DateAdapter.class)
-	@GraphProperty(propertyType=Long.class)
-	@XmlAttribute(name="endDate")
+	@GraphProperty(propertyType = Long.class)
+	@XmlAttribute(name = "endDate")
 	private Date endDate;
 
 	@Indexed
@@ -124,7 +124,7 @@ public class Event extends AbstractPersistable {
 	public void setStartDate(Date date) {
 		this.startDate = date;
 	}
-	
+
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -183,9 +183,9 @@ public class Event extends AbstractPersistable {
 	public Participant addParticipant(User user, Job job) {
 
 		Assert.notNull(user, "user may not be null");
-		
+
 		// TODO: check if job can be null
-		//Assert.notNull(job, "job may not be null");
+		// Assert.notNull(job, "job may not be null");
 
 		Participant p = new Participant(this, user, job);
 		participants.add(p);
@@ -196,9 +196,55 @@ public class Event extends AbstractPersistable {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Event{\n date=%s,\n  participants=%s\n, comments=%s\n}",
-				startDate.toString(), participants.toString(), comments.toString());
+		return String.format("Event{\n date=%s,\n  participants=%s\n, comments=%s\n}", startDate.toString(),
+				participants.toString(), comments.toString());
+	}
+
+	@Override
+	public String getContent() {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		if(location != null) {
+			builder.append(", Location: " + location.getName() + ", " + location.getAddress());
+		}
+		
+		if(description != null) {
+			builder.append(", Description: " + description + "\n");
+		}
+		
+		if(participants.size() > 0) {
+			builder.append(", Attendees: ");
+			for(Participant participant : participants) {
+				builder.append("	" + participant.getUser().getFirstName() + " " + participant.getUser().getLastName() + ", ");
+			}
+		}
+		
+		return builder.toString();
+	}
+
+	@Override
+	public String getTitle() {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		if(location != null) {
+			builder.append(location.getName() + " - ");
+		}
+		
+		builder.append(this.type);
+		
+		return builder.toString();
+	}
+
+	@Override
+	public Date getPubDate() {
+		return creationDate;
+	}
+
+	@Override
+	public String getLink() {
+		return "/events/" + getId();
 	}
 
 }
