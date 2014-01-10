@@ -202,38 +202,40 @@ public class Event extends AbstractPersistable implements Feedable {
 
 	@Override
 	public String getContent() {
-		
+
 		StringBuilder builder = new StringBuilder();
-		
-		if(location != null) {
-			builder.append(", Location: " + location.getName() + ", " + location.getAddress());
+
+		if (location != null) {
+			builder.append("Location: " + location.getName() + ", " + location.getAddress());
 		}
-		
-		if(description != null) {
+
+		if (description != null) {
 			builder.append(", Description: " + description + "\n");
 		}
-		
-		if(participants.size() > 0) {
+
+		if (participants.size() > 0) {
 			builder.append(", Attendees: ");
-			for(Participant participant : participants) {
-				builder.append("	" + participant.getUser().getFirstName() + " " + participant.getUser().getLastName() + ", ");
+			for (Participant participant : participants) {
+				builder.append("	" + participant.getUser().getFirstName() + " " + participant.getUser().getLastName()
+						+ ", ");
 			}
 		}
-		
+
 		return builder.toString();
 	}
 
 	@Override
 	public String getTitle() {
-		
+
 		StringBuilder builder = new StringBuilder();
-		
-		if(location != null) {
+
+		if (location != null) {
 			builder.append(location.getName() + " - ");
 		}
-		
+
 		builder.append(this.type);
-		
+		builder.append(", created by " + creator.getFirstName() + " " + creator.getLastName());
+
 		return builder.toString();
 	}
 

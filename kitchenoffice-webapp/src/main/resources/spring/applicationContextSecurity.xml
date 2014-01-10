@@ -16,13 +16,15 @@
 
 	<!-- http entry-point-ref="restAuthenticationEntryPoint"> <intercept-url 
 		pattern="/api/**" access="ROLE_USER" /> <http-basic /> </http -->
+		
+	<http pattern="/assets/**" security="none" />
+	<http pattern="/event/rss" security="none" />
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
 		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
 		<intercept-url pattern="/index.jsp" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/assets/**" access="permitAll" />
 		<intercept-url pattern="/cas-logout.jsp" access="permitAll" />
 		<intercept-url pattern="/casfailed.jsp" access="permitAll" />
 
