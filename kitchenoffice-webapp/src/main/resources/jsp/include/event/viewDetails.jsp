@@ -57,7 +57,7 @@
 			<button data-ng-switch-when="true" data-ng-disabled="event.locked" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)">
 				<i class="icon-flag"></i> dismiss event
 			</button>
-			<div data-ng-show="event.creator.id == me.id" class="pull-left">
+			<div data-ng-show="event.creator.id == me.id" class="pull-left ko-switch">
 				<input bs-switch ng-model="eventLocked" switch-size="small" switch-on-label="locked" switch-off-label="unlocked" switch-on="warning" switch-type="checkbox" switch-animate="true" class="make-switch" switch-active="{{!processing}}" switch-icon="icon-lock">
 			</div>
 			<button data-ng-show="event.creator.id == me.id" data-ng-disabled="event.locked" class="btn btn-small btn-danger" type="button" data-ng-click="deleteModal.open(event)">
