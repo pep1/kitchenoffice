@@ -61,7 +61,7 @@
 	<b:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
 	<!-- Neo4j Configuration -->
-	<neo4j:config storeDirectory="/home/pepone/workspaces/kitchenoffice/neo4j-db" />
+	<neo4j:config storeDirectory="${db.location}" />
 	<neo4j:repositories base-package="com.gentics.kitchenoffice.repository" />
 
 </b:beans>

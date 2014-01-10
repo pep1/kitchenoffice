@@ -17,6 +17,9 @@
 	<div data-ng-switch data-on="event.type" class="span4 well" data-ng-repeat="event in homeEvents">
 		<button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button>
 		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
+		<div class="alert" ng-show="event.locked">
+			<i class="icon-fixed-width icon-lock"></i> This event is locked !
+		</div>
 		<div>
 			<a class="btn btn-small" data-ng-href="/${project.build.finalName}/event/{{event.id}}">View details »</a>
 			<button data-ng-show="event.canAttend()" data-ng-disabled="event.locked" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>

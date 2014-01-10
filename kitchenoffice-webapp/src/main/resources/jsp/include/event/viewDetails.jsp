@@ -47,6 +47,9 @@
 				<li data-ng-repeat="participant in event.participants"><jsp:include page="../user/participantItem.jsp"></jsp:include></li>
 			</ul>
 		</div>
+		<div class="alert" ng-show="event.locked">
+			<i class="icon-fixed-width icon-lock"></i> This event is locked !
+		</div>
 		<div class="pull-left" data-ng-switch="event.participantsContainMe">
 			<button data-ng-switch-when="false" data-ng-disabled="event.locked" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">
 				<i class="icon-flag-alt"></i> attend to event
@@ -54,7 +57,9 @@
 			<button data-ng-switch-when="true" data-ng-disabled="event.locked" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)">
 				<i class="icon-flag"></i> dismiss event
 			</button>
-			<input data-ng-show="event.creator.id == me.id" bs-switch ng-model="eventLocked" switch-size="small" switch-on-label="locked" switch-off-label="unlocked" switch-on="warning" switch-type="checkbox" switch-animate="true" class="make-switch" switch-active="{{!processing}}" switch-icon="icon-lock">
+			<div data-ng-show="event.creator.id == me.id" class="pull-left">
+				<input bs-switch ng-model="eventLocked" switch-size="small" switch-on-label="locked" switch-off-label="unlocked" switch-on="warning" switch-type="checkbox" switch-animate="true" class="make-switch" switch-active="{{!processing}}" switch-icon="icon-lock">
+			</div>
 			<button data-ng-show="event.creator.id == me.id" data-ng-disabled="event.locked" class="btn btn-small btn-danger" type="button" data-ng-click="deleteModal.open(event)">
 				<i class="icon-trash"></i> delete event
 			</button>
