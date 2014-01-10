@@ -89,6 +89,9 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 
 } ]).factory('eventService', function($rootScope, Restangular) {
 
+	/**
+	 * Prepares all events with additional informations
+	 */
 	var prepareEvent = function(event) {
 		event.canAttend = function() {
 			return !$rootScope.containsMe(event.participants);
@@ -252,8 +255,37 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 
 	return eventService;
 }).factory('locationService', function($rootScope, Restangular) {
+	
+	/**
+	 * Prepares all locations with additional informations
+	 */
+	var prepareLocation = function(location) {
+		
+		/**
+		 * check if the user has subscribed to this location
+		 */
+		location.subscribed = $rootScope.me.then(function(me) {
+				return _.some(me.locationSubscriptions, function(locationItem) {
+					return location.id === locationItem.id;
+				});
+			});
+	};
 
-	var locationService = Restangular.all('locations');
+	var locationService = Restangular.withConfig(function(RestangularConfigurer) {
+
+		RestangularConfigurer.setResponseInterceptor(function(object, operation, what, url, response, deferred) {
+
+			if (operation === 'getList') {
+				for (var i = 0; i < object.length; i++) {
+					prepareLocation(object[i]);
+				}
+			} else {
+				prepareLocation(object);
+			}
+
+			return object;
+		});
+	}).all('locations');
 
 	locationService.getLastUsed = function() {
 		return this.getList();
@@ -263,15 +295,18 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 * returns the location with specified id
 	 */
 	locationService.getById = function(id) {
-		if (isNaN(id))
+		if (isNaN(id)) {
 			return {};
-		return Restangular.one("locations", id).get();
+		}
+		return this.one(id).get();
 	};
 
 	locationService.getPages = function(pageSize, page, maxPageFetchCount, search) {
 
-		if (_.isUndefined(maxPageFetchCount))
+		if (_.isUndefined(maxPageFetchCount)){
 			maxPageFetchCount = 2;
+		}
+		
 		var params = {
 			page : page,
 			limit : pageSize * maxPageFetchCount
@@ -283,6 +318,22 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		return this.getList(params).then(function(locations) {
 			return $rootScope.getPaging(locations, pageSize, "locations");
 		});
+	};
+	
+	locationService.subscribe = function(location) {
+		if(_.isNull(location) || _.isUndefined(location) || typeof location.id !== 'number') {
+			return {};
+		}
+		
+		return this.one(location.id, "subscribe").get();
+	};
+	
+	locationService.unsubscribe = function(location) {
+		if(_.isNull(location) || _.isUndefined(location) || typeof location.id !== 'number') {
+			return {};
+		}
+		
+		return this.one(location.id, "unsubscribe").get();
 	};
 
 	locationService.save = function(location) {

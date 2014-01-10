@@ -76,6 +76,10 @@ app.value('$strapConfig', {
 app.run(function($rootScope, $location, locationService, userService, $q) {
 
 	$rootScope.me = userService.getUser();
+	
+	$rootScope.refreshUser = function() {
+		$rootScope.me = userService.getUser();
+	};
 
 	$rootScope.isMe = function(object) {
 		if (_.isNull(object) || _.isUndefined(object)) {

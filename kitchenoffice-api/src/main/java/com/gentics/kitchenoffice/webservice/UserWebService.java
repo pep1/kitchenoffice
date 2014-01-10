@@ -52,7 +52,7 @@ public class UserWebService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getMe() {
 		log.debug("Calling user getMe");
-		return userService.getUser();
+		return userService.getRefreshedUser();
 	}
 
 	/**

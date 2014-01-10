@@ -186,4 +186,8 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		return isRolePresent;
 	}
 
+	public User getRefreshedUser() {
+		return userRepository.findOne(getUser().getId());
+	}
+
 }

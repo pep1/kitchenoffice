@@ -7,7 +7,9 @@
 	</div>
 	<div class="span3">
 		<div class="pull-right">
-			<a class="btn btn-primary" data-ng-href="/kitchenoffice-webapp/location/{{location.id}}/edit" data-ng-disabled="processing"><i class="icon-edit"></i> Edit this location</a>
+			<a class="btn btn-primary" data-ng-href="/kitchenoffice-webapp/location/{{location.id}}/edit" data-ng-disabled="processing">
+				<i class="icon-edit"></i> Edit this location
+			</a>
 		</div>
 	</div>
 </div>
@@ -19,7 +21,7 @@
 				<i class="icon-map-marker"></i> {{location.address}}
 			</p>
 			<p data-ng-show="location.website">
-				<i class="icon-globe"></i> <a target="_blank" ng-href="{{location.website}}" >Location Website</a>
+				<i class="icon-globe"></i> <a target="_blank" data-ng-href="{{location.website}}" >Location Website</a>
 			</p>
 		</div>
 		<div class="ko-thumb-container tags" data-ng-show="location.tags" >
@@ -32,6 +34,14 @@
 			<h5><i class="icon-info"></i> Description</h5>
 			<p class="ko-tag-list" data-markdown data-input="{{location.description}}">
 			</p>
+		</div>
+		<div class="pull-left">
+		</div>
+		<div class="pull-right">
+			<div class="ko-switch">
+				E-Mail Subscription: 
+				<input bs-switch ng-model="subscribeLocation" switch-size="small" switch-on-label="on" switch-off-label="off" switch-on="warning" switch-type="checkbox" switch-animate="true" class="make-switch" switch-active="{{!processing}}" switch-icon="icon-envelope-alt">
+			</div>
 		</div>
 	</div>
 	<div class="span6">

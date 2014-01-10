@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.neo4j.graphdb.Direction;
@@ -55,6 +56,7 @@ public class Location extends AbstractPersistable {
 	private Image image;
 
 	@Fetch
+	@JsonIgnore
 	@RelatedTo(type = "SUBSCRIBES", direction = Direction.BOTH, elementClass = User.class)
 	private Set<User> subscribers = new HashSet<User>();
 

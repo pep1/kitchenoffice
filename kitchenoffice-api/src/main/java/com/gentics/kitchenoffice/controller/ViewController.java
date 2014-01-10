@@ -3,7 +3,11 @@ package com.gentics.kitchenoffice.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +26,7 @@ public class ViewController {
 	private UserService userService;
 
 	@Autowired
-	private EventService eventservice;
+	private EventService eventService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getIndexRootpage(Model model) {
@@ -43,15 +47,19 @@ public class ViewController {
 	public ModelAndView getEventpage(Model model) {
 		return getIndexRootpage(model);
 	}
-	
+
 	@RequestMapping(value = "/event/rss", method = RequestMethod.GET)
 	public ModelAndView getEventRSS(Model model) {
-		
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		mav.setViewName("rssViewer");
-		mav.addObject(RSSEventViewer.FEED_CONTENT_KEY, eventservice.getFutureEvents(new PageRequest(0, 40)));
-		
+		mav.addObject(
+				RSSEventViewer.FEED_CONTENT_KEY,
+				eventService.getEvents(
+						new PageRequest(0, eventService.getRssItemCount(), new Sort(new Order(Direction.DESC,
+								"creationDate")))).getContent());
+
 		return mav;
 	}
 

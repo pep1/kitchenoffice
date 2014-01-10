@@ -1,4 +1,4 @@
-app.controller('LocationDetailsController', function($scope, $rootScope, $location, $routeParams, locationService, flash) {
+app.controller('LocationDetailsController', function($scope, $rootScope, $location, $routeParams, locationService, userService, flash) {
 
 	if(isNaN($routeParams.locationId)) {
 		$location.path('/kitchenoffice-webapp/home');
@@ -8,6 +8,7 @@ app.controller('LocationDetailsController', function($scope, $rootScope, $locati
 	
 	locationService.getById($routeParams.locationId).then(function(location) {
 		$scope.location = location;
+		$scope.subscribeLocation = location.subscribed;
 		
 		var newCenter = new google.maps.LatLng(location.latitude, location.longitude);
 		$scope.locationMap.setCenter(newCenter);
@@ -30,6 +31,33 @@ app.controller('LocationDetailsController', function($scope, $rootScope, $locati
 			flash('success', 'New location '+location.name+' saved');
 		});
 	};
+	
+	$scope.$watch("subscribeLocation", function(subscribe) {
+		if (typeof subscribe !== "boolean" || typeof $scope.location === "undefined") {
+			return;
+		}
+		
+		$rootScope.me.then(function(me){
+			locationSubscribed = _.some(me.locationSubscriptions, function(locationItem) {
+				return $scope.location.id === locationItem.id;
+			});
+			
+			// catch initial setting
+			if(locationSubscribed === subscribe) {
+				return;
+			}
+			
+			if (subscribe) {
+				locationService.subscribe($scope.location).then(function(updatedLocation) {
+					$rootScope.refreshUser();
+				});
+			} else {
+				locationService.unsubscribe($scope.location).then(function(updatedLocation) {
+					$rootScope.refreshUser();
+				});
+			}
+		});
+	});
 	
 	/**
 	 * Google Maps stuff

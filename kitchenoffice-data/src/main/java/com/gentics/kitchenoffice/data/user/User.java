@@ -15,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.gentics.kitchenoffice.data.AbstractPersistable;
+import com.gentics.kitchenoffice.data.event.Location;
 
 @NodeEntity
 public class User extends AbstractPersistable implements UserDetails {
@@ -44,6 +45,9 @@ public class User extends AbstractPersistable implements UserDetails {
 	@Fetch
 	@RelatedTo(type = "HAS_ROLES", direction = Direction.BOTH, elementClass = Role.class)
 	private Set<Role> roles = new HashSet<Role>();
+	
+	@RelatedTo(type = "SUBSCRIBES", direction = Direction.BOTH, elementClass = Location.class)
+	private Set<Location> locationSubscriptions= new HashSet<Location>();
 
 	public User() {
 
@@ -137,6 +141,14 @@ public class User extends AbstractPersistable implements UserDetails {
 	@JsonIgnore
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Set<Location> getLocationSubscriptions() {
+		return locationSubscriptions;
+	}
+
+	public void setLocationSubscriptions(Set<Location> locationSubscriptions) {
+		this.locationSubscriptions = locationSubscriptions;
 	}
 
 }

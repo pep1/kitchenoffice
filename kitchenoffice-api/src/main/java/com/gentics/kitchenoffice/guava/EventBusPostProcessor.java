@@ -19,7 +19,11 @@ import com.google.common.eventbus.Subscribe;
  * @author pmeade
  */
 public class EventBusPostProcessor implements BeanPostProcessor {
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	private EventBus eventBus;
 
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -48,7 +52,4 @@ public class EventBusPostProcessor implements BeanPostProcessor {
 
 		return bean;
 	}
-
-	@Autowired
-	private EventBus eventBus;
 }

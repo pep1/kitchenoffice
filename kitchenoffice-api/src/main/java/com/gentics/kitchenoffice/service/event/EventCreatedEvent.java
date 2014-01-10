@@ -12,7 +12,6 @@ public class EventCreatedEvent {
 	private Event event;
 
 	public EventCreatedEvent(Event event) {
-		super();
 		this.event = event;
 	}
 	

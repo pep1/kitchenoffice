@@ -12,7 +12,9 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +40,9 @@ public class EventService {
 
 	private static Logger log = LoggerFactory.getLogger(EventService.class);
 
+	@Value("${rss.itemcount}")
+	private Integer itemCount;
+
 	@Autowired
 	private EventRepository eventRepository;
 
@@ -59,6 +64,10 @@ public class EventService {
 	@PostConstruct
 	public void initialize() {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
+	}
+
+	public Page<Event> getEvents(Pageable pageable) {
+		return eventRepository.findAll(pageable);
 	}
 
 	public List<Event> getFutureEvents(Pageable pageable) {
@@ -294,5 +303,9 @@ public class EventService {
 		eventRepository.save(event);
 
 		return comment;
+	}
+
+	public int getRssItemCount() {
+		return itemCount;
 	}
 }

@@ -246,7 +246,7 @@ public class Event extends AbstractPersistable implements Feedable {
 
 	@Override
 	public String getLink() {
-		return "/events/" + getId();
+		return "/event/" + getId();
 	}
 
 }
