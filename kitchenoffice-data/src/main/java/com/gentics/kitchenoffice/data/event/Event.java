@@ -234,7 +234,8 @@ public class Event extends AbstractPersistable implements Feedable {
 		}
 
 		builder.append(this.type);
-		builder.append(", created by " + creator.getFirstName() + " " + creator.getLastName());
+		builder.append(", date: " + this.startDate);
+		builder.append(", created by " + creator.getUsername());
 
 		return builder.toString();
 	}

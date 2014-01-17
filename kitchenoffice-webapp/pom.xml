@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>kitchenoffice</artifactId>
 		<groupId>com.gentics</groupId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>0.0.3</version>
 	</parent>
 	<artifactId>kitchenoffice-webapp</artifactId>
 	<packaging>war</packaging>
@@ -148,7 +148,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
-				<db.location>C:/TEMP/neo4j-db</db.location>
+				<maven.db.location>C:/TEMP/neo4j-db</maven.db.location>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
@@ -162,7 +162,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
-				<database.location>/tmp/kitchenoffice/neo4j-db</database.location>
+				<maven.db.location>/tmp/kitchenoffice/neo4j-db</maven.db.location>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
@@ -171,7 +171,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
-				<db.location>/var/lib/kitchenoffice/neo4j-db</db.location>
+				<maven.db.location>/var/lib/kitchenoffice/neo4j-db</maven.db.location>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-prod.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
