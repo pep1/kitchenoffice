@@ -1,5 +1,7 @@
 package com.gentics.kitchenoffice.data;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -17,11 +19,14 @@ public class Job extends AbstractPersistable{
 
 	@Fetch
     @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING, elementClass = Image.class)
+	@Getter @Setter
 	private Image image;
 	
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "jobnamesearch")
+	@Getter @Setter
 	private String name;
 	
+	@Getter @Setter
 	private String description;
 
 	public Job() {
@@ -35,30 +40,6 @@ public class Job extends AbstractPersistable{
 		this.description = description;
 	}
 
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
 	@Override
 	public String toString() {
 		return String.format("Job{\n  name=%s\n}", name.toString());

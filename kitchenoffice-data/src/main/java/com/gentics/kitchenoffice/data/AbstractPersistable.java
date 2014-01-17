@@ -1,6 +1,9 @@
 package com.gentics.kitchenoffice.data;
 
 import java.io.Serializable;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -16,23 +19,9 @@ public abstract class AbstractPersistable implements Serializable {
 	private static final long serialVersionUID = -3244769429406745303L;
 	
 	@GraphId
+	@Getter @Setter(AccessLevel.PROTECTED)
     private Long id;
 	
-	public Long getId() {
-
-		return id;
-	}
-
-	/**
-	 * Sets the id of the entity.
-	 * 
-	 * @param id the id to set
-	 */
-	protected void setId(final Long id) {
-
-		this.id = id;
-	}
-
 	@JsonIgnore
 	public boolean isNew() {
 

@@ -14,8 +14,11 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.gentics.kitchenoffice.adapter.DateAdapter;
 import com.gentics.kitchenoffice.data.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NodeEntity
+@NodeEntity @NoArgsConstructor
 public class Comment extends AbstractPersistable{
 
 	/**
@@ -27,20 +30,19 @@ public class Comment extends AbstractPersistable{
 	@GraphProperty(propertyType=Long.class)
 	@XmlAttribute(name="timeStamp")
 	@NotNull
+	@Getter @Setter
 	private Date timeStamp;
 	
 	@Fetch
 	@NotNull
+	@Getter @Setter
 	private User user;
 	
 	@NotBlank(message="Comment text should not be blank")
 	@Size(min=2, message="Comment should have at least 2 characters")
+	@Getter @Setter
 	private String text;
 	
-	public Comment() {
-		
-	}
-
 	public Comment(User user, String text) {
 		super();
 		this.timeStamp = new Date();
@@ -48,30 +50,6 @@ public class Comment extends AbstractPersistable{
 		this.text = text;
 	}
 
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-	
 	@Override
 	public String toString() {
 		return String.format("Comment{\n  user='%s',\n  text=%s\n}", user.getFirstName(), text);

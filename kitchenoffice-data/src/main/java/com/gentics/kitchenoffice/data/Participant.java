@@ -10,8 +10,11 @@ import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.gentics.kitchenoffice.data.event.Event;
 import com.gentics.kitchenoffice.data.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@RelationshipEntity(type = "TAKES_PART")
+@RelationshipEntity(type = "TAKES_PART") @NoArgsConstructor
 public class Participant extends AbstractPersistable {
 
 	/**
@@ -22,48 +25,23 @@ public class Participant extends AbstractPersistable {
 	@Fetch
 	@StartNode
 	@JsonIgnore
+	@Getter @Setter
 	private Event event;
 
 	@Fetch
 	@EndNode
+	@Getter @Setter
 	private User user;
 
 	@Fetch
 	@RelatedTo(type = "HAS_JOB", direction = Direction.BOTH, elementClass = Job.class)
+	@Getter @Setter
 	private Job job;
-
-	public Participant() {
-
-	}
 
 	public Participant(Event event, User user, Job job) {
 		super();
 		this.event = event;
 		this.user = user;
-		this.job = job;
-	}
-
-	public Event getEvent() {
-		return event;
-	}
-
-	public void setEvent(Event event) {
-		this.event = event;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Job getJob() {
-		return job;
-	}
-
-	public void setJob(Job job) {
 		this.job = job;
 	}
 

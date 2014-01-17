@@ -16,8 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.event.Location;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NodeEntity
+@NodeEntity @NoArgsConstructor
 public class User extends AbstractPersistable implements UserDetails {
 
 	/**
@@ -26,32 +29,34 @@ public class User extends AbstractPersistable implements UserDetails {
 	private static final long serialVersionUID = -1479792543611842572L;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userfirstnamesearch")
+        @Getter @Setter
 	private String firstName;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userlastnamesearch")
+        @Getter @Setter
 	private String lastName;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "userusernamesearch")
+        @Getter @Setter
 	private String username;
 
-	@JsonIgnore
+	@JsonIgnore @Getter @Setter
 	private String password;
 
+        @Getter @Setter
 	private String email;
 
-	@JsonIgnore
+	@JsonIgnore @Getter @Setter
 	private boolean enabled;
 
 	@Fetch
 	@RelatedTo(type = "HAS_ROLES", direction = Direction.BOTH, elementClass = Role.class)
+        @JsonIgnore @Getter @Setter
 	private Set<Role> roles = new HashSet<Role>();
 	
 	@RelatedTo(type = "SUBSCRIBES", direction = Direction.BOTH, elementClass = Location.class)
+	@Getter @Setter
 	private Set<Location> locationSubscriptions= new HashSet<Location>();
-
-	public User() {
-
-	}
 
 	public User(String firstName, String lastName, String userName, boolean enabled) {
 		super();
@@ -59,54 +64,6 @@ public class User extends AbstractPersistable implements UserDetails {
 		this.lastName = lastName;
 		this.username = userName;
 		this.enabled = enabled;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String userName) {
-		this.username = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
 	}
 
 	@Override
@@ -131,24 +88,6 @@ public class User extends AbstractPersistable implements UserDetails {
 	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return isEnabled();
-	}
-
-	@JsonIgnore
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	@JsonIgnore
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public Set<Location> getLocationSubscriptions() {
-		return locationSubscriptions;
-	}
-
-	public void setLocationSubscriptions(Set<Location> locationSubscriptions) {
-		this.locationSubscriptions = locationSubscriptions;
 	}
 
 }

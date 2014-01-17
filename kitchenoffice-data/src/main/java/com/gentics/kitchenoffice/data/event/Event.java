@@ -27,9 +27,13 @@ import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.Participant;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NodeEntity
 @XmlRootElement
+@NoArgsConstructor
 public class Event extends AbstractPersistable implements Feedable {
 
 	/**
@@ -38,140 +42,60 @@ public class Event extends AbstractPersistable implements Feedable {
 	private static final long serialVersionUID = 4856195825764426200L;
 
 	@NotNull
+	@Getter @Setter
 	private EventType type;
 
 	@Fetch
 	@NotNull
 	@Valid
+	@Getter @Setter
 	private User creator;
 
-	private Boolean locked = false;
+	@Getter @Setter
+	private boolean locked = false;
 
 	@JsonIgnore
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType = Long.class)
 	@XmlAttribute(name = "creationDate")
+	@Getter @Setter
 	private Date creationDate;
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType = Long.class)
 	@XmlAttribute(name = "startDate")
+	@Getter @Setter
 	private Date startDate;
 
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType = Long.class)
 	@XmlAttribute(name = "endDate")
+	@Getter @Setter
 	private Date endDate;
 
 	@Indexed
+	@Getter @Setter
 	private String description;
 
 	@Fetch
 	@RelatedTo(type = "HAS_LOCATION", direction = Direction.BOTH, elementClass = Location.class)
+	@Getter @Setter
 	private Location location;
 
 	@Fetch
 	@RelatedTo(type = "COOKING", direction = Direction.BOTH, elementClass = Recipe.class)
+	@Getter @Setter
 	private Recipe recipe;
 
 	@Fetch
 	@RelatedToVia(type = "TAKES_PART", direction = Direction.BOTH, elementClass = Participant.class)
+	@Getter @Setter
 	private Set<Participant> participants = new HashSet<Participant>();
 
 	@Fetch
 	@RelatedTo(type = "HAS_COMMENT", direction = Direction.OUTGOING, enforceTargetType = true, elementClass = Comment.class)
+	@Getter @Setter
 	private Set<Comment> comments = new HashSet<Comment>();
-
-	public Event() {
-	}
-
-	public User getCreator() {
-		return creator;
-	}
-
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
-
-	public Boolean isLocked() {
-		return locked;
-	}
-
-	public void setLocked(Boolean locked) {
-		this.locked = locked;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public EventType getType() {
-		return type;
-	}
-
-	public void setType(EventType type) {
-		this.type = type;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date date) {
-		this.startDate = date;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date date) {
-		this.endDate = date;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Set<Participant> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(Set<Participant> participants) {
-		this.participants = participants;
-	}
-
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
 
 	public Comment addComment(Comment comment) {
 		Assert.notNull(comment, "comment may not be null or empty!");
