@@ -29,7 +29,7 @@ public class StorageService {
 
 	private Storage storage;
 
-	@Autowired
+	@Autowired(required = false)
 	private ServletContext servletContext;
 
 	@Value("${storage.class}")
