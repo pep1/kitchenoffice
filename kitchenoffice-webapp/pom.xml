@@ -75,6 +75,10 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>underscore.string</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery-file-upload</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -148,7 +152,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
-				<maven.db.location>C:/TEMP/neo4j-db</maven.db.location>
+				<database.location>C:/TEMP/neo4j-db</database.location>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
@@ -162,7 +166,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
-				<maven.db.location>/tmp/kitchenoffice/neo4j-db</maven.db.location>
+				<database.location>/tmp/kitchenoffice/neo4j-db</database.location>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
 		</profile>
@@ -171,7 +175,7 @@
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
-				<maven.db.location>/var/lib/kitchenoffice/neo4j-db</maven.db.location>
+				<database.location>/var/lib/kitchenoffice/neo4j-db</database.location>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-prod.properties</wro4j.configfile.path>
 			</properties>
 		</profile>

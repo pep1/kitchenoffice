@@ -132,6 +132,10 @@
 		</dependency>
 
 		<!-- Spring Data Neo4j -->
+                <dependency>
+                        <groupId>org.springframework.data</groupId>
+                        <artifactId>spring-data-neo4j</artifactId>
+		</dependency>
 
 		<!-- Tools -->
 		<dependency>

@@ -18,6 +18,7 @@ var app = angular.module(
 			'flash',
 			'infinite-scroll',
 			'frapontillo.bootstrap-switch',
+			'blueimp.fileupload'
 ]).config(
 [ '$routeProvider', '$locationProvider', '$httpProvider',
   function($routeProvider, $locationProvider, $httpProvider) {
@@ -73,7 +74,7 @@ app.value('$strapConfig', {
 		todayHighlight : true
 	}
 });
-app.run(function($rootScope, $location, locationService, userService, $q) {
+app.run(function($rootScope, userService, $q) {
 
 	$rootScope.me = userService.getUser();
 	
