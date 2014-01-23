@@ -83,7 +83,7 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 
 		Object email = assertion.getPrincipal().getAttributes().get("email");
 
-		if (email instanceof String) {
+		if (email != null && email instanceof String) {
 			String emailString = ((String) email).replace("[", "");
 			emailString = emailString.replace("]", "");
 			String[] emails = emailString.split(",");

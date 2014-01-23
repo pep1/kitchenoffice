@@ -232,7 +232,8 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		if (_.isNull(event) || _.isUndefined(event)) {
 			return;
 		}
-		return event.remove();
+		
+		return this.one(event.id).remove();
 	};
 
 	/**
