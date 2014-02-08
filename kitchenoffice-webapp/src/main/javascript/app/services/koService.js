@@ -93,16 +93,8 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 * Prepares all events with additional informations
 	 */
 	var prepareEvent = function(event) {
-		event.canAttend = function() {
-			return !$rootScope.containsMe(event.participants);
-		};
-
-		event.canDismiss = function() {
-			return $rootScope.containsMe(event.participants);
-		};
 		
 		event.participantsContainMe = $rootScope.containsMe(event.participants);
-		
 		event.hasParticipants = (!_.isNull(event.participants) && !_.isUndefined(event.participants)) ? event.participants.length !== 0 : false;
 	};
 
