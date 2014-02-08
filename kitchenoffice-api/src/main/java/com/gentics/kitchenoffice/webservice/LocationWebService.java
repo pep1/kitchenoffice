@@ -3,6 +3,7 @@
  */
 package com.gentics.kitchenoffice.webservice;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -183,17 +184,16 @@ public class LocationWebService {
 	 * @param location
 	 *            the location
 	 * @return the location
+	 * @throws IOException 
 	 */
 	@POST
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Location createOrUpdateLocation(@Valid Location location) {
-
-		log.debug("calling createLocation");
+	public Location createOrUpdateLocation(@Valid Location location) throws IOException {
+		log.debug("calling createOrUpdateLocation");
 
 		Assert.notNull(location);
-		// TODO: Validation
 		locationService.saveLocation(location);
 
 		return location;

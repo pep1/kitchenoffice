@@ -74,9 +74,10 @@ public class StorageService {
 	public File createTempFile(String type, String extension) {
 
 		String filename = getUniqueFileName(extension);
+		String filePath = tempPath + File.separator + type;
 
-		log.debug("creating new temp file: " + tempPath + File.separator + filename);
-		File f = new File(tempPath, filename);
+		log.debug("creating new temp file: " + filePath + File.separator + filename);
+		File f = new File(filePath, filename);
 
 		return f;
 	}
@@ -88,4 +89,9 @@ public class StorageService {
 		return new StringBuilder().append(RandomStringUtils.random(16, 0, 0, true, true, null, random)).append(".")
 				.append(extension).toString();
 	}
+
+	public Storage getStorage() {
+		return storage;
+	}
+
 }

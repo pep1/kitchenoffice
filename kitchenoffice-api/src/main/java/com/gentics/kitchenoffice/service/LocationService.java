@@ -1,5 +1,7 @@
 package com.gentics.kitchenoffice.service;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -12,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.LocationRepository;
+import com.gentics.kitchenoffice.server.ImageService;
 
 @Service
 public class LocationService {
@@ -26,6 +30,12 @@ public class LocationService {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private StorageService storageService;
+
+	@Autowired
+	private ImageService imageService;
 
 	@Autowired
 	TagService tagService;
@@ -73,7 +83,30 @@ public class LocationService {
 		}
 	}
 
-	public Location saveLocation(Location location) {
+	/**
+	 * Saves the location. If there is a new image appended, the image will be
+	 * processed.
+	 * 
+	 * @param location
+	 * @return the saved location
+	 * @throws IOException
+	 */
+	public Location saveLocation(Location location) throws IOException {
+
+		if (!StringUtils.isEmpty(location.getImageUrl())) {
+			// create new image object
+			Image newImage = imageService.createFromUrl(location.getImageUrl());
+			Image oldImage = location.getImage();
+
+			// delete old image if there is one
+			if (oldImage != null) {
+				imageService.removeImageObject(oldImage);
+			}
+
+			// set it as location image
+			location.setImage(newImage);
+		}
+
 		return locationRepository.save(location);
 	}
 

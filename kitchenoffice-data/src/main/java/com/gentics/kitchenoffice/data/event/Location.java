@@ -10,6 +10,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -21,13 +22,9 @@ import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.user.User;
 
+@SuppressWarnings("serial")
 @NodeEntity
 public class Location extends AbstractPersistable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5410871118357785312L;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "locationnamesearch")
 	private String name;
@@ -51,6 +48,12 @@ public class Location extends AbstractPersistable {
 	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH, enforceTargetType = true, elementClass = Tag.class)
 	private Set<Tag> tags = new HashSet<Tag>();
 
+	/**
+	 * Url that can be posted when creating or updating a location
+	 */
+	@Transient
+	private String imageUrl;
+
 	@Fetch
 	@RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING, elementClass = Image.class)
 	private Image image;
@@ -59,10 +62,6 @@ public class Location extends AbstractPersistable {
 	@JsonIgnore
 	@RelatedTo(type = "SUBSCRIBES", direction = Direction.BOTH, elementClass = User.class)
 	private Set<User> subscribers = new HashSet<User>();
-
-	public Location() {
-		super();
-	}
 
 	public String getName() {
 		return name;
@@ -110,6 +109,14 @@ public class Location extends AbstractPersistable {
 
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public Image getImage() {

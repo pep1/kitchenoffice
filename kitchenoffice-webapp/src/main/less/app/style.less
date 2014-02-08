@@ -4,7 +4,6 @@
 @grey: #999999;
 @selected: #08c;
 @hover: #839EF1;
-
 .box-shadow (@style , @c) when (iscolor(@c)) {
 	box-shadow: @style @c;
 	-webkit-box-shadow: @style @c;
@@ -36,20 +35,25 @@
 }
 
 .ko-map-canvas {
-	height: 400px; 
-	width: 100%; 
+	height: 400px;
+	width: 100%;
 	border: 1px solid @base;
 	margin: 3px;
-	.border-radius(4px);
+	.border-radius (4px);
 	.box-shadow (0 0 10px , 50%);
 }
 
 .ko-form-fluid {
 	.row-fluid {
 		margin-bottom: 10px;
-		
 		.help-inline {
 			margin-top: 5px;
+		}
+	}
+
+	.ko-image-preview {
+		img {
+			max-height: 200px;
 		}
 	}
 }
@@ -66,15 +70,14 @@
 	padding: 15px;
 	background: @base;
 	border: 1px solid @base;
-	.border-radius(4px);
+	.border-radius (4px);
 	cursor: pointer;
-	
 	&.selected {
 		background: white;
 		border-color: @selected;
 	}
-	
-	&:hover { 
+
+	&:hover {
 		border-color: @hover;
 	}
 }
@@ -83,23 +86,20 @@
 	display: block;
 	background: @white;
 	border: 1px solid @light;
-	.border-radius(5px);
+	.border-radius (5px);
 	padding: 6px 12px;
 	margin: 0 0 10px 0;
-	
 	ul.ko-attendees-list {
 		margin: 10px 5px;
-		
 		li {
 			border-bottom: 1px solid @base;
 			padding: 3px;
-			
 			&:last-child {
 				border-bottom: none;
 			}
 		}
 	}
-	
+
 	small {
 		color: @grey;
 	}
@@ -114,18 +114,15 @@
 }
 
 .tags {
-
-	.ko-tag-list{
+	.ko-tag-list {
 		margin-bottom: 5px;
 	}
 
 	.tag {
 		margin: 2px 3px 2px 3px;
-		
 		a {
 			color: @base;
 			cursor: pointer;
-			
 			&:hover {
 				test-decoration: none;
 			}
@@ -134,7 +131,7 @@
 }
 
 .gravatar-icon {
-	.border-radius(50px);
+	.border-radius (50px);
 	.box-shadow (1px 1px 1px , 50%);
 }
 
@@ -146,7 +143,7 @@
 	.icon-container {
 		margin-right: 7px;
 	}
-	
+
 	p {
 		margin: 5px 0px 3px 0px;
 	}
@@ -156,31 +153,31 @@
 	cursor: pointer;
 }
 
-html, body, .container, .content {
-    height: 100%;
+html , body , .container , .content {
+	height: 100%;
 }
- 
-.container, .content {
-    position: relative;
+
+.container , .content {
+	position: relative;
 }
- 
+
 .wrapper {
-    min-height: 100%;
-    height: auto !important;
-    margin: 0 auto -40px; /* same as the footer */
+	min-height: 100%;
+	height: auto ! important;
+	margin: 0 auto -40px;
 }
- 
+
 .push {
-    height: 40px; /* same as the footer */
+	height: 40px;
 }
+
 .footer-wrapper {
-    position: relative;
-    height: 40px;
-    background: @base;
-    
-    p {
-    	margin: 10px 0;
-    }
+	position: relative;
+	height: 40px;
+	background: @base;
+	p {
+		margin: 10px 0;
+	}
 }
 
 @media (max-width: 767px) {
@@ -204,6 +201,7 @@ html, body, .container, .content {
 
 @media (min-width: 979px) {
 	.proper-content {
-    	padding-top: 60px; /* >= navbar height */
+		padding-top: 60px;
 	}
 }
+

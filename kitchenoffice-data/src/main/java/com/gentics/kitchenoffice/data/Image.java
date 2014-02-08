@@ -1,18 +1,18 @@
 package com.gentics.kitchenoffice.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.gentics.kitchenoffice.server.storage.Storable;
 
+@SuppressWarnings("serial")
 @NodeEntity
 public class Image extends AbstractPersistable implements Storable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3712876154954811045L;
-
-	private static final String STORAGE_TYPE = "image";
+	public static final String STORAGE_TYPE = "image";
 
 	private String fileName;
 
@@ -23,6 +23,9 @@ public class Image extends AbstractPersistable implements Storable {
 	private int width;
 
 	private int height;
+
+	@Transient
+	private Map<Integer, Thumbnail> thumbs = new HashMap<Integer, Thumbnail>();
 
 	public Image() {
 
@@ -68,6 +71,14 @@ public class Image extends AbstractPersistable implements Storable {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public Map<Integer, Thumbnail> getThumbs() {
+		return thumbs;
+	}
+
+	public void setThumbs(Map<Integer, Thumbnail> thumbs) {
+		this.thumbs = thumbs;
 	}
 
 	@Override

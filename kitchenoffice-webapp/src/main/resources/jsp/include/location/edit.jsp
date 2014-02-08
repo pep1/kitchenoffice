@@ -1,12 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <div class="row-fluid">
-	<div class="span6">
-		<!-- div class="row-fluid">
-			<form id="fileupload" action="rest/sound/upload/multiple" method="POST" enctype="multipart/form-data" data-fileupload="options" data-ng-class="{true: 'fileupload-processing'}[!!processing() || loadingFiles]">
-				<div id="dropzone" class="fade well">Drop files here</div>
-			</form>
-		</div-->
-		<form name="locationForm" class="form-horizontal ko-form-fluid">
+	<form name="locationForm" class="form-horizontal ko-form-fluid">
+		<div class="span6">
 			<div class="row-fluid">
 				<div class="span3">
 					<label class="pull-right help-inline">Name</label>
@@ -44,6 +39,23 @@
 			</div>
 			<hr>
 			<div class="row-fluid">
+				<!-- form id="fileupload" action="rest/sound/upload/multiple" method="POST" enctype="multipart/form-data" data-fileupload="options" data-ng-class="{true: 'fileupload-processing'}[!!processing() || loadingFiles]">
+					<div id="dropzone" class="fade well">Drop files here</div>
+				</form-->
+				<div class="span3">
+					<label class="pull-right help-inline">Image</label>
+				</div>
+				<div class="span9">
+					<div class="row-fluid">
+						<input name="locationWebsite" type="url" class="input-block-level" data-ng-model="location.imageUrl" placeholder="paste image URL here">
+					</div>
+					<div class="row-fluid ko-image-preview">
+						<img data-ng-src="{{location.imageUrl}}" class="image-preview" />
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row-fluid">
 				<div class="span3">
 					<label class="pull-right help-inline">Tags</label>
 				</div>
@@ -51,6 +63,12 @@
 					<tag-input tags="location.tags"></tag-input>
 				</div>
 			</div>
+		</div>
+		<div class="span6">
+			<div class="row-fluid">
+				<input type="text" class="search-query input-block-level" data-ng-model="locationSearchString" data-maps-search="locationMap" placeholder="Enter location name here to search with Google">
+			</div>
+			<div id="map_canvas" class="ko-map-canvas" data-ui-map="locationMap" data-ui-options="mapOptions"></div>
 			<hr>
 			<div class="row-fluid">
 				<div class="span3">
@@ -66,12 +84,7 @@
 					<input type="number" class="input-block-level" data-ng-model="location.longitude" placeholder="Longitude" disabled="disabled" required>
 				</div>
 			</div>
-		</form>
-	</div>
-	<div class="span6">
-		<form class="form-inline">
-			<input type="text" class="search-query input-block-level" data-ng-model="locationSearchString" data-maps-search="locationMap" placeholder="Enter location name here to search with Google">
-		</form>
-		<div id="map_canvas" class="ko-map-canvas" data-ui-map="locationMap" data-ui-options="mapOptions"></div>
-	</div>
+		</div>
+
+	</form>
 </div>
