@@ -1,8 +1,10 @@
 package com.gentics.kitchenoffice.data;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
@@ -12,24 +14,26 @@ import com.gentics.kitchenoffice.server.storage.Storable;
 @NodeEntity
 public class Image extends AbstractPersistable implements Storable {
 
-	public static final String STORAGE_TYPE = "image";
+	@JsonIgnore
+	public static final String STORAGE_TYPE = "img";
 
+	@JsonIgnore
 	private String fileName;
 
-	private String mimeType;
-
+	@JsonIgnore
 	private long size;
 
+	@JsonIgnore
 	private int width;
 
+	@JsonIgnore
 	private int height;
 
 	@Transient
+	private URL url;
+
+	@Transient
 	private Map<Integer, Thumbnail> thumbs = new HashMap<Integer, Thumbnail>();
-
-	public Image() {
-
-	}
 
 	@Override
 	public String getFileName() {
@@ -39,14 +43,6 @@ public class Image extends AbstractPersistable implements Storable {
 	@Override
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
-	}
-
-	public String getMimeType() {
-		return mimeType;
-	}
-
-	public void setMimeType(String mimeType) {
-		this.mimeType = mimeType;
 	}
 
 	public long getSize() {
@@ -71,6 +67,14 @@ public class Image extends AbstractPersistable implements Storable {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public URL getUrl() {
+		return url;
+	}
+
+	public void setUrl(URL url) {
+		this.url = url;
 	}
 
 	public Map<Integer, Thumbnail> getThumbs() {

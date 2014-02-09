@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.security.SecureRandom;
 
 import javax.annotation.PostConstruct;
@@ -35,6 +36,15 @@ public class StorageService {
 	@Value("${storage.class}")
 	private Class<? extends Storage> storageClazz;
 
+	@Value("${storage.hostname:localhost}")
+	private String hostname;
+
+	@Value("${storage.port:8080}")
+	private Integer port;
+
+	@Value("${storage.protocol:http}")
+	private String protocol;
+
 	@Value("${storage.basepath}")
 	private String basePath;
 
@@ -50,7 +60,7 @@ public class StorageService {
 
 		// initialize storage
 		this.storage = storageClazz.newInstance();
-		storage.init(basePath);
+		storage.init(new URL(protocol, hostname, port, ""), basePath);
 
 		if (storage instanceof ServletContextAware) {
 			((ServletContextAware) storage).setServletContext(servletContext);
@@ -71,13 +81,47 @@ public class StorageService {
 		}
 	}
 
-	public File createTempFile(String type, String extension) {
+	public File createTempFile(String type, String extension) throws IOException {
 
 		String filename = getUniqueFileName(extension);
 		String filePath = tempPath + File.separator + type;
+		File dir = new File(filePath);
+
+		// auto create temp directory if not exist
+		if (!dir.isDirectory()) {
+			if (!dir.mkdirs()) {
+				throw new IOException("Could not create tempdir in filesystem.");
+			}
+		}
+
+		if (!dir.canWrite()) {
+			throw new IOException("Can not write to temp file path " + dir.getAbsolutePath());
+		}
 
 		log.debug("creating new temp file: " + filePath + File.separator + filename);
-		File f = new File(filePath, filename);
+		File f = new File(dir, filename);
+
+		return f;
+	}
+	
+	public File createTempFile (String type, String basename, String extension) throws IOException {
+		
+		String filePath = tempPath + File.separator + type;
+		File dir = new File(filePath);
+
+		// auto create temp directory if not exist
+		if (!dir.isDirectory()) {
+			if (!dir.mkdirs()) {
+				throw new IOException("Could not create tempdir in filesystem.");
+			}
+		}
+
+		if (!dir.canWrite()) {
+			throw new IOException("Can not write to temp file path " + dir.getAbsolutePath());
+		}
+
+		log.debug("creating new temp file: " + filePath + File.separator + basename + "." + extension);
+		File f = new File(dir, basename + "." + extension);
 
 		return f;
 	}

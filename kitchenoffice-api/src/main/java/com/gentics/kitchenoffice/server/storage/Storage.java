@@ -11,7 +11,7 @@ public interface Storage {
 	 * 
 	 * @param basePath for the public acessible files
 	 */
-	public void init(String basePath);
+	public void init(URL host, String basePath);
 
 	/**
 	 * Gets the url of the storable

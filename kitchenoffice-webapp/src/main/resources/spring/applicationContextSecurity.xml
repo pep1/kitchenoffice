@@ -18,6 +18,8 @@
 		pattern="/api/**" access="ROLE_USER" /> <http-basic /> </http -->
 		
 	<http pattern="/assets/**" security="none" />
+	<http pattern="/media/**" security="none" />
+	
 	<http pattern="/event/rss" security="none" />
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">

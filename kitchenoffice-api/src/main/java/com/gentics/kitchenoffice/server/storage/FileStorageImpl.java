@@ -1,7 +1,6 @@
 package com.gentics.kitchenoffice.server.storage;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -20,12 +19,16 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 
 	private String storageBasePath;
 
+	private URL host;
+
 	@Override
-	public void init(String basePath) {
+	public void init(URL host, String basePath) {
 		log.debug("Initializing FilestorageImpl instance ... ");
-		
+
 		Assert.notNull(basePath);
-		
+		Assert.notNull(host);
+
+		this.host = host;
 		this.storageBasePath = basePath;
 	}
 
@@ -35,17 +38,21 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 		URL url = null;
 		try {
 			StringBuilder builder = new StringBuilder();
-			builder.append(context.getContextPath());
-			builder.append("/");
+
+			if (context != null) {
+				builder.append(context.getContextPath());
+				builder.append("/");
+			}
+
 			builder.append(storageBasePath);
 			builder.append(storable.getStorageType());
 			builder.append("/");
 
 			builder.append(storable.getFileName());
-			url = new URL(builder.toString());
+			url = new URL(host.getProtocol(), host.getHost(), host.getPort(), builder.toString());
 
 		} catch (MalformedURLException e) {
-			log.error("Error while generating URL for Image", e);
+			log.error("Error while generating URL for Storable", e);
 		}
 
 		return url;
@@ -53,7 +60,14 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 
 	public String getStorablePath(Storable storable) {
 		Assert.notNull(storable);
-		return context.getRealPath(storageBasePath + File.separator + storable.getStorageType());
+
+		String path = storageBasePath + File.separator + storable.getStorageType();
+
+		if (context != null) {
+			return context.getRealPath(path);
+		} else {
+			return path;
+		}
 	}
 
 	@Override
@@ -64,11 +78,12 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 	@Override
 	public File getFileFromStorable(Storable storable) {
 		Assert.notNull(storable);
-		return new File(getStorablePath(storable));
+		Assert.hasLength(storable.getFileName());
+		return new File(getStorablePath(storable), storable.getFileName());
 	}
 
 	@Override
-	public Storable persistStorable(Storable storable, File file) throws IOException {
+	public Storable persistStorable(Storable storable, File file) {
 
 		Assert.notNull(file);
 		Assert.notNull(storable);
@@ -92,8 +107,8 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 			newFile.delete();
 
 		// Move file to new directory
-		if (file.renameTo(newFile)) {
-			throw new IOException("could not move file, please check permissions!");
+		if (!file.renameTo(newFile)) {
+			log.error("Persist: persist of file " + storable.getFileName() + " failed!");
 		}
 
 		storable.setFileName(fileName);
@@ -102,7 +117,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 	}
 
 	@Override
-	public void deleteStorable(Storable storable) throws IOException {
+	public void deleteStorable(Storable storable) {
 
 		Assert.notNull(storable);
 
@@ -126,7 +141,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 		boolean success = file.delete();
 
 		if (!success) {
-			throw new IOException("Delete: deletion failed");
+			log.error("Delete: deletion of file " + storable.getFileName() + " failed!");
 		}
 	}
 

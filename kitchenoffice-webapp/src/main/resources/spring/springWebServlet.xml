@@ -48,6 +48,8 @@
 		<beans:property name="standardDefaultImage" value="MONSTER" />
 		<beans:property name="size" value="50" />
 	</beans:bean>
+	
+	<mvc:resources mapping="/media/**" location="/media/" />
 
 	<mvc:resources mapping="/assets/css/**" location="/assets/css/" />
 	<mvc:resources mapping="/assets/js/**" location="/assets/js/" />

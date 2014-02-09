@@ -1,21 +1,26 @@
 package com.gentics.kitchenoffice.data;
 
 import java.io.File;
+import java.net.URL;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.gentics.kitchenoffice.server.storage.Storable;
 
 public class Thumbnail implements Storable {
 
+	@JsonIgnore
 	public static final String STORAGE_TYPE = "img" + File.separator + "thumb";
 
+	@JsonIgnore
 	private String fileName;
 
-	private String url;
+	private URL url;
 
 	/**
 	 * @return the url
 	 */
-	public String getUrl() {
+	public URL getUrl() {
 		return url;
 	}
 
@@ -23,7 +28,7 @@ public class Thumbnail implements Storable {
 	 * @param url
 	 *            the url to set
 	 */
-	public void setUrl(String url) {
+	public void setUrl(URL url) {
 		this.url = url;
 	}
 

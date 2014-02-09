@@ -1,4 +1,4 @@
-package com.gentics.kitchenoffice.server;
+package com.gentics.kitchenoffice.service;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,12 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.Thumbnail;
 import com.gentics.kitchenoffice.repository.ImageRepository;
-import com.gentics.kitchenoffice.service.StorageService;
 
 @Service
 @Scope("singleton")
@@ -36,22 +36,29 @@ public class ImageService {
 
 	@Autowired
 	private StorageService storageService;
-	
+
 	@Autowired
 	private ImageRepository repository;
 
 	@Value("#{'${process.image.thumbs.sizes:40,160,480}'.split(',')}")
 	private Set<Integer> sizes;
 
-	@Value("process.image.extension")
-	private String THUMB_EXTENSION = "jpg";
+	@Value("${process.image.extension:jpg}")
+	private String THUMB_EXTENSION;
 
-	@Value("process.image.quality:0.9")
+	@Value("${process.image.quality:0.9}")
 	private Float THUMB_QUALITY;
 
 	@PostConstruct
 	public void initialize() {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ...");
+	}
+
+	@Transactional
+	public Image findById(Long id) {
+		Assert.notNull(id);
+		Image output = repository.findOne(id);
+		return output;
 	}
 
 	public Image createFromUrl(String urlString) throws IOException {
@@ -68,7 +75,7 @@ public class ImageService {
 			// write image to new temp file
 			BufferedImage bi = ImageIO.read(in);
 			file = storageService.createTempFile(Image.STORAGE_TYPE, THUMB_EXTENSION);
-			ImageIO.write(bi, THUMB_EXTENSION, file);
+			ImageIO.write(bi, "jpeg", file);
 
 			imageFile = createImageObject(file);
 
@@ -107,7 +114,7 @@ public class ImageService {
 
 		// create thumbnails
 		for (Integer size : sizes) {
-			thumbFile = createThumbFile(size, bi, FilenameUtils.getExtension(file.getName()));
+			thumbFile = createThumbFile(size, bi, image.getFileName());
 			storageService.getStorage().persistStorable(new Thumbnail(), thumbFile);
 		}
 
@@ -122,7 +129,7 @@ public class ImageService {
 	private synchronized File createThumbFile(Integer size, BufferedImage image, String fileName) throws IOException {
 		long start = System.currentTimeMillis();
 
-		File thumbFile = storageService.createTempFile(Thumbnail.STORAGE_TYPE, THUMB_EXTENSION);
+		File thumbFile = storageService.createTempFile(Thumbnail.STORAGE_TYPE, FilenameUtils.getBaseName(fileName) + "." + size, THUMB_EXTENSION);
 
 		createThumb(image, thumbFile, size, size);
 
@@ -133,14 +140,19 @@ public class ImageService {
 	}
 
 	public void removeImageObject(Image oldImage) throws IOException {
-		// delete original
-		storageService.getStorage().deleteStorable(oldImage);
 
-		// delete thumbnails
-		for (Thumbnail thumb : oldImage.getThumbs().values()) {
-			storageService.getStorage().deleteStorable(thumb);
+		try {
+			// delete original
+			storageService.getStorage().deleteStorable(oldImage);
+
+			// delete thumbnails
+			for (Thumbnail thumb : oldImage.getThumbs().values()) {
+				storageService.getStorage().deleteStorable(thumb);
+			}
+		} catch (IllegalArgumentException e) {
+			log.error("Error while deleting image.", e);
 		}
-		
+
 		repository.delete(oldImage);
 	}
 
@@ -180,6 +192,14 @@ public class ImageService {
 				.addFilter(new Canvas(x, y, Positions.CENTER, true)).toFile(outputFile);
 
 		return outputFile;
+	}
+
+	public Set<Integer> getSizes() {
+		return sizes;
+	}
+
+	public String getThumbExtension() {
+		return THUMB_EXTENSION;
 	}
 
 }
