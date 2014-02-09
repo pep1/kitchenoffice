@@ -23,19 +23,16 @@ import org.springframework.util.Assert;
 import com.gentics.kitchenoffice.adapter.DateAdapter;
 import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Comment;
+import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.Job;
 import com.gentics.kitchenoffice.data.Participant;
 import com.gentics.kitchenoffice.data.Recipe;
 import com.gentics.kitchenoffice.data.user.User;
 
+@SuppressWarnings("serial")
 @NodeEntity
 @XmlRootElement
 public class Event extends AbstractPersistable implements Feedable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4856195825764426200L;
 
 	@NotNull
 	private EventType type;
@@ -81,9 +78,6 @@ public class Event extends AbstractPersistable implements Feedable {
 	@Fetch
 	@RelatedTo(type = "HAS_COMMENT", direction = Direction.OUTGOING, enforceTargetType = true, elementClass = Comment.class)
 	private Set<Comment> comments = new HashSet<Comment>();
-
-	public Event() {
-	}
 
 	public User getCreator() {
 		return creator;
@@ -222,6 +216,14 @@ public class Event extends AbstractPersistable implements Feedable {
 		}
 
 		return builder.toString();
+	}
+
+	public Image getImage() {
+		if (location != null && location.getImage() != null) {
+			return location.getImage();
+		} else {
+			return null;
+		}
 	}
 
 	@Override

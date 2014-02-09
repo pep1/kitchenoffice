@@ -26,7 +26,9 @@
 					</p>
 				</div>
 				<div class="span6">
-					<img ng-src="{{location.image.thumbs[160].url}}" />
+					<div class="thumbnail pull-right">
+						<img ng-src="{{location.getThumbURL(278, 160)}}" />
+					</div>
 				</div>
 			</div>
 		</div>

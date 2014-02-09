@@ -99,7 +99,7 @@ public class LocationWebService {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId, "Id could not be parsed");
 
-		Location location = locationService.getLocationById(parsedId);
+		Location location = locationService.findLocationById(parsedId);
 
 		if (location == null) {
 			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
@@ -124,7 +124,7 @@ public class LocationWebService {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId, "Id could not be parsed");
 
-		Location location = locationService.getLocationById(parsedId);
+		Location location = locationService.findLocationById(parsedId);
 
 		if (location == null) {
 			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
@@ -149,7 +149,7 @@ public class LocationWebService {
 		Long parsedId = NumberUtils.parseNumber(id, Long.class);
 		Assert.notNull(parsedId, "Id could not be parsed");
 
-		Location location = locationService.getLocationById(parsedId);
+		Location location = locationService.findLocationById(parsedId);
 
 		if (location == null) {
 			throw new NotFoundException("Sorry, there is no location with id " + parsedId);
@@ -175,7 +175,7 @@ public class LocationWebService {
 	@Path("/lastused")
 	public List<Location> getUserLastLocations(@Context Pageable pageable, @QueryParam("search") String search) {
 		log.debug("calling getLastUsedLocations");
-		return locationService.getLastUsedLocations(pageable, null, search).getContent();
+		return locationService.findLastUsedLocations(pageable, null, search).getContent();
 	}
 
 	/**

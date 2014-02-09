@@ -94,6 +94,20 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 */
 	var prepareEvent = function(event) {
 		
+		event.getThumbURL = function(width, height) {
+			if(_.isUndefined(this.image) || _.isNull(this.image)) {
+				return null;
+			}
+			
+			if(!width || !height) {
+				return null;
+			}
+			
+			var baseName = this.image.fileName.substr(0, this.image.fileName.lastIndexOf('.')); 
+			
+			return $rootScope.thumbBasePath + baseName + "-" + width + "x" + height + ".jpg";
+		};
+		
 		event.participantsContainMe = $rootScope.containsMe(event.participants);
 		event.hasParticipants = (!_.isNull(event.participants) && !_.isUndefined(event.participants)) ? event.participants.length !== 0 : false;
 	};
@@ -253,6 +267,23 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	 * Prepares all locations with additional informations
 	 */
 	var prepareLocation = function(location) {
+		
+		/**
+		 * 
+		 */
+		location.getThumbURL = function(width, height) {
+			if(_.isUndefined(this.image) || _.isNull(this.image)) {
+				return null;
+			}
+			
+			if(!width || !height) {
+				return null;
+			}
+			
+			var baseName = this.image.fileName.substr(0, this.image.fileName.lastIndexOf('.')); 
+			
+			return $rootScope.thumbBasePath + baseName + "-" + width + "x" + height + ".jpg";
+		};
 		
 		/**
 		 * check if the user has subscribed to this location

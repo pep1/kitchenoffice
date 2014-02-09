@@ -75,9 +75,11 @@ app.value('$strapConfig', {
 	}
 });
 app.run(function($rootScope, userService, $q) {
+	
+	$rootScope.thumbBasePath = "/kitchenoffice-webapp/thumbs/";
 
 	$rootScope.me = userService.getUser();
-	
+
 	$rootScope.refreshUser = function() {
 		$rootScope.me = userService.getUser();
 	};
@@ -98,7 +100,7 @@ app.run(function($rootScope, userService, $q) {
 		
 		return deferred.promise;
 	};
-	
+
 	$rootScope.containsMe = function(array) {
 		var deferred = $q.defer();
 		

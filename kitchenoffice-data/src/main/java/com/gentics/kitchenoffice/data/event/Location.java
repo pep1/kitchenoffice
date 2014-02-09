@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.neo4j.graphdb.Direction;
@@ -111,10 +112,12 @@ public class Location extends AbstractPersistable {
 		this.longitude = longitude;
 	}
 
+	@JsonIgnore
 	public String getImageUrl() {
 		return imageUrl;
 	}
 
+	@JsonProperty
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}

@@ -1,10 +1,9 @@
 package com.gentics.kitchenoffice.data;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
@@ -17,7 +16,7 @@ public class Image extends AbstractPersistable implements Storable {
 	@JsonIgnore
 	public static final String STORAGE_TYPE = "img";
 
-	@JsonIgnore
+	@JsonProperty
 	private String fileName;
 
 	@JsonIgnore
@@ -32,15 +31,14 @@ public class Image extends AbstractPersistable implements Storable {
 	@Transient
 	private URL url;
 
-	@Transient
-	private Map<Integer, Thumbnail> thumbs = new HashMap<Integer, Thumbnail>();
-
 	@Override
+	@JsonProperty
 	public String getFileName() {
 		return fileName;
 	}
 
 	@Override
+	@JsonIgnore
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
@@ -75,14 +73,6 @@ public class Image extends AbstractPersistable implements Storable {
 
 	public void setUrl(URL url) {
 		this.url = url;
-	}
-
-	public Map<Integer, Thumbnail> getThumbs() {
-		return thumbs;
-	}
-
-	public void setThumbs(Map<Integer, Thumbnail> thumbs) {
-		this.thumbs = thumbs;
 	}
 
 	@Override

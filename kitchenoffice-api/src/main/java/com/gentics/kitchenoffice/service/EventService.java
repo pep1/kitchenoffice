@@ -66,26 +66,32 @@ public class EventService {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ...");
 	}
 
-	public Page<Event> getEvents(Pageable pageable) {
+	@Transactional
+	public Page<Event> findEvents(Pageable pageable) {
 		return eventRepository.findAll(pageable);
 	}
 
-	public List<Event> getFutureEvents(Pageable pageable) {
+	@Transactional
+	public List<Event> findFutureEvents(Pageable pageable) {
 		return eventRepository.findAllinFutureOf(new DateTime().toDateTimeISO().getMillis(), pageable);
 	}
 
-	public List<Event> getPastEvents(Pageable pageable) {
+	@Transactional
+	public List<Event> findPastEvents(Pageable pageable) {
 		return eventRepository.findAllinPastOf(new DateTime().toDateTimeISO().getMillis(), pageable);
 	}
 
-	public List<Event> getMyAttendedEvents(Pageable pageable) {
+	@Transactional
+	public List<Event> findMyAttendedEvents(Pageable pageable) {
 		return eventRepository.findAllAttended(userService.getUser(), pageable);
 	}
 
-	public List<Event> getEventsOfUser(Pageable pageable) {
+	@Transactional
+	public List<Event> findEventsOfUser(Pageable pageable) {
 		return eventRepository.findByCreator(userService.getUser(), pageable);
 	}
 
+	@Transactional
 	public Event getEventById(Long id) {
 		Assert.notNull(id);
 		return eventRepository.findById(id);
@@ -230,6 +236,7 @@ public class EventService {
 		return event;
 	}
 
+	@Transactional
 	public boolean checkIfUserCanAttendEvent(Event event, User user) {
 		Assert.notNull(event);
 		Assert.notNull(user);
@@ -249,6 +256,7 @@ public class EventService {
 		return output;
 	}
 
+	@Transactional
 	public boolean checkIfUserCanCreateEvent(Event event, User user) {
 		Assert.notNull(event);
 		Assert.notNull(user);
@@ -264,11 +272,13 @@ public class EventService {
 		return output;
 	}
 
+	@Transactional
 	public List<Event> getAttendedEventsFromUserInFutureOf(Date date) {
 		Assert.notNull(date);
 		return eventRepository.findAllAttendedInFuture(userService.getUser(), new DateTime(date).getMillis());
 	}
 
+	@Transactional
 	public List<Event> getAttendedEventsFromUserInPeriod(Date startDate, Date endDate) {
 		Assert.notNull(startDate);
 		Assert.notNull(endDate);
@@ -276,11 +286,13 @@ public class EventService {
 				new DateTime(endDate).getMillis());
 	}
 
+	@Transactional
 	public List<Event> getCreatedEventsFromUserInFutureOf(Date date) {
 		Assert.notNull(date);
 		return eventRepository.findAllCreatedInFutureOf(userService.getUser(), new DateTime(date).getMillis());
 	}
 
+	@Transactional
 	public List<Event> getCreatedEventsFromUserInPeriod(Date startDate, Date endDate) {
 		Assert.notNull(startDate);
 		Assert.notNull(endDate);

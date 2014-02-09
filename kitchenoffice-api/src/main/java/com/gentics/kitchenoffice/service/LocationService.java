@@ -1,13 +1,9 @@
 package com.gentics.kitchenoffice.service;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +15,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import com.gentics.kitchenoffice.data.Image;
-import com.gentics.kitchenoffice.data.Thumbnail;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.LocationRepository;
@@ -51,25 +46,18 @@ public class LocationService {
 
 	@Transactional
 	public Page<Location> findAll(Pageable pageable) {
-		Page<Location> output = locationRepository.findAll(pageable);
-		injectTransientFields(output.getContent());
-		return output;
+		return locationRepository.findAll(pageable);
 	}
 
 	@Transactional
 	public Location findByName(String name) {
 		Assert.hasLength(name);
-
-		Location output = locationRepository.findByName(name);
-
-		injectTransientFields(output);
-		return output;
+		return locationRepository.findByName(name);
 	}
 
 	@Transactional
 	public Page<Location> findByNameLike(Pageable pageable, String name) {
-
-		Page<Location> output;
+		Page<Location> output = null;
 
 		if (StringUtils.hasLength(name) && name.length() > 2) {
 			output = locationRepository.findByNameLike("*" + name + "*", pageable);
@@ -77,20 +65,17 @@ public class LocationService {
 			output = findAll(pageable);
 		}
 
-		injectTransientFields(output.getContent());
 		return output;
 	}
 
 	@Transactional
-	public Location getLocationById(Long id) {
+	public Location findLocationById(Long id) {
 		Assert.notNull(id);
-		Location output = locationRepository.findById(id);
-		injectTransientFields(output);
-		return output;
+		return locationRepository.findById(id);
 	}
 
 	@Transactional
-	public Page<Location> getLastUsedLocations(Pageable pageable, User user, String search) {
+	public Page<Location> findLastUsedLocations(Pageable pageable, User user, String search) {
 
 		Page<Location> page = null;
 
@@ -136,9 +121,7 @@ public class LocationService {
 			location.setImage(newImage);
 		}
 
-		location = locationRepository.save(location);
-		injectTransientFields(location);
-		return location;
+		return locationRepository.save(location);
 	}
 
 	@Transactional
@@ -159,9 +142,7 @@ public class LocationService {
 			location.getSubscribers().add(user);
 		}
 
-		location = locationRepository.save(location);
-		injectTransientFields(location);
-		return location;
+		return locationRepository.save(location);
 	}
 
 	@Transactional
@@ -181,38 +162,7 @@ public class LocationService {
 			throw new IllegalStateException("User is not in the list of subscribers of location " + location.getName());
 		}
 
-		locationRepository.save(location);
-		injectTransientFields(location);
-		return location;
-	}
-
-	private void injectTransientFields(Location location) {
-		Set<Location> helper = new HashSet<Location>();
-		helper.add(location);
-		injectTransientFields(helper);
-	}
-
-	private void injectTransientFields(Collection<Location> locations) {
-		Image image;
-
-		for (Location location : locations) {
-			image = location.getImage();
-
-			// image url
-			if (image != null) {
-				image.setUrl(storageService.getStorage().getStorableUrl(image));
-
-				// thumbnails url
-				for (Integer size : imageService.getSizes()) {
-					Thumbnail thumb = new Thumbnail();
-					thumb.setFileName(FilenameUtils.getBaseName(image.getFileName()) + "." + size + "." + imageService.getThumbExtension());
-					thumb.setUrl(storageService.getStorage().getStorableUrl(thumb));
-
-					image.getThumbs().put(size, thumb);
-				}
-			}
-		}
-
+		return locationRepository.save(location);
 	}
 
 	/*
