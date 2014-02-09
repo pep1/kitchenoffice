@@ -114,22 +114,13 @@ public class InjectTransientFieldsAspect {
 		Image image;
 
 		for (Location location : locations) {
-			image = location.getImage();
+			if (location != null) {
+				image = location.getImage();
 
-			// image url
-			if (image != null) {
-				image.setUrl(storageService.getStorage().getStorableUrl(image));
-
-				// // thumbnail urls
-				// for (Integer size : imageService.getSizes()) {
-				// Thumbnail thumb = new Thumbnail();
-				// thumb.setFileName(FilenameUtils.getBaseName(image.getFileName())
-				// + "." + size + "."
-				// + imageService.getThumbExtension());
-				// thumb.setUrl(storageService.getStorage().getStorableUrl(thumb));
-				//
-				// image.getThumbs().put(size, thumb);
-				// }
+				// image url
+				if (image != null) {
+					image.setUrl(storageService.getStorage().getStorableUrl(image));
+				}
 			}
 		}
 
