@@ -77,7 +77,6 @@
 		<maven-clover-plugin.version>3.1.8</maven-clover-plugin.version>
 		<maven-site-plugin.version>3.1</maven-site-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		<maven-enunciate-plugin.version>1.27</maven-enunciate-plugin.version>
 	</properties>
 
 	<build>

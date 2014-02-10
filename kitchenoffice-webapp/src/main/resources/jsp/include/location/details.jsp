@@ -25,7 +25,7 @@
 						<i class="icon-globe"></i> <a target="_blank" data-ng-href="{{location.website}}">Location Website</a>
 					</p>
 				</div>
-				<div class="span6">
+				<div ng-show="location.image" class="span6">
 					<div class="thumbnail pull-right">
 						<img ng-src="{{location.getThumbURL(278, 160)}}" />
 					</div>
