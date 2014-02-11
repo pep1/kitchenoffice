@@ -51,7 +51,7 @@
 						<div class="thumbnail" ng-show="location.imageUrl">
 							<img data-ng-src="{{location.imageUrl}}" class="image-preview" />
 						</div>
-						<div class="thumbnail" ng-show="location.image">
+						<div class="thumbnail" ng-show="location.image && !location.imageUrl">
 							<img data-ng-src="{{location.getThumbURL(413)}}" class="image-preview" />
 						</div>
 					</div>
