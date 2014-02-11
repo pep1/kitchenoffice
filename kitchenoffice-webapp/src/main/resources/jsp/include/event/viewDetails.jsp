@@ -29,7 +29,7 @@
 				</div>
 				<div ng-show="event.image" class="span6">
 					<div class="thumbnail pull-right">
-						<img ng-src="{{event.getThumbURL(278, 160)}}" />
+						<img ng-src="{{event.getThumbURL(278)}}" />
 					</div>
 				</div>
 			</div>

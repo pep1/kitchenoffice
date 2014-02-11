@@ -45,10 +45,15 @@
 				</div>
 				<div class="span9">
 					<div class="row-fluid">
-						<input name="locationWebsite" type="url" class="input-block-level" data-ng-model="location.imageUrl" placeholder="paste image URL here">
+						<input name="locationWebsite" type="url" class="input-block-level" data-ng-model="location.imageUrl" placeholder="paste new image URL here">
 					</div>
-					<div class="row-fluid ko-image-preview">
-						<img data-ng-src="{{location.imageUrl}}" class="image-preview" />
+					<div class="row-fluid">
+						<div class="thumbnail" ng-show="location.imageUrl">
+							<img data-ng-src="{{location.imageUrl}}" class="image-preview" />
+						</div>
+						<div class="thumbnail" ng-show="location.image">
+							<img data-ng-src="{{location.getThumbURL(413)}}" class="image-preview" />
+						</div>
 					</div>
 				</div>
 			</div>

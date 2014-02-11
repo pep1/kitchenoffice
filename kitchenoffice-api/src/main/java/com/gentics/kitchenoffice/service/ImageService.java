@@ -1,19 +1,15 @@
 package com.gentics.kitchenoffice.service;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.FileImageOutputStream;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.filters.Canvas;
@@ -79,32 +75,25 @@ public class ImageService {
 			// write image to new temp file
 			BufferedImage bi = ImageIO.read(in);
 
+			// create a blank, RGB, same width and height, and a white
+			// background
+			BufferedImage newBufferedImage = new BufferedImage(bi.getWidth(), bi.getHeight(),
+					BufferedImage.TYPE_INT_RGB);
+			newBufferedImage.createGraphics().drawImage(bi, 0, 0, Color.WHITE, null);
+
 			file = storageService.createTempFile(Image.STORAGE_TYPE, THUMB_EXTENSION);
-
-			Iterator<ImageWriter> iter = ImageIO.getImageWritersByFormatName("jpg");
-			ImageWriter writer = iter.next();
-			ImageWriteParam iwp = writer.getDefaultWriteParam();
-
-			iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-			iwp.setCompressionQuality(1);
-
-			FileImageOutputStream output = new FileImageOutputStream(file);
-			writer.setOutput(output);
-
-			IIOImage imageWrite = new IIOImage(bi, null, null);
-			writer.write(null, imageWrite, iwp);
-			writer.dispose();
+			ImageIO.write(newBufferedImage, THUMB_EXTENSION, file);
 
 			imageFile = createImageObject(file);
 
 		} catch (IOException e) {
-			log.error("Error while creating image from input stream", e);
+			log.error("Error while reading image from input stream", e);
 
 			if (file != null) {
 				file.delete();
 			}
 
-			throw new IOException("Error while creating image from input stream", e);
+			throw new IOException("Error while reading image from input stream", e);
 		}
 
 		return imageFile;
@@ -128,13 +117,14 @@ public class ImageService {
 
 		bi.flush();
 
-//		File thumbFile = null;
+		// File thumbFile = null;
 
 		// create thumbnails
-//		for (Integer size : sizes) {
-//			thumbFile = createThumbFile(size, bi, image.getFileName());
-//			storageService.getStorage().persistStorable(new Thumbnail(), thumbFile);
-//		}
+		// for (Integer size : sizes) {
+		// thumbFile = createThumbFile(size, bi, image.getFileName());
+		// storageService.getStorage().persistStorable(new Thumbnail(),
+		// thumbFile);
+		// }
 
 		// store file
 		storageService.getStorage().persistStorable(image, file);
@@ -144,26 +134,28 @@ public class ImageService {
 		return image;
 	}
 
-//	private synchronized File createThumbFile(Integer size, BufferedImage image, String fileName) throws IOException {
-//		long start = System.currentTimeMillis();
-//
-//		File thumbFile = storageService.createTempFile(Thumbnail.STORAGE_TYPE, FilenameUtils.getBaseName(fileName)
-//				+ "." + size, THUMB_EXTENSION);
-//
-//		createThumb(image, thumbFile, size, size);
-//
-//		long end = System.currentTimeMillis() - start;
-//		log.debug("creating thumb took " + end + " ms");
-//
-//		return thumbFile;
-//	}
+	// private synchronized File createThumbFile(Integer size, BufferedImage
+	// image, String fileName) throws IOException {
+	// long start = System.currentTimeMillis();
+	//
+	// File thumbFile = storageService.createTempFile(Thumbnail.STORAGE_TYPE,
+	// FilenameUtils.getBaseName(fileName)
+	// + "." + size, THUMB_EXTENSION);
+	//
+	// createThumb(image, thumbFile, size, size);
+	//
+	// long end = System.currentTimeMillis() - start;
+	// log.debug("creating thumb took " + end + " ms");
+	//
+	// return thumbFile;
+	// }
 
 	public void removeImageObject(Image oldImage) throws IOException {
 
 		try {
 			// delete original
 			storageService.getStorage().deleteStorable(oldImage);
-			
+
 		} catch (IllegalArgumentException e) {
 			log.error("Error while deleting image.", e);
 		}
@@ -204,8 +196,8 @@ public class ImageService {
 		int newWidth = (int) Math.ceil((image.getWidth() * scaleRatio));
 		int newHeight = (int) Math.ceil((image.getHeight() * scaleRatio));
 
-		Thumbnails.of(image).size(newWidth, newHeight).outputQuality(THUMB_QUALITY).outputFormat(THUMB_EXTENSION).antialiasing(Antialiasing.ON)
-				.addFilter(new Canvas(x, y, Positions.CENTER, true)).toFile(outputFile);
+		Thumbnails.of(image).size(newWidth, newHeight).outputQuality(THUMB_QUALITY).outputFormat(THUMB_EXTENSION)
+				.antialiasing(Antialiasing.ON).addFilter(new Canvas(x, y, Positions.CENTER, true)).toFile(outputFile);
 
 		return outputFile;
 	}

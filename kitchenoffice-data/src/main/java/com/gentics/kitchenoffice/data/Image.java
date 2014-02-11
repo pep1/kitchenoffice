@@ -22,10 +22,8 @@ public class Image extends AbstractPersistable implements Storable {
 	@JsonIgnore
 	private long size;
 
-	@JsonIgnore
 	private int width;
 
-	@JsonIgnore
 	private int height;
 
 	@Transient

@@ -22,9 +22,6 @@ package com.gentics.kitchenoffice.server.thumbnail;
 
 import java.io.File;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Fetch a thumbnail object.
  * 
@@ -41,11 +38,6 @@ public class ThumbnailFetcher {
 	 * The base dir where the thumbnails will be created.
 	 */
 	private final String destinationBaseDir;
-
-	/**
-	 * My logger.
-	 */
-	private final Logger logger = LoggerFactory.getLogger(ThumbnailFetcher.class);
 
 	public ThumbnailFetcher(String theOriginalBaseDir, String theDestinationBaseDir) {
 		originalBaseDir = theOriginalBaseDir;
