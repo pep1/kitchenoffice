@@ -242,7 +242,7 @@ public class Thumbnail {
 		int newWidth = (int) Math.ceil((originalWidth * scaleRatio));
 		int newHeight = (int) Math.ceil((originalHeight * scaleRatio));
 
-		return new ProcessBuilder("convert", "-resize", newWidth + "x" + newHeight, "-gravity", "Center", "-crop",
+		return new ProcessBuilder("convert","-quality", "95", "-resize", newWidth + "x" + newHeight, "-gravity", "Center", "-crop",
 				this.getImageDimensions() + "+0+0", this.getOriginalBaseDir() + File.separator
 						+ this.getOriginalImageNameWithExtension(), this.getDestinationDir() + File.separator
 						+ this.getImageFileName());
