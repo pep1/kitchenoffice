@@ -169,6 +169,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<database.location>C:/TEMP/neo4j-db</database.location>
+				<storage.basedir>C:/TEMP/kitchenoffice</storage.basedir>
 				<incrementalBuildEnabled>true</incrementalBuildEnabled>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
@@ -184,6 +185,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>localhost:8080</cas.service.host>
 				<database.location>/tmp/kitchenoffice/neo4j-db</database.location>
+				<storage.basedir>/tmp/kitchenoffice</storage.basedir>
 				<incrementalBuildEnabled>true</incrementalBuildEnabled>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
 			</properties>
@@ -194,6 +196,7 @@
 				<cas.server.host>secure.gentics.com</cas.server.host>
 				<cas.service.host>food.office</cas.service.host>
 				<database.location>/var/lib/kitchenoffice/neo4j-db</database.location>
+				<storage.basedir>/var/lib/kitchenoffice</storage.basedir>
 				<incrementalBuildEnabled>false</incrementalBuildEnabled>
 				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-prod.properties</wro4j.configfile.path>
 			</properties>

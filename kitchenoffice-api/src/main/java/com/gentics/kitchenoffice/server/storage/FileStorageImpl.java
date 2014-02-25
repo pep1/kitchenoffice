@@ -11,25 +11,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.web.context.ServletContextAware;
 
-public class FileStorageImpl implements Storage, ServletContextAware {
+public class FileStorageImpl implements FileStorage, ServletContextAware {
 
 	private static Logger log = LoggerFactory.getLogger(FileStorageImpl.class);
 
 	private ServletContext context;
 
-	private String storageBasePath;
+	private String mediaPath;
+
+	private String basePath;
 
 	private URL host;
 
 	@Override
-	public void init(URL host, String basePath) {
+	public void init(URL host, String mediaPath) {
 		log.debug("Initializing FilestorageImpl instance ... ");
 
-		Assert.notNull(basePath);
+		Assert.notNull(mediaPath);
 		Assert.notNull(host);
 
 		this.host = host;
-		this.storageBasePath = basePath;
+		this.mediaPath = mediaPath;
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 				builder.append("/");
 			}
 
-			builder.append(storageBasePath);
+			builder.append(mediaPath);
 			builder.append(storable.getStorageType());
 			builder.append("/");
 
@@ -61,7 +63,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 	public String getStorablePath(Storable storable) {
 		Assert.notNull(storable);
 
-		String path = storageBasePath + File.separator + storable.getStorageType();
+		String path = mediaPath + File.separator + storable.getStorageType();
 
 		if (context != null) {
 			return context.getRealPath(path);
@@ -89,7 +91,7 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 		Assert.notNull(storable);
 
 		String fileName = file.getName();
-		String storablePath = getStorablePath(storable);
+		String storablePath = basePath + File.separator + mediaPath + File.separator + storable.getStorageType();
 
 		log.debug("storing file: " + file.getAbsolutePath());
 		log.debug("to:" + storablePath);
@@ -143,6 +145,11 @@ public class FileStorageImpl implements Storage, ServletContextAware {
 		if (!success) {
 			log.error("Delete: deletion of file " + storable.getFileName() + " failed!");
 		}
+	}
+
+	@Override
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
 	}
 
 }

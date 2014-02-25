@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +24,7 @@ import com.gentics.kitchenoffice.server.thumbnail.ImageMagickFileThumbnailCreato
 import com.gentics.kitchenoffice.server.thumbnail.Thumbnail;
 import com.gentics.kitchenoffice.server.thumbnail.ThumbnailException;
 import com.gentics.kitchenoffice.server.thumbnail.ThumbnailFetcher;
+import com.gentics.kitchenoffice.service.StorageService;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -38,11 +39,12 @@ public class ThumbnailController implements ServletContextAware {
 
 	private ServletContext context;
 
-	@Value("media/img/thumbs")
 	private String thumbsDir = "media/img/thumbs";
 
-	@Value("media/img")
-	private String originalsDir = "media/img";
+	private String originalsDir = "/img";
+
+	@Autowired
+	private StorageService storageService;
 
 	private ThumbnailFetcher factory;
 
@@ -59,8 +61,8 @@ public class ThumbnailController implements ServletContextAware {
 
 	@PostConstruct
 	public void initialize() {
-
-		factory = new ThumbnailFetcher(context.getRealPath("/") + originalsDir, context.getRealPath("/" + thumbsDir));
+		factory = new ThumbnailFetcher(storageService.getMediaDir() + originalsDir,
+				context.getRealPath("/" + thumbsDir));
 	}
 
 	@RequestMapping(value = "/{filename}-{width}x{height}.{extension}", method = RequestMethod.GET)
