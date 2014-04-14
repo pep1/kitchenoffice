@@ -52,18 +52,19 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<spring.version>3.2.6.RELEASE</spring.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
-		<spring-data-neo4j.version>2.3.3.RELEASE</spring-data-neo4j.version>
+		<spring-data-neo4j.version>2.3.4.RELEASE</spring-data-neo4j.version>
+		<hibernate.validator.version>5.0.3.Final</hibernate.validator.version>
 		<quartz.version>2.2.1</quartz.version>
-
-		<github.url>https://github.com/pep1/kitchenoffice</github.url>
 
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 
 		<!-- Rest API versions -->
 		<jersey.version>1.17.1</jersey.version>
+		
+		<github.url>https://github.com/pep1/kitchenoffice</github.url>
 
 		<!-- Maven Plugin Versions -->
 		<maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
@@ -449,21 +450,21 @@
 				<artifactId>servlet-api</artifactId>
 				<version>2.5</version>
 			</dependency>
+			
 			<dependency>
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
 				<version>1.1.0.Final</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>4.3.1.Final</version>
+				<version>${hibernate.validator.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator-annotation-processor</artifactId>
-				<version>4.3.1.Final</version>
+				<version>${hibernate.validator.version}</version>
 			</dependency>
 
 			<!-- JS Frameworks -->
