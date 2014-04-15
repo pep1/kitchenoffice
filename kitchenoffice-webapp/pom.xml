@@ -147,7 +147,7 @@
 					<wroFile>${basedir}/src/main/webapp/WEB-INF/wro.xml</wroFile>
 					<groupNameMappingFile>${basedir}/src/main/webapp/WEB-INF/wromapping.properties</groupNameMappingFile>
 					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
-					<parallelProcessing>true</parallelProcessing>
+					<parallelProcessing>false</parallelProcessing>
 					<incrementalBuildEnabled>${wro4j.incrementalBuildEnabled}</incrementalBuildEnabled>
 					<extraConfigFile>${basedir}/${wro4j.configfile.path}</extraConfigFile>
 				</configuration>
@@ -184,6 +184,22 @@
 			<activation>
 				<os>
 					<family>Linux</family>
+				</os>
+			</activation>
+			<properties>
+				<cas.server.host>secure.gentics.com</cas.server.host>
+				<cas.service.host>localhost:8080</cas.service.host>
+				<database.location>/tmp/kitchenoffice/neo4j-db</database.location>
+				<storage.basedir>/tmp/kitchenoffice</storage.basedir>
+				<incrementalBuildEnabled>true</incrementalBuildEnabled>
+				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-mac</id>
+			<activation>
+				<os>
+					<family>mac</family>
 				</os>
 			</activation>
 			<properties>
