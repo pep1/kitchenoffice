@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.jasig.cas.client.validation.Assertion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +27,7 @@ import com.gentics.kitchenoffice.repository.UserRepository;
 
 @Service("KitchenOfficeUserService")
 @Scope("singleton")
-public class UserService extends AbstractCasAssertionUserDetailsService {
+public class UserService {
 
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
 
@@ -40,17 +38,14 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 	@Value("${webapp.job.defaults}")
 	private String[] defaultJobIds;
 
-	@Value("${webapp.security.adminemails}")
-	private String[] adminEmails;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	private RoleRepository roleRepository;
 
 	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	JobRepository jobRepository;
+	private JobRepository jobRepository;
 
 	@PostConstruct
 	@Transactional
@@ -65,33 +60,8 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 		checkAndCreateDefaultJobs();
 	}
 
-	@Override
-	protected UserDetails loadUserDetails(Assertion assertion) {
-
-		log.debug("loading user details of cas assertion: " + assertion.getPrincipal().getName());
-
-		User user = userRepository.findUserByUsername(assertion.getPrincipal().getName());
-
-		if (user == null) {
-			// if user is not found in database, create one with specified
-			// username
-			user = createUserByUsername(assertion.getPrincipal().getName());
-		}
-
-		user.setFirstName((String) assertion.getPrincipal().getAttributes().get("firstname"));
-		user.setLastName((String) assertion.getPrincipal().getAttributes().get("lastname"));
-
-		Object email = assertion.getPrincipal().getAttributes().get("email");
-
-		if (email != null && email instanceof String) {
-			String emailString = ((String) email).replace("[", "");
-			emailString = emailString.replace("]", "");
-			String[] emails = emailString.split(",");
-			user.setEmail(emails[0]);
-		}
-
-		// persist fetched user.
-		return userRepository.save(user);
+	public boolean emailExists(String email) {
+		return userRepository.countByEmail(email) != 0;
 	}
 
 	private void checkAndCreateRoles() {
@@ -105,20 +75,6 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 			Role role = new Role(ROLE_ADMIN_NAME);
 			roleRepository.save(role);
 		}
-
-	}
-
-	private User createUserByUsername(String username) {
-
-		User user = new User();
-		user.setUsername(username);
-		user.setEnabled(true);
-
-		user = userRepository.save(user);
-
-		user.getRoles().add(roleRepository.findByRoleName(ROLE_USER_NAME));
-
-		return userRepository.save(user);
 
 	}
 
@@ -188,6 +144,11 @@ public class UserService extends AbstractCasAssertionUserDetailsService {
 
 	public User getRefreshedUser() {
 		return userRepository.findOne(getUser().getId());
+	}
+
+	public void register(User user) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

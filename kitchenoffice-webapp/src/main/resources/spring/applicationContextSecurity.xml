@@ -12,23 +12,29 @@
 			http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<context:property-placeholder location="classpath:/config/webapp.properties" />
-	<global-method-security pre-post-annotations="enabled"/>
+	<global-method-security pre-post-annotations="enabled" />
 
 	<!-- http entry-point-ref="restAuthenticationEntryPoint"> <intercept-url 
 		pattern="/api/**" access="ROLE_USER" /> <http-basic /> </http -->
-		
+
 	<http pattern="/assets/**" security="none" />
 	<http pattern="/media/**" security="none" />
-	
+
 	<http pattern="/event/rss" security="none" />
 
+	<http pattern="/login*" security="none" />
+	<http pattern="/register*" security="none" />
+	<http pattern="/register/*" security="none" />
+
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
-		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
-		<intercept-url pattern="/index.jsp" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/cas-logout.jsp" access="permitAll" />
 		<intercept-url pattern="/casfailed.jsp" access="permitAll" />
+
+		<form-login login-page="/login" default-target-url="/home"
+			always-use-default-target="true" authentication-failure-url="/login?error=true" />
+		<logout logout-url="/logout" />
 
 		<custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" />
 		<custom-filter ref="singleLogoutFilter" before="CAS_FILTER" />
@@ -37,6 +43,7 @@
 	</http>
 
 	<authentication-manager alias="authManager">
+		<authentication-provider ref="UserDetailsAuthenticationProvider" />
 		<authentication-provider ref="casAuthProvider" />
 	</authentication-manager>
 
@@ -87,7 +94,7 @@
 		class="org.springframework.security.cas.authentication.CasAuthenticationProvider"
 		p:serviceProperties-ref="serviceProperties" p:key="casAuthProviderKey">
 		<b:property name="authenticationUserDetailsService">
-			<b:ref bean="KitchenOfficeUserService" />
+			<b:ref bean="CasAuthenticationProvider" />
 		</b:property>
 		<b:property name="ticketValidator">
 			<b:bean class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator"
@@ -98,5 +105,8 @@
 			</b:bean>
 		</b:property>
 	</b:bean>
+
+	<b:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 </b:beans>
