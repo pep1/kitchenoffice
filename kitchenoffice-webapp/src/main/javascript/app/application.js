@@ -83,6 +83,10 @@ app.run(function($rootScope, userService, $q) {
 	$rootScope.refreshUser = function() {
 		$rootScope.me = userService.getUser();
 	};
+	
+	$rootScope.logout = function() {
+		window.location.href = "/kitchenoffice-webapp/logout";
+	};
 
 	$rootScope.isMe = function(object) {
 		var deferred = $q.defer();
