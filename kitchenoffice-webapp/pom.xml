@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>kitchenoffice</artifactId>
-		<groupId>com.gentics</groupId>
+		<groupId>com.pep1</groupId>
 		<version>0.0.3</version>
 	</parent>
 	<artifactId>kitchenoffice-webapp</artifactId>
