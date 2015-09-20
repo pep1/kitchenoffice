@@ -2,6 +2,8 @@ package com.gentics.kitchenoffice.data;
 
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -19,18 +21,23 @@ public class Article extends AbstractPersistable {
 	private static final long serialVersionUID = 7839328132356893992L;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "articlenamesearch")
+	@Getter @Setter
     private String name;
 
+	@Getter @Setter
     private String unit;
     
+	@Getter @Setter
     private double price;
     
     @Fetch
     @RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING, elementClass = Image.class)
+	@Getter @Setter
 	private Image image = new Image();
     
     @Fetch
     @RelatedToVia(type = "IS_NEEDED_IN", direction = Direction.BOTH, elementClass = Ingredient.class)
+	@Getter @Setter
     private Set<Ingredient> incredients = new HashSet<Ingredient>();
     
     public Article() {
@@ -42,46 +49,6 @@ public class Article extends AbstractPersistable {
 		this.name = name;
 		this.unit = unit;
 		this.price = price;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-	
-	public Set<Ingredient> getIncredients() {
-		return incredients;
-	}
-
-	public void setIncredients(Set<Ingredient> incredients) {
-		this.incredients = incredients;
 	}
 
 	@Override
