@@ -5,8 +5,12 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.gentics.kitchenoffice.data.AbstractPersistable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NodeEntity
+@NodeEntity @NoArgsConstructor @AllArgsConstructor
 public class Role extends AbstractPersistable implements GrantedAuthority {
 
 	/**
@@ -14,28 +18,12 @@ public class Role extends AbstractPersistable implements GrantedAuthority {
 	 */
 	private static final long serialVersionUID = -4123551412665180604L;
 
-	@Indexed
+	@Indexed @Getter @Setter
 	private String roleName;
-
-	public Role() {
-
-	}
-
-	public Role(String role) {
-		this.roleName = role;
-	}
 
 	@Override
 	public String getAuthority() {
 		return roleName;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String role) {
-		this.roleName = role;
 	}
 
 }

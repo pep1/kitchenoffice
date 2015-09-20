@@ -12,6 +12,8 @@ import org.springframework.data.neo4j.support.index.IndexType;
 import org.springframework.util.Assert;
 
 import com.gentics.kitchenoffice.adapter.DateAdapter;
+import lombok.Getter;
+import lombok.Setter;
 
 @NodeEntity
 public class Tag extends AbstractPersistable {
@@ -24,9 +26,11 @@ public class Tag extends AbstractPersistable {
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	@GraphProperty(propertyType = Long.class)
 	@XmlAttribute(name="timstamp")
+	@Getter @Setter
 	private Date timeStamp;
 
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "tagnamesearch")
+	@Getter @Setter
 	private String name;
 
 	public Tag() {
@@ -38,22 +42,6 @@ public class Tag extends AbstractPersistable {
 
 		timeStamp = new Date();
 		name = tagName;
-	}
-
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Override
