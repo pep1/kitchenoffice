@@ -1,8 +1,10 @@
 target/
 .settings/
+.idea/
 .project
 .classpath
 *.orig
+*.iml
 
 kitchenoffice-webapp/src/main/webapp/WEB-INF/wromapping.properties
 kitchenoffice-webapp/src/main/webapp/assets/
@@ -11,3 +13,4 @@ widgetsets/
 gwt-unitCache/
 
 .checkstyle
+

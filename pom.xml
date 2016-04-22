@@ -58,12 +58,14 @@
 		<hibernate.validator.version>5.0.3.Final</hibernate.validator.version>
 		<quartz.version>2.2.1</quartz.version>
 
+		<github.url>https://github.com/pep1/kitchenoffice</github.url>
+
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 
 		<!-- Rest API versions -->
 		<jersey.version>1.17.1</jersey.version>
-		
+
 		<github.url>https://github.com/pep1/kitchenoffice</github.url>
 
 		<!-- Maven Plugin Versions -->
@@ -78,6 +80,7 @@
 		<maven-clover-plugin.version>3.1.8</maven-clover-plugin.version>
 		<maven-site-plugin.version>3.1</maven-site-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+		<maven-enunciate-plugin.version>1.31</maven-enunciate-plugin.version>
 	</properties>
 
 	<build>
@@ -96,6 +99,12 @@
 
 	<dependencyManagement>
 		<dependencies>
+                        <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.12.2</version>
+                            <scope>provided</scope>
+                        </dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -385,6 +394,13 @@
 				<version>0.4.2</version>
 			</dependency>
 			<dependency>
+				<groupId>org.imgscalr</groupId>
+				<artifactId>imgscalr-lib</artifactId>
+				<version>4.2</version>
+				<type>jar</type>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
 				<groupId>jmimemagic</groupId>
 				<artifactId>jmimemagic</artifactId>
 				<version>0.1.2</version>
@@ -450,7 +466,7 @@
 				<artifactId>servlet-api</artifactId>
 				<version>2.5</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
