@@ -23,8 +23,6 @@
     <http pattern="/event/rss" security="none"/>
     <http pattern="/login.jsp" security="none"/>
 
-	<http pattern="/event/rss" security="none" />
-
     <http entry-point-ref="crowdAuthenticationProcessingFilterEntryPoint" auto-config="false" use-expressions="true">
         <intercept-url pattern="/" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>

@@ -69,7 +69,7 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 
-        <!-- Spring Security CAS -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
