@@ -3,6 +3,7 @@ package com.gentics.kitchenoffice;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -58,7 +59,7 @@ public class TagTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void tagTest() {
+	public void tagTest() throws IOException {
 
 		log.debug("starting tag Test");
 		log.debug("findall: " + ((List<?>) tagRepository.findAll().as(List.class)));
@@ -90,7 +91,7 @@ public class TagTest {
 	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws IOException {
 		log.debug("creating some data");
 
 		Location loc = new Location();

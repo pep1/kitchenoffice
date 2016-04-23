@@ -38,7 +38,7 @@ app.controller('LocationDetailsController', function($scope, $rootScope, $locati
 		}
 		
 		$rootScope.me.then(function(me){
-			locationSubscribed = _.some(me.locationSubscriptions, function(locationItem) {
+			var locationSubscribed = _.some(me.locationSubscriptions, function(locationItem) {
 				return $scope.location.id === locationItem.id;
 			});
 			

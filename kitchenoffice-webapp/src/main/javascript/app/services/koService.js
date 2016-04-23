@@ -87,22 +87,50 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	// set base URL
 	RestangularProvider.setBaseUrl("/kitchenoffice-webapp/api/v1");
 
-} ]).factory('eventService', function($rootScope, Restangular) {
+} ])
+/**
+ * Event Service
+ */
+.factory('eventService', function($rootScope, Restangular) {
 
 	/**
 	 * Prepares all events with additional informations
 	 */
 	var prepareEvent = function(event) {
-		event.canAttend = function() {
-			return !$rootScope.containsMe(event.participants);
-		};
+		
+		event.getThumbURL = function(width, height) {
+			if(_.isUndefined(this.image) || _.isNull(this.image)) {
+				return null;
+			}
+			
+			if(!width) {
+				return null;
+			}
+			
+			var baseName = this.image.fileName.substr(0, this.image.fileName.lastIndexOf('.')); 
+			
+			if(height) {
+				return $rootScope.thumbBasePath + baseName + "-" + width + "x" + height + ".jpg";
+			} else {
+				
+				var ratio = this.image.width / this.image.height;
+				var scaleRatio;
 
-		event.canDismiss = function() {
-			return $rootScope.containsMe(event.participants);
+				if (ratio > 1) {
+					// Width larger than Height
+					scaleRatio = width / this.image.height;
+				} else {
+					scaleRatio = width / this.image.width;
+				}
+
+				var newWidth = Math.ceil((this.image.width * scaleRatio));
+				var newHeight = Math.ceil((this.image.height * scaleRatio));
+				
+				return $rootScope.thumbBasePath + baseName + "-" + newWidth + "x" + newHeight + ".jpg";
+			};
 		};
 		
 		event.participantsContainMe = $rootScope.containsMe(event.participants);
-		
 		event.hasParticipants = (!_.isNull(event.participants) && !_.isUndefined(event.participants)) ? event.participants.length !== 0 : false;
 	};
 
@@ -113,7 +141,7 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 			if (operation === 'getList') {
 				for (var i = 0; i < object.length; i++) {
 					prepareEvent(object[i]);
-				}
+				};
 			} else {
 				prepareEvent(object);
 			}
@@ -232,7 +260,8 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 		if (_.isNull(event) || _.isUndefined(event)) {
 			return;
 		}
-		return event.remove();
+		
+		return this.one(event.id).remove();
 	};
 
 	/**
@@ -254,12 +283,51 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 
 	return eventService;
-}).factory('locationService', function($rootScope, Restangular) {
+})
+/**
+ * Location Service
+ */
+.factory('locationService', function($rootScope, Restangular) {
 	
 	/**
 	 * Prepares all locations with additional informations
 	 */
 	var prepareLocation = function(location) {
+		
+		/**
+		 * creates an url for the thumb servlet
+		 */
+		location.getThumbURL = function(width, height) {
+			if(_.isUndefined(this.image) || _.isNull(this.image)) {
+				return null;
+			}
+			
+			if(!width) {
+				return null;
+			}
+			
+			var baseName = this.image.fileName.substr(0, this.image.fileName.lastIndexOf('.')); 
+			
+			if(height) {
+				return $rootScope.thumbBasePath + baseName + "-" + width + "x" + height + ".jpg";
+			} else {
+				
+				var ratio = this.image.width / this.image.height;
+				var scaleRatio;
+
+				if (ratio > 1) {
+					// Width larger than Height
+					scaleRatio = width / this.image.height;
+				} else {
+					scaleRatio = width / this.image.width;
+				}
+
+				var newWidth = Math.ceil((this.image.width * scaleRatio));
+				var newHeight = Math.ceil((this.image.height * scaleRatio));
+				
+				return $rootScope.thumbBasePath + baseName + "-" + newWidth + "x" + newHeight + ".jpg";
+			};
+		};
 		
 		/**
 		 * check if the user has subscribed to this location
@@ -272,13 +340,12 @@ angular.module('ko.services', [ 'restangular', 'flash' ])
 	};
 
 	var locationService = Restangular.withConfig(function(RestangularConfigurer) {
-
 		RestangularConfigurer.setResponseInterceptor(function(object, operation, what, url, response, deferred) {
 
 			if (operation === 'getList') {
 				for (var i = 0; i < object.length; i++) {
 					prepareLocation(object[i]);
-				}
+				};
 			} else {
 				prepareLocation(object);
 			}

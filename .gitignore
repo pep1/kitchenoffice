@@ -1,10 +1,10 @@
 target/
 .settings/
+.idea/
 .project
 .classpath
 *.orig
 *.iml
-.idea/
 
 kitchenoffice-webapp/src/main/resources/config/crowd.properties
 kitchenoffice-webapp/src/main/webapp/WEB-INF/wromapping.properties
@@ -14,3 +14,4 @@ widgetsets/
 gwt-unitCache/
 
 .checkstyle
+

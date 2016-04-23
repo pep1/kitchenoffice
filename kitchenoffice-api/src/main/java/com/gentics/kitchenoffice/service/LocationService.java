@@ -1,5 +1,7 @@
 package com.gentics.kitchenoffice.service;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.data.user.User;
 import com.gentics.kitchenoffice.repository.LocationRepository;
@@ -28,6 +31,12 @@ public class LocationService {
 	private CrowdUserService userService;
 
 	@Autowired
+	private StorageService storageService;
+
+	@Autowired
+	private ImageService imageService;
+
+	@Autowired
 	TagService tagService;
 
 	@PostConstruct
@@ -35,45 +44,83 @@ public class LocationService {
 		log.debug("initializing " + this.getClass().getSimpleName() + " instance ... ");
 	}
 
+	@Transactional
 	public Page<Location> findAll(Pageable pageable) {
 		return locationRepository.findAll(pageable);
 	}
 
+	@Transactional
 	public Location findByName(String name) {
 		Assert.hasLength(name);
 		return locationRepository.findByName(name);
 	}
 
+	@Transactional
 	public Page<Location> findByNameLike(Pageable pageable, String name) {
+		Page<Location> output = null;
+
 		if (StringUtils.hasLength(name) && name.length() > 2) {
-			return locationRepository.findByNameLike("*" + name + "*", pageable);
+			output = locationRepository.findByNameLike("*" + name + "*", pageable);
 		} else {
-			return findAll(pageable);
+			output = findAll(pageable);
 		}
+
+		return output;
 	}
 
-	public Location getLocationById(Long id) {
+	@Transactional
+	public Location findLocationById(Long id) {
 		Assert.notNull(id);
 		return locationRepository.findById(id);
 	}
 
-	public Page<Location> getLastUsedLocations(Pageable pageable, User user, String search) {
+	@Transactional
+	public Page<Location> findLastUsedLocations(Pageable pageable, User user, String search) {
+
+		Page<Location> page = null;
+
 		if (user == null) {
 			if (StringUtils.hasLength(search) && search.length() > 2) {
-				return locationRepository.getLastUsedLocations(search, pageable);
+				page = locationRepository.getLastUsedLocations(search, pageable);
 			} else {
-				return locationRepository.getLastUsedLocations(pageable);
+				page = locationRepository.getLastUsedLocations(pageable);
 			}
 		} else {
 			if (StringUtils.hasLength(search) && search.length() > 2) {
-				return locationRepository.getLastUsedLocations(user, search, pageable);
+				page = locationRepository.getLastUsedLocations(user, search, pageable);
 			} else {
-				return locationRepository.getLastUsedLocations(user, pageable);
+				page = locationRepository.getLastUsedLocations(user, pageable);
 			}
 		}
+
+		return page;
 	}
 
-	public Location saveLocation(Location location) {
+	/**
+	 * Saves the location. If there is a new image appended, the image will be
+	 * processed.
+	 * 
+	 * @param location
+	 * @return the saved location
+	 * @throws IOException
+	 */
+	@Transactional
+	public Location saveLocation(Location location) throws IOException {
+
+		if (!StringUtils.isEmpty(location.getImageUrl())) {
+			// create new image object
+			Image newImage = imageService.createFromUrl(location.getImageUrl());
+			Image oldImage = location.getImage();
+
+			// delete old image if there is one
+			if (oldImage != null) { 
+				imageService.removeImageObject(imageService.findById(oldImage.getId()));
+			}
+
+			// set it as location image
+			location.setImage(newImage);
+		}
+
 		return locationRepository.save(location);
 	}
 

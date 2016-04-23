@@ -1,76 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.gentics</groupId>
-        <artifactId>kitchenoffice</artifactId>
-        <version>0.0.3</version>
-    </parent>
-    <artifactId>kitchenoffice-api</artifactId>
-    <name>Kitchenoffice API</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gentics</groupId>
+		<artifactId>kitchenoffice</artifactId>
+		<version>0.0.4-SNAPSHOT</version>
+	</parent>
+	<artifactId>kitchenoffice-api</artifactId>
+	<name>Kitchenoffice API</name>
 
-    <build>
-        <!--plugins>
-            <plugin>
-                <groupId>org.codehaus.enunciate</groupId>
-                <artifactId>maven-enunciate-plugin</artifactId>
-                <version>${maven-enunciate-plugin.version}</version>
-                <configuration>
-                    <configFile>src/main/resources/enunciate.xml</configFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>docs</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins-->
-        <pluginManagement>
-            <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings
-                    only. It has no influence on the Maven build itself. -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-                                            org.codehaus.enunciate
-                                        </groupId>
-                                        <artifactId>
-                                            maven-enunciate-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [1.27,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>docs</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore></ignore>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.gentics</groupId>
-            <artifactId>kitchenoffice-data</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>com.gentics</groupId>
+			<artifactId>kitchenoffice-data</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -86,41 +29,45 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
 
-        <!-- Jersey -->
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-spring</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-multipart</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-        </dependency>
+		<!-- Jersey -->
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+		</dependency>
 
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
 
         <!-- Spring Security CAS -->
         <dependency>
@@ -148,79 +95,87 @@
             <version>2.8.3</version>
         </dependency>
 
-        <!-- Spring Data Neo4j -->
+		<!-- Spring Data Neo4j -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-neo4j</artifactId>
+		</dependency>
 
-        <!-- Tools -->
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.bripkens</groupId>
-            <artifactId>gravatar4java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz-jobs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.java.dev.rome</groupId>
-            <artifactId>rome</artifactId>
-        </dependency>
+		<!-- Tools -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.bripkens</groupId>
+			<artifactId>gravatar4java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.rome</groupId>
+			<artifactId>rome</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-            <version>4.8.2</version>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<version>4.8.2</version>
+		</dependency>
+	</dependencies>
 </project>

@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="gravatar" uri="/WEB-INF/classes/tld/gravatarTag.tld"%>
-<div class="navbar navbar-inverse navbar-fixed-top" >
+<div class="ko-navbar navbar navbar-inverse navbar-fixed-top" >
 	<div class="navbar-inner">
 		<div class="container">
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">

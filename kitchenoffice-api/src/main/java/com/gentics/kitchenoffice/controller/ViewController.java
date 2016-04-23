@@ -55,7 +55,7 @@ public class ViewController {
 		mav.setViewName("rssViewer");
 		mav.addObject(
 				RSSEventViewer.FEED_CONTENT_KEY,
-				eventService.getEvents(
+				eventService.findEvents(
 						new PageRequest(0, eventService.getRssItemCount(),
 								new Sort(new Order(Direction.DESC,
 										"creationDate")))).getContent());

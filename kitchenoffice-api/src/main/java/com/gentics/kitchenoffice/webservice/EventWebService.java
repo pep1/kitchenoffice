@@ -83,7 +83,7 @@ public class EventWebService {
 	@GET
 	public List<Event> getEvents(@Context Pageable pageable) {
 		log.debug("calling getEvents");
-		return eventService.getFutureEvents(pageable);
+		return eventService.findFutureEvents(pageable);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class EventWebService {
 	@Path("/past")
 	public List<Event> getPastEvents(@Context Pageable pageable) {
 		log.debug("calling getPastEvents");
-		return eventService.getPastEvents(pageable);
+		return eventService.findPastEvents(pageable);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class EventWebService {
 	@Path("/mine")
 	public List<Event> getMyEvents(@Context Pageable pageable) {
 		log.debug("calling getMyEvents");
-		return eventService.getEventsOfUser(pageable);
+		return eventService.findEventsOfUser(pageable);
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class EventWebService {
 	@Path("/attended")
 	public List<Event> getMyAttendedEvents(@Context Pageable pageable) {
 		log.debug("calling getMyAttendedEvents");
-		return eventService.getFutureEvents(pageable);
+		return eventService.findFutureEvents(pageable);
 	}
 
 	/**

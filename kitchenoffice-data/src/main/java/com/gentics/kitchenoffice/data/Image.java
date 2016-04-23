@@ -1,38 +1,76 @@
 package com.gentics.kitchenoffice.data;
 
+import java.net.URL;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.gentics.kitchenoffice.server.storage.Storable;
-import lombok.Getter;
-import lombok.Setter;
 
+@SuppressWarnings("serial")
 @NodeEntity
 public class Image extends AbstractPersistable implements Storable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3712876154954811045L;
+	@JsonIgnore
+	public static final String STORAGE_TYPE = "img";
 
-	private static final String STORAGE_TYPE = "image";
-
-	@Getter @Setter
+	@JsonProperty
 	private String fileName;
 
-	@Getter @Setter
-	private String mimeType;
-
-	@Getter @Setter
+	@JsonIgnore
 	private long size;
 
-	@Getter @Setter
 	private int width;
 
-	@Getter @Setter
 	private int height;
 
-	public Image() {
+	@Transient
+	private URL url;
 
+	@Override
+	@JsonProperty
+	public String getFileName() {
+		return fileName;
+	}
+
+	@Override
+	@JsonIgnore
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public URL getUrl() {
+		return url;
+	}
+
+	public void setUrl(URL url) {
+		this.url = url;
 	}
 
 	@Override

@@ -3,27 +3,36 @@
 <div class="row-fluid">
 	<div class="span6">
 		<div class="ko-thumb-container">
-			<h5>
-				Details
-				<div class="pull-right" data-ng-switch data-on="event.type">
-					<span data-ng-switch-when="EXTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> go out eating</span> <span data-ng-switch-when="INTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> cook something to eat</span> <span data-ng-switch-when="ORDER" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> order something to eat</span> <span data-ng-switch-when="FETCH"
-						class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> fetch something to eat</span>
+			<div class="row-fluid">
+				<div class="span6">
+					<h5>
+						Details
+						<div class="pull-right" data-ng-switch data-on="event.type">
+							<span data-ng-switch-when="EXTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> go out eating</span> <span data-ng-switch-when="INTERNAL" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> cook something to eat</span> <span data-ng-switch-when="ORDER" class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> order something to eat</span> <span data-ng-switch-when="FETCH"
+								class="label label-info" data-ng-switch="e"><i class="icon-fixed-width icon-food"></i> fetch something to eat</span>
+						</div>
+					</h5>
+					<p>
+						<i class="icon-fixed-width icon-time"></i> {{calendar(event.startDate)}} <small>{{fromNow(event.startDate)}}</small>
+					<p>
+					<p data-ng-show="event.location">
+						<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
+					</p>
+					<p data-ng-show="event.location && event.location.website">
+						<i class="icon-fixed-width icon-globe"></i> <a target="_blank" data-ng-href="{{event.location.website}}"> Location Website</a>
+					</p>
+					<p data-ng-show="event.creator">
+						<i class="icon-fixed-width icon-user"></i>
+						<gravatar-image gravatar-email="event.creator.email" gravatar-size="30" gravatar-default="retro"></gravatar-image>
+						&nbsp;&nbsp;{{event.creator.username}}
+					</p>
 				</div>
-			</h5>
-			<p>
-				<i class="icon-fixed-width icon-time"></i> {{calendar(event.startDate)}} <small>{{fromNow(event.startDate)}}</small>
-			<p>
-			<p data-ng-show="event.location">
-				<i class="icon-fixed-width icon-map-marker"></i> {{event.location.address}}
-			</p>
-			<p data-ng-show="event.location && event.location.website">
-				<i class="icon-fixed-width icon-globe"></i> <a target="_blank" data-ng-href="{{event.location.website}}"> Location Website</a>
-			</p>
-			<p data-ng-show="event.creator">
-				<i class="icon-fixed-width icon-user"></i>
-				<gravatar-image gravatar-email="event.creator.email" gravatar-size="30" gravatar-default="retro"></gravatar-image>
-				&nbsp;&nbsp;{{event.creator.username}}
-			</p>
+				<div ng-show="event.image" class="span6">
+					<div class="thumbnail pull-right">
+						<img ng-src="{{event.getThumbURL(278)}}" />
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="ko-thumb-container tags" data-ng-hide="event.location.tags.length == 0">
 			<h5>

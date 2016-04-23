@@ -80,9 +80,7 @@
 	
 	<div class="row-fluid" ng-show="event.location || event.recipe || event.type == 'INTERNAL'">
 		<h4>4. Some optional description</h4>
-		<textarea rows="4" class="input-block-level" ng-model="event.description"
-						placeholder="Event description"></textarea>
-		<span class="help-block"><i class="icon-lightbulb"></i> You can use <a href="http://daringfireball.net/projects/markdown/" target="_blank" >Markdown</a>.</span>
+		<markdown-editor rows="4" class="input-block-level" model="event.description" placeholder="Event description"></markdown-editor>
 	</div>
 </form>
 <hr>

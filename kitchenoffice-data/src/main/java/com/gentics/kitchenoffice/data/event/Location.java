@@ -7,9 +7,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -20,59 +22,128 @@ import com.gentics.kitchenoffice.data.AbstractPersistable;
 import com.gentics.kitchenoffice.data.Image;
 import com.gentics.kitchenoffice.data.Tag;
 import com.gentics.kitchenoffice.data.user.User;
-import lombok.Getter;
-import lombok.Setter;
 
+@SuppressWarnings("serial")
 @NodeEntity
 public class Location extends AbstractPersistable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5410871118357785312L;
-
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = "locationnamesearch")
-	@Getter @Setter
 	private String name;
 
 	@NotBlank(message = "Address is mandatory")
 	@Size(min = 5, message = "Address should have at least 5 characters")
-	@Getter @Setter
 	private String address;
 
 	@URL
-	@Getter @Setter
 	private String website;
 
-	@Getter @Setter
 	private String description;
 
 	@NotNull
-	@Getter @Setter
 	private Float latitude;
 
 	@NotNull
-	@Getter @Setter
 	private Float longitude;
 
 	@Fetch
 	@RelatedTo(type = "HAS_TAG", direction = Direction.BOTH, enforceTargetType = true, elementClass = Tag.class)
-	@Getter @Setter
 	private Set<Tag> tags = new HashSet<Tag>();
+
+	/**
+	 * Url that can be posted when creating or updating a location
+	 */
+	@Transient
+	private String imageUrl;
 
 	@Fetch
 	@RelatedTo(type = "HAS_IMAGE", direction = Direction.OUTGOING, elementClass = Image.class)
-	@Getter @Setter
 	private Image image;
 
 	@Fetch
 	@JsonIgnore
 	@RelatedTo(type = "SUBSCRIBES", direction = Direction.BOTH, elementClass = User.class)
-	@Getter @Setter
 	private Set<User> subscribers = new HashSet<User>();
 
-	public Location() {
-		super();
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
+	}
+
+	@JsonIgnore
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	@JsonProperty
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public Set<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public Set<User> getSubscribers() {
+		return subscribers;
+	}
+
+	public void setSubscribers(Set<User> subscribers) {
+		this.subscribers = subscribers;
 	}
 
 	@Override

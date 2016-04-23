@@ -81,7 +81,7 @@ app.controller('LocationSelectController', function($scope, $rootScope, $locatio
 
 		$timeout.cancel(filterTextTimeout);
 
-		tempFilterText = val;
+		var tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
 			$timeout.cancel(filterTextTimeout);
 			$scope.update(tempFilterText);

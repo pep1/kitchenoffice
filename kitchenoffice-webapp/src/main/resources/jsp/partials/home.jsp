@@ -6,7 +6,7 @@
 			<i class="icon-food"></i> Selectable food ...
 		</h1>
 	</div>
-	<div class="span3" data-ng-show="!areEventsEmpty">
+	<div class="span3" data-ng-show="!areHomeEventsEmpty">
 		<div class="pull-right">
 			or&nbsp;&nbsp;&nbsp;<a href="/${project.build.finalName}/event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</div>
@@ -14,21 +14,30 @@
 </div>
 <hr>
 <div class="row-fluid">
-	<div data-ng-switch data-on="event.type" class="span4 well" data-ng-repeat="event in homeEvents">
-		<button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button>
-		<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
-		<div class="alert" ng-show="event.locked">
-			<i class="icon-fixed-width icon-lock"></i> This event is locked !
-		</div>
-		<div>
-			<a class="btn btn-small" data-ng-href="/${project.build.finalName}/event/{{event.id}}">View details »</a>
-			<button data-ng-show="event.canAttend()" data-ng-disabled="event.locked" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)"><i class="icon-flag-alt"></i> attend</button>
-			<button data-ng-show="event.canDismiss()" data-ng-disabled="event.locked" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)"><i class="icon-flag"></i> dismiss</button>
+	<div data-ng-switch data-on="event.type" class="span4" data-ng-repeat="event in homeEvents">
+		<!-- button data-ng-show="event.creator.id == me.id" type="button" class="close" aria-hidden="true" data-ng-click="deleteModal.open(event)">×</button-->
+		<div class="thumbnail">
+			<img ng-src="{{event.getThumbURL(360,120)}}" />
+			<div class="caption">
+				<jsp:include page="../include/event/viewThumb.jsp"></jsp:include>
+				<div class="alert" ng-show="event.locked">
+					<i class="icon-fixed-width icon-lock"></i> This event is locked !
+				</div>
+				<p>
+					<a class="btn btn-small" data-ng-href="/${project.build.finalName}/event/{{event.id}}">View details »</a>
+					<button data-ng-show="!event.participantsContainMe" data-ng-disabled="event.locked" class="btn btn-small btn-primary" data-ng-click="attendModal.open(event)">
+						<i class="icon-flag-alt"></i> attend
+					</button>
+					<button data-ng-show="event.participantsContainMe" data-ng-disabled="event.locked" class="btn btn-small btn-warning" data-ng-click="dismissModal.open(event)">
+						<i class="icon-flag"></i> dismiss
+					</button>
+				</p>
+			</div>
 		</div>
 	</div>
 	<div data-ng-show="areHomeEventsEmpty">
-		<p class="center" >there are no future events right now<br/>
-			<a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
+		<p class="center">
+			there are no future events right now<br /> <a href="event/create" class="btn btn-large btn-primary"> <i class="icon-edit"></i> <spring:message code="event.create" /></a>
 		</p>
 	</div>
 </div>

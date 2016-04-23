@@ -2,6 +2,7 @@ package com.gentics.kitchenoffice.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.security.SecureRandom;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.context.ServletContextAware;
 
+import com.gentics.kitchenoffice.server.storage.FileStorage;
 import com.gentics.kitchenoffice.server.storage.Storage;
 
 @Service
@@ -35,48 +37,120 @@ public class StorageService {
 	@Value("${storage.class}")
 	private Class<? extends Storage> storageClazz;
 
-	@Value("${storage.basepath}")
-	private String basePath;
+	@Value("${storage.hostname:localhost}")
+	private String hostname;
+
+	@Value("${storage.port:8080}")
+	private Integer port;
+
+	@Value("${storage.protocol:http}")
+	private String protocol;
+
+	@Value("${storage.basedir}")
+	private String baseDir;
+
+	@Value("${storage.mediapath}")
+	private String mediaPath;
 
 	@Value("${storage.temppath}")
 	private String tempPath;
+
+	private String mediaDir;
+
+	private String tempDir;
 
 	@PostConstruct
 	public void initialize() throws IOException, SecurityException, InstantiationException, IllegalAccessException {
 		log.debug("Initializing " + this.getClass().getSimpleName() + " instance ... ");
 
 		Assert.notNull(storageClazz);
-		Assert.notNull(basePath);
+		Assert.notNull(baseDir);
+		Assert.notNull(mediaPath);
+		Assert.notNull(tempPath);
+
+		File mediaFileDir = new File(baseDir, mediaPath);
+		File tempFileDir = new File(baseDir, tempPath);
+
+		if (!tempFileDir.isDirectory()) {
+			// auto create temp directory if not exist
+			if (!tempFileDir.mkdirs()) {
+				throw new IOException("Could not create tempdir in filesystem.");
+			}
+		}
+
+		if (!tempFileDir.canWrite()) {
+			throw new InstantiationException("Can not write in temp file directory " + tempPath);
+		}
+
+		if (!mediaFileDir.isDirectory()) {
+			// auto create media dir directory if not exist
+			if (!mediaFileDir.mkdirs()) {
+				throw new IOException("Could not create media directory in filesystem.");
+			}
+		}
+
+		this.mediaDir = mediaFileDir.getAbsolutePath();
+		this.tempDir = tempFileDir.getAbsolutePath();
+
+		if (!mediaFileDir.canWrite()) {
+			throw new InstantiationException("Can not write in media directory " + tempPath);
+		}
 
 		// initialize storage
 		this.storage = storageClazz.newInstance();
-		storage.init(basePath);
+		storage.init(new URL(protocol, hostname, port, ""), mediaPath);
 
 		if (storage instanceof ServletContextAware) {
 			((ServletContextAware) storage).setServletContext(servletContext);
 		}
 
-		Assert.notNull(tempPath);
-		File tempDir = new File(tempPath);
+		if (storage instanceof FileStorage) {
+			((FileStorage) storage).setBasePath(baseDir);
+		}
 
-		if (!tempDir.isDirectory()) {
-			// auto create temp directory if not exist
-			if (!tempDir.mkdirs()) {
+	}
+
+	public File createTempFile(String type, String extension) throws IOException {
+
+		String filename = getUniqueFileName(extension);
+		String filePath = baseDir + File.separator + tempPath + File.separator + type;
+		File dir = new File(filePath);
+
+		// auto create temp directory if not exist
+		if (!dir.isDirectory()) {
+			if (!dir.mkdirs()) {
 				throw new IOException("Could not create tempdir in filesystem.");
 			}
 		}
 
-		if (!tempDir.canWrite()) {
-			throw new InstantiationException("Can not write in temp file directory " + tempPath);
+		if (!dir.canWrite()) {
+			throw new IOException("Can not write to temp file path " + dir.getAbsolutePath());
 		}
+
+		log.debug("creating new temp file: " + filePath + File.separator + filename);
+		File f = new File(dir, filename);
+
+		return f;
 	}
 
-	public File createTempFile(String type, String extension) {
+	public File createTempFile(String type, String basename, String extension) throws IOException {
 
-		String filename = getUniqueFileName(extension);
+		String filePath = baseDir + File.separator + tempPath + File.separator + type;
+		File dir = new File(filePath);
 
-		log.debug("creating new temp file: " + tempPath + File.separator + filename);
-		File f = new File(tempPath, filename);
+		// auto create temp directory if not exist
+		if (!dir.isDirectory()) {
+			if (!dir.mkdirs()) {
+				throw new IOException("Could not create tempdir in filesystem.");
+			}
+		}
+
+		if (!dir.canWrite()) {
+			throw new IOException("Can not write to temp file path " + dir.getAbsolutePath());
+		}
+
+		log.debug("creating new temp file: " + filePath + File.separator + basename + "." + extension);
+		File f = new File(dir, basename + "." + extension);
 
 		return f;
 	}
@@ -88,4 +162,17 @@ public class StorageService {
 		return new StringBuilder().append(RandomStringUtils.random(16, 0, 0, true, true, null, random)).append(".")
 				.append(extension).toString();
 	}
+
+	public Storage getStorage() {
+		return storage;
+	}
+
+	public String getMediaDir() {
+		return mediaDir;
+	}
+
+	public String getTempDir() {
+		return tempDir;
+	}
+
 }

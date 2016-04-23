@@ -80,7 +80,7 @@ app.controller('LocationListController', function($scope, $rootScope, $q, $locat
 
 		$timeout.cancel(filterTextTimeout);
 
-		tempFilterText = val;
+		var tempFilterText = val;
 		filterTextTimeout = $timeout(function() {
 			$timeout.cancel(filterTextTimeout);
 			$scope.update(tempFilterText);

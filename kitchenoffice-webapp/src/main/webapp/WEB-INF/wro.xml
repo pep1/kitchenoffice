@@ -25,6 +25,17 @@
 		<js>classpath:META-INF/resources/webjars/angular-ui/0.4.0/angular-ui.js</js>
 		<js>classpath:META-INF/resources/webjars/angular-ui-bootstrap/0.5.0/ui-bootstrap-tpls.js</js>
 
+		<!-- jquery file upload -->
+		<js>classpath:META-INF/resources/webjars/jquery-ui/1.9.0/js/jquery-ui-1.9.0.custom.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/jquery.iframe-transport.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/cors/jquery.postmessage-transport.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/cors/jquery.xdr-transport.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/jquery.fileupload.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/jquery.fileupload-process.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/jquery.fileupload-validate.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/jquery.fileupload-ui.js</js>
+		<js>classpath:META-INF/resources/webjars/jquery-file-upload/9.5.2/js/jquery.fileupload-angular.js</js>
+
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap.css</css>
 		<css>classpath:META-INF/resources/webjars/bootstrap/2.3.2/css/bootstrap-responsive.css</css>
 
