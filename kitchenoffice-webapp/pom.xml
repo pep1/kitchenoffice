@@ -167,6 +167,22 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>dev-mac</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<cas.server.host>secure.gentics.com</cas.server.host>
+				<cas.service.host>localhost:8080</cas.service.host>
+				<storage.basedir>/tmp/kitchenoffice</storage.basedir>
+				<maven.db.location>/tmp/kitchenoffice/neo4j-db</maven.db.location>
+				<incrementalBuildEnabled>true</incrementalBuildEnabled>
+				<wro4j.configfile.path>src/main/webapp/WEB-INF/wro-dev.properties</wro4j.configfile.path>
+			</properties>
+		</profile>
+		<profile>
 			<id>prod</id>
 			<properties>
 				<cas.server.host>secure.gentics.com</cas.server.host>

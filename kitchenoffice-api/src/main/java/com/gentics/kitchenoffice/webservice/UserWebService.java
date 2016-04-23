@@ -20,7 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import com.gentics.kitchenoffice.data.user.User;
-import com.gentics.kitchenoffice.service.UserService;
+import com.gentics.kitchenoffice.service.CrowdUserService;
 import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 
 /**
@@ -29,6 +29,7 @@ import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
  * Provides user CRUD functionality.
  */
 @Component
+@PreAuthorize("isAuthenticated()")
 @Scope("singleton")
 @Path("/users")
 @NoCache
@@ -39,7 +40,7 @@ public class UserWebService {
 
 	/** The user service. */
 	@Autowired
-	private UserService userService;
+	private CrowdUserService userService;
 
 	/**
 	 * Gets the user object of logged in user.
@@ -47,7 +48,6 @@ public class UserWebService {
 	 * @return the me
 	 */
 	@GET
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Path("/me")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getMe() {
@@ -65,7 +65,6 @@ public class UserWebService {
 	 * @return the list
 	 */
 	@GET
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> findAll(@Context Pageable pageable) {
 		log.debug("Calling user findAll");

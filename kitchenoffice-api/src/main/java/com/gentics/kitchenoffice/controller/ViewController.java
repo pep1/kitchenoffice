@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gentics.kitchenoffice.service.EventService;
-import com.gentics.kitchenoffice.service.UserService;
+import com.gentics.kitchenoffice.service.CrowdUserService;
 
 @Controller
 public class ViewController {
@@ -22,7 +22,7 @@ public class ViewController {
 	private static Logger log = LoggerFactory.getLogger(ViewController.class);
 
 	@Autowired
-	private UserService userService;
+	private CrowdUserService userService;
 
 	@Autowired
 	private EventService eventService;

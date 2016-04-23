@@ -47,7 +47,7 @@ public class EventService {
 	private EventRepository eventRepository;
 
 	@Autowired
-	private UserService userService;
+	private CrowdUserService userService;
 
 	@Autowired
 	private JobRepository jobRepository;

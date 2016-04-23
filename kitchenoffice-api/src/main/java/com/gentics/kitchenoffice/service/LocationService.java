@@ -25,7 +25,7 @@ public class LocationService {
 	private LocationRepository locationRepository;
 
 	@Autowired
-	private UserService userService;
+	private CrowdUserService userService;
 
 	@Autowired
 	TagService tagService;

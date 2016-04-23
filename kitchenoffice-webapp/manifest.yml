@@ -1,0 +1,12 @@
+---
+applications:
+- name: kitchenoffice
+  memory: 512MB
+  hostname: kitchenoffice
+  timeout: 180
+  path: target/kitchenoffice-webapp.war
+  stack: cflinuxfs2
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.6
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: "[jre: {version: 1.8.0_+}, memory_calculator: {memory_sizes: {metaspace: 90m, native: 100m.., stack: 2m, heap: 150m}}]"
+    JAVA_OPTS: "-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -Djava.net.preferIPv4Stack=true"

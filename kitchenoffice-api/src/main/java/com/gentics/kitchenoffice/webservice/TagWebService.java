@@ -34,6 +34,7 @@ import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
  * automatically when not used anymore.
  */
 @Component
+@PreAuthorize("isAuthenticated()")
 @Scope("singleton")
 @Path("/tags")
 @NoCache
@@ -58,7 +59,6 @@ public class TagWebService {
 	 * @return the tags
 	 */
 	@GET
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Tag> getTags(@Context Pageable pageable, @QueryParam("search") String search) {
 		log.debug("calling getTags");
@@ -73,7 +73,6 @@ public class TagWebService {
 	 * @return the tag
 	 */
 	@POST
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Tag createOrUpdateTag(Tag tag) {

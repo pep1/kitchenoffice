@@ -12,7 +12,7 @@
 			<div class="nav-collapse in collapse">
 				<p class="navbar-text pull-right">
 					<spring:message code="header.greeting" />
-					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" https="false" />' />
+					<a href="#" class="navbar-link">${user.username}</a> <img src='<gravatar:gravatar email="${user.email}" size="40" https="true" />' />
 				</p>
 				<ul class="nav">
 					<li class="dropdown" >

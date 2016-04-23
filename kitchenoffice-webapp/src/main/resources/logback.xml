@@ -16,6 +16,7 @@
 	</appender>
 	<logger name="org.springframework" level="ERROR" />
 	<logger name="com.gentics.kitchenoffice" level="DEBUG" />
+	<logger name="com.atlassian" level="DEBUG" />
 	<root level="ERROR">
 		<appender-ref ref="ROOTLOGGER" />
 	</root>

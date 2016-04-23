@@ -3,7 +3,24 @@
  */
 package com.gentics.kitchenoffice.webservice;
 
-import java.util.List;
+import com.gentics.kitchenoffice.data.Comment;
+import com.gentics.kitchenoffice.data.Job;
+import com.gentics.kitchenoffice.data.event.Event;
+import com.gentics.kitchenoffice.service.EventService;
+import com.gentics.kitchenoffice.service.JobService;
+import com.gentics.kitchenoffice.service.CrowdUserService;
+import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
+import com.sun.jersey.api.NotFoundException;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.NumberUtils;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
@@ -16,26 +33,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.util.NumberUtils;
-
-import com.gentics.kitchenoffice.data.Comment;
-import com.gentics.kitchenoffice.data.Job;
-import com.gentics.kitchenoffice.data.event.Event;
-import com.gentics.kitchenoffice.service.EventService;
-import com.gentics.kitchenoffice.service.JobService;
-import com.gentics.kitchenoffice.service.UserService;
-import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
-import com.sun.jersey.api.NotFoundException;
+import java.util.List;
 
 /**
  * The Class EventWebService.
@@ -45,7 +43,7 @@ import com.sun.jersey.api.NotFoundException;
 @Component
 @Scope("singleton")
 @Path("/events")
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("isAuthenticated()")
 @Produces(MediaType.APPLICATION_JSON)
 @NoCache
 public class EventWebService {
@@ -55,7 +53,7 @@ public class EventWebService {
 
 	/** The user service. */
 	@Autowired
-	private UserService userService;
+	private CrowdUserService userService;
 
 	/** The event service. */
 	@Autowired

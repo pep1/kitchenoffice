@@ -29,7 +29,7 @@ import org.springframework.util.NumberUtils;
 
 import com.gentics.kitchenoffice.data.event.Location;
 import com.gentics.kitchenoffice.service.LocationService;
-import com.gentics.kitchenoffice.service.UserService;
+import com.gentics.kitchenoffice.service.CrowdUserService;
 import com.gentics.kitchenoffice.webservice.filter.CacheAnnotations.NoCache;
 import com.sun.jersey.api.NotFoundException;
 
@@ -42,6 +42,7 @@ import com.sun.jersey.api.NotFoundException;
 @Scope("singleton")
 @Path("/locations")
 @NoCache
+@PreAuthorize("isAuthenticated()")
 public class LocationWebService {
 
 	/** The log. */
@@ -49,7 +50,7 @@ public class LocationWebService {
 
 	/** The user service. */
 	@Autowired
-	private UserService userService;
+	private CrowdUserService userService;
 
 	/** The location service. */
 	@Autowired
@@ -75,7 +76,6 @@ public class LocationWebService {
 	 * @return the locations
 	 */
 	@GET
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Location> getLocations(@Context Pageable pageable, @QueryParam("search") String search) {
 		log.debug("calling getLocations");
@@ -91,7 +91,6 @@ public class LocationWebService {
 	 */
 	@GET
 	@Path("/{id}")
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Location getLocation(@PathParam("id") String id) {
 		Assert.notNull(id);
@@ -116,7 +115,6 @@ public class LocationWebService {
 	 */
 	@GET
 	@Path("/{id}/subscribe")
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Location subscribeLocation(@PathParam("id") String id) {
 		Assert.notNull(id);
@@ -141,7 +139,6 @@ public class LocationWebService {
 	 */
 	@GET
 	@Path("/{id}/unsubscribe")
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Location unSubscribeLocation(@PathParam("id") String id) {
 		Assert.notNull(id);
@@ -169,7 +166,6 @@ public class LocationWebService {
 	 * @return the user last locations
 	 */
 	@GET
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/lastused")
 	public List<Location> getUserLastLocations(@Context Pageable pageable, @QueryParam("search") String search) {
@@ -185,7 +181,6 @@ public class LocationWebService {
 	 * @return the location
 	 */
 	@POST
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Location createOrUpdateLocation(@Valid Location location) {
